@@ -95,4 +95,3 @@ services:
         condition: service_started
     environment:
       WEBSITE_URL: http://e2e-gateway
-      VITE_API_URL: http://e2e-gateway/api
