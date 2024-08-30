@@ -1,0 +1,65 @@
+x-baseService: &baseService
+  restart: always
+  healthcheck:
+    interval: 1s
+    timeout: 2s
+    retries: 100
+
+services:
+  prd-gateway:
+    <<: *baseService
+    image: nginx
+    volumes:
+      - ./nginx.prd.conf:/etc/nginx/nginx.conf
+    ports: 
+      - ${GATEWAY_PORT}:80
+    depends_on:
+      prd-backend:
+        condition: service_healthy
+      prd-frontend:
+        condition: service_healthy
+
+  prd-db:
+    <<: *baseService
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_HOST} -U ${DB_USER}"]
+    volumes:
+      - ./persist/prd-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_HOST: ${DB_HOST}
+
+  prd-backend:
+    <<: *baseService
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prd
+    healthcheck: 
+      test: ["CMD-SHELL", "curl --fail --request POST --header 'Content-Type: application/json' --url 'http://prd-backend:4000' --data '{\"query\":\"query { __typename }\"}' || exit 1"]
+    depends_on:
+      prd-db:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/src/
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_HOST: ${DB_HOST}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_TTL: ${COOKIE_TTL}
+
+  prd-frontend:
+    <<: *baseService
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prd
+    healthcheck: 
+      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://prd-frontend:5173' || exit 1"]
+    volumes:
+      - ./frontend/src:/app/src/
+    environment:
+      VITE_API_URL: http://prd-gateway:${GATEWAY_PORT}/api

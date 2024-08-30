@@ -3,15 +3,16 @@ name: Compile Code & Send Images to DockerHub
 on:
   push:
     branches: 
-      - staging
+      - production
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: Staging
+    environment: production
     strategy:
       matrix:
-        service: # Add services here
+        # Add services here
+        service: 
           - frontend
           - backend
 
@@ -32,6 +33,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./${{ matrix.service }}
-          file: ./${{ matrix.service }}/Dockerfile
+          file: ./${{ matrix.service }}/Dockerfile.prd
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.DOCKER_HUB_CLIENT_IMAGE_NAME }}:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}-${{ matrix.service }}:latest

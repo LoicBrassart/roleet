@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: # Add services here
+        # Add services here
+        service: 
           - frontend
           - backend
 
@@ -36,13 +37,14 @@ jobs:
         id: filter
         uses: dorny/paths-filter@v2
         with:
-          filters: # Add services here
+          # Add services here
+          filters: |
             frontend:
               - 'frontend/**'
             backend:
               - 'backend/**'
 
-      - name: Check lint and Run unit tests
+      - name: Run unit tests
         if: ${{ steps.filter.outputs[matrix.service] == 'true' }}
         run: |
           cd ${{ matrix.service }}
