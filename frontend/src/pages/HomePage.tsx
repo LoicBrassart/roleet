@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import type { User } from "../generated/graphql-types";
+import type { User } from "../graphql/generated/graphql-types";
 import sdk from "../graphql/sdk";
 
 export async function HomeLoader() {
