@@ -62,4 +62,4 @@ services:
     volumes:
       - ./frontend/src:/app/src/
     environment:
-      VITE_API_URL: http://prd-gateway:${GATEWAY_PORT}/api
+      VITE_API_URL: http://prd-backend:4000

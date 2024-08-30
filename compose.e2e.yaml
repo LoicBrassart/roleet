@@ -65,7 +65,7 @@ services:
     volumes:
       - ./frontend/src:/app/src/
     environment:
-      VITE_API_URL: http://e2e-gateway/api
+      VITE_API_URL: http://e2e-backend:4000
 
   e2e-codegen:
     <<: *baseService
