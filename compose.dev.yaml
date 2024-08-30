@@ -87,6 +87,6 @@ services:
         condition: service_healthy
     volumes:
       - ./frontend/src:/app/src/
-    command: npm run codegen
+    command: ["npm", "run codegen"]
     environment:
       VITE_API_URL: http://dev-backend:4000
