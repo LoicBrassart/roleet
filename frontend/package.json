@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "start": "node dist/index.js",
+    "start": "node build/index.js",
     "unit-tests": "echo 'TODO: Run Unit Tests'",
     "integration-tests": "echo 'TODO: Run Integration Tests'",
     "codegen": "graphql-codegen --config codegen.ts"

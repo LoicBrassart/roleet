@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "nodemon --exec ts-node -- ./src/index.ts",
-    "start": "node dist/index.js",
+    "start": "node build/index.js",
     "unit-tests": "echo 'TODO: Run Unit Tests'",
     "integration-tests": "echo 'TODO: Run Integration Tests'"
   },
