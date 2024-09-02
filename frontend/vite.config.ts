@@ -14,9 +14,6 @@ const config: UserConfig = {
   build: {
     outDir: "./build",
   },
-  esbuild: {
-    jsxInject: `import React from 'react'`,
-  },
 
   test: {
     globals: true,
