@@ -60,25 +60,10 @@ services:
     healthcheck: 
       test: ["CMD-SHELL", "curl --fail --request GET --url 'http://e2e-frontend:5173' || exit 1"]
     depends_on:
-      e2e-codegen:
-        condition: service_completed_successfully
-    volumes:
-      - ./frontend/src:/app/src/
-    environment:
-      VITE_API_URL: http://e2e-backend:4000
-
-  e2e-codegen:
-    <<: *baseService
-    restart: on-failure
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.dev
-    depends_on:
       e2e-backend:
         condition: service_healthy
     volumes:
       - ./frontend/src:/app/src/
-    command: ["npm", "run", "codegen"]
     environment:
       VITE_API_URL: http://e2e-backend:4000
 
