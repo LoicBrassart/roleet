@@ -12,7 +12,7 @@ const config: UserConfig = {
     },
   },
   build: {
-    outDir: "./dist",
+    outDir: "./build",
   },
   esbuild: {
     jsxInject: `import React from 'react'`,
