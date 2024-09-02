@@ -1,4 +1,3 @@
-import type MyContext from "@/types/myContext";
 import * as argon2 from "argon2";
 import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
@@ -12,6 +11,7 @@ import {
   Resolver,
 } from "type-graphql";
 import { Roles, User } from "../entities/User";
+import type MyContext from "../types/myContext";
 
 dotenv.config();
 

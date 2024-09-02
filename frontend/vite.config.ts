@@ -11,6 +11,13 @@ const config: UserConfig = {
       usePolling: true,
     },
   },
+  build: {
+    outDir: "./dist",
+  },
+  esbuild: {
+    jsxInject: `import React from 'react'`,
+  },
+
   test: {
     globals: true,
     environment: "jsdom",
