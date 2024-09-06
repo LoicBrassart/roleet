@@ -6,6 +6,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Checkout code
@@ -15,36 +16,36 @@ jobs:
 
       - name: Setup Git
         run: |
-          git config --global user.name "Github Actions"
+          git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-      
+
       - name: Get latest version tag
-        run: echo "LATEST_TAG=$(git describe --tags --abbrev=0 --match 'v*')" >> $GITHUB_ENV
-      
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 --match 'v*' || echo "v0.0.0")
+          echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
+
       - name: Create new tag
         run: |
           LATEST_TAG=${{ env.LATEST_TAG }}
           echo "Last tag: $LATEST_TAG"
 
-          if [ -z "$LATEST_TAG"]; then
-            NEW_TAG="v1.0.0"
-          else
-            VERSION=$(echo $LATEST_TAG | /sed 's/^v//')
-            IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
-            MAJOR=${VERSION_PARTS[0]}
-            MINOR=${VERSION_PARTS[1]}
-            PATCH=${VERSION_PARTS[2]}
+          VERSION=$(echo $LATEST_TAG | sed 's/^v//')
+          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
 
-            PATCH=$((PATCH + 1))
-            NEW_TAG="v$MAJOR.$MINOR.PATCH"
-          fi
-
+          PATCH=$((PATCH + 1))
+          NEW_TAG="v$MAJOR.$MINOR.$PATCH"
+          
           echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
           echo "New tag: $NEW_TAG"
 
-          git tag -a ${{ env.NEW_TAG }} -m "Release ${{ env.NEW_TAG }}"
-          git push origin ${{ env.NEW_TAG }}
-      
+          git tag -a $NEW_TAG -m "Release $NEW_TAG"
+          git push origin $NEW_TAG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Changelog
         run: |
           git fetch --tags
@@ -52,13 +53,17 @@ jobs:
           git add CHANGELOG.md
           git commit -m "Update CHANGELOG.md for ${{ env.LATEST_TAG }}"
           git push origin staging
-      
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Update main branch
         run: |
           git checkout main
           git merge --no-ff staging
           git push origin main
-      
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Release
         uses: actions/create-release@v1
         with: 

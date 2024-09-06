@@ -15,19 +15,36 @@
     - "integration-tests"
 - update `.env.dev`, `compose.dev.yaml` and `nginx.dev.conf` if relevant
 
-## Create this template
-### GHub Settings (template repo)
+### Deploy application on a new server
+_NB: Commands and instructions that should be run on the dev machine will be prefixed with "💻" ; those to run on your deployment machine by "🏭"_
 
-#### General
+#### Security & initial setup [TODO]
+- Change SSH port
+- Install fail2ban, docker, caddy, webhook
 
-##### Features
-- [x] Template Repository
+#### Set up target environments (dev/staging/prod)
+To install an app named APPNAME:
+- 💻`cp compose.dev.yaml nginx.dev.conf .env.dev deploy/acme/dev/`
+- 💻 Change `.env.dev` contents to something somewhat secure
+- 💻`mv deploy/acme deploy/APPNAME`
+- 💻`scp deploy/APPNAME myUser@myHost:~/apps`
+- 🏭 Create an SSH key and link it to your GHub repository
+- 🏭 Edit `/etc/caddy/Caddyfile` to match your server's ports' mapping (sample available in this repo: deploy/Caddyfile)
+- 🏭`systemctl reload caddy`
+- 🏭`cd ~/apps/APPNAME/dev && GATEWAY_PORT=8001 docker compose up --build -d` (Change "8001" for whatever port you chose in Caddyfile)
+
+## GHub Settings (template repo)
+
+### General
+
+#### Features
+- [ ] Template Repository
 - [ ] Wikis
 - [ ] Issues
 - [ ] Preserve this repository
 - [ ] Projects
 
-##### Pull Requests
+#### Pull Requests
 - [ ] Allow merge commits
 - [x] Allow squash merging Loading
   - Default commit message: Pull request title
@@ -35,12 +52,12 @@
 - [ ] Allow auto-merge 
 - [ ] Automatically delete head branches
 
-#### Collaborators
+### Collaborators
 - Inviter les collaborateurs
 
-#### Branches
+### Branches
 
-##### Branch protection rule: "main", "staging", "dev"
+#### Branch protection rule: "main", "staging", "dev"
 - [x] Require a pull request before merging
   - [x] Require approvals (1)
   - [x] Dismiss stale pull request approvals when new commits are pushed
@@ -49,3 +66,10 @@
 - [x] Require status checks to pass before merging
   - [x] Require branches to be up to date before merging
 - [ ] Require deployments to succeed before merging _(NB: pour l'instant !)
+
+### WebHooks
+- Add WebHook
+  - Payload URL: specific url you declared on your vps
+  - [x] Enable SSL
+  - [x] Just the Push event (unless our project needs something else, obviously)
+  - [x] Active

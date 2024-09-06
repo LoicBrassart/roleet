@@ -10,11 +10,13 @@ const config: UserConfig = {
     watch: {
       usePolling: true,
     },
+    hmr: {
+      port: 8000,
+    },
   },
   build: {
     outDir: "./build",
   },
-
   test: {
     globals: true,
     environment: "jsdom",
