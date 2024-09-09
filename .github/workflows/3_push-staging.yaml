@@ -36,3 +36,12 @@ jobs:
           file: ./${{ matrix.service }}/Dockerfile.prd
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}-${{ matrix.service }}:latest
+  
+  notify-server:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Notify server
+        run: |
+          curl -X POST ${{ secrets.SERVER_DOMAIN }}/hooks/dockerhub-${{ secrets.APP_NAME }}
