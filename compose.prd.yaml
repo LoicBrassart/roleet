@@ -8,9 +8,11 @@ x-baseService: &baseService
 services:
   prd-gateway:
     <<: *baseService
-    image: nginx
+    image: nginx:1.21.3
     volumes:
       - ./nginx.prd.conf:/etc/nginx/nginx.conf
+      - web-client-build:/web-client-build
+      - ./persist/prd-nginx:/var/log/nginx
     ports: 
       - ${GATEWAY_PORT}:80
     depends_on:
@@ -34,9 +36,7 @@ services:
 
   prd-backend:
     <<: *baseService
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.prd
+    image: ${DOCKER_HUB_USERNAME}/${APP_NAME}-backend
     healthcheck: 
       test: ["CMD-SHELL", "curl --fail --request POST --header 'Content-Type: application/json' --url 'http://prd-backend:4000' --data '{\"query\":\"query { __typename }\"}' || exit 1"]
     depends_on:
@@ -45,6 +45,8 @@ services:
     volumes:
       - ./backend/src:/app/src/
     environment:
+      NODE_ENV: production
+      SERVER_PORT: 4000
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
       DB_USER: ${DB_USER}
@@ -54,12 +56,15 @@ services:
 
   prd-frontend:
     <<: *baseService
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.prd
+    image: ${DOCKER_HUB_USERNAME}/${APP_NAME}-frontend
     healthcheck: 
-      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://prd-frontend:5173' || exit 1"]
+      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://prd-frontend:4001' || exit 1"]
     volumes:
-      - ./frontend/src:/app/src/
+      - web-client-build:/app/build
     environment:
+      NODE_ENV: production
+      SERVER_PORT: 4001
       VITE_API_URL: http://prd-backend:4000
+
+volumes:
+  web-client-build:

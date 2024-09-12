@@ -14,4 +14,4 @@ WORKDIR /app
 COPY --from=builder /app/build .
 COPY --from=builder /app/package*.json .
 RUN npm install --production
-CMD ["npm", "run start"]
+CMD ["npm", "run", "start"]

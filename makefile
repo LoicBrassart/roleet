@@ -1,4 +1,4 @@
-.PHONY: stop clean enter dev e2e
+.PHONY: stop clean enter dev loc e2e
 
 stop:
 	docker stop $(shell docker ps -a -q)
@@ -8,6 +8,9 @@ clean:
 
 enter:
 	docker exec -it $(target) sh
+
+loc: 
+	docker compose --env-file .env.loc -f compose.loc.yaml up --build -d
 
 dev: 
 	docker compose --env-file .env.dev -f compose.dev.yaml up --build -d
