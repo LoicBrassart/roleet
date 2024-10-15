@@ -5,6 +5,9 @@ import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
 import { buildSchema } from "type-graphql";
 import { dataSource } from "./config/db";
+import PlanResolver from "./resolvers/PlanResolver";
+import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
+import ScenarioResolver from "./resolvers/ScenarioResolver";
 import UserResolver from "./resolvers/UserResolver";
 
 dotenv.config();
@@ -12,7 +15,12 @@ dotenv.config();
 const start = async () => {
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [
+      UserResolver,
+      ScenarioResolver,
+      PlanResolver,
+      PointOfInterestResolver,
+    ],
     authChecker: ({ context }, neededRoles) => {
       if (!context.payload) return false;
 

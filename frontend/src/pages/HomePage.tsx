@@ -1,28 +1,23 @@
-import { useLoaderData } from "react-router-dom";
-import type { User } from "../graphql/generated/graphql-types";
-import sdk from "../graphql/sdk";
-
-export async function HomeLoader() {
-  try {
-    const { getAllUsers } = await sdk.GetAllUsers();
-    return getAllUsers;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
+import {
+  type Scenario,
+  useGetAllScenariosQuery,
+} from "../graphql/generated/graphql-types";
+import ScenarioList from "../organisms/ScenarioList";
 
 export default function HomePage() {
-  const users = useLoaderData() as User[];
+  const { loading, error, data } = useGetAllScenariosQuery();
+
+  if (error) return <p>Oops, something went awry...</p>;
+  if (loading)
+    return <p>Enhance your calm, we're still fetching this data...</p>;
+  if (!data) return <p>We found nothing to display.</p>;
 
   return (
     <>
-      <h2>Tous les utilisateurs</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
+      <ScenarioList
+        title="Scenarios"
+        data={data.getAllScenarios as Scenario[]}
+      />
     </>
   );
 }

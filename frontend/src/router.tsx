@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import AboutPage from "./pages/AboutPage";
 import ErrorPage from "./pages/ErrorPage";
-import HomePage, { HomeLoader } from "./pages/HomePage";
+import HomePage from "./pages/HomePage";
+import ScenarioPage from "./pages/ScenarioPage";
 
 const router = createBrowserRouter([
   {
@@ -14,13 +14,10 @@ const router = createBrowserRouter([
         path: "/",
         index: true,
         element: <HomePage />,
-        loader: () => {
-          return HomeLoader();
-        },
       },
       {
-        path: "/about",
-        element: <AboutPage />,
+        path: "/scenario/:id",
+        element: <ScenarioPage />,
       },
     ],
   },

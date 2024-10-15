@@ -1,9 +1,10 @@
+import path from "node:path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import type { UserConfig } from "vitest/config";
+import type { ViteUserConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
-const config: UserConfig = {
+const config: ViteUserConfig = {
   plugins: [react()],
   server: {
     host: true,
@@ -11,7 +12,8 @@ const config: UserConfig = {
       usePolling: true,
     },
     hmr: {
-      port: 8000,
+      port: 7000,
+      path: "/hmr",
     },
   },
   build: {
@@ -20,6 +22,11 @@ const config: UserConfig = {
   test: {
     globals: true,
     environment: "jsdom",
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
 };
 export default defineConfig(config);
