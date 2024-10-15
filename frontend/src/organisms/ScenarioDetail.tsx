@@ -1,6 +1,4 @@
-import {
-  type Scenario,
-} from "../graphql/generated/graphql-types";
+import type { Scenario } from "../graphql/generated/graphql-types";
 
 type Props = {
   data: Scenario;
