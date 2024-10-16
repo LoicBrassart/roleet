@@ -306,8 +306,9 @@ async function generateAndSaveFixtures() {
         return poi.save();
       }),
     );
-    console.info(`Fixtures enregistrées avec succès: ${savedScenarios.length} Scenario(s), ${savedPlans.length} Plans, ${savedPoI.length} PoI`);
-
+    console.info(
+      `Fixtures enregistrées avec succès: ${savedScenarios.length} Scenario(s), ${savedPlans.length} Plans, ${savedPoI.length} PoI`,
+    );
   } catch (error) {
     console.error("Erreur lors de l'enregistrement des fixtures:", error);
   } finally {
