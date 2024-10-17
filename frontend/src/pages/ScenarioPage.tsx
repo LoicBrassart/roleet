@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import {
   type Scenario,
   useGetScenarioQuery,
-} from "../graphql/generated/graphql-types";
+} from "../lib/graphql/generated/graphql-types";
 import ScenarioDetail from "../organisms/ScenarioDetail";
 
 export default function ScenarioPage() {

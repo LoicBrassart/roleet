@@ -20,5 +20,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "codegen.ts"]
+  "exclude": ["node_modules", "lib/codegen/config.ts"]
 }

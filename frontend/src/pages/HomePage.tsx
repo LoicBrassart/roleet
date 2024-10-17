@@ -1,7 +1,7 @@
 import {
   type Scenario,
   useGetAllScenariosQuery,
-} from "../graphql/generated/graphql-types";
+} from "../lib/graphql/generated/graphql-types";
 import ScenarioList from "../organisms/ScenarioList";
 
 export default function HomePage() {
