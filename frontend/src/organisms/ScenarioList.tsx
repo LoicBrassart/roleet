@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { Scenario } from "../graphql/generated/graphql-types";
 
 type Props = {
@@ -10,7 +11,9 @@ export default function ScenarioList(props: Props) {
       <h2>{props.title}</h2>
       <ul>
         {props.data.map((scenario) => (
-          <li key={scenario.id}>{scenario.title}</li>
+          <li key={scenario.id}>
+            <Link to={`/scenario/${scenario.id}`}>{scenario.title}</Link>
+          </li>
         ))}
       </ul>
     </>
