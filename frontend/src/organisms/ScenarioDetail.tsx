@@ -1,17 +1,17 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
-import type { Scenario } from "../lib/graphql/generated/graphql-types";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/lib/shadcn/ui/resizable";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/lib/shadcn/ui/accordion";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/lib/shadcn/ui/resizable";
 import { ScrollArea } from "@/lib/shadcn/ui/scroll-area";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
+import type { Scenario } from "../lib/graphql/generated/graphql-types";
 
 type Props = {
   data: Scenario;
