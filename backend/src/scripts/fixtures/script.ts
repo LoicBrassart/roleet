@@ -1,8 +1,10 @@
-import { dataSource } from "../config/db";
-import { Plan } from "../entities/Plan";
-import { PointOfInterest } from "../entities/PointOfInterest";
-import { Scenario } from "../entities/Scenario";
+import { cpSync } from "node:fs";
+import { dataSource } from "../../config/db";
+import { Plan } from "../../entities/Plan";
+import { PointOfInterest } from "../../entities/PointOfInterest";
+import { Scenario } from "../../entities/Scenario";
 
+const fixturesFolder = "./src/scripts/fixtures/img/";
 const scenariosData = [
   {
     title: "A la chasse aux gobs",
@@ -45,7 +47,7 @@ const plansData = [
   {
     title: "L'antre des gobelins",
     description: undefined,
-    pictureUrl: "/fixtures/map-antre-gobelins.png",
+    pictureUrl: "map-antre-gobelins.png",
   },
 ];
 const poisData = [
@@ -271,6 +273,7 @@ const poisData = [
 
 async function generateAndSaveFixtures() {
   try {
+    cpSync(fixturesFolder, "./static/", { recursive: true });
     await dataSource.initialize();
 
     const savedScenarios = await Promise.all(
