@@ -16,5 +16,5 @@ export default function ScenarioPage() {
     return <p>Enhance your calm, we're still fetching this data...</p>;
   if (!data) return <p>We found nothing to display.</p>;
 
-  return <ScenarioDetail data={data.getScenario[0] as Scenario} />;
+  return <ScenarioDetail data={data.getScenario as Scenario} />;
 }

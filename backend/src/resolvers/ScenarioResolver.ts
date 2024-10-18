@@ -27,9 +27,16 @@ class ScenarioResolver {
     return await Scenario.find({ relations: ["plans"] });
   }
 
-  @Query(() => [Scenario])
+  @Query(() => Scenario)
   async getScenario(@Arg("id") id: number) {
-    return await Scenario.find({ where: { id }, relations: ["plans"] });
+    return await Scenario.findOne({
+      where: { id },
+      relations: {
+        plans: {
+          pointsOfInterest: true,
+        },
+      },
+    });
   }
 
   @Mutation(() => Scenario)

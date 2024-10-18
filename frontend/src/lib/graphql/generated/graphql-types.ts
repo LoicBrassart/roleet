@@ -122,7 +122,7 @@ export type Query = {
   getAllPointsOfInterest: Array<PointOfInterest>;
   getAllScenarios: Array<Scenario>;
   getAllUsers: Array<User>;
-  getScenario: Array<Scenario>;
+  getScenario: Scenario;
 };
 
 
@@ -185,7 +185,7 @@ export type GetScenarioQueryVariables = Exact<{
 }>;
 
 
-export type GetScenarioQuery = { __typename?: 'Query', getScenario: Array<{ __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, pictureUrl: string, description?: string | null }> }> };
+export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, pictureUrl: string, description?: string | null, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, title?: string | null, code: string, description?: string | null }> }> } };
 
 
 export const SignupDocument = gql`
@@ -348,6 +348,12 @@ export const GetScenarioDocument = gql`
       title
       pictureUrl
       description
+      pointsOfInterest {
+        id
+        title
+        code
+        description
+      }
     }
   }
 }

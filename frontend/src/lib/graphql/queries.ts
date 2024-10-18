@@ -48,6 +48,12 @@ export const GETSCENARIO = gql`
         title
         pictureUrl
         description
+        pointsOfInterest {
+          id
+          title
+          code
+          description
+        }
       }
     }
   }

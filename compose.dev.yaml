@@ -53,6 +53,7 @@ services:
         condition: service_healthy
     volumes:
       - ./backend/src:/app/src/
+      - ./persist/dev-backend:/app/static
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
