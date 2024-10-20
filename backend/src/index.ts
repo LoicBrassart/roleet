@@ -5,11 +5,11 @@ import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
 import { buildSchema } from "type-graphql";
 import { dataSource } from "./config/db";
+import FlashcardResolver from "./resolvers/FlashcardResolver";
 import PlanResolver from "./resolvers/PlanResolver";
 import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
 import ScenarioResolver from "./resolvers/ScenarioResolver";
 import UserResolver from "./resolvers/UserResolver";
-import FlashcardResolver from "./resolvers/FlashcardResolver";
 
 dotenv.config();
 

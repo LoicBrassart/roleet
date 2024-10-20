@@ -6,8 +6,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Plan } from "./Plan";
 import { Flashcard } from "./FlashCard";
+import { Plan } from "./Plan";
 
 @Entity()
 @ObjectType()

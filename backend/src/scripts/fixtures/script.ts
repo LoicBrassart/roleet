@@ -1,9 +1,9 @@
 import { cpSync } from "node:fs";
 import { dataSource } from "../../config/db";
+import { Flashcard, MonsterCard, NPCCard } from "../../entities/FlashCard";
 import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import { Scenario } from "../../entities/Scenario";
-import { Flashcard, MonsterCard, NPCCard } from "../../entities/FlashCard";
 
 const fixturesFolder = "./src/scripts/fixtures/img/";
 const scenariosData = [

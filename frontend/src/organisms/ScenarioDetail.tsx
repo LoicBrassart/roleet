@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
 import type { Scenario } from "../lib/graphql/generated/graphql-types";
-import PlanDetail from "./PlanDetail";
 import FlashcardList from "./FlashcardList";
+import PlanDetail from "./PlanDetail";
 
 type Props = {
   data: Scenario;
