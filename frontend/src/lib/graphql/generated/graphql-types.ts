@@ -17,16 +17,32 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Flashcard = {
+  __typename?: 'Flashcard';
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  scenario: Scenario;
+  title: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createFlashcard: Flashcard;
   createPlan: Plan;
   createPointOfInterest: PointOfInterest;
   createScenario: Scenario;
+  deleteFlashcard: Scalars['Boolean']['output'];
   deletePlan: Scalars['Boolean']['output'];
   deletePointOfInterest: Scalars['Boolean']['output'];
   deleteScenario: Scalars['Boolean']['output'];
   login: Scalars['String']['output'];
   signup: Scalars['String']['output'];
+};
+
+
+export type MutationCreateFlashcardArgs = {
+  data: NewFlashcardInput;
 };
 
 
@@ -42,6 +58,11 @@ export type MutationCreatePointOfInterestArgs = {
 
 export type MutationCreateScenarioArgs = {
   data: NewScenarioInput;
+};
+
+
+export type MutationDeleteFlashcardArgs = {
+  id: Scalars['Float']['input'];
 };
 
 
@@ -67,6 +88,15 @@ export type MutationLoginArgs = {
 
 export type MutationSignupArgs = {
   data: NewUserInput;
+};
+
+export type NewFlashcardInput = {
+  dangerLevel: Scalars['Float']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  scenarioId: Scalars['Float']['input'];
+  species: Scalars['String']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  type: Scalars['String']['input'];
 };
 
 export type NewPlanInput = {
@@ -118,8 +148,6 @@ export type PointOfInterest = {
 
 export type Query = {
   __typename?: 'Query';
-  getAllPlans: Array<Plan>;
-  getAllPointsOfInterest: Array<PointOfInterest>;
   getAllScenarios: Array<Scenario>;
   getAllUsers: Array<User>;
   getScenario: Scenario;
@@ -140,6 +168,7 @@ export type Scenario = {
   __typename?: 'Scenario';
   bannerUrl?: Maybe<Scalars['String']['output']>;
   credits: Scalars['String']['output'];
+  flashcards: Array<Flashcard>;
   fullStory: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   plans: Array<Plan>;
@@ -185,7 +214,7 @@ export type GetScenarioQueryVariables = Exact<{
 }>;
 
 
-export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, pictureUrl: string, description?: string | null, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, title?: string | null, code: string, description?: string | null }> }> } };
+export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, pictureUrl: string, description?: string | null, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, title?: string | null, code: string, description?: string | null }> }>, flashcards: Array<{ __typename?: 'Flashcard', id: string, type: string, title: string, description?: string | null }> } };
 
 
 export const SignupDocument = gql`
@@ -354,6 +383,12 @@ export const GetScenarioDocument = gql`
         code
         description
       }
+    }
+    flashcards {
+      id
+      type
+      title
+      description
     }
   }
 }

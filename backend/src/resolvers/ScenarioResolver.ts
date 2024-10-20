@@ -24,7 +24,7 @@ class NewScenarioInput {
 class ScenarioResolver {
   @Query(() => [Scenario])
   async getAllScenarios() {
-    return await Scenario.find({ relations: ["plans"] });
+    return await Scenario.find({ relations: ["plans", "flashcards"] });
   }
 
   @Query(() => Scenario)
@@ -35,6 +35,7 @@ class ScenarioResolver {
         plans: {
           pointsOfInterest: true,
         },
+        flashcards: true,
       },
     });
   }

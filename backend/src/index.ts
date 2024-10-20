@@ -9,6 +9,7 @@ import PlanResolver from "./resolvers/PlanResolver";
 import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
 import ScenarioResolver from "./resolvers/ScenarioResolver";
 import UserResolver from "./resolvers/UserResolver";
+import FlashcardResolver from "./resolvers/FlashcardResolver";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ const start = async () => {
       ScenarioResolver,
       PlanResolver,
       PointOfInterestResolver,
+      FlashcardResolver,
     ],
     authChecker: ({ context }, neededRoles) => {
       if (!context.payload) return false;

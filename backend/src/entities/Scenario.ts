@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Plan } from "./Plan";
+import { Flashcard } from "./FlashCard";
 
 @Entity()
 @ObjectType()
@@ -44,4 +45,11 @@ export class Scenario extends BaseEntity {
     },
   )
   plans!: Plan[];
+
+  @Field(() => [Flashcard])
+  @OneToMany(
+    () => Flashcard,
+    (flashcard) => flashcard.scenario,
+  )
+  flashcards!: Flashcard[];
 }

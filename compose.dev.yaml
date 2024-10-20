@@ -16,6 +16,8 @@ services:
     depends_on:
       dev-backend:
         condition: service_healthy
+      dev-files:
+        condition: service_healthy
       dev-frontend:
         condition: service_healthy
       dev-adminer:
@@ -61,6 +63,17 @@ services:
       DB_HOST: ${DB_HOST}
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_TTL: ${COOKIE_TTL}
+  
+  dev-files:
+    <<: *baseService
+    build:
+      context: ./files
+      dockerfile: Dockerfile.dev
+    healthcheck: 
+      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://dev-files:4000/health'|| exit 1"]
+    volumes:
+      - ./files/src:/app/src/
+      - ./persist/dev-files:/app/public
 
   dev-frontend:
     <<: *baseService

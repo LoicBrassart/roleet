@@ -1,17 +1,7 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/lib/shadcn/ui/accordion";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/lib/shadcn/ui/resizable";
-import { ScrollArea } from "@/lib/shadcn/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
 import type { Scenario } from "../lib/graphql/generated/graphql-types";
+import PlanDetail from "./PlanDetail";
+import FlashcardList from "./FlashcardList";
 
 type Props = {
   data: Scenario;
@@ -27,35 +17,13 @@ export default function ScenarioDetail({ data }: Props) {
           <TabsTrigger value="flashcards">FlashCards</TabsTrigger>
         </TabsList>
         <TabsContent value="home">
-          <p>Home</p>
+          <p>{data.fullStory}</p>
         </TabsContent>
         <TabsContent value="plans">
-          <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel>
-              <img
-                src={data.plans[0].pictureUrl}
-                alt={data.plans[0].title ?? `Plan for scenario ${data.title}`}
-              />
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel>
-              <ScrollArea>
-                <Accordion type="single" collapsible className="w-full">
-                  {data.plans[0].pointsOfInterest.map((poi) => (
-                    <AccordionItem value={`key-${poi.id}`} key={poi.id}>
-                      <AccordionTrigger>
-                        {poi.code} - {poi.title}
-                      </AccordionTrigger>
-                      <AccordionContent>{poi.description}</AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </ScrollArea>
-            </ResizablePanel>
-          </ResizablePanelGroup>
+          <PlanDetail data={data.plans[0]} />
         </TabsContent>
         <TabsContent value="flashcards">
-          <p>FlashCards</p>
+          <FlashcardList data={data.flashcards} title="Flashcards" />
         </TabsContent>
       </Tabs>
     </>

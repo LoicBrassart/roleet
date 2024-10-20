@@ -55,6 +55,12 @@ export const GETSCENARIO = gql`
           description
         }
       }
+      flashcards {
+        id
+        type
+        title
+        description
+      }
     }
   }
 `;

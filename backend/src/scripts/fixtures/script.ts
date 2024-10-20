@@ -3,6 +3,7 @@ import { dataSource } from "../../config/db";
 import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import { Scenario } from "../../entities/Scenario";
+import { Flashcard, MonsterCard, NPCCard } from "../../entities/FlashCard";
 
 const fixturesFolder = "./src/scripts/fixtures/img/";
 const scenariosData = [
@@ -47,7 +48,7 @@ const plansData = [
   {
     title: "L'antre des gobelins",
     description: undefined,
-    pictureUrl: "map-antre-gobelins.png",
+    pictureUrl: "map.png",
   },
 ];
 const poisData = [
@@ -271,6 +272,23 @@ const poisData = [
   },
 ];
 
+const flashcardsData = [
+  {
+    title: "Gobelin",
+    description: "Petit, vert, pas bien malin mais vicieux pour deux !",
+    type: "MonsterCard",
+    species: "goblin",
+    dangerLevel: 1,
+  },
+  {
+    title: "Thron",
+    description: "forgeron et chef du village",
+    type: "NPCCard",
+    species: "human",
+    dangerLevel: 1,
+  },
+];
+
 async function generateAndSaveFixtures() {
   try {
     cpSync(fixturesFolder, "./static/", { recursive: true });
@@ -309,8 +327,33 @@ async function generateAndSaveFixtures() {
         return poi.save();
       }),
     );
+
+    const savedFlashcards = await Promise.all(
+      flashcardsData.map(async (cardData) => {
+        let card: Flashcard;
+        switch (cardData.type) {
+          case "MonsterCard":
+            card = new MonsterCard();
+            (card as MonsterCard).species = cardData.species;
+            (card as MonsterCard).dangerLevel = cardData.dangerLevel;
+            break;
+          case "NPCCard":
+            card = new NPCCard();
+            (card as NPCCard).species = cardData.species;
+            (card as NPCCard).dangerLevel = cardData.dangerLevel;
+            break;
+          default:
+            card = new Flashcard();
+        }
+        card.title = cardData.title;
+        card.description = cardData.description;
+        card.type = cardData.type;
+        card.scenario = savedScenarios[0];
+        return card.save();
+      }),
+    );
     console.info(
-      `Fixtures enregistrées avec succès: ${savedScenarios.length} Scenario(s), ${savedPlans.length} Plans, ${savedPoI.length} PoI`,
+      `Fixtures enregistrées avec succès: ${savedScenarios.length} Scenario(s), ${savedPlans.length} Plans, ${savedPoI.length} PoI, ${savedFlashcards.length} FlashCards`,
     );
   } catch (error) {
     console.error("Erreur lors de l'enregistrement des fixtures:", error);

@@ -1,4 +1,4 @@
-import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Field, InputType, Mutation, Resolver } from "type-graphql";
 import { Plan } from "../entities/Plan";
 import { Scenario } from "../entities/Scenario";
 
@@ -19,11 +19,6 @@ class NewPlanInput implements Partial<Plan> {
 
 @Resolver(Plan)
 class PlanResolver {
-  @Query(() => [Plan])
-  async getAllPlans() {
-    return await Plan.find({ relations: ["pointsOfInterest", "scenario"] });
-  }
-
   @Mutation(() => Plan)
   async createPlan(@Arg("data") planData: NewPlanInput) {
     try {
