@@ -1,5 +1,5 @@
-import { DnDnpcCard, Flashcard } from "../entities/FlashCard";
 import { createUnionType } from "type-graphql";
+import { DnDnpcCard, Flashcard } from "../entities/FlashCard";
 
 export const FlashcardUnion = createUnionType({
   name: "FlashcardUnion",

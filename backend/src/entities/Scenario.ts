@@ -6,9 +6,9 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { FlashcardUnion } from "../types/FlashcardUnion";
 import { Flashcard } from "./FlashCard";
 import { Plan } from "./Plan";
-import { FlashcardUnion } from "../types/FlashcardUnion";
 
 @Entity()
 @ObjectType()

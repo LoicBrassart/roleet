@@ -1,6 +1,6 @@
 import { cpSync } from "node:fs";
 import { dataSource } from "../../config/db";
-import { Flashcard, DnDnpcCard } from "../../entities/FlashCard";
+import { DnDnpcCard, Flashcard } from "../../entities/FlashCard";
 import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import { Scenario } from "../../entities/Scenario";

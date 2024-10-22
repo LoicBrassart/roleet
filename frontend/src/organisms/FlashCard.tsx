@@ -1,3 +1,7 @@
+import type {
+  DnDnpcCard,
+  FlashcardUnion,
+} from "@/lib/graphql/generated/graphql-types";
 import {
   Card,
   CardContent,
@@ -6,10 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/lib/shadcn/ui/card";
-import type {
-  DnDnpcCard,
-  FlashcardUnion,
-} from "@/lib/graphql/generated/graphql-types";
 
 type DnDnpcCardProps = {
   data: DnDnpcCard;

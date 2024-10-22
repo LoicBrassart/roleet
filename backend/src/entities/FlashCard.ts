@@ -1,13 +1,13 @@
+import { Field, ID, ObjectType } from "type-graphql";
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  TableInheritance,
-  ChildEntity,
   BaseEntity,
+  ChildEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  TableInheritance,
 } from "typeorm";
-import { ObjectType, Field, ID } from "type-graphql";
 import { Scenario } from "./Scenario";
 
 @Entity()

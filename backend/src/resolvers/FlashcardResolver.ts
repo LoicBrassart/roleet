@@ -1,5 +1,5 @@
 import { Arg, Field, InputType, Mutation, Resolver } from "type-graphql";
-import { Flashcard, DnDnpcCard } from "../entities/FlashCard";
+import { DnDnpcCard, Flashcard } from "../entities/FlashCard";
 import { Scenario } from "../entities/Scenario";
 
 @InputType()
