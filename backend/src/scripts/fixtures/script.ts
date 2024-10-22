@@ -1,6 +1,6 @@
 import { cpSync } from "node:fs";
 import { dataSource } from "../../config/db";
-import { Flashcard, MonsterCard, NPCCard } from "../../entities/FlashCard";
+import { Flashcard, DnDnpcCard } from "../../entities/FlashCard";
 import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import { Scenario } from "../../entities/Scenario";
@@ -48,7 +48,7 @@ const plansData = [
   {
     title: "L'antre des gobelins",
     description: undefined,
-    pictureUrl: "map.png",
+    pictureUrl: "map-antre-gobelins.png",
   },
 ];
 const poisData = [
@@ -274,18 +274,112 @@ const poisData = [
 
 const flashcardsData = [
   {
-    title: "Gobelin",
-    description: "Petit, vert, pas bien malin mais vicieux pour deux !",
-    type: "MonsterCard",
-    species: "goblin",
+    title: "Elric",
+    description:
+      "Elric est un jeune apprenti magicien qui veut devenir alchimiste.",
+    type: "DnDnpcCard",
+    species: "Humanoïde (Humain)",
+    size: "M",
+    alignment: "Neutre",
+    armorClass: 10,
+    health: "7 (2d8-2)",
+    speed: 9,
+    strength: 10,
+    dexterity: 10,
+    constitution: 9,
+    intelligence: 14,
+    wisdom: 10,
+    charisma: 13,
+    skills: "Arcanes +4, Persuasion +3",
+    senses: "Perception passive 10",
+    languages: "Commun, Gobelin",
     dangerLevel: 1,
+    behaviour: `Incantation: Elric est un lanceur de sorts de niveau 1. Sa caracteristique d'incantation est l'Intelligence (jet de sauvegarde contre ses sorts DD12, +4 au toucher pour les attaques avec un sort). Elric a préparé les sorts de magicien suivants:
+      Sorts mineurs (à volonté): Amis, Aspersion d'acide, Lumière
+      Niveau 1 (2 emplacements): Bouclier, Graisse, Repli expéditif`,
+    actions:
+      "Dague: Attaque au corps à corps ou à distance avec une arme: +2 au toucher, allonge 1.50m ou portée 6/18m, une cible. Touché: 2 (1d4) dégâts perforants",
   },
   {
-    title: "Thron",
-    description: "forgeron et chef du village",
-    type: "NPCCard",
-    species: "human",
+    title: "Gobelin",
+    description:
+      "Les gobelins sont de petits humanoïdes malvellants qui vivent dans les donjons abandonnés ou dans des taudis lugubres. Individuellement faibles, ils se rassemblent en grand nombre pour tourmenter les autres créatures.",
+    type: "DnDnpcCard",
+    species: "Humanoïde (gobelinoïde)",
+    size: "P",
+    alignment: "Neutre Mauvais",
+    armorClass: 15,
+    health: "7 (2d6)",
+    speed: 9,
+    strength: 8,
+    dexterity: 14,
+    constitution: 10,
+    intelligence: 10,
+    wisdom: 10,
+    charisma: 8,
+    skills: "Discrétion +6",
+    senses: "Vision dans le noir 18m, Perception passive 9",
+    languages: "Commun, Gobelin",
     dangerLevel: 1,
+    behaviour:
+      "Fuite agile: Le gobelin peut Se Cacher ou Se Désengager à chacun de ses tours en utilisant une action bonus.",
+    actions: `Cimeterre: Attaque au corps à corps avec une arme: +4 au toucher, allonge 1.50m, une cible. Touché: 5 (1d6+2) dégâts tranchants.
+      
+      Arc Court: Attaque à distance avec une arme: +4 au toucher, portée 24/96m, une cible. Touché: 5 (1d6+2) dégâts perforants.`,
+  },
+  {
+    title: "Gobelours",
+    description:
+      "Les gobelours sont des gobelinoïdes velus nés pour la bataille et la destruction. Ils survivent en pillant et en chassant, mais sont friands des attaques en embuscade d'où ils peuvent rapidement s'enfuir en cas de problème.",
+    type: "DnDnpcCard",
+    species: "Humanoïde (gobelinoïde)",
+    size: "M",
+    alignment: "Chaotique Mauvais",
+    armorClass: 16,
+    health: "27 (5d8+5)",
+    speed: 9,
+    strength: 15,
+    dexterity: 14,
+    constitution: 13,
+    intelligence: 8,
+    wisdom: 11,
+    charisma: 9,
+    skills: "Discrétion +6, Survie +2",
+    senses: "Vision dans le noir 18m, Perception passive 10",
+    languages: "Commun, Gobelin",
+    dangerLevel: 1,
+    behaviour: `Attaque surprise: Si un gobelours surprend une créature et touche avec une attaque lors du premier round de combat, la cible subit 7 (2d6) dégâts supplémentaires pour cette attaque.
+    
+    Brutal: Une arme de corps à corps inflige un dé de dégâts supplémentaire lors que le gobelours réussit son attaque (inclus dans l'attaque ci-dessous).`,
+    actions: `Morgenstern: Attaque au corps à corps avec une arme: +4 au toucher, allonge 1.50m, une cible. Touché: 11 (2d8+2) dégâts perforants.
+      
+      Javeline: Attaque au corps à corps ou à distance avec une arme: +4 au toucher, allonge 1.50m ou portée 9/36m, une cible. Touché: 9 (2d6+2) dégâts perforants à distance.`,
+  },
+  {
+    title: "Hobgobelin",
+    description:
+      "Les hobgobelins sont de grands gobelinoïdes à la peau noir orangée ou rouge orangée. Une hobgobelin mesurel e mérite suivant la force physique et les prouesses martiales, ne se souciant de rien d'autre que de la compétence et de l'astuce dans la bataille.",
+    type: "DnDnpcCard",
+    species: "Humanoïde (gobelinoïde)",
+    size: "M",
+    alignment: "Loyal Mauvais",
+    armorClass: 18,
+    health: "11 (2d8-2)",
+    speed: 9,
+    strength: 13,
+    dexterity: 12,
+    constitution: 12,
+    intelligence: 10,
+    wisdom: 10,
+    charisma: 9,
+    skills: "",
+    senses: "Vision dans le noir 18m, Perception passive 10",
+    languages: "Commun, Gobelin",
+    dangerLevel: 1,
+    behaviour: `Avantage martial: Une fois apr tour, un hobgobelin peur infliger 7 (2d6) dégâts supplémentaires à une créature s'il la touche à l'aide d'une attaque armée réussie à condition que cette créature se situe à 1.50m ou moins d'un allié du hiobgobelin.`,
+    actions: `Epée longue: Attaque au corps à corps avec une arme: +3 au toucher, allonge 1.50m, une cible. Touché: 5 (1d8+1) dégâts tranchants, ou 6 (1d10+1) dégâts tranchants si utilisée à deux mains.
+      
+      Arc Long: Attaque à distance avec une arme: +3 au toucher, portée 45/180m, une cible. Touché: 5 (1d8+1) dégâts perforants.`,
   },
 ];
 
@@ -296,34 +390,30 @@ async function generateAndSaveFixtures() {
 
     const savedScenarios = await Promise.all(
       scenariosData.map(async (scenarioData) => {
-        const scenario = new Scenario();
-        scenario.title = scenarioData.title;
-        scenario.bannerUrl = scenarioData.bannerUrl;
-        scenario.teaser = scenarioData.teaser;
-        scenario.credits = scenarioData.credits;
-        scenario.fullStory = scenarioData.fullStory;
+        const scenario = Object.assign(new Scenario(), {
+          ...scenarioData,
+        });
         return scenario.save();
       }),
     );
 
     const savedPlans = await Promise.all(
       plansData.map(async (planData) => {
-        const plan = new Plan();
-        plan.title = planData.title;
-        plan.pictureUrl = planData.pictureUrl;
-        plan.description = planData.description;
-        plan.scenario = savedScenarios[0];
+        const plan = Object.assign(new Plan(), {
+          ...planData,
+          scenario: savedScenarios[0],
+        });
+
         return plan.save();
       }),
     );
 
     const savedPoI = await Promise.all(
       poisData.map(async (poiData) => {
-        const poi = new PointOfInterest();
-        poi.title = poiData.title;
-        poi.code = poiData.code;
-        poi.description = poiData.description;
-        poi.plan = savedPlans[0];
+        const poi = Object.assign(new PointOfInterest(), {
+          ...poiData,
+          plan: savedPlans[0],
+        });
         return poi.save();
       }),
     );
@@ -332,23 +422,19 @@ async function generateAndSaveFixtures() {
       flashcardsData.map(async (cardData) => {
         let card: Flashcard;
         switch (cardData.type) {
-          case "MonsterCard":
-            card = new MonsterCard();
-            (card as MonsterCard).species = cardData.species;
-            (card as MonsterCard).dangerLevel = cardData.dangerLevel;
+          case "DnDnpcCard":
+            card = Object.assign(new DnDnpcCard(), {
+              ...cardData,
+              scenario: savedScenarios[0],
+            });
             break;
-          case "NPCCard":
-            card = new NPCCard();
-            (card as NPCCard).species = cardData.species;
-            (card as NPCCard).dangerLevel = cardData.dangerLevel;
-            break;
+
           default:
-            card = new Flashcard();
+            card = Object.assign(new Flashcard(), {
+              ...cardData,
+              scenario: savedScenarios[0],
+            });
         }
-        card.title = cardData.title;
-        card.description = cardData.description;
-        card.type = cardData.type;
-        card.scenario = savedScenarios[0];
         return card.save();
       }),
     );

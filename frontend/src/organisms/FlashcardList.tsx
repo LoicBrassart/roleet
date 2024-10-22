@@ -1,9 +1,9 @@
-import type { Flashcard } from "../lib/graphql/generated/graphql-types";
-import FlashCard from "../molecules/FlashCard";
+import type { FlashcardUnion } from "../lib/graphql/generated/graphql-types";
+import FlashCard from "./FlashCard";
 
 type Props = {
   title: string;
-  data: Flashcard[];
+  data: FlashcardUnion[];
 };
 export default function FlashcardList(props: Props) {
   return (

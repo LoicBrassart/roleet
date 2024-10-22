@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Flashcard } from "./FlashCard";
 import { Plan } from "./Plan";
+import { FlashcardUnion } from "../types/FlashcardUnion";
 
 @Entity()
 @ObjectType()
@@ -46,10 +47,17 @@ export class Scenario extends BaseEntity {
   )
   plans!: Plan[];
 
-  @Field(() => [Flashcard])
+  // @Field(() => [Flashcard])
+  // @OneToMany(
+  //   () => Flashcard,
+  //   (flashcard) => flashcard.scenario,
+  // )
+  // flashcards!: Flashcard[];
+
+  @Field(() => [FlashcardUnion])
   @OneToMany(
     () => Flashcard,
     (flashcard) => flashcard.scenario,
   )
-  flashcards!: Flashcard[];
+  flashcards!: (typeof FlashcardUnion)[];
 }

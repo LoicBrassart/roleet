@@ -1,18 +1,9 @@
 import { Arg, Field, InputType, Mutation, Resolver } from "type-graphql";
-import { Flashcard, MonsterCard, NPCCard } from "../entities/FlashCard";
+import { Flashcard, DnDnpcCard } from "../entities/FlashCard";
 import { Scenario } from "../entities/Scenario";
 
 @InputType()
 class NewFlashcardInput implements Partial<Flashcard> {
-  @Field({ nullable: true })
-  title: string;
-
-  @Field({ nullable: true })
-  description?: string;
-
-  @Field()
-  scenarioId: number;
-
   @Field()
   type: string;
 
@@ -20,7 +11,58 @@ class NewFlashcardInput implements Partial<Flashcard> {
   species: string;
 
   @Field()
+  size: string;
+
+  @Field()
+  alignment: string;
+
+  @Field()
+  armorClass: number;
+
+  @Field()
+  health: string;
+
+  @Field()
+  speed: string;
+
+  @Field()
+  strength: number;
+
+  @Field()
+  dexterity: number;
+
+  @Field()
+  constitution: number;
+
+  @Field()
+  intelligence: number;
+
+  @Field()
+  wisdom: number;
+
+  @Field()
+  charisma: number;
+
+  @Field()
+  skills: string;
+
+  @Field()
+  senses: string;
+
+  @Field()
+  languages: string;
+
+  @Field()
   dangerLevel: number;
+
+  @Field()
+  behaviour: string;
+
+  @Field()
+  actions: string;
+
+  @Field()
+  scenarioId: number;
 }
 
 @Resolver(Flashcard)
@@ -33,19 +75,11 @@ class FlashcardResolver {
       });
       let flashcard: Flashcard;
       switch (flashcardData.type) {
-        case "MonsterCard":
-          flashcard = await MonsterCard.create({
+        case "DnDnpcCard":
+          flashcard = await DnDnpcCard.create({
             ...flashcardData,
             scenario,
           }).save();
-
-          break;
-        case "NPCCard":
-          flashcard = await NPCCard.create({
-            ...flashcardData,
-            scenario,
-          }).save();
-
           break;
         default:
           flashcard = await Flashcard.create({

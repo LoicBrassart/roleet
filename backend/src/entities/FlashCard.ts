@@ -1,13 +1,13 @@
-import { Field, ID, ObjectType } from "type-graphql";
 import {
-  BaseEntity,
-  ChildEntity,
-  Column,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
   TableInheritance,
+  ChildEntity,
+  BaseEntity,
 } from "typeorm";
+import { ObjectType, Field, ID } from "type-graphql";
 import { Scenario } from "./Scenario";
 
 @Entity()
@@ -30,9 +30,9 @@ export class Flashcard extends BaseEntity {
   @Column()
   type!: string;
 
-  @Field((_type) => Scenario)
+  @Field(() => Scenario)
   @ManyToOne(
-    (_type) => Scenario,
+    () => Scenario,
     (scenario) => scenario.flashcards,
   )
   scenario!: Scenario;
@@ -40,24 +40,76 @@ export class Flashcard extends BaseEntity {
 
 @ChildEntity()
 @ObjectType()
-export class MonsterCard extends Flashcard {
+export class DnDnpcCard extends Flashcard {
   @Field()
   @Column()
   species!: string;
 
   @Field()
   @Column()
-  dangerLevel!: number;
-}
-
-@ChildEntity()
-@ObjectType()
-export class NPCCard extends Flashcard {
-  @Field()
-  @Column()
-  species!: string;
+  size!: string;
 
   @Field()
   @Column()
+  alignment!: string;
+
+  @Field()
+  @Column()
+  armorClass!: number;
+
+  @Field()
+  @Column()
+  health!: string;
+
+  @Field()
+  @Column()
+  speed!: string;
+
+  @Field()
+  @Column()
+  strength!: number;
+
+  @Field()
+  @Column()
+  dexterity!: number;
+
+  @Field()
+  @Column()
+  constitution!: number;
+
+  @Field()
+  @Column()
+  intelligence!: number;
+
+  @Field()
+  @Column()
+  wisdom!: number;
+
+  @Field()
+  @Column()
+  charisma!: number;
+
+  @Field()
+  @Column()
+  skills!: string;
+
+  @Field()
+  @Column()
+  senses!: string;
+
+  @Field()
+  @Column()
+  languages!: string;
+
+  @Field()
+  @Column()
   dangerLevel!: number;
+
+  @Field()
+  @Column()
+  behaviour!: string;
+
+  @Field()
+  @Column()
+  actions!: string;
 }

@@ -17,6 +17,33 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type DnDnpcCard = {
+  __typename?: 'DnDnpcCard';
+  actions: Scalars['String']['output'];
+  alignment: Scalars['String']['output'];
+  armorClass: Scalars['Float']['output'];
+  behaviour: Scalars['String']['output'];
+  charisma: Scalars['Float']['output'];
+  constitution: Scalars['Float']['output'];
+  dangerLevel: Scalars['Float']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  dexterity: Scalars['Float']['output'];
+  health: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  intelligence: Scalars['Float']['output'];
+  languages: Scalars['String']['output'];
+  scenario: Scenario;
+  senses: Scalars['String']['output'];
+  size: Scalars['String']['output'];
+  skills: Scalars['String']['output'];
+  species: Scalars['String']['output'];
+  speed: Scalars['String']['output'];
+  strength: Scalars['Float']['output'];
+  title: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+  wisdom: Scalars['Float']['output'];
+};
+
 export type Flashcard = {
   __typename?: 'Flashcard';
   description?: Maybe<Scalars['String']['output']>;
@@ -25,6 +52,8 @@ export type Flashcard = {
   title: Scalars['String']['output'];
   type: Scalars['String']['output'];
 };
+
+export type FlashcardUnion = DnDnpcCard | Flashcard;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -91,12 +120,26 @@ export type MutationSignupArgs = {
 };
 
 export type NewFlashcardInput = {
+  actions: Scalars['String']['input'];
+  alignment: Scalars['String']['input'];
+  armorClass: Scalars['Float']['input'];
+  behaviour: Scalars['String']['input'];
+  charisma: Scalars['Float']['input'];
+  constitution: Scalars['Float']['input'];
   dangerLevel: Scalars['Float']['input'];
-  description?: InputMaybe<Scalars['String']['input']>;
+  dexterity: Scalars['Float']['input'];
+  health: Scalars['String']['input'];
+  intelligence: Scalars['Float']['input'];
+  languages: Scalars['String']['input'];
   scenarioId: Scalars['Float']['input'];
+  senses: Scalars['String']['input'];
+  size: Scalars['String']['input'];
+  skills: Scalars['String']['input'];
   species: Scalars['String']['input'];
-  title?: InputMaybe<Scalars['String']['input']>;
+  speed: Scalars['String']['input'];
+  strength: Scalars['Float']['input'];
   type: Scalars['String']['input'];
+  wisdom: Scalars['Float']['input'];
 };
 
 export type NewPlanInput = {
@@ -168,7 +211,7 @@ export type Scenario = {
   __typename?: 'Scenario';
   bannerUrl?: Maybe<Scalars['String']['output']>;
   credits: Scalars['String']['output'];
-  flashcards: Array<Flashcard>;
+  flashcards: Array<FlashcardUnion>;
   fullStory: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   plans: Array<Plan>;
@@ -214,7 +257,7 @@ export type GetScenarioQueryVariables = Exact<{
 }>;
 
 
-export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, pictureUrl: string, description?: string | null, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, title?: string | null, code: string, description?: string | null }> }>, flashcards: Array<{ __typename?: 'Flashcard', id: string, type: string, title: string, description?: string | null }> } };
+export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'DnDnpcCard', id: string, title: string, description?: string | null, type: string, species: string, dangerLevel: number, health: string, actions: string, size: string, alignment: string, strength: number, dexterity: number, constitution: number, intelligence: number, wisdom: number, charisma: number, armorClass: number, speed: string, skills: string, senses: string, languages: string, behaviour: string } | { __typename?: 'Flashcard', id: string, title: string, description?: string | null, type: string }>, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, description?: string | null, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title?: string | null, description?: string | null }> }> } };
 
 
 export const SignupDocument = gql`
@@ -364,7 +407,7 @@ export type GetAllScenariosLazyQueryHookResult = ReturnType<typeof useGetAllScen
 export type GetAllScenariosSuspenseQueryHookResult = ReturnType<typeof useGetAllScenariosSuspenseQuery>;
 export type GetAllScenariosQueryResult = Apollo.QueryResult<GetAllScenariosQuery, GetAllScenariosQueryVariables>;
 export const GetScenarioDocument = gql`
-    query getScenario($id: Float!) {
+    query GetScenario($id: Float!) {
   getScenario(id: $id) {
     id
     bannerUrl
@@ -372,23 +415,49 @@ export const GetScenarioDocument = gql`
     fullStory
     teaser
     title
+    flashcards {
+      ... on Flashcard {
+        id
+        title
+        description
+        type
+      }
+      ... on DnDnpcCard {
+        id
+        title
+        description
+        type
+        species
+        dangerLevel
+        health
+        actions
+        size
+        alignment
+        strength
+        dexterity
+        constitution
+        intelligence
+        wisdom
+        charisma
+        armorClass
+        speed
+        skills
+        senses
+        languages
+        behaviour
+      }
+    }
     plans {
       id
       title
-      pictureUrl
       description
+      pictureUrl
       pointsOfInterest {
         id
-        title
         code
+        title
         description
       }
-    }
-    flashcards {
-      id
-      type
-      title
-      description
     }
   }
 }
