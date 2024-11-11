@@ -6,56 +6,60 @@ x-baseService: &baseService
     retries: 100
 
 services:
-  dev-gateway:
+  gateway-dev:
     <<: *baseService
+    container_name: gateway-dev
     image: nginx
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf
     ports: 
       - ${GATEWAY_PORT}:80
     depends_on:
-      dev-backend:
+      backend-dev:
         condition: service_healthy
-      dev-files:
+      files-dev:
         condition: service_healthy
-      dev-frontend:
+      frontend-dev:
         condition: service_healthy
-      dev-adminer:
+      adminer-dev:
         condition: service_started
 
-  dev-db:
+  db-dev:
     <<: *baseService
+    container_name: db-dev
     image: postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d ${DB_HOST} -U ${DB_USER}"]
     volumes:
-      - ./persist/dev-db:/var/lib/postgresql/data
+      - ./persist/db-dev:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_HOST: ${DB_HOST}
 
-  dev-adminer:
+  adminer-dev:
     <<: *baseService
+    container_name: adminer-dev
     image: adminer
     depends_on:
-      dev-db:
+      db-dev:
         condition: service_healthy
 
-  dev-backend:
+  backend-dev:
     <<: *baseService
+    container_name: backend-dev
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
     healthcheck: 
-      test: ["CMD-SHELL", "curl --fail --request POST --header 'Content-Type: application/json' --url 'http://dev-backend:4000' --data '{\"query\":\"query { __typename }\"}' || exit 1"]
+      test: ["CMD-SHELL", "curl --fail --request POST --header 'Content-Type: application/json' --url 'http://backend-dev:4000' --data '{\"query\":\"query { __typename }\"}' || exit 1"]
     depends_on:
-      dev-db:
+      db-dev:
         condition: service_healthy
     volumes:
       - ./backend/src:/app/src/
-      - ./persist/dev-backend:/app/static
+      - ./persist/backend-dev:/app/static
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
@@ -64,43 +68,46 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_TTL: ${COOKIE_TTL}
   
-  dev-files:
+  files-dev:
     <<: *baseService
+    container_name: files-dev
     build:
       context: ./files
       dockerfile: Dockerfile.dev
     healthcheck: 
-      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://dev-files:4000/health'|| exit 1"]
+      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://files-dev:4000/health'|| exit 1"]
     volumes:
       - ./files/src:/app/src/
-      - ./persist/dev-files:/app/public
+      - ./persist/files-dev:/app/public
 
-  dev-frontend:
+  frontend-dev:
     <<: *baseService
+    container_name: frontend-dev
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
     healthcheck: 
-      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://dev-frontend:5173' || exit 1"]
+      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://frontend-dev:5173' || exit 1"]
     depends_on:
-      dev-codegen:
+      codegen-dev:
         condition: service_completed_successfully
     volumes:
       - ./frontend/src:/app/src/
     environment:
       VITE_API_URL: ${VITE_API_URL}
 
-  dev-codegen:
+  codegen-dev:
     <<: *baseService
+    container_name: codegen-dev
     restart: on-failure
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
     depends_on:
-      dev-backend:
+      backend-dev:
         condition: service_healthy
     volumes:
       - ./frontend/src:/app/src/
     command: ["npm", "run", "codegen"]
     environment:
-      VITE_API_URL: http://dev-backend:4000
+      VITE_API_URL: http://backend-dev:4000

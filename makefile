@@ -1,4 +1,4 @@
-.PHONY: stop clean enter dev loc e2e
+.PHONY: stop clean enter run
 
 stop:
 	docker stop $(shell docker ps -a -q)
@@ -6,14 +6,23 @@ stop:
 clean:
 	docker system prune -af --volumes
 
+# ie. `make run dev`
+run:
+	@ENV_FILE=.env.$(word 2,$(MAKECMDGOALS)); \
+	COMPOSE_FILE=compose.$(word 2,$(MAKECMDGOALS)).yaml; \
+	if [ -f "$$ENV_FILE" ] && [ -f "$$COMPOSE_FILE" ]; then \
+		docker compose --env-file $$ENV_FILE -f $$COMPOSE_FILE up --build -d; \
+	else \
+		echo "Fichier $$ENV_FILE ou $$COMPOSE_FILE non trouvé."; \
+	fi
+
+# ie. `make enter dev adminer`
 enter:
-	docker exec -it $(target) sh
-
-loc: 
-	docker compose --env-file .env.loc -f compose.loc.yaml up --build -d
-
-dev: 
-	docker compose --env-file .env.dev -f compose.dev.yaml up --build -d
-
-e2e: 
-	docker compose --env-file .env.e2e -f compose.e2e.yaml run e2e-tests
+	@ENV=$(word 2,$(MAKECMDGOALS)); \
+	COMPOSE_FILE=compose.$${ENV}.yaml; \
+	CONTAINER_NAME=$(word 3,$(MAKECMDGOALS))-$${ENV}; \
+	if [ -f "$$COMPOSE_FILE" ]; then \
+		docker compose -f $$COMPOSE_FILE exec $$CONTAINER_NAME sh; \
+	else \
+		echo "Fichier $$COMPOSE_FILE non trouvé."; \
+	fi

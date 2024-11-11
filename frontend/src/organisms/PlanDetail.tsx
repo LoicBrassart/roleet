@@ -18,7 +18,7 @@ type Props = {
 export default function PlanDetail({ data }: Props) {
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel>
+      <ResizablePanel className="h-[90vh]">
         <img
           src={`http://localhost:7000/files/${data.pictureUrl}`}
           alt={data.title ?? `Plan for scenario ${data.title}`}
@@ -26,7 +26,7 @@ export default function PlanDetail({ data }: Props) {
       </ResizablePanel>
       <ResizableHandle withHandle />
       <ResizablePanel>
-        <ScrollArea>
+        <ScrollArea className="h-[90vh]">
           <Accordion type="single" collapsible className="w-full">
             {data.pointsOfInterest.map((poi) => (
               <AccordionItem value={`key-${poi.id}`} key={poi.id}>

@@ -3,7 +3,7 @@ import "./globals.css";
 
 function App() {
   return (
-    <main>
+    <main className="w-8/12 m-auto dark">
       <Outlet />
     </main>
   );

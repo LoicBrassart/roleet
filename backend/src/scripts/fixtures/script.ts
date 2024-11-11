@@ -358,7 +358,7 @@ const flashcardsData = [
   {
     title: "Hobgobelin",
     description:
-      "Les hobgobelins sont de grands gobelinoïdes à la peau noir orangée ou rouge orangée. Une hobgobelin mesurel e mérite suivant la force physique et les prouesses martiales, ne se souciant de rien d'autre que de la compétence et de l'astuce dans la bataille.",
+      "Les hobgobelins sont de grands gobelinoïdes à la peau noir orangée ou rouge orangée. Une hobgobelin mesure le mérite suivant la force physique et les prouesses martiales, ne se souciant de rien d'autre que de la compétence et de l'astuce dans la bataille.",
     type: "DnDnpcCard",
     species: "Humanoïde (gobelinoïde)",
     size: "M",
