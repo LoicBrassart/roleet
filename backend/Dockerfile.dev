@@ -4,6 +4,6 @@ RUN apk --no-cache add curl
 COPY *.json .
 RUN npm install
 COPY src src
-RUN mkdir static
+# RUN mkdir static
 
 CMD npm run dev

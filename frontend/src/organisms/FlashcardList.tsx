@@ -1,5 +1,5 @@
 import type { FlashcardUnion } from "../lib/graphql/generated/graphql-types";
-import FlashCard from "./FlashCard";
+import FlashCard from "../molecules/FlashCard";
 
 type Props = {
   title?: string;

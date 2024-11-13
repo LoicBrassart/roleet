@@ -1,17 +1,29 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
-import type { Scenario } from "../lib/graphql/generated/graphql-types";
+import type { Plan, Scenario } from "../lib/graphql/generated/graphql-types";
 import FlashcardList from "./FlashcardList";
-import PlanDetail from "./PlanDetail";
+import PlanDetail from "../molecules/PlanDetail";
 import { type FormEvent, useState } from "react";
 import { Input } from "@/lib/shadcn/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/lib/shadcn/ui/select";
 
 type Props = {
   data: Scenario;
 };
 export default function ScenarioDetail({ data }: Props) {
   const [needle, setNeedle] = useState<string>("");
-  const hChange = (evt: FormEvent<HTMLInputElement>) => {
+  const [currPlan, setCurrPlan] = useState<Plan>(data.plans[0]);
+  const hChangeCardNeedle = (evt: FormEvent<HTMLInputElement>) => {
     setNeedle(evt.currentTarget.value);
+  };
+  const hChangePlan = (evt: string) => {
+    const newPlan = data.plans.find((plan) => plan.id === evt);
+    if (newPlan) setCurrPlan(newPlan);
   };
   return (
     <>
@@ -26,13 +38,26 @@ export default function ScenarioDetail({ data }: Props) {
           <p>{data.fullStory}</p>
         </TabsContent>
         <TabsContent value="plans">
-          <PlanDetail data={data.plans[0]} />
+          <Select onValueChange={hChangePlan}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder={currPlan.title} />
+            </SelectTrigger>
+            <SelectContent>
+              {data.plans.map((plan) => (
+                <SelectItem value={plan.id} key={plan.id}>
+                  {plan.title}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <PlanDetail data={currPlan} />
         </TabsContent>
         <TabsContent value="flashcards">
           <Input
             type="search"
             placeholder="Search specific card..."
-            onChange={hChange}
+            onChange={hChangeCardNeedle}
+            className="w-[180px]"
           />
           <FlashcardList
             data={data.flashcards.filter((fcard) =>

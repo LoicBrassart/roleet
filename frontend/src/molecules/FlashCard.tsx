@@ -1,5 +1,6 @@
 import type {
   DnDnpcCard,
+  Flashcard,
   FlashcardUnion,
 } from "@/lib/graphql/generated/graphql-types";
 import {
@@ -67,12 +68,30 @@ function DnDnpcCardComponent({ data }: DnDnpcCardProps) {
     </Card>
   );
 }
+type DefaultFlashCardProps = {
+  data: Flashcard;
+};
+function DefaultFlashCard({ data }: DefaultFlashCardProps) {
+  return (
+    <Card className="w-96 h-96 m-1">
+      <CardHeader>
+        <CardTitle>{data.title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ScrollArea>{data.description}</ScrollArea>
+      </CardContent>
+    </Card>
+  );
+}
 
 type FlashCardProps = {
   data: FlashcardUnion;
 };
 export default function FlashCard({ data }: FlashCardProps) {
-  if (data.type === "DnDnpcCard")
-    return <DnDnpcCardComponent data={data as DnDnpcCard} />;
-  return <p>This is a basic Card named {data.title}</p>;
+  switch (data.type) {
+    case "DnDnpcCard":
+      return <DnDnpcCardComponent data={data as DnDnpcCard} />;
+    default:
+      return <DefaultFlashCard data={data as Flashcard} />;
+  }
 }
