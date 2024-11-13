@@ -1,8 +1,3 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
-import type { Plan, Scenario } from "../lib/graphql/generated/graphql-types";
-import FlashcardList from "./FlashcardList";
-import PlanDetail from "../molecules/PlanDetail";
-import { type FormEvent, useState } from "react";
 import { Input } from "@/lib/shadcn/ui/input";
 import {
   Select,
@@ -11,6 +6,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/lib/shadcn/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
+import { type FormEvent, useState } from "react";
+import type { Plan, Scenario } from "../lib/graphql/generated/graphql-types";
+import PlanDetail from "../molecules/PlanDetail";
+import FlashcardList from "./FlashcardList";
 
 type Props = {
   data: Scenario;
