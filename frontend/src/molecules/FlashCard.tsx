@@ -9,9 +9,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/lib/shadcn/ui/card";
-import { ScrollArea } from "@/lib/shadcn/ui/scroll-area";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
+} from "@/lib/shadcn/generated/ui/card";
+import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/lib/shadcn/generated/ui/tabs";
 
 type DnDnpcCardProps = {
   data: DnDnpcCard;

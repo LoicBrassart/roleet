@@ -1,10 +1,10 @@
-import { useIsMobile } from "@/lib/shadcn/hooks/use-mobile";
-import { Button } from "@/lib/shadcn/ui/button";
-import { Input } from "@/lib/shadcn/ui/input";
-import { Separator } from "@/lib/shadcn/ui/separator";
-import { Sheet, SheetContent } from "@/lib/shadcn/ui/sheet";
-import { Skeleton } from "@/lib/shadcn/ui/skeleton";
-import { cn } from "@/lib/shadcn/utils";
+import { useIsMobile } from "@/lib/shadcn/generated/hooks/use-mobile";
+import { Button } from "@/lib/shadcn/generated/ui/button";
+import { Input } from "@/lib/shadcn/generated/ui/input";
+import { Separator } from "@/lib/shadcn/generated/ui/separator";
+import { Sheet, SheetContent } from "@/lib/shadcn/generated/ui/sheet";
+import { Skeleton } from "@/lib/shadcn/generated/ui/skeleton";
+import { cn } from "@/lib/shadcn/generated/utils";
 import { ViewVerticalIcon } from "@radix-ui/react-icons";
 import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";

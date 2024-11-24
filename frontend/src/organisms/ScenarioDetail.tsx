@@ -1,13 +1,18 @@
 import Markdown from "@/atoms/Markdown";
-import { Input } from "@/lib/shadcn/ui/input";
+import { Input } from "@/lib/shadcn/generated/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/lib/shadcn/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/lib/shadcn/ui/tabs";
+} from "@/lib/shadcn/generated/ui/select";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/lib/shadcn/generated/ui/tabs";
 import { type FormEvent, useState } from "react";
 import type { Plan, Scenario } from "../lib/graphql/generated/graphql-types";
 import PlanDetail from "../molecules/PlanDetail";

@@ -3,13 +3,13 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/lib/shadcn/ui/accordion";
+} from "@/lib/shadcn/generated/ui/accordion";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/lib/shadcn/ui/resizable";
-import { ScrollArea } from "@/lib/shadcn/ui/scroll-area";
+} from "@/lib/shadcn/generated/ui/resizable";
+import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
 import type { Plan } from "../lib/graphql/generated/graphql-types";
 
 type Props = {

@@ -1,5 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/lib/shadcn/ui/card";
-import { cn } from "@/lib/shadcn/utils";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../lib/shadcn/generated/ui/card";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 import type { Scenario } from "../lib/graphql/generated/graphql-types";
@@ -9,8 +13,6 @@ type Props = {
   data: Scenario[];
 };
 export default function ScenarioList({ title, data }: Props) {
-  // console.log(data);
-
   return (
     <>
       <h2>{title}</h2>
