@@ -1,3 +1,4 @@
+import Markdown from "@/atoms/Markdown";
 import { Input } from "@/lib/shadcn/ui/input";
 import {
   Select,
@@ -35,7 +36,7 @@ export default function ScenarioDetail({ data }: Props) {
           <TabsTrigger value="flashcards">FlashCards</TabsTrigger>
         </TabsList>
         <TabsContent value="home">
-          <p>{data.fullStory}</p>
+          <Markdown value={data.fullStory} />
         </TabsContent>
         <TabsContent value="plans">
           <Select onValueChange={hChangePlan}>
