@@ -1,12 +1,12 @@
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Link } from "react-router-dom";
+import type { Scenario } from "../lib/graphql/generated/graphql-types";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "../lib/shadcn/generated/ui/card";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Link } from "react-router-dom";
-import type { Scenario } from "../lib/graphql/generated/graphql-types";
 
 type Props = {
   title: string;
