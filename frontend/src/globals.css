@@ -87,10 +87,10 @@
 @layer components {
   .Markdown {
     h2 {
-      @apply mb-6 text-center text-2xl font-bold text-lime-400;
+      @apply mb-6 mt-6 text-2xl font-bold;
     }
     blockquote {
-      @apply m-auto p-4 bg-lime-900 w-2/3;
+      @apply m-auto p-4 bg-lime-800 w-2/3;
     }
   }
 }

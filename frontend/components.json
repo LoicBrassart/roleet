@@ -5,7 +5,7 @@
   "tsx": true,
   "tailwind": {
     "config": "tailwind.config.js",
-    "css": "globals.css",
+    "css": "src/globals.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
@@ -14,7 +14,7 @@
     "components": "@/lib/shadcn/generated/components",
     "utils": "@/lib/shadcn/generated/utils",
     "ui": "@/lib/shadcn/generated/ui",
-    "lib": "@/lib/shadcn",
+    "lib": "@/lib/shadcn/generated",
     "hooks": "@/lib/shadcn/generated/hooks"
   }
 }
