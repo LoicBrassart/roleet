@@ -27,6 +27,15 @@ class NewUserInput implements Partial<User> {
   name: string;
 }
 
+@InputType()
+class UserInput {
+  @Field()
+  mail!: string;
+
+  @Field()
+  password!: string;
+}
+
 function setCookie(ctx: MyContext, key: string, value: string) {
   if (!process.env.COOKIE_TTL) throw new Error("Missing ttl conf key!");
   const myDate = new Date();
@@ -61,7 +70,7 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async login(@Arg("data") userData: NewUserInput, @Ctx() context: MyContext) {
+  async login(@Arg("data") userData: UserInput, @Ctx() context: MyContext) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();
       const user = await User.findOneByOrFail({ mail: userData.mail });
@@ -75,6 +84,16 @@ class UserResolver {
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
       setCookie(context, "token", token);
       return JSON.stringify(getUserPublicProfile(user));
+    } catch (err) {
+      return err;
+    }
+  }
+
+  @Mutation(() => String)
+  async logout(@Ctx() context: MyContext) {
+    try {
+      setCookie(context, "token", "");
+      return "Goodbye, your auth cookie was cleared";
     } catch (err) {
       return err;
     }

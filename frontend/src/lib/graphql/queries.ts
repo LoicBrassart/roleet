@@ -7,8 +7,14 @@ export const SIGNUP = gql`
 `;
 
 export const LOGIN = gql`
-  mutation login($data: NewUserInput!) {
+  mutation login($data: UserInput!) {
     login(data: $data)
+  }
+`;
+
+export const LOGOUT = gql`
+  mutation logout {
+    logout
   }
 `;
 
@@ -35,58 +41,58 @@ export const GETALLSCENARIOS = gql`
 `;
 
 export const GETSCENARIO = gql`
-query GetScenario($id: Float!) {
-  getScenario(id: $id) {
-    id
-    bannerUrl
-    credits
-    fullStory
-    teaser
-    title
-    flashcards {
-      ... on Flashcard {
-        id
-        title
-        description
-        type
-      }
-      ... on DnDnpcCard {
-        id
-        title
-        description
-        type
-        species
-        dangerLevel
-        health
-        actions
-        size
-        alignment
-        strength
-        dexterity
-        constitution
-        intelligence
-        wisdom
-        charisma
-        armorClass
-        speed
-        skills
-        senses
-        languages
-        behaviour
-      }
-    }
-    plans{
+  query GetScenario($id: Float!) {
+    getScenario(id: $id) {
       id
+      bannerUrl
+      credits
+      fullStory
+      teaser
       title
-      description
-      pictureUrl
-      pointsOfInterest{
+      flashcards {
+        ... on Flashcard {
+          id
+          title
+          description
+          type
+        }
+        ... on DnDnpcCard {
+          id
+          title
+          description
+          type
+          species
+          dangerLevel
+          health
+          actions
+          size
+          alignment
+          strength
+          dexterity
+          constitution
+          intelligence
+          wisdom
+          charisma
+          armorClass
+          speed
+          skills
+          senses
+          languages
+          behaviour
+        }
+      }
+      plans {
         id
-        code
         title
         description
+        pictureUrl
+        pointsOfInterest {
+          id
+          code
+          title
+          description
+        }
       }
     }
   }
-}
 `;
