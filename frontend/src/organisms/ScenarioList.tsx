@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "../lib/shadcn/generated/ui/card";
 import ModalToAuth from "./ModalToAuth";
+import ModalToOpenScenario from "./ModalToOpenScenario";
 
 type Props = {
   title: string;
@@ -41,13 +42,17 @@ export default function ScenarioList({ title, data }: Props) {
                   <ScrollArea>{scenario.teaser}</ScrollArea>
                 </CardContent>
                 <CardFooter>
-                  {currentUser ? (
-                    <Button asChild>
-                      <Link to={`/scenario/${scenario.id}`}>Lire</Link>
-                    </Button>
-                  ) : (
-                    <ModalToAuth />
-                  )}
+                  {!currentUser && <ModalToAuth />}
+                  {currentUser &&
+                    currentUser.readScenarios.includes(scenario.id) && (
+                      <Button asChild>
+                        <Link to={`/scenario/${scenario.id}`}>Lire</Link>
+                      </Button>
+                    )}
+                  {currentUser &&
+                    !currentUser.readScenarios.includes(scenario.id) && (
+                      <ModalToOpenScenario />
+                    )}
                 </CardFooter>
               </Card>
             </li>

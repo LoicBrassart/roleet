@@ -216,6 +216,7 @@ export type Scenario = {
   fullStory: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   plans: Array<Plan>;
+  readers: User;
   teaser: Scalars['String']['output'];
   title: Scalars['String']['output'];
 };
@@ -226,6 +227,7 @@ export type User = {
   id: Scalars['Float']['output'];
   mail: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  readScenarios: Scenario;
   roles: Array<Roles>;
 };
 

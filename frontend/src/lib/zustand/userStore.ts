@@ -4,6 +4,8 @@ import { devtools, persist } from "zustand/middleware";
 type User = {
   mail: string;
   name: string;
+  roles: string[];
+  readScenarios: string[];
 };
 
 type UserState = {
@@ -22,7 +24,7 @@ export const useUserStore = create<UserState>()(
       }),
       {
         name: "user-store",
-      },
-    ),
-  ),
+      }
+    )
+  )
 );

@@ -43,7 +43,7 @@ function setCookie(ctx: MyContext, key: string, value: string) {
   myDate.setTime(expiryTStamp);
   ctx.res.setHeader(
     "Set-Cookie",
-    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`,
+    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`
   );
 }
 function getUserPublicProfile(user: User) {
@@ -51,6 +51,7 @@ function getUserPublicProfile(user: User) {
     id: user.id,
     name: user.name,
     roles: user.roles,
+    readScenarios: user.readScenarios.map((scen) => scen.id + ""),
   };
 }
 function getUserTokenContent(user: User) {
@@ -73,13 +74,19 @@ class UserResolver {
   async login(@Arg("data") userData: UserInput, @Ctx() context: MyContext) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();
-      const user = await User.findOneByOrFail({ mail: userData.mail });
+      const user = await User.findOne({
+        where: { mail: userData.mail },
+        relations: ["readScenarios"],
+      });
+      if (!user) throw new Error();
 
       const isValid = await argon2.verify(
         user.hashedPassword,
-        userData.password,
+        userData.password
       );
       if (!isValid) throw new Error();
+
+      console.log(user.readScenarios);
 
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
       setCookie(context, "token", token);

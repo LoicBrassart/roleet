@@ -36,7 +36,7 @@ export default function LoginForm() {
     mail: z
       .string()
       .min(4, {
-        message: "L'adresse mail' doit contenir au moins 2 caractères.",
+        message: "L'adresse mail doit contenir au moins 2 caractères.",
       })
       .max(64, {
         message: "L'adresse mail doit contenir au maximum 64 caractères.",

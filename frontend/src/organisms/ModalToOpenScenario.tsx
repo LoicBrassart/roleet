@@ -7,28 +7,32 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/lib/shadcn/generated/ui/dialog";
-import { Link } from "react-router-dom";
 
-export default function ModalToAuth() {
+export default function ModalToOpenScenario() {
+  const hUnseal = () => {
+    // TODO
+    // - new Mutation: Unseal(idScenario)
+    console.log("Todo: User wants to unseal a Scenario");
+  };
+
   return (
     <Dialog>
       <DialogTrigger>
-        <Button>Lire</Button>
+        <Button>Découvrir</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Attends une minute !</DialogTitle>
+          <DialogTitle>Désceller ce scenario ?</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          Tu ne peux pas lire ce scenario sans être authentifié. En effet, nous
-          allons garder une trace de ce que tu lis pour t'aider à organiser tes
-          prochaines parties !
+          Ceci est une opération irréversible: "What has been seen cannot be
+          unseen" !
         </DialogDescription>
         <DialogFooter>
-          <Button asChild>
-            <Link to={`/auth`}>Compris!</Link>
-          </Button>
+          <Button onClick={hUnseal}>Ouvrir</Button>
+          <DialogClose>Annuler</DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,5 +1,13 @@
 import { Field, ObjectType, registerEnumType } from "type-graphql";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Scenario } from "./Scenario";
 
 export enum Roles {
   ADMIN = "ADMIN",
@@ -32,4 +40,9 @@ export class User extends BaseEntity {
   @Field(() => [Roles])
   @Column("simple-array", { default: Roles.USER })
   roles: Roles[];
+
+  @Field((_type) => Scenario)
+  @ManyToMany((_type) => Scenario, (scenario) => scenario.readers)
+  @JoinTable({ name: "scenarioSeals" })
+  readScenarios: Scenario[];
 }
