@@ -1,3 +1,5 @@
+import { Button } from "@/lib/shadcn/generated/ui/button";
+import { useUserStore } from "@/lib/zustand/userStore";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 import type { Scenario } from "../lib/graphql/generated/graphql-types";
@@ -9,8 +11,6 @@ import {
   CardTitle,
 } from "../lib/shadcn/generated/ui/card";
 import ModalToAuth from "./ModalToAuth";
-import { useUserStore } from "@/lib/zustand/userStore";
-import { Button } from "@/lib/shadcn/generated/ui/button";
 
 type Props = {
   title: string;

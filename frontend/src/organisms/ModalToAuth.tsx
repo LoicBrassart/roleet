@@ -1,13 +1,13 @@
+import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogDescription,
-  DialogFooter,
 } from "@/lib/shadcn/generated/ui/dialog";
-import { Button } from "@/lib/shadcn/generated/ui/button";
 import { Link } from "react-router-dom";
 
 export default function ModalToAuth() {
