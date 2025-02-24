@@ -43,7 +43,7 @@ function setCookie(ctx: MyContext, key: string, value: string) {
   myDate.setTime(expiryTStamp);
   ctx.res.setHeader(
     "Set-Cookie",
-    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`
+    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`,
   );
 }
 function getUserPublicProfile(user: User) {
@@ -82,7 +82,7 @@ class UserResolver {
 
       const isValid = await argon2.verify(
         user.hashedPassword,
-        userData.password
+        userData.password,
       );
       if (!isValid) throw new Error();
 

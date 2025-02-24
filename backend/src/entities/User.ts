@@ -42,7 +42,10 @@ export class User extends BaseEntity {
   roles: Roles[];
 
   @Field((_type) => Scenario)
-  @ManyToMany((_type) => Scenario, (scenario) => scenario.readers)
+  @ManyToMany(
+    (_type) => Scenario,
+    (scenario) => scenario.readers,
+  )
   @JoinTable({ name: "scenarioSeals" })
   readScenarios: Scenario[];
 }

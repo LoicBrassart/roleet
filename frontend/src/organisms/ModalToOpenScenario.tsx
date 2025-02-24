@@ -1,13 +1,13 @@
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/lib/shadcn/generated/ui/dialog";
 
 export default function ModalToOpenScenario() {
