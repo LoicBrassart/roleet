@@ -27,7 +27,7 @@ export default function ModalToAuth() {
         </DialogDescription>
         <DialogFooter>
           <Button asChild>
-            <Link to={`/auth`}>Compris!</Link>
+            <Link to={"/auth"}>Compris!</Link>
           </Button>
         </DialogFooter>
       </DialogContent>

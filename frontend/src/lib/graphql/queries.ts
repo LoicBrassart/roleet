@@ -96,3 +96,9 @@ export const GETSCENARIO = gql`
     }
   }
 `;
+
+export const UNSEALSCENARIO = gql`
+  mutation unsealScenario($unsealScenarioId: Float!) {
+    unsealScenario(id: $unsealScenarioId)
+  }
+`;

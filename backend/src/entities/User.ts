@@ -38,10 +38,10 @@ export class User extends BaseEntity {
   hashedPassword: string;
 
   @Field(() => [Roles])
-  @Column("simple-array", { default: Roles.USER })
+  @Column({ type: "enum", enum: Roles, array: true, default: [Roles.USER] })
   roles: Roles[];
 
-  @Field((_type) => Scenario)
+  @Field((_type) => [Scenario], { nullable: false })
   @ManyToMany(
     (_type) => Scenario,
     (scenario) => scenario.readers,

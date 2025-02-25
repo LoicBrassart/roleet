@@ -37,7 +37,7 @@ export class Plan extends BaseEntity {
       cascade: true,
     },
   )
-  pointsOfInterest!: PointOfInterest[];
+  pointsOfInterest: PointOfInterest[];
 
   @Field((_type) => Scenario)
   @ManyToOne(

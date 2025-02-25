@@ -39,7 +39,7 @@ export class Scenario extends BaseEntity {
   @Column()
   credits!: string;
 
-  @Field((_type) => [Plan])
+  @Field((_type) => [Plan], { nullable: false })
   @OneToMany(
     (_type) => Plan,
     (plan) => plan.scenario,
@@ -47,23 +47,16 @@ export class Scenario extends BaseEntity {
       cascade: true,
     },
   )
-  plans!: Plan[];
+  plans: Plan[];
 
-  // @Field(() => [Flashcard])
-  // @OneToMany(
-  //   () => Flashcard,
-  //   (flashcard) => flashcard.scenario,
-  // )
-  // flashcards!: Flashcard[];
-
-  @Field(() => [FlashcardUnion])
+  @Field(() => [FlashcardUnion], { nullable: false })
   @OneToMany(
     () => Flashcard,
     (flashcard) => flashcard.scenario,
   )
-  flashcards!: (typeof FlashcardUnion)[];
+  flashcards: (typeof FlashcardUnion)[];
 
-  @Field((_type) => User)
+  @Field((_type) => [User], { nullable: false })
   @ManyToMany(
     (_type) => User,
     (user) => user.readScenarios,

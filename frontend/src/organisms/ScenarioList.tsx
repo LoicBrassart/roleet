@@ -43,15 +43,14 @@ export default function ScenarioList({ title, data }: Props) {
                 </CardContent>
                 <CardFooter>
                   {!currentUser && <ModalToAuth />}
-                  {currentUser &&
-                    currentUser.readScenarios.includes(scenario.id) && (
-                      <Button asChild>
-                        <Link to={`/scenario/${scenario.id}`}>Lire</Link>
-                      </Button>
-                    )}
+                  {currentUser?.readScenarios.includes(scenario.id) && (
+                    <Button asChild>
+                      <Link to={`/scenario/${scenario.id}`}>Lire</Link>
+                    </Button>
+                  )}
                   {currentUser &&
                     !currentUser.readScenarios.includes(scenario.id) && (
-                      <ModalToOpenScenario />
+                      <ModalToOpenScenario scenario={scenario} />
                     )}
                 </CardFooter>
               </Card>

@@ -24,9 +24,10 @@ const start = async () => {
       FlashcardResolver,
     ],
     authChecker: ({ context }, neededRoles) => {
-      if (!context.payload) return false;
+      if (!context.user) return false;
+      if (!neededRoles.length) return true;
 
-      const userRoles = context.payload.roles.split(",");
+      const userRoles = context.user.roles.split(",");
       if (userRoles.includes("ADMIN")) return true;
 
       return !!neededRoles.filter((roleCandidate) =>
@@ -41,16 +42,17 @@ const start = async () => {
     listen: { port: 4000 },
     context: async ({ req, res }) => {
       if (!process.env.JWT_SECRET) return { res };
-      if (!req.headers.authorization) return { res };
-
       if (!req.headers.cookie) return { res };
 
-      const payload = jwt.verify(
-        req.headers.cookie.split("token=")[1],
-        process.env.JWT_SECRET,
-      );
-      if (typeof payload === "string") return { res };
-      return { payload, res };
+      const match = req.headers.cookie.match(/roleetAuthToken=([^;]+)/);
+      if (!match) return { res };
+
+      const token = match[1];
+
+      const user = jwt.verify(token, process.env.JWT_SECRET);
+      if (typeof user === "string") return { res };
+
+      return { user, res };
     },
   });
 

@@ -1,3 +1,7 @@
+import {
+  type Scenario,
+  useUnsealScenarioMutation,
+} from "@/lib/graphql/generated/graphql-types";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
@@ -9,12 +13,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/lib/shadcn/generated/ui/dialog";
+import { useUserStore } from "@/lib/zustand/userStore";
+import { useNavigate } from "react-router-dom";
 
-export default function ModalToOpenScenario() {
-  const hUnseal = () => {
+type Props = {
+  scenario: Scenario;
+};
+export default function ModalToOpenScenario({ scenario }: Props) {
+  const [unseal] = useUnsealScenarioMutation();
+  const navigate = useNavigate();
+  const currentUser = useUserStore((state) => state.user);
+
+  const hUnseal = async () => {
     // TODO
     // - new Mutation: Unseal(idScenario)
-    console.log("Todo: User wants to unseal a Scenario");
+    const { data } = await unseal({
+      variables: { unsealScenarioId: Number(scenario.id) },
+    });
+    const result = data?.unsealScenario;
+    if (result) {
+      currentUser?.readScenarios.push(`${scenario.id}`);
+      navigate(`/scenario/${scenario.id}`);
+    }
   };
 
   return (
@@ -24,7 +44,7 @@ export default function ModalToOpenScenario() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Désceller ce scenario ?</DialogTitle>
+          <DialogTitle>Désceller le scenario: {scenario.title} ?</DialogTitle>
         </DialogHeader>
         <DialogDescription>
           Ceci est une opération irréversible: "What has been seen cannot be

@@ -11,7 +11,7 @@ import {
   Resolver,
 } from "type-graphql";
 import { Roles, User } from "../entities/User";
-import type MyContext from "../types/myContext";
+import type AuthContext from "../types/AuthContext";
 
 dotenv.config();
 
@@ -36,7 +36,7 @@ class UserInput {
   password!: string;
 }
 
-function setCookie(ctx: MyContext, key: string, value: string) {
+function setCookie(ctx: AuthContext, key: string, value: string) {
   if (!process.env.COOKIE_TTL) throw new Error("Missing ttl conf key!");
   const myDate = new Date();
   const expiryTStamp = myDate.getTime() + Number(process.env.COOKIE_TTL);
@@ -51,7 +51,7 @@ function getUserPublicProfile(user: User) {
     id: user.id,
     name: user.name,
     roles: user.roles,
-    readScenarios: user.readScenarios.map((scen) => scen.id + ""),
+    readScenarios: user.readScenarios.map((scen) => `${scen.id}`),
   };
 }
 function getUserTokenContent(user: User) {
@@ -71,7 +71,7 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async login(@Arg("data") userData: UserInput, @Ctx() context: MyContext) {
+  async login(@Arg("data") userData: UserInput, @Ctx() context: AuthContext) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();
       const user = await User.findOne({
@@ -86,10 +86,8 @@ class UserResolver {
       );
       if (!isValid) throw new Error();
 
-      console.log(user.readScenarios);
-
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
-      setCookie(context, "token", token);
+      setCookie(context, "roleetAuthToken", token);
       return JSON.stringify(getUserPublicProfile(user));
     } catch (err) {
       return err;
@@ -97,9 +95,9 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async logout(@Ctx() context: MyContext) {
+  async logout(@Ctx() context: AuthContext) {
     try {
-      setCookie(context, "token", "");
+      setCookie(context, "roleetAuthToken", "");
       return "Goodbye, your auth cookie was cleared";
     } catch (err) {
       return err;
@@ -107,7 +105,10 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async signup(@Arg("data") userData: NewUserInput, @Ctx() context: MyContext) {
+  async signup(
+    @Arg("data") userData: NewUserInput,
+    @Ctx() context: AuthContext,
+  ) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();
 
@@ -119,7 +120,7 @@ class UserResolver {
         roles: [Roles.USER],
       });
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
-      setCookie(context, "token", token);
+      setCookie(context, "roleetAuthToken", token);
       return JSON.stringify(getUserPublicProfile(user));
     } catch (err) {
       console.error(err);

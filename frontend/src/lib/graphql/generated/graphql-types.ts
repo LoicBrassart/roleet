@@ -68,6 +68,7 @@ export type Mutation = {
   login: Scalars['String']['output'];
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
+  unsealScenario: Scalars['Boolean']['output'];
 };
 
 
@@ -118,6 +119,11 @@ export type MutationLoginArgs = {
 
 export type MutationSignupArgs = {
   data: NewUserInput;
+};
+
+
+export type MutationUnsealScenarioArgs = {
+  id: Scalars['Float']['input'];
 };
 
 export type NewFlashcardInput = {
@@ -216,7 +222,7 @@ export type Scenario = {
   fullStory: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   plans: Array<Plan>;
-  readers: User;
+  readers: Array<User>;
   teaser: Scalars['String']['output'];
   title: Scalars['String']['output'];
 };
@@ -227,7 +233,7 @@ export type User = {
   id: Scalars['Float']['output'];
   mail: Scalars['String']['output'];
   name: Scalars['String']['output'];
-  readScenarios: Scenario;
+  readScenarios: Array<Scenario>;
   roles: Array<Roles>;
 };
 
@@ -271,6 +277,13 @@ export type GetScenarioQueryVariables = Exact<{
 
 
 export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'DnDnpcCard', id: string, title: string, description?: string | null, type: string, species: string, dangerLevel: number, health: string, actions: string, size: string, alignment: string, strength: number, dexterity: number, constitution: number, intelligence: number, wisdom: number, charisma: number, armorClass: number, speed: string, skills: string, senses: string, languages: string, behaviour: string } | { __typename?: 'Flashcard', id: string, title: string, description?: string | null, type: string }>, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, description?: string | null, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title?: string | null, description?: string | null }> }> } };
+
+export type UnsealScenarioMutationVariables = Exact<{
+  unsealScenarioId: Scalars['Float']['input'];
+}>;
+
+
+export type UnsealScenarioMutation = { __typename?: 'Mutation', unsealScenario: boolean };
 
 
 export const SignupDocument = gql`
@@ -538,3 +551,34 @@ export type GetScenarioQueryHookResult = ReturnType<typeof useGetScenarioQuery>;
 export type GetScenarioLazyQueryHookResult = ReturnType<typeof useGetScenarioLazyQuery>;
 export type GetScenarioSuspenseQueryHookResult = ReturnType<typeof useGetScenarioSuspenseQuery>;
 export type GetScenarioQueryResult = Apollo.QueryResult<GetScenarioQuery, GetScenarioQueryVariables>;
+export const UnsealScenarioDocument = gql`
+    mutation unsealScenario($unsealScenarioId: Float!) {
+  unsealScenario(id: $unsealScenarioId)
+}
+    `;
+export type UnsealScenarioMutationFn = Apollo.MutationFunction<UnsealScenarioMutation, UnsealScenarioMutationVariables>;
+
+/**
+ * __useUnsealScenarioMutation__
+ *
+ * To run a mutation, you first call `useUnsealScenarioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnsealScenarioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unsealScenarioMutation, { data, loading, error }] = useUnsealScenarioMutation({
+ *   variables: {
+ *      unsealScenarioId: // value for 'unsealScenarioId'
+ *   },
+ * });
+ */
+export function useUnsealScenarioMutation(baseOptions?: Apollo.MutationHookOptions<UnsealScenarioMutation, UnsealScenarioMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnsealScenarioMutation, UnsealScenarioMutationVariables>(UnsealScenarioDocument, options);
+      }
+export type UnsealScenarioMutationHookResult = ReturnType<typeof useUnsealScenarioMutation>;
+export type UnsealScenarioMutationResult = Apollo.MutationResult<UnsealScenarioMutation>;
+export type UnsealScenarioMutationOptions = Apollo.BaseMutationOptions<UnsealScenarioMutation, UnsealScenarioMutationVariables>;
