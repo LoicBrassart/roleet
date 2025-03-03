@@ -12,7 +12,7 @@ services:
     image: nginx
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf
-    ports: 
+    ports:
       - ${GATEWAY_PORT}:80
     depends_on:
       backend-dev:
@@ -52,8 +52,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
-    healthcheck: 
-      test: ["CMD-SHELL", "curl --fail --request POST --header 'Content-Type: application/json' --url 'http://backend-dev:4000' --data '{\"query\":\"query { __typename }\"}' || exit 1"]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-dev:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
+        ]
     depends_on:
       db-dev:
         condition: service_healthy
@@ -67,15 +71,19 @@ services:
       DB_HOST: ${DB_HOST}
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_TTL: ${COOKIE_TTL}
-  
+
   files-dev:
     <<: *baseService
     container_name: files-dev
     build:
       context: ./files
       dockerfile: Dockerfile.dev
-    healthcheck: 
-      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://files-dev:4000/health'|| exit 1"]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://files-dev:4000/health'|| exit 1",
+        ]
     volumes:
       - ./files/src:/app/src/
       - ./persist/files-dev:/app/public
@@ -86,8 +94,12 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    healthcheck: 
-      test: ["CMD-SHELL", "curl --fail --request GET --url 'http://frontend-dev:5173' || exit 1"]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://frontend-dev:5173' || exit 1",
+        ]
     depends_on:
       codegen-dev:
         condition: service_completed_successfully
