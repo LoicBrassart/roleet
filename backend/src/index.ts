@@ -5,6 +5,7 @@ import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
 import { buildSchema } from "type-graphql";
 import { dataSource } from "./config/db";
+import CampaignResolver from "./resolvers/CampaignResolver";
 import FlashcardResolver from "./resolvers/FlashcardResolver";
 import PlanResolver from "./resolvers/PlanResolver";
 import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
@@ -22,6 +23,7 @@ const start = async () => {
       PlanResolver,
       PointOfInterestResolver,
       FlashcardResolver,
+      CampaignResolver,
     ],
     authChecker: ({ context }, neededRoles) => {
       if (!context.user) return false;

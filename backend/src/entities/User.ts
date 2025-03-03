@@ -5,8 +5,10 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Campaign } from "./Campaign";
 import { Scenario } from "./Scenario";
 
 export enum Roles {
@@ -48,4 +50,21 @@ export class User extends BaseEntity {
   )
   @JoinTable({ name: "scenarioSeals" })
   readScenarios: Scenario[];
+
+  @Field((_type) => [Campaign], { nullable: false })
+  @ManyToMany(
+    (_type) => Campaign,
+    (campaign) => campaign.players,
+  )
+  campaigns: Campaign[];
+
+  @Field((_type) => [Campaign], { nullable: false })
+  @OneToMany(
+    (_type) => Campaign,
+    (campaignsToLead) => campaignsToLead.storyteller,
+    {
+      cascade: true,
+    },
+  )
+  campaignsToLead: Campaign[];
 }

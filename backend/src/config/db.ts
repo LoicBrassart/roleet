@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
+import { Campaign } from "../entities/Campaign";
 import { DnDnpcCard, Flashcard } from "../entities/FlashCard";
 import { Plan } from "../entities/Plan";
 import { PointOfInterest } from "../entities/PointOfInterest";
@@ -10,7 +11,15 @@ dotenv.config();
 const { DB_HOST, DB_USER, DB_DATABASE, DB_PASSWORD, DB_PORT } = process.env;
 
 export const dataSource = new DataSource({
-  entities: [User, Scenario, Plan, PointOfInterest, Flashcard, DnDnpcCard],
+  entities: [
+    User,
+    Scenario,
+    Plan,
+    PointOfInterest,
+    Flashcard,
+    DnDnpcCard,
+    Campaign,
+  ],
 
   type: "postgres",
   host: DB_HOST,

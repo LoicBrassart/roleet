@@ -17,6 +17,16 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Campaign = {
+  __typename?: 'Campaign';
+  bannerUrl?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  players: Array<User>;
+  scenarios: Array<Scenario>;
+  storyteller: User;
+  title: Scalars['String']['output'];
+};
+
 export type DnDnpcCard = {
   __typename?: 'DnDnpcCard';
   actions: Scalars['String']['output'];
@@ -200,7 +210,14 @@ export type Query = {
   __typename?: 'Query';
   getAllScenarios: Array<Scenario>;
   getAllUsers: Array<User>;
+  getCampaign: Campaign;
+  getMyCampaigns: Array<Campaign>;
   getScenario: Scenario;
+};
+
+
+export type QueryGetCampaignArgs = {
+  id: Scalars['Float']['input'];
 };
 
 
@@ -217,6 +234,7 @@ export enum Roles {
 export type Scenario = {
   __typename?: 'Scenario';
   bannerUrl?: Maybe<Scalars['String']['output']>;
+  campaigns: Array<Campaign>;
   credits: Scalars['String']['output'];
   flashcards: Array<FlashcardUnion>;
   fullStory: Scalars['String']['output'];
@@ -229,6 +247,8 @@ export type Scenario = {
 
 export type User = {
   __typename?: 'User';
+  campaigns: Array<Campaign>;
+  campaignsToLead: Array<Campaign>;
   hashedPassword: Scalars['String']['output'];
   id: Scalars['Float']['output'];
   mail: Scalars['String']['output'];
@@ -284,6 +304,18 @@ export type UnsealScenarioMutationVariables = Exact<{
 
 
 export type UnsealScenarioMutation = { __typename?: 'Mutation', unsealScenario: boolean };
+
+export type GetMyCampaignsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyCampaignsQuery = { __typename?: 'Query', getMyCampaigns: Array<{ __typename?: 'Campaign', id: string, bannerUrl?: string | null, title: string, storyteller: { __typename?: 'User', id: number, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: number, name: string }> }> };
+
+export type GetCampaignQueryVariables = Exact<{
+  id: Scalars['Float']['input'];
+}>;
+
+
+export type GetCampaignQuery = { __typename?: 'Query', getCampaign: { __typename?: 'Campaign', id: string, bannerUrl?: string | null, title: string, storyteller: { __typename?: 'User', id: number, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: number, name: string }> } };
 
 
 export const SignupDocument = gql`
@@ -582,3 +614,110 @@ export function useUnsealScenarioMutation(baseOptions?: Apollo.MutationHookOptio
 export type UnsealScenarioMutationHookResult = ReturnType<typeof useUnsealScenarioMutation>;
 export type UnsealScenarioMutationResult = Apollo.MutationResult<UnsealScenarioMutation>;
 export type UnsealScenarioMutationOptions = Apollo.BaseMutationOptions<UnsealScenarioMutation, UnsealScenarioMutationVariables>;
+export const GetMyCampaignsDocument = gql`
+    query getMyCampaigns {
+  getMyCampaigns {
+    id
+    bannerUrl
+    storyteller {
+      id
+      name
+    }
+    scenarios {
+      id
+      title
+    }
+    players {
+      id
+      name
+    }
+    title
+  }
+}
+    `;
+
+/**
+ * __useGetMyCampaignsQuery__
+ *
+ * To run a query within a React component, call `useGetMyCampaignsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyCampaignsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyCampaignsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyCampaignsQuery(baseOptions?: Apollo.QueryHookOptions<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>(GetMyCampaignsDocument, options);
+      }
+export function useGetMyCampaignsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>(GetMyCampaignsDocument, options);
+        }
+export function useGetMyCampaignsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>(GetMyCampaignsDocument, options);
+        }
+export type GetMyCampaignsQueryHookResult = ReturnType<typeof useGetMyCampaignsQuery>;
+export type GetMyCampaignsLazyQueryHookResult = ReturnType<typeof useGetMyCampaignsLazyQuery>;
+export type GetMyCampaignsSuspenseQueryHookResult = ReturnType<typeof useGetMyCampaignsSuspenseQuery>;
+export type GetMyCampaignsQueryResult = Apollo.QueryResult<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>;
+export const GetCampaignDocument = gql`
+    query getCampaign($id: Float!) {
+  getCampaign(id: $id) {
+    id
+    bannerUrl
+    title
+    storyteller {
+      id
+      name
+    }
+    scenarios {
+      id
+      title
+    }
+    players {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCampaignQuery__
+ *
+ * To run a query within a React component, call `useGetCampaignQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCampaignQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCampaignQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCampaignQuery(baseOptions: Apollo.QueryHookOptions<GetCampaignQuery, GetCampaignQueryVariables> & ({ variables: GetCampaignQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCampaignQuery, GetCampaignQueryVariables>(GetCampaignDocument, options);
+      }
+export function useGetCampaignLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCampaignQuery, GetCampaignQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCampaignQuery, GetCampaignQueryVariables>(GetCampaignDocument, options);
+        }
+export function useGetCampaignSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCampaignQuery, GetCampaignQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCampaignQuery, GetCampaignQueryVariables>(GetCampaignDocument, options);
+        }
+export type GetCampaignQueryHookResult = ReturnType<typeof useGetCampaignQuery>;
+export type GetCampaignLazyQueryHookResult = ReturnType<typeof useGetCampaignLazyQuery>;
+export type GetCampaignSuspenseQueryHookResult = ReturnType<typeof useGetCampaignSuspenseQuery>;
+export type GetCampaignQueryResult = Apollo.QueryResult<GetCampaignQuery, GetCampaignQueryVariables>;

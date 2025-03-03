@@ -102,3 +102,47 @@ export const UNSEALSCENARIO = gql`
     unsealScenario(id: $unsealScenarioId)
   }
 `;
+
+export const GETMYCAMPAIGNS = gql`
+  query getMyCampaigns {
+    getMyCampaigns {
+      id
+      bannerUrl
+      storyteller {
+        id
+        name
+      }
+      scenarios {
+        id
+        title
+      }
+      players {
+        id
+        name
+      }
+      title
+    }
+  }
+`;
+
+export const GETCAMPAIGN = gql`
+  query getCampaign($id: Float!) {
+    getCampaign(id: $id) {
+      id
+      bannerUrl
+      title
+      storyteller {
+        id
+        name
+      }
+      scenarios {
+        id
+        title
+      }
+      players {
+        id
+        name
+      }
+    }
+  }
+`;

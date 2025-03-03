@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { FlashcardUnion } from "../types/FlashcardUnion";
+import { Campaign } from "./Campaign";
 import { Flashcard } from "./FlashCard";
 import { Plan } from "./Plan";
 import { User } from "./User";
@@ -62,4 +63,11 @@ export class Scenario extends BaseEntity {
     (user) => user.readScenarios,
   )
   readers: User[];
+
+  @Field((_type) => [Campaign], { nullable: false })
+  @ManyToMany(
+    (_type) => Campaign,
+    (campaign) => campaign.scenarios,
+  )
+  campaigns: Campaign[];
 }

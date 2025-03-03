@@ -17,6 +17,8 @@ export default function AppSidebar() {
         <SidebarGroup />
         <SidebarGroup />
         <Link to="/">Home</Link>
+        <Link to="/campaigns">Mes Campagnes</Link>
+        <Link to="/scenarios">Scenarios</Link>
         <SidebarGroup />
       </SidebarContent>
       <SidebarFooter />
