@@ -571,7 +571,7 @@ const users = [
 ];
 const campaigns = [
   {
-    title: "",
+    title: "Campagne d'initiation à D&D5",
     bannerUrl: "scenario-background.webp",
     storyteller: "ValhallaCode",
     players: ["Alex93", "GameMaster42", "NeoPlayer", "LunaCraft"],

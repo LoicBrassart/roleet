@@ -3,8 +3,11 @@ import {
   type Campaign,
   useGetMyCampaignsQuery,
 } from "../lib/graphql/generated/graphql-types";
+import { useUserStore } from "@/lib/zustand/userStore";
 
 export default function CampaignsPage() {
+  const currentUser = useUserStore((state) => state.user);
+
   const { loading, error, data } = useGetMyCampaignsQuery();
 
   if (error) return <p>Oops, something went awry...</p>;
@@ -16,11 +19,24 @@ export default function CampaignsPage() {
     <>
       <CampaignList
         title="Mes Campagnes (Joueur)"
-        data={data.getMyCampaigns as Campaign[]}
+        data={
+          data.getMyCampaigns.filter(
+            (campaign) =>
+              currentUser &&
+              campaign.players.some(
+                (player) => player.name === currentUser.name
+              )
+          ) as Campaign[]
+        }
       />
       <CampaignList
         title="Mes Campagnes (Meneur)"
-        data={data.getMyCampaigns as Campaign[]}
+        data={
+          data.getMyCampaigns.filter(
+            (campaign) =>
+              currentUser && campaign.storyteller.name === currentUser.name
+          ) as Campaign[]
+        }
       />
     </>
   );
