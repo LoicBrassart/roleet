@@ -7,6 +7,10 @@ type Props = {
 export default function CampaignDetail({ data }: Props) {
   const currentUser = useUserStore((state) => state.user);
 
+  let role: string;
+  if (data.storyteller.name === currentUser?.name) role = "Meneur";
+  else role = "Joueur";
+
   const formatter = new Intl.ListFormat("fr", {
     style: "long",
     type: "conjunction",
@@ -15,6 +19,7 @@ export default function CampaignDetail({ data }: Props) {
   return (
     <>
       <h1>{data.title}</h1>
+      <h2>(Mon rôle: {role})</h2>
       <ul>
         <li>Meneur: {data.storyteller.name}</li>
         <li>

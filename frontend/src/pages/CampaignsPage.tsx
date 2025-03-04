@@ -15,7 +15,11 @@ export default function CampaignsPage() {
   return (
     <>
       <CampaignList
-        title="My Campaigns"
+        title="Mes Campagnes (Joueur)"
+        data={data.getMyCampaigns as Campaign[]}
+      />
+      <CampaignList
+        title="Mes Campagnes (Meneur)"
         data={data.getMyCampaigns as Campaign[]}
       />
     </>
