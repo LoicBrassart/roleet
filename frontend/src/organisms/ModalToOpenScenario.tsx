@@ -25,8 +25,6 @@ export default function ModalToOpenScenario({ scenario }: Props) {
   const currentUser = useUserStore((state) => state.user);
 
   const hUnseal = async () => {
-    // TODO
-    // - new Mutation: Unseal(idScenario)
     const { data } = await unseal({
       variables: { unsealScenarioId: Number(scenario.id) },
     });
