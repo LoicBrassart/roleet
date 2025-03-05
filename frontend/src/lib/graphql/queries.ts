@@ -40,6 +40,18 @@ export const GETALLSCENARIOS = gql`
   }
 `;
 
+export const GETMYSCENARIOS = gql`
+  query getMyScenarios {
+    getMyScenarios {
+      id
+      title
+      teaser
+      bannerUrl
+      credits
+    }
+  }
+`;
+
 export const GETSCENARIO = gql`
   query GetScenario($id: Float!) {
     getScenario(id: $id) {
@@ -143,6 +155,16 @@ export const GETCAMPAIGN = gql`
         id
         name
       }
+    }
+  }
+`;
+
+export const CREATECAMPAIGN = gql`
+  mutation createCampaign($data: NewCampaignInput!) {
+    createCampaign(data: $data) {
+      id
+      bannerUrl
+      title
     }
   }
 `;

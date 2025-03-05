@@ -1,7 +1,4 @@
-import {
-  UserInput,
-  useLoginMutation,
-} from "@/lib/graphql/generated/graphql-types";
+import { useLoginMutation } from "@/lib/graphql/generated/graphql-types";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Form,

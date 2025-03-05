@@ -27,7 +27,7 @@ export default function CampaignDetail({ data }: Props) {
         </li>
         {currentUser?.name === data.storyteller.name && (
           <li>
-            Scenarios:
+            Scenarios:{" "}
             {formatter.format(data.scenarios.map((scenario) => scenario.title))}
           </li>
         )}

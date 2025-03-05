@@ -38,6 +38,16 @@ class ScenarioResolver {
     return await Scenario.find({ relations: ["plans", "flashcards"] });
   }
 
+  @Authorized()
+  @Query(() => [Scenario])
+  async getMyScenarios(@Ctx() ctx: AuthContext) {
+    console.log("getMyScenarios: currentUser:", ctx.user?.id);
+    return await Scenario.find({
+      where: { readers: { id: ctx.user?.id } },
+      relations: ["plans", "flashcards"],
+    });
+  }
+
   @Query(() => Scenario)
   async getScenario(@Arg("id") id: number) {
     return await Scenario.findOne({
@@ -51,6 +61,7 @@ class ScenarioResolver {
     });
   }
 
+  @Authorized()
   @Mutation(() => Scenario)
   async createScenario(@Arg("data") scenarioData: NewScenarioInput) {
     try {

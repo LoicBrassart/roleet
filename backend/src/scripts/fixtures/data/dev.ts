@@ -5,8 +5,7 @@ const scenarios = [
     title: "A la chasse aux gobs",
     teaser:
       "Depuis environ deux semaines, plusieurs villageois ont aperçu sur la colline, à l'ouest, des gobelins.",
-    fullStory: `
-## Contexte
+    fullStory: `## Contexte
 Fial est un village tranquille niché au creux de la grande vallée du Saril, à l'est de la province d'Egonzasthan, et placé sous l'autorité du chevalier de Saint-Bris. Depuis environ deux semaines, plusieurs villageois ont aperçu sur la colline, à l'ouest, des gobelins. Toutefois, jusque-là, aucun raid de ces petites créatures maléfiques n'est à déplorer. Gérald de Flamberge, le régisseur de Saint-Bris, a été prévenu, mais le chevalier a d'autres chats à fouetter pour le moment, en particulier une bande d'orques qui sévit dans les montagnes au sud-est de Fial et qui représente un danger bien plus important. De Flamberge, pour sa part, n'a que deux soldats à ses ordres, et il préfère les garder au village avec lui plutôt que de les envoyer prendre des risques dans la forêt.
 
 ## Au md
@@ -533,8 +532,8 @@ const users = [
     campaignsToLead: [],
   },
   {
-    mail: "alex@spamland.com",
-    name: "Alex93",
+    mail: "lily@spamland.com",
+    name: "Lily",
     hashedPassword: "",
     roles: [Roles.USER],
     readScenarios: [],
@@ -542,8 +541,8 @@ const users = [
     campaignsToLead: [],
   },
   {
-    mail: "gmaster40@spamland.com",
-    name: "GameMaster42",
+    mail: "shyz@spamland.com",
+    name: "Shyzen",
     hashedPassword: "",
     roles: [Roles.USER],
     readScenarios: [],
@@ -551,8 +550,8 @@ const users = [
     campaignsToLead: [],
   },
   {
-    mail: "neoplayer@spamland.com",
-    name: "NeoPlayer",
+    mail: "missy@spamland.com",
+    name: "Missy",
     hashedPassword: "",
     roles: [Roles.USER],
     readScenarios: [],
@@ -574,8 +573,15 @@ const campaigns = [
     title: "Campagne d'initiation à D&D5",
     bannerUrl: "scenario-background.webp",
     storyteller: "ValhallaCode",
-    players: ["Alex93", "GameMaster42", "NeoPlayer", "LunaCraft"],
+    players: ["Lily", "Shyzen", "Missy", "LunaCraft"],
     scenarios: ["A la chasse aux gobs"],
+  },
+  {
+    title: "Le Loup qui avait un nouvel ami",
+    bannerUrl: "scenario-background.webp",
+    storyteller: "Missy",
+    players: ["Lily", "Shyzen", "Valhallacode", "LunaCraft"],
+    scenarios: ["Le Loup qui avait un nouvel ami"],
   },
 ];
 export { scenarios, plans, pois, flashcards, users, campaigns };

@@ -1,7 +1,16 @@
-import { useUserStore } from "@/lib/zustand/userStore";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/lib/shadcn/generated/ui/dialog";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 import type { Campaign } from "../lib/graphql/generated/graphql-types";
+import { Button } from "../lib/shadcn/generated/ui/button";
 import {
   Card,
   CardContent,
@@ -9,13 +18,25 @@ import {
   CardHeader,
   CardTitle,
 } from "../lib/shadcn/generated/ui/card";
+import CampaignForm from "./CampaignForm";
 
 type Props = {
   title: string;
   data: Campaign[];
+  addCreateButton?: boolean;
 };
-export default function CampaignList({ title, data }: Props) {
-  const currentUser = useUserStore((state) => state.user);
+export default function CampaignList({
+  title,
+  data,
+  addCreateButton = false,
+}: Props) {
+  if (!data.length)
+    return (
+      <>
+        <h2>{title}</h2>
+        <p>Rien à afficher ici :shrug: </p>
+      </>
+    );
 
   return (
     <>
@@ -37,12 +58,35 @@ export default function CampaignList({ title, data }: Props) {
                   <ScrollArea>TODO: Ajouter joueurs ? Autre info ?</ScrollArea>
                 </CardContent>
                 <CardFooter>
-                  <Link to={`/campaign/${campaign.id}`}>Détail</Link>
+                  <Button asChild>
+                    <Link to={`/campaign/${campaign.id}`}>Détail</Link>
+                  </Button>
                 </CardFooter>
               </Card>
             </li>
           );
         })}
+        {addCreateButton && (
+          <li className="w-96 h-auto">
+            <Card className="w-96 m-1 h-40">
+              <CardContent>
+                <Dialog>
+                  <DialogTrigger>
+                    <Button>Créer une campagne</Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>D'humeur créatrice ?</DialogTitle>
+                    </DialogHeader>
+                    <DialogDescription>
+                      <CampaignForm />
+                    </DialogDescription>
+                  </DialogContent>
+                </Dialog>
+              </CardContent>
+            </Card>
+          </li>
+        )}
       </ul>
     </>
   );

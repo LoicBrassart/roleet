@@ -1,9 +1,9 @@
+import { useUserStore } from "@/lib/zustand/userStore";
 import CampaignList from "@/organisms/CampaignList";
 import {
   type Campaign,
   useGetMyCampaignsQuery,
 } from "../lib/graphql/generated/graphql-types";
-import { useUserStore } from "@/lib/zustand/userStore";
 
 export default function CampaignsPage() {
   const currentUser = useUserStore((state) => state.user);
@@ -24,8 +24,8 @@ export default function CampaignsPage() {
             (campaign) =>
               currentUser &&
               campaign.players.some(
-                (player) => player.name === currentUser.name
-              )
+                (player) => player.name === currentUser.name,
+              ),
           ) as Campaign[]
         }
       />
@@ -34,7 +34,7 @@ export default function CampaignsPage() {
         data={
           data.getMyCampaigns.filter(
             (campaign) =>
-              currentUser && campaign.storyteller.name === currentUser.name
+              currentUser && campaign.storyteller.name === currentUser.name,
           ) as Campaign[]
         }
       />

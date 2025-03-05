@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 
 const PLUGINS_REMARK = [[remarkGfm]];
 
-// Nota bene: styles for Markdown are defined in /src/globals.css, couldn't make it work any other satisfying manner
+// TODO: styles for Markdown are defined in /src/globals.css, couldn't make it work any other satisfying manner
 const MarkdownComponent = ({ value = "" }) => {
   //-- RENDERERS
   const _renderers = useMemo(

@@ -20,6 +20,14 @@ type Props = {
 export default function ScenarioList({ title, data }: Props) {
   const currentUser = useUserStore((state) => state.user);
 
+  if (!data.length)
+    return (
+      <>
+        <h2>{title}</h2>
+        <p>Rien à afficher ici :shrug: </p>
+      </>
+    );
+
   return (
     <>
       <h2>{title}</h2>

@@ -67,6 +67,7 @@ export type FlashcardUnion = DnDnpcCard | Flashcard;
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCampaign: Campaign;
   createFlashcard: Flashcard;
   createPlan: Plan;
   createPointOfInterest: PointOfInterest;
@@ -79,6 +80,11 @@ export type Mutation = {
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
   unsealScenario: Scalars['Boolean']['output'];
+};
+
+
+export type MutationCreateCampaignArgs = {
+  data: NewCampaignInput;
 };
 
 
@@ -134,6 +140,11 @@ export type MutationSignupArgs = {
 
 export type MutationUnsealScenarioArgs = {
   id: Scalars['Float']['input'];
+};
+
+export type NewCampaignInput = {
+  bannerUrl: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type NewFlashcardInput = {
@@ -212,6 +223,7 @@ export type Query = {
   getAllUsers: Array<User>;
   getCampaign: Campaign;
   getMyCampaigns: Array<Campaign>;
+  getMyScenarios: Array<Scenario>;
   getScenario: Scenario;
 };
 
@@ -291,6 +303,11 @@ export type GetAllScenariosQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllScenariosQuery = { __typename?: 'Query', getAllScenarios: Array<{ __typename?: 'Scenario', id: string, title: string, teaser: string, bannerUrl?: string | null, credits: string }> };
 
+export type GetMyScenariosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyScenariosQuery = { __typename?: 'Query', getMyScenarios: Array<{ __typename?: 'Scenario', id: string, title: string, teaser: string, bannerUrl?: string | null, credits: string }> };
+
 export type GetScenarioQueryVariables = Exact<{
   id: Scalars['Float']['input'];
 }>;
@@ -316,6 +333,13 @@ export type GetCampaignQueryVariables = Exact<{
 
 
 export type GetCampaignQuery = { __typename?: 'Query', getCampaign: { __typename?: 'Campaign', id: string, bannerUrl?: string | null, title: string, storyteller: { __typename?: 'User', id: number, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: number, name: string }> } };
+
+export type CreateCampaignMutationVariables = Exact<{
+  data: NewCampaignInput;
+}>;
+
+
+export type CreateCampaignMutation = { __typename?: 'Mutation', createCampaign: { __typename?: 'Campaign', id: string, bannerUrl?: string | null, title: string } };
 
 
 export const SignupDocument = gql`
@@ -494,6 +518,49 @@ export type GetAllScenariosQueryHookResult = ReturnType<typeof useGetAllScenario
 export type GetAllScenariosLazyQueryHookResult = ReturnType<typeof useGetAllScenariosLazyQuery>;
 export type GetAllScenariosSuspenseQueryHookResult = ReturnType<typeof useGetAllScenariosSuspenseQuery>;
 export type GetAllScenariosQueryResult = Apollo.QueryResult<GetAllScenariosQuery, GetAllScenariosQueryVariables>;
+export const GetMyScenariosDocument = gql`
+    query getMyScenarios {
+  getMyScenarios {
+    id
+    title
+    teaser
+    bannerUrl
+    credits
+  }
+}
+    `;
+
+/**
+ * __useGetMyScenariosQuery__
+ *
+ * To run a query within a React component, call `useGetMyScenariosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyScenariosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyScenariosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyScenariosQuery(baseOptions?: Apollo.QueryHookOptions<GetMyScenariosQuery, GetMyScenariosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMyScenariosQuery, GetMyScenariosQueryVariables>(GetMyScenariosDocument, options);
+      }
+export function useGetMyScenariosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyScenariosQuery, GetMyScenariosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMyScenariosQuery, GetMyScenariosQueryVariables>(GetMyScenariosDocument, options);
+        }
+export function useGetMyScenariosSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetMyScenariosQuery, GetMyScenariosQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMyScenariosQuery, GetMyScenariosQueryVariables>(GetMyScenariosDocument, options);
+        }
+export type GetMyScenariosQueryHookResult = ReturnType<typeof useGetMyScenariosQuery>;
+export type GetMyScenariosLazyQueryHookResult = ReturnType<typeof useGetMyScenariosLazyQuery>;
+export type GetMyScenariosSuspenseQueryHookResult = ReturnType<typeof useGetMyScenariosSuspenseQuery>;
+export type GetMyScenariosQueryResult = Apollo.QueryResult<GetMyScenariosQuery, GetMyScenariosQueryVariables>;
 export const GetScenarioDocument = gql`
     query GetScenario($id: Float!) {
   getScenario(id: $id) {
@@ -721,3 +788,38 @@ export type GetCampaignQueryHookResult = ReturnType<typeof useGetCampaignQuery>;
 export type GetCampaignLazyQueryHookResult = ReturnType<typeof useGetCampaignLazyQuery>;
 export type GetCampaignSuspenseQueryHookResult = ReturnType<typeof useGetCampaignSuspenseQuery>;
 export type GetCampaignQueryResult = Apollo.QueryResult<GetCampaignQuery, GetCampaignQueryVariables>;
+export const CreateCampaignDocument = gql`
+    mutation createCampaign($data: NewCampaignInput!) {
+  createCampaign(data: $data) {
+    id
+    bannerUrl
+    title
+  }
+}
+    `;
+export type CreateCampaignMutationFn = Apollo.MutationFunction<CreateCampaignMutation, CreateCampaignMutationVariables>;
+
+/**
+ * __useCreateCampaignMutation__
+ *
+ * To run a mutation, you first call `useCreateCampaignMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCampaignMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCampaignMutation, { data, loading, error }] = useCreateCampaignMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateCampaignMutation(baseOptions?: Apollo.MutationHookOptions<CreateCampaignMutation, CreateCampaignMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCampaignMutation, CreateCampaignMutationVariables>(CreateCampaignDocument, options);
+      }
+export type CreateCampaignMutationHookResult = ReturnType<typeof useCreateCampaignMutation>;
+export type CreateCampaignMutationResult = Apollo.MutationResult<CreateCampaignMutation>;
+export type CreateCampaignMutationOptions = Apollo.BaseMutationOptions<CreateCampaignMutation, CreateCampaignMutationVariables>;

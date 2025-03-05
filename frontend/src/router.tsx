@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import AuthPage from "./pages/AuthPage";
 import CampaignPage from "./pages/CampaignPage";
 import CampaignsPage from "./pages/CampaignsPage";
+import DashboardPage from "./pages/DashboardPage";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import ScenarioPage from "./pages/ScenarioPage";
@@ -18,6 +19,11 @@ const router = createBrowserRouter([
         path: "/",
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "/dashboard",
+        index: true,
+        element: <DashboardPage />,
       },
       {
         path: "/auth",
