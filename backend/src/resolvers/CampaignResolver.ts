@@ -24,9 +24,6 @@ class NewCampaignInput implements Partial<Campaign> {
 
   @Field(() => [ID])
   players!: User[];
-
-  // @Field(()=>[ID])
-  // tags!: Tag[];
 }
 
 @Resolver(Campaign)

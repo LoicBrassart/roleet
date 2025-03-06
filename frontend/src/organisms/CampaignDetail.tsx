@@ -59,7 +59,7 @@ export default function CampaignDetail({ data }: Props) {
     ),
   });
 
-  const form = useForm<z.infer<typeof campaignSchema>>({
+  const form = useForm<z.input<typeof campaignSchema>>({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
       title: data.title,
@@ -67,7 +67,7 @@ export default function CampaignDetail({ data }: Props) {
     },
   });
 
-  const hUpdateCampaign = async (values: z.infer<typeof campaignSchema>) => {
+  const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) => {
     console.log(values);
   };
 
@@ -140,36 +140,34 @@ export default function CampaignDetail({ data }: Props) {
               </FormItem>
             )}
           />
-          {scenData && (
-            <FormField
-              control={form.control}
-              name="scenarios"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Scenarios</FormLabel>
-                  <FormControl>
-                    <Select
-                      {...field}
-                      options={scenData.getMyScenarios.map((scenario) => ({
-                        value: scenario.id,
-                        label: scenario.title,
-                      }))}
-                      defaultValue={data.scenarios.map((scenario) => ({
-                        value: scenario.id,
-                        label: scenario.title,
-                      }))}
-                      isMulti
-                      delimiter=","
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    les scenarios que vous voulez offrir à vos joueurs
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
+          <FormField
+            control={form.control}
+            name="scenarios"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Scenarios</FormLabel>
+                <FormControl>
+                  <Select
+                    {...field}
+                    options={scenData?.getMyScenarios.map((scenario) => ({
+                      value: scenario.id,
+                      label: scenario.title,
+                    }))}
+                    defaultValue={data.scenarios.map((scenario) => ({
+                      value: scenario.id,
+                      label: scenario.title,
+                    }))}
+                    isMulti
+                    delimiter=","
+                  />
+                </FormControl>
+                <FormDescription>
+                  les scenarios que vous voulez offrir à vos joueurs
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button type="submit">Sauvegarder</Button>
         </form>
       </Form>
