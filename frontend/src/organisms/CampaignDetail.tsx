@@ -1,7 +1,7 @@
 import {
+  type Campaign,
   useGetAllUsersQuery,
   useGetMyScenariosQuery,
-  type Campaign,
 } from "@/lib/graphql/generated/graphql-types";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
@@ -41,22 +41,36 @@ export default function CampaignDetail({ data }: Props) {
         message: "doit contenir au maximum 256 caractères.",
       })
       .default(""),
-    players: z.array(
-      z
-        .object({
-          label: z.string(),
-          value: z.number(),
-        })
-        .transform((val) => val.value)
-    ),
-    scenarios: z.array(
-      z
-        .object({
-          label: z.string(),
-          value: z.number(),
-        })
-        .transform((val) => val.value)
-    ),
+    players: z
+      .array(
+        z
+          .object({
+            label: z.string(),
+            value: z.string(),
+          })
+          .transform((val) => val.value)
+      )
+      .default(
+        data.players.map((user) => ({
+          value: user.id,
+          label: user.name,
+        }))
+      ),
+    scenarios: z
+      .array(
+        z
+          .object({
+            label: z.string(),
+            value: z.string(),
+          })
+          .transform((val) => val.value)
+      )
+      .default(
+        data.scenarios.map((scenario) => ({
+          value: scenario.id,
+          label: scenario.title,
+        }))
+      ),
   });
 
   const form = useForm<z.input<typeof campaignSchema>>({

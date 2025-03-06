@@ -27,16 +27,25 @@ export class Campaign extends BaseEntity {
   bannerUrl: string;
 
   @Field((_type) => User)
-  @ManyToOne((_type) => User, (storyteller) => storyteller.campaignsToLead)
+  @ManyToOne(
+    (_type) => User,
+    (storyteller) => storyteller.campaignsToLead,
+  )
   storyteller!: User;
 
   @Field((_type) => [User], { nullable: false })
-  @ManyToMany((_type) => User, (user) => user.campaigns)
+  @ManyToMany(
+    (_type) => User,
+    (user) => user.campaigns,
+  )
   @JoinTable({ name: "campaignPlayers" })
   players: User[];
 
   @Field((_type) => [Scenario], { nullable: false })
-  @ManyToMany((_type) => Scenario, (scenario) => scenario.campaigns)
+  @ManyToMany(
+    (_type) => Scenario,
+    (scenario) => scenario.campaigns,
+  )
   @JoinTable({ name: "campaignScenarios" })
   scenarios: Scenario[];
 }

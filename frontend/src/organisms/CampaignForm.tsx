@@ -46,7 +46,7 @@ export default function CampaignForm() {
           label: z.string(),
           value: z.number(),
         })
-        .transform((val) => val.value)
+        .transform((val) => val.value),
     ),
   });
 
