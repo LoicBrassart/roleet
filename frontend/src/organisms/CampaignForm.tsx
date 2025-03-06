@@ -1,4 +1,7 @@
-import { useCreateCampaignMutation } from "@/lib/graphql/generated/graphql-types";
+import {
+  useCreateCampaignMutation,
+  useGetAllUsersQuery,
+} from "@/lib/graphql/generated/graphql-types";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import { DialogClose } from "@/lib/shadcn/generated/ui/dialog";
 import {
@@ -15,10 +18,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+// import Select from "react-select";
 
 export default function CampaignForm() {
+  const { loading, error, data } = useGetAllUsersQuery();
   const [createCampaign] = useCreateCampaignMutation();
   const navigate = useNavigate();
+
   const campaignSchema = z.object({
     title: z
       .string()
@@ -34,6 +40,7 @@ export default function CampaignForm() {
         message: "doit contenir au maximum 256 caractères.",
       })
       .optional(),
+    // players: z.string().transform((val) => val.split(",")),
     // TODO Add relations to the initial campaign, or add them afterwards ?
     // players
     // scenarios
@@ -47,10 +54,8 @@ export default function CampaignForm() {
     },
   });
   const hCreateCampaign = async (values: z.infer<typeof campaignSchema>) => {
-    // const { data } = await login({
-    //   variables: { data: values },
-    // });
-    // TODO Appeler la Mutation concernée
+    console.log(values);
+
     const { data } = await createCampaign({
       variables: { data: values },
     });
@@ -96,6 +101,33 @@ export default function CampaignForm() {
             </FormItem>
           )}
         />
+        {/* {data?.getAllUsers && (
+          <FormField
+            control={form.control}
+            name="players"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Joueurs</FormLabel>
+                <FormControl>
+                  <Select
+                    options={data.getAllUsers.map((user) => ({
+                      value: user.id,
+                      label: user.name,
+                    }))}
+                    isMulti
+                    name="players"
+                    delimiter=","
+                  />
+                </FormControl>
+                <FormDescription>
+                  les joueurs que vous souhaitez voir venir sur cette tablée
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )} */}
+
         <Button type="submit">Créer</Button>
         <DialogClose>Annuler</DialogClose>
       </form>

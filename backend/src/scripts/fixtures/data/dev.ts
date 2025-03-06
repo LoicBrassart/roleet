@@ -576,12 +576,12 @@ const campaigns = [
     players: ["Lily", "Shyzen", "Missy", "LunaCraft"],
     scenarios: ["A la chasse aux gobs"],
   },
-  {
-    title: "Le Loup qui avait un nouvel ami",
-    bannerUrl: "scenario-background.webp",
-    storyteller: "Missy",
-    players: ["Lily", "Shyzen", "Valhallacode", "LunaCraft"],
-    scenarios: ["Le Loup qui avait un nouvel ami"],
-  },
+  // {
+  //   title: "Le Loup qui avait un nouvel ami",
+  //   bannerUrl: "scenario-background.webp",
+  //   storyteller: "Missy",
+  //   players: ["Lily", "Shyzen", "Valhallacode", "LunaCraft"],
+  //   scenarios: ["Le Loup qui avait un nouvel ami"],
+  // },
 ];
 export { scenarios, plans, pois, flashcards, users, campaigns };
