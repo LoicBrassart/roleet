@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { map, z } from "zod";
+import { z } from "zod";
 
 export default function CampaignForm() {
   const { loading, error, data } = useGetAllUsersQuery();
@@ -48,8 +48,6 @@ export default function CampaignForm() {
         })
         .transform((val) => val.value)
     ),
-    // TODO Add relations to the initial campaign, or add them afterwards ?
-    // scenarios
   });
 
   const form = useForm<z.infer<typeof campaignSchema>>({

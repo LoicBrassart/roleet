@@ -20,7 +20,7 @@ class NewCampaignInput implements Partial<Campaign> {
   title: string;
 
   @Field()
-  bannerUrl?: string;
+  bannerUrl: string;
 
   @Field(() => [ID])
   players!: User[];
@@ -55,7 +55,7 @@ class CampaignResolver {
   @Mutation(() => Campaign)
   async createCampaign(
     @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: AuthContext,
+    @Ctx() ctx: AuthContext
   ) {
     try {
       if (!ctx.user) throw new Error();
