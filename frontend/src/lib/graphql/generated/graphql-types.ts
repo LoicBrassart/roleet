@@ -144,6 +144,7 @@ export type MutationUnsealScenarioArgs = {
 
 export type NewCampaignInput = {
   bannerUrl: Scalars['String']['input'];
+  players: Array<Scalars['ID']['input']>;
   title: Scalars['String']['input'];
 };
 

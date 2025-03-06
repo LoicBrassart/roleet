@@ -17,8 +17,8 @@ import { Input } from "@/lib/shadcn/generated/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
 import Select from "react-select";
+import { map, z } from "zod";
 
 export default function CampaignForm() {
   const { loading, error, data } = useGetAllUsersQuery();
@@ -40,7 +40,6 @@ export default function CampaignForm() {
         message: "doit contenir au maximum 256 caractères.",
       })
       .optional(),
-    // players: z.any(),
     players: z.array(
       z
         .object({
@@ -117,13 +116,13 @@ export default function CampaignForm() {
                 <FormLabel>Joueurs</FormLabel>
                 <FormControl>
                   <Select
+                    {...field}
                     options={data.getAllUsers.map((user) => ({
                       value: user.id,
                       label: user.name,
                     }))}
                     isMulti
                     delimiter=","
-                    {...field}
                   />
                 </FormControl>
                 <FormDescription>

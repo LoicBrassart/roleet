@@ -9,10 +9,10 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
-import { In, type DeepPartial } from "typeorm";
+import { type DeepPartial, In } from "typeorm";
 import { Campaign } from "../entities/Campaign";
-import type AuthContext from "../types/AuthContext";
 import { User } from "../entities/User";
+import type AuthContext from "../types/AuthContext";
 
 @InputType()
 class NewCampaignInput implements Partial<Campaign> {
@@ -55,7 +55,7 @@ class CampaignResolver {
   @Mutation(() => Campaign)
   async createCampaign(
     @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: AuthContext
+    @Ctx() ctx: AuthContext,
   ) {
     try {
       if (!ctx.user) throw new Error();
