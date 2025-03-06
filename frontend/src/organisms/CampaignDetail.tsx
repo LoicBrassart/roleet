@@ -3,6 +3,8 @@ import {
   useGetAllUsersQuery,
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
+import { getOptions } from "@/lib/helpers/forms";
+import { formOptionsSchema } from "@/lib/helpers/zodSchemas";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Form,
@@ -26,6 +28,9 @@ export default function CampaignDetail({ data }: Props) {
   const { data: usersData } = useGetAllUsersQuery();
   const { data: scenData } = useGetMyScenariosQuery();
 
+  const defaultPlayers = getOptions(data.players, "id", "name");
+  const defaultScenarios = getOptions(data.scenarios, "id", "title");
+
   const campaignSchema = z.object({
     title: z
       .string()
@@ -41,36 +46,8 @@ export default function CampaignDetail({ data }: Props) {
         message: "doit contenir au maximum 256 caractères.",
       })
       .default(""),
-    players: z
-      .array(
-        z
-          .object({
-            label: z.string(),
-            value: z.string(),
-          })
-          .transform((val) => val.value)
-      )
-      .default(
-        data.players.map((user) => ({
-          value: user.id,
-          label: user.name,
-        }))
-      ),
-    scenarios: z
-      .array(
-        z
-          .object({
-            label: z.string(),
-            value: z.string(),
-          })
-          .transform((val) => val.value)
-      )
-      .default(
-        data.scenarios.map((scenario) => ({
-          value: scenario.id,
-          label: scenario.title,
-        }))
-      ),
+    players: formOptionsSchema.default(defaultPlayers),
+    scenarios: formOptionsSchema.default(defaultScenarios),
   });
 
   const form = useForm<z.input<typeof campaignSchema>>({
@@ -78,6 +55,9 @@ export default function CampaignDetail({ data }: Props) {
     defaultValues: {
       title: data.title,
       bannerUrl: data.bannerUrl,
+      // ???? Ca devrait pas plutot etre là les defaults ?
+      // players: defaultPlayers,
+      // scenarios: defaultScenarios,
     },
   });
 
@@ -139,10 +119,7 @@ export default function CampaignDetail({ data }: Props) {
                       value: user.id,
                       label: user.name,
                     }))}
-                    defaultValue={data.players.map((user) => ({
-                      value: user.id,
-                      label: user.name,
-                    }))}
+                    defaultValue={defaultPlayers}
                     isMulti
                     delimiter=","
                   />
@@ -167,10 +144,7 @@ export default function CampaignDetail({ data }: Props) {
                       value: scenario.id,
                       label: scenario.title,
                     }))}
-                    defaultValue={data.scenarios.map((scenario) => ({
-                      value: scenario.id,
-                      label: scenario.title,
-                    }))}
+                    defaultValue={defaultScenarios}
                     isMulti
                     delimiter=","
                   />
