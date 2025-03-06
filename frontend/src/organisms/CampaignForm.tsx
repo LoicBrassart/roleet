@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-// import Select from "react-select";
+import Select from "react-select";
 
 export default function CampaignForm() {
   const { loading, error, data } = useGetAllUsersQuery();
@@ -40,9 +40,16 @@ export default function CampaignForm() {
         message: "doit contenir au maximum 256 caractères.",
       })
       .optional(),
-    // players: z.string().transform((val) => val.split(",")),
+    // players: z.any(),
+    players: z.array(
+      z
+        .object({
+          label: z.string(),
+          value: z.number(),
+        })
+        .transform((val) => val.value)
+    ),
     // TODO Add relations to the initial campaign, or add them afterwards ?
-    // players
     // scenarios
   });
 
@@ -101,7 +108,7 @@ export default function CampaignForm() {
             </FormItem>
           )}
         />
-        {/* {data?.getAllUsers && (
+        {data?.getAllUsers && (
           <FormField
             control={form.control}
             name="players"
@@ -115,8 +122,8 @@ export default function CampaignForm() {
                       label: user.name,
                     }))}
                     isMulti
-                    name="players"
                     delimiter=","
+                    {...field}
                   />
                 </FormControl>
                 <FormDescription>
@@ -126,7 +133,7 @@ export default function CampaignForm() {
               </FormItem>
             )}
           />
-        )} */}
+        )}
 
         <Button type="submit">Créer</Button>
         <DialogClose>Annuler</DialogClose>
