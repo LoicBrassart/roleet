@@ -15,8 +15,8 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import { type FormEvent, useState } from "react";
 import type { Plan, Scenario } from "../lib/graphql/generated/graphql-types";
-import PlanDetail from "../molecules/PlanDetail";
 import FlashcardList from "./FlashcardList";
+import PlanDetail from "./PlanDetail";
 
 type Props = {
   data: Scenario;

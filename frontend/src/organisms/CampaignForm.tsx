@@ -1,9 +1,9 @@
+import { FormMessage } from "@/atoms/FormMessage";
 import {
-  useCreateCampaignMutation,
+  type Campaign,
   useGetAllUsersQuery,
+  useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
-import { Button } from "@/lib/shadcn/generated/ui/button";
-import { DialogClose } from "@/lib/shadcn/generated/ui/dialog";
 import {
   Form,
   FormControl,
@@ -11,101 +11,68 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
-import { Input } from "@/lib/shadcn/generated/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import Select from "react-select";
 import { z } from "zod";
+import { Button } from "../atoms/Button";
+import { Select } from "../atoms/Select";
+import { EditableField } from "../molecules/EditableField";
 
-export default function CampaignForm() {
-  const { loading, error, data } = useGetAllUsersQuery();
-  const [createCampaign] = useCreateCampaignMutation();
-  const navigate = useNavigate();
+const campaignSchema = z.object({
+  title: z
+    .string()
+    .min(4, {
+      message: "doit contenir au moins 2 caractères.",
+    })
+    .max(64, {
+      message: "doit contenir au maximum 64 caractères.",
+    }),
+  bannerUrl: z
+    .string()
+    .max(256, {
+      message: "doit contenir au maximum 256 caractères.",
+    })
+    .default(""),
+  players: z
+    .array(z.object({ label: z.string(), value: z.string() }))
+    .default([]),
+  scenarios: z
+    .array(z.object({ label: z.string(), value: z.string() }))
+    .default([]),
+});
 
-  const campaignSchema = z.object({
-    title: z
-      .string()
-      .min(4, {
-        message: "doit contenir au moins 2 caractères.",
-      })
-      .max(64, {
-        message: "doit contenir au maximum 64 caractères.",
-      }),
-    bannerUrl: z
-      .string()
-      .max(256, {
-        message: "doit contenir au maximum 256 caractères.",
-      })
-      .optional(),
-    players: z.array(
-      z
-        .object({
-          label: z.string(),
-          value: z.number(),
-        })
-        .transform((val) => val.value),
-    ),
-  });
-
-  const form = useForm<z.infer<typeof campaignSchema>>({
+type Props = {
+  campaign: Campaign;
+};
+export default function CampaignForm({ campaign }: Props) {
+  const form = useForm({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
-      title: "",
-      bannerUrl: "",
+      title: campaign.title,
+      players: campaign.players.map((p) => ({ label: p.name, value: p.id })),
+      scenarios: campaign.scenarios.map((s) => ({
+        label: s.title,
+        value: s.id,
+      })),
     },
   });
-  const hCreateCampaign = async (values: z.infer<typeof campaignSchema>) => {
-    console.log(values);
+  const { data: scenData } = useGetMyScenariosQuery();
+  const { data: usersData } = useGetAllUsersQuery();
 
-    const { data } = await createCampaign({
-      variables: { data: values },
-    });
-    if (data?.createCampaign.id)
-      navigate(`/campaign/${data?.createCampaign.id}`);
-  };
+  const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) =>
+    console.log(values);
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(hCreateCampaign)}
-        className="w-2/3 space-y-6"
-      >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Titre*</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormDescription>
-                sera affichée aux autres utilisateurs
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
+      <form onSubmit={form.handleSubmit(hUpdateCampaign)} className="space-y-6">
+        <EditableField label="Titre" name="title" control={form.control} />
+        <EditableField
+          label="Bannière"
           name="bannerUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bannière</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormDescription>
-                servira à décorer le cartouche de votre campagne
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          control={form.control}
         />
-        {data?.getAllUsers && (
+        {usersData && (
           <FormField
             control={form.control}
             name="players"
@@ -115,12 +82,18 @@ export default function CampaignForm() {
                 <FormControl>
                   <Select
                     {...field}
-                    options={data.getAllUsers.map((user) => ({
+                    label="Joueurs"
+                    name="players"
+                    control={form.control}
+                    isMulti
+                    options={usersData.getAllUsers.map((user) => ({
                       value: user.id,
                       label: user.name,
                     }))}
-                    isMulti
-                    delimiter=","
+                    defaultValue={campaign.players.map((user) => ({
+                      value: user.id,
+                      label: user.name,
+                    }))}
                   />
                 </FormControl>
                 <FormDescription>
@@ -131,9 +104,39 @@ export default function CampaignForm() {
             )}
           />
         )}
-
-        <Button type="submit">Créer</Button>
-        <DialogClose>Annuler</DialogClose>
+        {scenData && (
+          <FormField
+            control={form.control}
+            name="scenarios"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Scenarios</FormLabel>
+                <FormControl>
+                  <Select
+                    {...field}
+                    label="Scenarios"
+                    name="scenarios"
+                    control={form.control}
+                    isMulti
+                    options={scenData.getMyScenarios.map((scenario) => ({
+                      value: scenario.id,
+                      label: scenario.title,
+                    }))}
+                    defaultValue={campaign.players.map((scenario) => ({
+                      value: scenario.id,
+                      label: scenario.name,
+                    }))}
+                  />
+                </FormControl>
+                <FormDescription>
+                  les scenarios que vous voulez offrir à vos joueurs
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        <Button type="submit">Sauvegarder</Button>
       </form>
     </Form>
   );
