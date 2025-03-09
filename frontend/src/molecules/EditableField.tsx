@@ -4,9 +4,25 @@ import {
   FormLabel,
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
+import type {
+  Control,
+  ControllerProps,
+  FieldPath,
+  FieldValues,
+} from "react-hook-form";
 import { Input } from "../atoms/Input";
 
-export function EditableField({ label, name, control }) {
+type Props<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> = Pick<ControllerProps<TFieldValues, TName>, "control" | "name"> & {
+  label: string;
+};
+
+export function EditableField<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({ label, name, control }: Props<TFieldValues, TName>) {
   return (
     <FormField
       name={name}

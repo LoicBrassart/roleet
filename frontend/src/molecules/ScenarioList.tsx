@@ -1,6 +1,15 @@
 import { Text } from "../atoms/Text";
 
-export default function ScenarioList({ scenarios }) {
+type Scenario = {
+  id: string;
+  title: string;
+};
+
+export default function ScenarioList<T extends Scenario>({
+  scenarios,
+}: {
+  scenarios: T[];
+}) {
   return (
     <ul className="list-disc pl-5">
       {scenarios.map((scenario) => (

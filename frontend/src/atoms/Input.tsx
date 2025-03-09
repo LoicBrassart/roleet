@@ -1,2 +1,5 @@
-import { Input as ShadInput } from "@/lib/shadcn/generated/ui/input";
-export const Input = (props) => <ShadInput {...props} />;
+import {
+  Input as ShadInput,
+  type InputProps,
+} from "@/lib/shadcn/generated/ui/input";
+export const Input = (props: InputProps) => <ShadInput {...props} />;

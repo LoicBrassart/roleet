@@ -1,6 +1,13 @@
 import { Text } from "../atoms/Text";
 
-export default function PlayerList({ players }) {
+type Player = {
+  id: string;
+  name: string;
+};
+
+export default function PlayerList<T extends Player>({
+  players,
+}: { players: T[] }) {
   return (
     <ul className="list-disc pl-5">
       {players.map((player) => (

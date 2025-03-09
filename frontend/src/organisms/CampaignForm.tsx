@@ -15,7 +15,7 @@ import {
   FormLabel,
 } from "@/lib/shadcn/generated/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { ControllerProps, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../atoms/Button";
 import { Select } from "../atoms/Select";
@@ -66,7 +66,11 @@ export default function CampaignForm({ campaign }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(hUpdateCampaign)} className="space-y-6">
-        <EditableField label="Titre" name="title" control={form.control} />
+        <EditableField
+          label="Titre"
+          name="title"
+          control={form.control}
+        />
         <EditableField
           label="Bannière"
           name="bannerUrl"

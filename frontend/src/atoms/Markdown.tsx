@@ -1,4 +1,10 @@
-import { memo, useMemo } from "react";
+import {
+  type HTMLAttributes,
+  memo,
+  useMemo,
+  type PropsWithChildren,
+  type ImgHTMLAttributes,
+} from "react";
 import MarkdownRender from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -10,7 +16,12 @@ const MarkdownComponent = ({ value = "" }) => {
   const _renderers = useMemo(
     () =>
       Object.assign({
-        code: ({ inline, className, children, ...props }) => {
+        code: ({
+          inline,
+          className,
+          children,
+          ...props
+        }: HTMLAttributes<HTMLDivElement> & { inline: boolean }) => {
           if (inline) {
             return (
               <code className={className} {...props}>
@@ -26,14 +37,14 @@ const MarkdownComponent = ({ value = "" }) => {
             </code>
           );
         },
-        img: ({ src, alt }) => {
+        img: ({ src, alt }: ImgHTMLAttributes<HTMLImageElement>) => {
           return (
             <div className="content--img">
               <img src={src} alt={alt ?? ""} />
             </div>
           );
         },
-        p: ({ children }) => {
+        p: ({ children }: PropsWithChildren) => {
           return <p>{children}</p>;
         },
       }),
