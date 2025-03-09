@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../lib/shadcn/generated/ui/card";
-import CampaignForm from "./_old/CampaignForm";
+import CampaignForm from "./CampaignForm";
 
 type Props = {
   title: string;
