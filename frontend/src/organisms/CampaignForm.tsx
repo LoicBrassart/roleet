@@ -4,6 +4,8 @@ import {
   useGetAllUsersQuery,
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
+import { getOptions } from "@/lib/helpers/forms";
+import { formOptionsSchema } from "@/lib/helpers/zodSchemas";
 import {
   Form,
   FormControl,
@@ -19,46 +21,44 @@ import { Button } from "../atoms/Button";
 import { Select } from "../atoms/Select";
 import { EditableField } from "../molecules/EditableField";
 
-const campaignSchema = z.object({
-  title: z
-    .string()
-    .min(4, {
-      message: "doit contenir au moins 2 caractères.",
-    })
-    .max(64, {
-      message: "doit contenir au maximum 64 caractères.",
-    }),
-  bannerUrl: z
-    .string()
-    .max(256, {
-      message: "doit contenir au maximum 256 caractères.",
-    })
-    .default(""),
-  players: z
-    .array(z.object({ label: z.string(), value: z.string() }))
-    .default([]),
-  scenarios: z
-    .array(z.object({ label: z.string(), value: z.string() }))
-    .default([]),
-});
-
 type Props = {
   campaign: Campaign;
 };
 export default function CampaignForm({ campaign }: Props) {
+  const defaultPlayers = getOptions(campaign.players, "id", "name");
+  const defaultScenarios = getOptions(campaign.scenarios, "id", "title");
+
+  const campaignSchema = z.object({
+    title: z
+      .string()
+      .min(4, {
+        message: "doit contenir au moins 2 caractères.",
+      })
+      .max(64, {
+        message: "doit contenir au maximum 64 caractères.",
+      }),
+    bannerUrl: z
+      .string()
+      .max(256, {
+        message: "doit contenir au maximum 256 caractères.",
+      })
+      .default(""),
+    players: formOptionsSchema.default(defaultPlayers),
+    scenarios: formOptionsSchema.default(defaultScenarios),
+  });
+
+  const { data: scenData } = useGetMyScenariosQuery();
+  const { data: usersData } = useGetAllUsersQuery();
+
   const form = useForm({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
       title: campaign.title,
-      players: campaign.players.map((p) => ({ label: p.name, value: p.id })),
-      scenarios: campaign.scenarios.map((s) => ({
-        label: s.title,
-        value: s.id,
-      })),
+      bannerUrl: campaign.bannerUrl,
+      players: defaultPlayers,
+      scenarios: defaultScenarios,
     },
   });
-  const { data: scenData } = useGetMyScenariosQuery();
-  const { data: usersData } = useGetAllUsersQuery();
 
   const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) =>
     console.log(values);
@@ -90,10 +90,7 @@ export default function CampaignForm({ campaign }: Props) {
                       value: user.id,
                       label: user.name,
                     }))}
-                    defaultValue={campaign.players.map((user) => ({
-                      value: user.id,
-                      label: user.name,
-                    }))}
+                    defaultValue={defaultPlayers}
                   />
                 </FormControl>
                 <FormDescription>
@@ -122,10 +119,7 @@ export default function CampaignForm({ campaign }: Props) {
                       value: scenario.id,
                       label: scenario.title,
                     }))}
-                    defaultValue={campaign.players.map((scenario) => ({
-                      value: scenario.id,
-                      label: scenario.name,
-                    }))}
+                    defaultValue={defaultScenarios}
                   />
                 </FormControl>
                 <FormDescription>
