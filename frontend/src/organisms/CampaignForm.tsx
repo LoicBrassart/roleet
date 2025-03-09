@@ -1,6 +1,11 @@
-import { useCreateCampaignMutation } from "@/lib/graphql/generated/graphql-types";
-import { Button } from "@/lib/shadcn/generated/ui/button";
-import { DialogClose } from "@/lib/shadcn/generated/ui/dialog";
+import { FormMessage } from "@/atoms/FormMessage";
+import {
+  type Campaign,
+  useGetAllUsersQuery,
+  useGetMyScenariosQuery,
+} from "@/lib/graphql/generated/graphql-types";
+import { getOptions } from "@/lib/helpers/forms";
+import { formOptionsSchema } from "@/lib/helpers/zodSchemas";
 import {
   Form,
   FormControl,
@@ -8,17 +13,21 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
-import { Input } from "@/lib/shadcn/generated/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { z } from "zod";
+import { Button } from "../atoms/Button";
+import { Select } from "../atoms/Select";
+import { EditableField } from "../molecules/EditableField";
 
-export default function CampaignForm() {
-  const [createCampaign] = useCreateCampaignMutation();
-  const navigate = useNavigate();
+type Props = {
+  campaign: Campaign;
+};
+export default function CampaignForm({ campaign }: Props) {
+  const defaultPlayers = getOptions(campaign.players, "id", "name");
+  const defaultScenarios = getOptions(campaign.scenarios, "id", "title");
+
   const campaignSchema = z.object({
     title: z
       .string()
@@ -33,71 +42,95 @@ export default function CampaignForm() {
       .max(256, {
         message: "doit contenir au maximum 256 caractères.",
       })
-      .optional(),
-    // TODO Add relations to the initial campaign, or add them afterwards ?
-    // players
-    // scenarios
+      .default(""),
+    players: formOptionsSchema.default(defaultPlayers),
+    scenarios: formOptionsSchema.default(defaultScenarios),
   });
 
-  const form = useForm<z.infer<typeof campaignSchema>>({
+  const { data: scenData } = useGetMyScenariosQuery();
+  const { data: usersData } = useGetAllUsersQuery();
+
+  const form = useForm({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
-      title: "",
-      bannerUrl: "",
+      title: campaign.title,
+      bannerUrl: campaign.bannerUrl,
+      players: defaultPlayers,
+      scenarios: defaultScenarios,
     },
   });
-  const hCreateCampaign = async (values: z.infer<typeof campaignSchema>) => {
-    // const { data } = await login({
-    //   variables: { data: values },
-    // });
-    // TODO Appeler la Mutation concernée
-    const { data } = await createCampaign({
-      variables: { data: values },
-    });
-    if (data?.createCampaign.id)
-      navigate(`/campaign/${data?.createCampaign.id}`);
-  };
+
+  const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) =>
+    console.log(values);
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(hCreateCampaign)}
-        className="w-2/3 space-y-6"
-      >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Titre*</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormDescription>
-                sera affichée aux autres utilisateurs
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
+      <form onSubmit={form.handleSubmit(hUpdateCampaign)} className="space-y-6">
+        <EditableField label="Titre" name="title" control={form.control} />
+        <EditableField
+          label="Bannière"
           name="bannerUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bannière</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormDescription>
-                servira à décorer le cartouche de votre campagne
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          control={form.control}
         />
-        <Button type="submit">Créer</Button>
-        <DialogClose>Annuler</DialogClose>
+        {usersData && (
+          <FormField
+            control={form.control}
+            name="players"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Joueurs</FormLabel>
+                <FormControl>
+                  <Select
+                    {...field}
+                    label="Joueurs"
+                    name="players"
+                    control={form.control}
+                    isMulti
+                    options={usersData.getAllUsers.map((user) => ({
+                      value: user.id,
+                      label: user.name,
+                    }))}
+                    defaultValue={defaultPlayers}
+                  />
+                </FormControl>
+                <FormDescription>
+                  les joueurs que vous souhaitez voir venir sur cette tablée
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        {scenData && (
+          <FormField
+            control={form.control}
+            name="scenarios"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Scenarios</FormLabel>
+                <FormControl>
+                  <Select
+                    {...field}
+                    label="Scenarios"
+                    name="scenarios"
+                    control={form.control}
+                    isMulti
+                    options={scenData.getMyScenarios.map((scenario) => ({
+                      value: scenario.id,
+                      label: scenario.title,
+                    }))}
+                    defaultValue={defaultScenarios}
+                  />
+                </FormControl>
+                <FormDescription>
+                  les scenarios que vous voulez offrir à vos joueurs
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+        <Button type="submit">Sauvegarder</Button>
       </form>
     </Form>
   );

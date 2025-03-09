@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
 import AuthPage from "./pages/AuthPage";
-import CampaignPage from "./pages/CampaignPage";
+import CampaignPage from "./pages/CampaignDetails";
 import CampaignsPage from "./pages/CampaignsPage";
 import DashboardPage from "./pages/DashboardPage";
 import ErrorPage from "./pages/ErrorPage";

@@ -3,13 +3,15 @@ import {
   Authorized,
   Ctx,
   Field,
+  ID,
   InputType,
   Mutation,
   Query,
   Resolver,
 } from "type-graphql";
-import type { DeepPartial } from "typeorm";
+import { type DeepPartial, In } from "typeorm";
 import { Campaign } from "../entities/Campaign";
+import { User } from "../entities/User";
 import type AuthContext from "../types/AuthContext";
 
 @InputType()
@@ -18,7 +20,10 @@ class NewCampaignInput implements Partial<Campaign> {
   title: string;
 
   @Field()
-  bannerUrl?: string;
+  bannerUrl: string;
+
+  @Field(() => [ID])
+  players!: User[];
 }
 
 @Resolver(Campaign)
@@ -53,6 +58,9 @@ class CampaignResolver {
       if (!ctx.user) throw new Error();
       const campaign = Campaign.create(campaignData as DeepPartial<Campaign>);
       campaign.storyteller = ctx.user;
+      const players = await User.findBy({ id: In(campaignData.players) });
+      campaign.players = players;
+
       await campaign.save();
 
       return campaign;

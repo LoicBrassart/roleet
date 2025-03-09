@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from "type-graphql";
+import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -23,9 +23,9 @@ registerEnumType(Roles, {
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field()
+  @Field((_type) => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  readonly id: number;
 
   @Field()
   @Column({ unique: true })

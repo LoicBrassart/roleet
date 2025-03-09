@@ -37,6 +37,7 @@
     "react-remark": "^2.1.0",
     "react-resizable-panels": "^2.1.4",
     "react-router-dom": "^6.23.1",
+    "react-select": "^5.10.1",
     "remark-gfm": "^4.0.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
