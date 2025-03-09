@@ -18,15 +18,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../atoms/Button";
-import { Select } from "../atoms/Select";
+import { type Option, Select } from "../atoms/Select";
 import { EditableField } from "../molecules/EditableField";
 
 type Props = {
-  campaign: Campaign;
+  campaign?: Campaign;
 };
 export default function CampaignForm({ campaign }: Props) {
-  const defaultPlayers = getOptions(campaign.players, "id", "name");
-  const defaultScenarios = getOptions(campaign.scenarios, "id", "title");
+  let defaultPlayers: Option[];
+  let defaultScenarios: Option[];
+
+  if (campaign) {
+    defaultPlayers = getOptions(campaign.players, "id", "name");
+    defaultScenarios = getOptions(campaign.scenarios, "id", "title");
+  } else {
+    defaultPlayers = [];
+    defaultScenarios = [];
+  }
 
   const campaignSchema = z.object({
     title: z
@@ -53,8 +61,8 @@ export default function CampaignForm({ campaign }: Props) {
   const form = useForm({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
-      title: campaign.title,
-      bannerUrl: campaign.bannerUrl,
+      title: campaign ? campaign.title : "",
+      bannerUrl: campaign ? campaign.bannerUrl : "",
       players: defaultPlayers,
       scenarios: defaultScenarios,
     },
