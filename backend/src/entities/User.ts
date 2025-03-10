@@ -41,21 +41,15 @@ export class User extends BaseEntity {
 
   @Field(() => [Roles])
   @Column({ type: "enum", enum: Roles, array: true, default: [Roles.USER] })
-  roles: Roles[];
+  roles: Roles[] = [Roles.USER];
 
   @Field((_type) => [Scenario], { nullable: false })
-  @ManyToMany(
-    (_type) => Scenario,
-    (scenario) => scenario.readers,
-  )
+  @ManyToMany((_type) => Scenario, (scenario) => scenario.readers)
   @JoinTable({ name: "scenarioSeals" })
   readScenarios: Scenario[];
 
   @Field((_type) => [Campaign], { nullable: false })
-  @ManyToMany(
-    (_type) => Campaign,
-    (campaign) => campaign.players,
-  )
+  @ManyToMany((_type) => Campaign, (campaign) => campaign.players)
   campaigns: Campaign[];
 
   @Field((_type) => [Campaign], { nullable: false })
@@ -64,7 +58,7 @@ export class User extends BaseEntity {
     (campaignsToLead) => campaignsToLead.storyteller,
     {
       cascade: true,
-    },
+    }
   )
   campaignsToLead: Campaign[];
 }

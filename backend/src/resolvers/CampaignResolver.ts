@@ -13,9 +13,10 @@ import { type DeepPartial, In } from "typeorm";
 import { Campaign } from "../entities/Campaign";
 import { User } from "../entities/User";
 import type AuthContext from "../types/AuthContext";
+import { assert } from "console";
 
 @InputType()
-class NewCampaignInput implements Partial<Campaign> {
+class NewCampaignInput {
   @Field()
   title: string;
 
@@ -23,7 +24,7 @@ class NewCampaignInput implements Partial<Campaign> {
   bannerUrl: string;
 
   @Field(() => [ID])
-  players!: User[];
+  players!: number[];
 }
 
 @Resolver(Campaign)
@@ -31,7 +32,7 @@ class CampaignResolver {
   @Authorized()
   @Query(() => [Campaign])
   async getMyCampaigns(@Ctx() ctx: AuthContext) {
-    console.log(ctx.user);
+    assert(ctx.user);
     return await Campaign.find({
       relations: ["scenarios", "players", "storyteller"],
       // TODO: Filter on storyteller or players === ctx.user
@@ -41,7 +42,7 @@ class CampaignResolver {
   @Authorized()
   @Query(() => Campaign)
   async getCampaign(@Arg("id") id: number, @Ctx() ctx: AuthContext) {
-    console.log(ctx.user);
+    assert(ctx.user);
     return await Campaign.findOne({
       where: { id },
       relations: ["scenarios", "players", "storyteller"],
@@ -52,21 +53,26 @@ class CampaignResolver {
   @Mutation(() => Campaign)
   async createCampaign(
     @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: AuthContext,
+    @Ctx() ctx: AuthContext
   ) {
     try {
-      if (!ctx.user) throw new Error();
+      if (!ctx.user) throw new Error("User not authenticated");
+
       const campaign = Campaign.create(campaignData as DeepPartial<Campaign>);
       campaign.storyteller = ctx.user;
+
       const players = await User.findBy({ id: In(campaignData.players) });
+      if (players.length !== campaignData.players.length) {
+        throw new Error("One or more players not found");
+      }
+
       campaign.players = players;
 
       await campaign.save();
 
       return campaign;
     } catch (err) {
-      console.error(err);
-      throw new Error("Failed to create campaign");
+      throw new Error(`Failed to create campaign: ${err.message}`);
     }
   }
 }
