@@ -1,6 +1,6 @@
 import PlayerList from "../molecules/PlayerList";
 import ScenarioList from "../molecules/ScenarioList";
-
+// TODO type props
 export default function CampaignDetailsView({ campaign }) {
   return (
     <div className="space-y-4">

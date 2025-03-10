@@ -72,6 +72,7 @@ export default function CampaignForm({ campaign }: Props) {
     },
   });
 
+  // TODO: Fix bannerUrl : mandatory or optional ?
   const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) => {
     const { data } = await createCampaign({ variables: { data: values } });
     if (!data) return;

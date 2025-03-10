@@ -4,3 +4,4 @@ export type Option = {
   value: string;
   label: string;
 };
+// TODO type props

@@ -18,6 +18,7 @@ import {
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
 
+// TODO type props
 type DnDnpcCardProps = {
   data: DnDnpcCard;
 };
@@ -47,12 +48,24 @@ function DnDnpcCardComponent({ data }: DnDnpcCardProps) {
               <p>Vitesse: {data.speed}m</p>
               <hr />
               <ul className="flex">
-                <li>{`STR: ${data.strength} (${Math.floor((data.strength - 10) / 2)})`}</li>
-                <li>{`DEX: ${data.dexterity} (${Math.floor((data.dexterity - 10) / 2)})`}</li>
-                <li>{`CON: ${data.constitution} (${Math.floor((data.constitution - 10) / 2)})`}</li>
-                <li>{`INT: ${data.intelligence} (${Math.floor((data.intelligence - 10) / 2)})`}</li>
-                <li>{`WIS: ${data.wisdom} (${Math.floor((data.wisdom - 10) / 2)})`}</li>
-                <li>{`CHA: ${data.charisma} (${Math.floor((data.charisma - 10) / 2)})`}</li>
+                <li>{`STR: ${data.strength} (${Math.floor(
+                  (data.strength - 10) / 2
+                )})`}</li>
+                <li>{`DEX: ${data.dexterity} (${Math.floor(
+                  (data.dexterity - 10) / 2
+                )})`}</li>
+                <li>{`CON: ${data.constitution} (${Math.floor(
+                  (data.constitution - 10) / 2
+                )})`}</li>
+                <li>{`INT: ${data.intelligence} (${Math.floor(
+                  (data.intelligence - 10) / 2
+                )})`}</li>
+                <li>{`WIS: ${data.wisdom} (${Math.floor(
+                  (data.wisdom - 10) / 2
+                )})`}</li>
+                <li>{`CHA: ${data.charisma} (${Math.floor(
+                  (data.charisma - 10) / 2
+                )})`}</li>
               </ul>
               <hr />
               <p>Compétences: {data.skills}</p>

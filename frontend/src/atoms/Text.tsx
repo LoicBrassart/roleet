@@ -6,3 +6,4 @@ export function Text({ variant = "body", children }) {
   };
   return <p className={variants[variant]}>{children}</p>;
 }
+// TODO type props

@@ -3,6 +3,7 @@ import CampaignDetailsView from "../organisms/CampaignDetailsView";
 import CampaignForm from "../organisms/CampaignForm";
 import CampaignHeader from "../organisms/CampaignHeader";
 
+// TODO type props
 export default function CampaignDetailsLayout({ campaign }) {
   const currentUser = useUserStore((state) => state.user);
 

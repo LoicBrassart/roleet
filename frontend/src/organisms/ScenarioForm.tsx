@@ -68,6 +68,7 @@ export default function ScenarioForm({ scenario }: Props) {
     navigate(`/scenario/${scenId}`);
   };
 
+  // TODO Fix bannerUrl
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(hUpdateScenario)} className="space-y-6">

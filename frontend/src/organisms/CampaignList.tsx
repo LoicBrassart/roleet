@@ -1,12 +1,3 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/lib/shadcn/generated/ui/dialog";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 import type { Campaign } from "../lib/graphql/generated/graphql-types";
@@ -18,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../lib/shadcn/generated/ui/card";
-import CampaignForm from "./CampaignForm";
 
 type Props = {
   title: string;

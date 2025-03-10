@@ -5,7 +5,7 @@ import {
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
 import { Input } from "../atoms/Input";
-
+// TODO type props
 export function EditableField({ label, name, control }) {
   return (
     <FormField
