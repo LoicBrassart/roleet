@@ -23,13 +23,8 @@ import CampaignForm from "./CampaignForm";
 type Props = {
   title: string;
   data: Campaign[];
-  addCreateButton?: boolean;
 };
-export default function CampaignList({
-  title,
-  data,
-  addCreateButton = false,
-}: Props) {
+export default function CampaignList({ title, data }: Props) {
   if (!data.length)
     return (
       <>
@@ -66,27 +61,6 @@ export default function CampaignList({
             </li>
           );
         })}
-        {addCreateButton && (
-          <li className="w-96 h-auto">
-            <Card className="w-96 m-1 h-40">
-              <CardContent>
-                <Dialog>
-                  <DialogTrigger>
-                    <Button>Créer une campagne</Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>D'humeur créatrice ?</DialogTitle>
-                    </DialogHeader>
-                    <DialogDescription>
-                      <CampaignForm />
-                    </DialogDescription>
-                  </DialogContent>
-                </Dialog>
-              </CardContent>
-            </Card>
-          </li>
-        )}
       </ul>
     </>
   );

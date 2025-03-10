@@ -67,7 +67,7 @@ class CampaignResolver {
   @Mutation(() => Campaign)
   async createCampaign(
     @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: AuthContext
+    @Ctx() ctx: AuthContext,
   ) {
     try {
       if (!ctx.user) throw new Error();

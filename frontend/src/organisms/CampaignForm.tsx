@@ -17,11 +17,11 @@ import {
 } from "@/lib/shadcn/generated/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Button } from "../atoms/Button";
 import { type Option, Select } from "../atoms/Select";
 import { EditableField } from "../molecules/EditableField";
-import { useNavigate } from "react-router-dom";
 
 type Props = {
   campaign?: Campaign;
