@@ -49,22 +49,22 @@ function DnDnpcCardComponent({ data }: DnDnpcCardProps) {
               <hr />
               <ul className="flex">
                 <li>{`STR: ${data.strength} (${Math.floor(
-                  (data.strength - 10) / 2
+                  (data.strength - 10) / 2,
                 )})`}</li>
                 <li>{`DEX: ${data.dexterity} (${Math.floor(
-                  (data.dexterity - 10) / 2
+                  (data.dexterity - 10) / 2,
                 )})`}</li>
                 <li>{`CON: ${data.constitution} (${Math.floor(
-                  (data.constitution - 10) / 2
+                  (data.constitution - 10) / 2,
                 )})`}</li>
                 <li>{`INT: ${data.intelligence} (${Math.floor(
-                  (data.intelligence - 10) / 2
+                  (data.intelligence - 10) / 2,
                 )})`}</li>
                 <li>{`WIS: ${data.wisdom} (${Math.floor(
-                  (data.wisdom - 10) / 2
+                  (data.wisdom - 10) / 2,
                 )})`}</li>
                 <li>{`CHA: ${data.charisma} (${Math.floor(
-                  (data.charisma - 10) / 2
+                  (data.charisma - 10) / 2,
                 )})`}</li>
               </ul>
               <hr />
