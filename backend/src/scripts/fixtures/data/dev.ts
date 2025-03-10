@@ -534,7 +534,8 @@ const users = [
   {
     mail: "lily@spamland.com",
     name: "Lily",
-    hashedPassword: "",
+    hashedPassword:
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
     roles: [Roles.USER],
     readScenarios: [],
     campaigns: [],
@@ -543,7 +544,8 @@ const users = [
   {
     mail: "shyz@spamland.com",
     name: "Shyzen",
-    hashedPassword: "",
+    hashedPassword:
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
     roles: [Roles.USER],
     readScenarios: [],
     campaigns: [],
@@ -552,7 +554,8 @@ const users = [
   {
     mail: "missy@spamland.com",
     name: "Missy",
-    hashedPassword: "",
+    hashedPassword:
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
     roles: [Roles.USER],
     readScenarios: [],
     campaigns: [],
@@ -561,7 +564,8 @@ const users = [
   {
     mail: "lunacraft@spamland.com",
     name: "LunaCraft",
-    hashedPassword: "",
+    hashedPassword:
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
     roles: [Roles.USER],
     readScenarios: [],
     campaigns: [],

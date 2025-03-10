@@ -41,7 +41,6 @@ class ScenarioResolver {
   @Authorized()
   @Query(() => [Scenario])
   async getMyScenarios(@Ctx() ctx: AuthContext) {
-    console.log("getMyScenarios: currentUser:", ctx.user?.id);
     return await Scenario.find({
       where: { readers: { id: ctx.user?.id } },
       relations: ["plans", "flashcards"],

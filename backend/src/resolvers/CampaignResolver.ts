@@ -11,6 +11,7 @@ import {
 } from "type-graphql";
 import { type DeepPartial, In } from "typeorm";
 import { Campaign } from "../entities/Campaign";
+import type { Scenario } from "../entities/Scenario";
 import { User } from "../entities/User";
 import type AuthContext from "../types/AuthContext";
 
@@ -24,6 +25,9 @@ class NewCampaignInput implements Partial<Campaign> {
 
   @Field(() => [ID])
   players!: User[];
+
+  @Field(() => [ID])
+  scenarios!: Scenario[];
 }
 
 @Resolver(Campaign)
@@ -31,28 +35,39 @@ class CampaignResolver {
   @Authorized()
   @Query(() => [Campaign])
   async getMyCampaigns(@Ctx() ctx: AuthContext) {
-    console.log(ctx.user);
     return await Campaign.find({
       relations: ["scenarios", "players", "storyteller"],
-      // TODO: Filter on storyteller or players === ctx.user
+      where: [
+        {
+          storyteller: { id: ctx.user?.id },
+        },
+        {
+          players: { id: ctx.user?.id },
+        },
+      ],
     });
   }
 
   @Authorized()
   @Query(() => Campaign)
   async getCampaign(@Arg("id") id: number, @Ctx() ctx: AuthContext) {
-    console.log(ctx.user);
-    return await Campaign.findOne({
+    const campaign = await Campaign.findOne({
       where: { id },
       relations: ["scenarios", "players", "storyteller"],
-      // TODO: Filter on storyteller or players === ctx.user
     });
+    if (!campaign) return null;
+    if (
+      campaign.storyteller.id === ctx.user?.id ||
+      campaign.players.find((player) => player.id === ctx.user?.id)
+    )
+      return campaign;
+    return null;
   }
 
   @Mutation(() => Campaign)
   async createCampaign(
     @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: AuthContext,
+    @Ctx() ctx: AuthContext
   ) {
     try {
       if (!ctx.user) throw new Error();

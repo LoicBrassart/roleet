@@ -168,3 +168,16 @@ export const CREATECAMPAIGN = gql`
     }
   }
 `;
+
+export const CREATESCENARIO = gql`
+  mutation createScenario($data: NewScenarioInput!) {
+    createScenario(data: $data) {
+      id
+      title
+      teaser
+      fullStory
+      bannerUrl
+      credits
+    }
+  }
+`;

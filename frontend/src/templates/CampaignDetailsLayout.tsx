@@ -6,7 +6,7 @@ import CampaignHeader from "../organisms/CampaignHeader";
 export default function CampaignDetailsLayout({ campaign }) {
   const currentUser = useUserStore((state) => state.user);
 
-  const isStoryteller = campaign.storyteller.name === currentUser?.name; // TODO: Récupérer le rôle réel
+  const isStoryteller = campaign.storyteller.name === currentUser?.name;
 
   return (
     <div className="space-y-6">

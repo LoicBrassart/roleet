@@ -44,19 +44,23 @@ export default function ScenarioDetail({ data }: Props) {
           <Markdown value={data.fullStory} />
         </TabsContent>
         <TabsContent value="plans">
-          <Select onValueChange={hChangePlan}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={currPlan.title} />
-            </SelectTrigger>
-            <SelectContent>
-              {data.plans.map((plan) => (
-                <SelectItem value={plan.id} key={plan.id}>
-                  {plan.title}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <PlanDetail data={currPlan} />
+          {currPlan && (
+            <>
+              <Select onValueChange={hChangePlan}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder={currPlan.title} />
+                </SelectTrigger>
+                <SelectContent>
+                  {data.plans.map((plan) => (
+                    <SelectItem value={plan.id} key={plan.id}>
+                      {plan.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <PlanDetail data={currPlan} />
+            </>
+          )}
         </TabsContent>
         <TabsContent value="flashcards">
           <Input
