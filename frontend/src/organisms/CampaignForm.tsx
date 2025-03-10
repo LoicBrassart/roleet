@@ -25,15 +25,12 @@ type Props = {
   campaign?: Campaign;
 };
 export default function CampaignForm({ campaign }: Props) {
-  let defaultPlayers: Option[];
-  let defaultScenarios: Option[];
+  let defaultPlayers: Option[] = [];
+  let defaultScenarios: Option[] = [];
 
   if (campaign) {
     defaultPlayers = getOptions(campaign.players, "id", "name");
     defaultScenarios = getOptions(campaign.scenarios, "id", "title");
-  } else {
-    defaultPlayers = [];
-    defaultScenarios = [];
   }
 
   const campaignSchema = z.object({
