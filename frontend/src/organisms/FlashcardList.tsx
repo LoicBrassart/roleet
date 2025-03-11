@@ -1,9 +1,9 @@
-import type { Flashcard } from "../lib/graphql/generated/graphql-types";
 import FlashCard from "../molecules/FlashCard";
+import type { Q } from "@/types/queries";
 
 type Props = {
   title?: string;
-  data: Flashcard[];
+  data: Q.ScenarioFlashcard[];
 };
 export default function FlashcardList(props: Props) {
   return (

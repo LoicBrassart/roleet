@@ -1,4 +1,5 @@
-import type { Flashcard as GqlFlashcard } from "@/graphql/generated";
+import type { Flashcard as GqlFlashcard } from "@/lib/graphql/generated/graphql-types";
+import type { Q } from "./queries";
 
 /*
 Ajouter un nouveau type de flashcards:
@@ -32,30 +33,17 @@ export type DndNpcCardData = {
 };
 
 /* 2. Flashcard spécialisées (union discriminée) */
-export type DndNpcCard = Omit<GqlFlashcard, "data" | "type"> & {
-  type: "DndNpcCard";
-} & DndNpcCardData;
+type FlashcardBase = Omit<GqlFlashcard, "data" | "type" | "scenario"> & {
+  type: string;
+};
+export type TDndNpcCard = FlashcardBase & { type: "DndNpcCard" } & {
+  data: DndNpcCardData;
+};
 
 // Union de toutes les flashcards spécialisées
-export type FlashcardTyped = DndNpcCard; // | OtherFlashcard | ...
+export type FlashcardTyped = FlashcardBase | TDndNpcCard; // | OtherFlashcard | ...
 
 /* 3. Type Guards (pour sécuriser dynamiquement) */
-export function isDndNpcCard(card: GqlFlashcard): card is DndNpcCard {
-  return (
-    card.type === "DndNpcCard" &&
-    typeof card.data === "object" &&
-    card.data !== null &&
-    "species" in card.data &&
-    "armorClass" in card.data
-  );
-}
-
-/* 4. Helper de parsing (pour caster facilement) */
-export function parseFlashcard(card: GqlFlashcard): FlashcardTyped {
-  switch (card.type) {
-    case "DndNpcCard":
-      return card as DndNpcCard;
-    default:
-      throw new Error(`Unknown flashcard type: ${card.type}`);
-  }
+export function isDndNpcCard(card: Q.ScenarioFlashcard): card is TDndNpcCard {
+  return card.type === "DndNpcCard";
 }

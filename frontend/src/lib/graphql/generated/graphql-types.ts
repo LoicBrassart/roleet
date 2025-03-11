@@ -15,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  JSON: { input: any; output: any; }
 };
 
 export type Campaign = {
@@ -29,7 +30,7 @@ export type Campaign = {
 
 export type Flashcard = {
   __typename?: 'Flashcard';
-  data?: Maybe<Scalars['String']['output']>;
+  data?: Maybe<Scalars['JSON']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   scenario: Scenario;
@@ -287,7 +288,7 @@ export type GetScenarioQueryVariables = Exact<{
 }>;
 
 
-export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'Flashcard', id: string, title: string, description?: string | null, type: string, data?: string | null }>, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, description?: string | null, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title?: string | null, description?: string | null }> }> } };
+export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'Flashcard', id: string, title: string, description?: string | null, type: string, data?: any | null }>, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, description?: string | null, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title?: string | null, description?: string | null }> }> } };
 
 export type UnsealScenarioMutationVariables = Exact<{
   unsealScenarioId: Scalars['Float']['input'];
