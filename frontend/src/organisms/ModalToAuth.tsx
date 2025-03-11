@@ -1,4 +1,4 @@
-import { Button } from "@/lib/shadcn/generated/ui/button";
+import { Button, buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -13,9 +13,7 @@ import { Link } from "react-router-dom";
 export default function ModalToAuth() {
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button>Lire</Button>
-      </DialogTrigger>
+      <DialogTrigger className={buttonVariants()}>Lire</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Attends une minute !</DialogTitle>

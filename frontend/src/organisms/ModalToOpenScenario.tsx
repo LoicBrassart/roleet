@@ -2,7 +2,7 @@ import {
   type Scenario,
   useUnsealScenarioMutation,
 } from "@/lib/graphql/generated/graphql-types";
-import { Button } from "@/lib/shadcn/generated/ui/button";
+import { Button, buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -37,9 +37,7 @@ export default function ModalToOpenScenario({ scenario }: Props) {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button>Découvrir</Button>
-      </DialogTrigger>
+      <DialogTrigger className={buttonVariants()}>Découvrir</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Désceller le scenario: {scenario.title} ?</DialogTitle>
