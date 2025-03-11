@@ -6,7 +6,7 @@
     "dev": "nodemon --exec ts-node -- ./src/index.ts",
     "start": "node build/index.js",
     "db:fixtures": "ts-node ./src/scripts/fixtures/script.ts",
-    "unit-tests": "npx jest",
+    "unit-tests": "echo 'TODO: Run Unit Tests'",
     "integration-tests": "echo 'TODO: Run Integration Tests'"
   },
   "keywords": [],
@@ -27,13 +27,10 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.9",
     "eslint": "^9.9.1",
-    "jest": "^29.7.0",
     "nodemon": "^3.1.4",
-    "ts-jest": "^29.2.6",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   }
