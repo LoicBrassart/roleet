@@ -31,6 +31,7 @@ class PlanResolver {
       }).save();
       return plan;
     } catch (err) {
+      console.error(err);
       throw new Error("Failed to create Plan");
     }
   }
@@ -41,6 +42,7 @@ class PlanResolver {
       const result = await Plan.delete(id);
       return result.affected === 1;
     } catch (err) {
+      console.error(err);
       return false;
     }
   }
