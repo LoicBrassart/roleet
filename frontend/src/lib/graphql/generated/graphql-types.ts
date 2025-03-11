@@ -27,43 +27,15 @@ export type Campaign = {
   title: Scalars['String']['output'];
 };
 
-export type DnDnpcCard = {
-  __typename?: 'DnDnpcCard';
-  actions: Scalars['String']['output'];
-  alignment: Scalars['String']['output'];
-  armorClass: Scalars['Float']['output'];
-  behaviour: Scalars['String']['output'];
-  charisma: Scalars['Float']['output'];
-  constitution: Scalars['Float']['output'];
-  dangerLevel: Scalars['Float']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  dexterity: Scalars['Float']['output'];
-  health: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  intelligence: Scalars['Float']['output'];
-  languages: Scalars['String']['output'];
-  scenario: Scenario;
-  senses: Scalars['String']['output'];
-  size: Scalars['String']['output'];
-  skills: Scalars['String']['output'];
-  species: Scalars['String']['output'];
-  speed: Scalars['String']['output'];
-  strength: Scalars['Float']['output'];
-  title: Scalars['String']['output'];
-  type: Scalars['String']['output'];
-  wisdom: Scalars['Float']['output'];
-};
-
 export type Flashcard = {
   __typename?: 'Flashcard';
+  data?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   scenario: Scenario;
   title: Scalars['String']['output'];
   type: Scalars['String']['output'];
 };
-
-export type FlashcardUnion = DnDnpcCard | Flashcard;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -250,7 +222,7 @@ export type Scenario = {
   bannerUrl?: Maybe<Scalars['String']['output']>;
   campaigns: Array<Campaign>;
   credits: Scalars['String']['output'];
-  flashcards: Array<FlashcardUnion>;
+  flashcards: Array<Flashcard>;
   fullStory: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   plans: Array<Plan>;
@@ -315,7 +287,7 @@ export type GetScenarioQueryVariables = Exact<{
 }>;
 
 
-export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'DnDnpcCard', id: string, title: string, description?: string | null, type: string, species: string, dangerLevel: number, health: string, actions: string, size: string, alignment: string, strength: number, dexterity: number, constitution: number, intelligence: number, wisdom: number, charisma: number, armorClass: number, speed: string, skills: string, senses: string, languages: string, behaviour: string } | { __typename?: 'Flashcard', id: string, title: string, description?: string | null, type: string }>, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, description?: string | null, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title?: string | null, description?: string | null }> }> } };
+export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'Flashcard', id: string, title: string, description?: string | null, type: string, data?: string | null }>, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, description?: string | null, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title?: string | null, description?: string | null }> }> } };
 
 export type UnsealScenarioMutationVariables = Exact<{
   unsealScenarioId: Scalars['Float']['input'];
@@ -580,36 +552,11 @@ export const GetScenarioDocument = gql`
     teaser
     title
     flashcards {
-      ... on Flashcard {
-        id
-        title
-        description
-        type
-      }
-      ... on DnDnpcCard {
-        id
-        title
-        description
-        type
-        species
-        dangerLevel
-        health
-        actions
-        size
-        alignment
-        strength
-        dexterity
-        constitution
-        intelligence
-        wisdom
-        charisma
-        armorClass
-        speed
-        skills
-        senses
-        languages
-        behaviour
-      }
+      id
+      title
+      description
+      type
+      data
     }
     plans {
       id

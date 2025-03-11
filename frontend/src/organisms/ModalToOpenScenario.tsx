@@ -17,7 +17,7 @@ import { useUserStore } from "@/lib/zustand/userStore";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  scenario: Scenario;
+  scenario: Pick<Scenario, "id" | "title">;
 };
 export default function ModalToOpenScenario({ scenario }: Props) {
   const [unseal] = useUnsealScenarioMutation();

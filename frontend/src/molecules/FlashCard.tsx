@@ -1,8 +1,4 @@
-import type {
-  DnDnpcCard,
-  Flashcard,
-  FlashcardUnion,
-} from "@/lib/graphql/generated/graphql-types";
+import type { Flashcard } from "@/lib/graphql/generated/graphql-types";
 import {
   Card,
   CardContent,
@@ -17,18 +13,18 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
+import type { DndNpcCard, FlashcardTyped } from "@/types/flashcards";
 
-// TODO type props
-type DnDnpcCardProps = {
-  data: DnDnpcCard;
+type DndNpcCardProps = {
+  card: DndNpcCard;
 };
-function DnDnpcCardComponent({ data }: DnDnpcCardProps) {
+function DndNpcCard({ card }: DndNpcCardProps) {
   return (
     <Card className="w-96 h-96 m-1">
       <CardHeader>
-        <CardTitle>{data.title}</CardTitle>
+        <CardTitle>{card.title}</CardTitle>
         <CardDescription>
-          {`${data.species} de taille ${data.size}, ${data.alignment}`}
+          {`${card.species} de taille ${card.size}, ${card.alignment}`}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -39,46 +35,46 @@ function DnDnpcCardComponent({ data }: DnDnpcCardProps) {
             <TabsTrigger value="attacks">Attacks</TabsTrigger>
           </TabsList>
           <TabsContent value="description">
-            <ScrollArea className="h-[200px]">{data.description}</ScrollArea>
+            <ScrollArea className="h-[200px]">{card.description}</ScrollArea>
           </TabsContent>
           <TabsContent value="stats">
             <ScrollArea className="h-[200px]">
-              <p>Armure: {data.armorClass}</p>
-              <p>Points de vie: {data.health}</p>
-              <p>Vitesse: {data.speed}m</p>
+              <p>Armure: {card.armorClass}</p>
+              <p>Points de vie: {card.health}</p>
+              <p>Vitesse: {card.speed}m</p>
               <hr />
               <ul className="flex">
-                <li>{`STR: ${data.strength} (${Math.floor(
-                  (data.strength - 10) / 2,
+                <li>{`STR: ${card.strength} (${Math.floor(
+                  (card.strength - 10) / 2,
                 )})`}</li>
-                <li>{`DEX: ${data.dexterity} (${Math.floor(
-                  (data.dexterity - 10) / 2,
+                <li>{`DEX: ${card.dexterity} (${Math.floor(
+                  (card.dexterity - 10) / 2,
                 )})`}</li>
-                <li>{`CON: ${data.constitution} (${Math.floor(
-                  (data.constitution - 10) / 2,
+                <li>{`CON: ${card.constitution} (${Math.floor(
+                  (card.constitution - 10) / 2,
                 )})`}</li>
-                <li>{`INT: ${data.intelligence} (${Math.floor(
-                  (data.intelligence - 10) / 2,
+                <li>{`INT: ${card.intelligence} (${Math.floor(
+                  (card.intelligence - 10) / 2,
                 )})`}</li>
-                <li>{`WIS: ${data.wisdom} (${Math.floor(
-                  (data.wisdom - 10) / 2,
+                <li>{`WIS: ${card.wisdom} (${Math.floor(
+                  (card.wisdom - 10) / 2,
                 )})`}</li>
-                <li>{`CHA: ${data.charisma} (${Math.floor(
-                  (data.charisma - 10) / 2,
+                <li>{`CHA: ${card.charisma} (${Math.floor(
+                  (card.charisma - 10) / 2,
                 )})`}</li>
               </ul>
               <hr />
-              <p>Compétences: {data.skills}</p>
-              <p>Sens: {data.senses}</p>
-              <p>Langues: {data.languages}</p>
-              <p>Puissance: {data.dangerLevel}</p>
+              <p>Compétences: {card.skills}</p>
+              <p>Sens: {card.senses}</p>
+              <p>Langues: {card.languages}</p>
+              <p>Puissance: {card.dangerLevel}</p>
             </ScrollArea>
           </TabsContent>
           <TabsContent value="attacks">
             <ScrollArea className="h-[200px]">
-              <p>{data.behaviour}</p>
+              <p>{card.behaviour}</p>
               <hr />
-              <p>{data.actions}</p>
+              <p>{card.actions}</p>
             </ScrollArea>
           </TabsContent>
         </Tabs>
@@ -86,30 +82,32 @@ function DnDnpcCardComponent({ data }: DnDnpcCardProps) {
     </Card>
   );
 }
-type DefaultFlashCardProps = {
-  data: Flashcard;
+type DefaultCardProps = {
+  card: Flashcard;
 };
-function DefaultFlashCard({ data }: DefaultFlashCardProps) {
+function DefaultCard() {
   return (
     <Card className="w-96 h-96 m-1">
       <CardHeader>
-        <CardTitle>{data.title}</CardTitle>
+        <CardTitle>N/A</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea>{data.description}</ScrollArea>
+        <ScrollArea>
+          Cette card n'est actuellement passupportée par Roleet 🤷
+        </ScrollArea>
       </CardContent>
     </Card>
   );
 }
 
-type FlashCardProps = {
-  data: FlashcardUnion;
+type Props = {
+  card: FlashcardTyped;
 };
-export default function FlashCard({ data }: FlashCardProps) {
-  switch (data.type) {
-    case "DnDnpcCard":
-      return <DnDnpcCardComponent data={data as DnDnpcCard} />;
+export default function FlashCard({ card }: Props) {
+  switch (card.type) {
+    case "DndNpcCard":
+      return <DndNpcCard card={card} />;
     default:
-      return <DefaultFlashCard data={data as Flashcard} />;
+      return <DefaultCard />;
   }
 }

@@ -24,7 +24,7 @@ import { type Option, Select } from "../atoms/Select";
 import { EditableField } from "../molecules/EditableField";
 
 type Props = {
-  campaign?: Campaign;
+  campaign?: Pick<Campaign, "players" | "scenarios" | "title" | "bannerUrl">;
 };
 export default function CampaignForm({ campaign }: Props) {
   const [createCampaign] = useCreateCampaignMutation();

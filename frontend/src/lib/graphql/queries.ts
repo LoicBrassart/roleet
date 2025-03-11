@@ -62,36 +62,11 @@ export const GETSCENARIO = gql`
       teaser
       title
       flashcards {
-        ... on Flashcard {
-          id
-          title
-          description
-          type
-        }
-        ... on DnDnpcCard {
-          id
-          title
-          description
-          type
-          species
-          dangerLevel
-          health
-          actions
-          size
-          alignment
-          strength
-          dexterity
-          constitution
-          intelligence
-          wisdom
-          charisma
-          armorClass
-          speed
-          skills
-          senses
-          languages
-          behaviour
-        }
+        id
+        title
+        description
+        type
+        data
       }
       plans {
         id

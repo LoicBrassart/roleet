@@ -7,7 +7,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { FlashcardUnion } from "../types/FlashcardUnion";
 import { Campaign } from "./Campaign";
 import { Flashcard } from "./FlashCard";
 import { Plan } from "./Plan";
@@ -50,12 +49,12 @@ export class Scenario extends BaseEntity {
   )
   plans: Plan[];
 
-  @Field(() => [FlashcardUnion], { nullable: false })
+  @Field(() => [Flashcard], { nullable: false })
   @OneToMany(
     () => Flashcard,
     (flashcard) => flashcard.scenario,
   )
-  flashcards: (typeof FlashcardUnion)[];
+  flashcards: (typeof Flashcard)[];
 
   @Field((_type) => [User], { nullable: false })
   @ManyToMany(

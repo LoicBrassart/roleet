@@ -19,21 +19,21 @@ import FlashcardList from "./FlashcardList";
 import PlanDetail from "./PlanDetail";
 
 type Props = {
-  data: Scenario;
+  scenario: Pick<Scenario, "plans" | "title" | "fullStory" | "flashcards">;
 };
-export default function ScenarioDetail({ data }: Props) {
+export default function ScenarioDetail({ scenario }: Props) {
   const [needle, setNeedle] = useState<string>("");
-  const [currPlan, setCurrPlan] = useState<Plan>(data.plans[0]);
+  const [currPlan, setCurrPlan] = useState<Plan>(scenario.plans[0]);
   const hChangeCardNeedle = (evt: FormEvent<HTMLInputElement>) => {
     setNeedle(evt.currentTarget.value);
   };
   const hChangePlan = (evt: string) => {
-    const newPlan = data.plans.find((plan) => plan.id === evt);
+    const newPlan = scenario.plans.find((plan) => plan.id === evt);
     if (newPlan) setCurrPlan(newPlan);
   };
   return (
     <>
-      <h2>{data.title}</h2>
+      <h2>{scenario.title}</h2>
       <Tabs defaultValue="home">
         <TabsList>
           <TabsTrigger value="home">Home</TabsTrigger>
@@ -41,7 +41,7 @@ export default function ScenarioDetail({ data }: Props) {
           <TabsTrigger value="flashcards">FlashCards</TabsTrigger>
         </TabsList>
         <TabsContent value="home">
-          <Markdown value={data.fullStory} />
+          <Markdown value={scenario.fullStory} />
         </TabsContent>
         <TabsContent value="plans">
           {currPlan && (
@@ -51,14 +51,14 @@ export default function ScenarioDetail({ data }: Props) {
                   <SelectValue placeholder={currPlan.title} />
                 </SelectTrigger>
                 <SelectContent>
-                  {data.plans.map((plan) => (
+                  {scenario.plans.map((plan) => (
                     <SelectItem value={plan.id} key={plan.id}>
                       {plan.title}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <PlanDetail data={currPlan} />
+              <PlanDetail plan={currPlan} />
             </>
           )}
         </TabsContent>
@@ -70,7 +70,7 @@ export default function ScenarioDetail({ data }: Props) {
             className="w-[180px]"
           />
           <FlashcardList
-            data={data.flashcards.filter((fcard) =>
+            data={scenario.flashcards.filter((fcard) =>
               fcard.title.toLowerCase().includes(needle.toLowerCase()),
             )}
           />
