@@ -11,9 +11,10 @@ import {
 } from "@/lib/shadcn/generated/ui/resizable";
 import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
 import type { Plan } from "../lib/graphql/generated/graphql-types";
+import type { Q } from "@/types/queries";
 
 type Props = {
-  plan: Pick<Plan, "title" | "pointsOfInterest">;
+  plan: Q.ScenarioPlan;
 };
 export default function PlanDetail({ plan }: Props) {
   return (

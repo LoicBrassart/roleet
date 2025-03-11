@@ -18,7 +18,7 @@ export const LOGOUT = gql`
   }
 `;
 
-export const GETALLUSERS = gql`
+export const GET_ALL_USERS = gql`
   query getAllUsers {
     getAllUsers {
       id
@@ -52,7 +52,7 @@ export const GETMYSCENARIOS = gql`
   }
 `;
 
-export const GETSCENARIO = gql`
+export const GET_SCENARIO = gql`
   query GetScenario($id: Float!) {
     getScenario(id: $id) {
       id

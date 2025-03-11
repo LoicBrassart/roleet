@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Scenario } from "./Scenario";
+import { GraphQLJSON } from "graphql-scalars";
 
 @ObjectType()
 @Entity()
@@ -34,7 +35,7 @@ export class Flashcard extends BaseEntity {
   )
   scenario!: Scenario;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => GraphQLJSON, { nullable: true })
   @Column("jsonb", { nullable: true })
-  data?: Record<string, any>;
+  data?: Record<string, string | number>;
 }

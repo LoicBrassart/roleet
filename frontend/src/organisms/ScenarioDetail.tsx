@@ -14,16 +14,16 @@ import {
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
 import { type FormEvent, useState } from "react";
-import type { Plan, Scenario } from "../lib/graphql/generated/graphql-types";
 import FlashcardList from "./FlashcardList";
 import PlanDetail from "./PlanDetail";
+import type { Q } from "@/types/queries";
 
 type Props = {
-  scenario: Pick<Scenario, "plans" | "title" | "fullStory" | "flashcards">;
+  scenario: Q.Scenario;
 };
 export default function ScenarioDetail({ scenario }: Props) {
   const [needle, setNeedle] = useState<string>("");
-  const [currPlan, setCurrPlan] = useState<Plan>(scenario.plans[0]);
+  const [currPlan, setCurrPlan] = useState<Q.ScenarioPlan>(scenario.plans[0]);
   const hChangeCardNeedle = (evt: FormEvent<HTMLInputElement>) => {
     setNeedle(evt.currentTarget.value);
   };

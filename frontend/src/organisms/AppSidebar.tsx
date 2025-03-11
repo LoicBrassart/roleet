@@ -18,6 +18,7 @@ import {
 import { Link } from "react-router-dom";
 import CampaignForm from "./CampaignForm";
 import ScenarioForm from "./ScenarioForm";
+import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 
 export default function AppSidebar() {
   return (
@@ -38,8 +39,8 @@ export default function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupLabel>Créer de nouveaux éléments</SidebarGroupLabel>
           <Dialog>
-            <DialogTrigger>
-              <Button>Créer une campagne</Button>
+            <DialogTrigger className={buttonVariants()}>
+              Créer une campagne
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -51,8 +52,8 @@ export default function AppSidebar() {
             </DialogContent>
           </Dialog>
           <Dialog>
-            <DialogTrigger>
-              <Button>Créer un scénario</Button>
+            <DialogTrigger className={buttonVariants()}>
+              Créer un scénario
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

@@ -16,7 +16,7 @@ export default function ScenariosPage() {
     <>
       <ScenarioList
         title="Scenarios"
-        data={data.getAllScenarios as Scenario[]}
+        data={data.getAllScenarios}
       />
     </>
   );
