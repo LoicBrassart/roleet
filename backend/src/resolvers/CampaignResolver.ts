@@ -11,6 +11,7 @@ import {
 } from "type-graphql";
 import { type DeepPartial, In } from "typeorm";
 import { Campaign } from "../entities/Campaign";
+import type { Scenario } from "../entities/Scenario";
 import { User } from "../entities/User";
 import type AuthContext from "../types/AuthContext";
 import { assert } from "console";
@@ -35,7 +36,14 @@ class CampaignResolver {
     assert(ctx.user);
     return await Campaign.find({
       relations: ["scenarios", "players", "storyteller"],
-      // TODO: Filter on storyteller or players === ctx.user
+      where: [
+        {
+          storyteller: { id: ctx.user?.id },
+        },
+        {
+          players: { id: ctx.user?.id },
+        },
+      ],
     });
   }
 
@@ -46,8 +54,14 @@ class CampaignResolver {
     return await Campaign.findOne({
       where: { id },
       relations: ["scenarios", "players", "storyteller"],
-      // TODO: Filter on storyteller or players === ctx.user
     });
+    if (!campaign) return null;
+    if (
+      campaign.storyteller.id === ctx.user?.id ||
+      campaign.players.find((player) => player.id === ctx.user?.id)
+    )
+      return campaign;
+    return null;
   }
 
   @Mutation(() => Campaign)

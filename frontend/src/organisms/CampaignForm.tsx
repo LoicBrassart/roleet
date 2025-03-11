@@ -1,6 +1,7 @@
 import { FormMessage } from "@/atoms/FormMessage";
 import {
   type Campaign,
+  useCreateCampaignMutation,
   useGetAllUsersQuery,
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
@@ -16,15 +17,18 @@ import {
 } from "@/lib/shadcn/generated/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Button } from "../atoms/Button";
 import { type Option, Select } from "../atoms/Select";
 import { EditableField } from "../molecules/EditableField";
 
 type Props = {
-  campaign?: Campaign;
+  campaign?: Pick<Campaign, "players" | "scenarios" | "title" | "bannerUrl">;
 };
 export default function CampaignForm({ campaign }: Props) {
+  const [createCampaign] = useCreateCampaignMutation();
+  const navigate = useNavigate();
   let defaultPlayers: Option[] = [];
   let defaultScenarios: Option[] = [];
 
@@ -37,13 +41,16 @@ export default function CampaignForm({ campaign }: Props) {
     title: z
       .string()
       .min(4, {
-        message: "doit contenir au moins 2 caractères.",
+        message: "doit contenir au moins 4 caractères.",
       })
       .max(64, {
         message: "doit contenir au maximum 64 caractères.",
       }),
     bannerUrl: z
       .string()
+      .min(4, {
+        message: "doit contenir au moins 4 caractères.",
+      })
       .max(256, {
         message: "doit contenir au maximum 256 caractères.",
       })
@@ -65,8 +72,13 @@ export default function CampaignForm({ campaign }: Props) {
     },
   });
 
-  const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) =>
-    console.log(values);
+  // TODO: Fix bannerUrl : mandatory or optional ?
+  const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) => {
+    const { data } = await createCampaign({ variables: { data: values } });
+    if (!data) return;
+    const campId = data.createCampaign.id;
+    navigate(`/campaign/${campId}`);
+  };
 
   return (
     <Form {...form}>

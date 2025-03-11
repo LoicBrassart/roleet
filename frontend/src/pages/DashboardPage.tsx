@@ -50,7 +50,6 @@ export default function DashboardPage() {
                 currentUser && campaign.storyteller.name === currentUser.name,
             ) as Campaign[]
           }
-          addCreateButton
         />
       </section>
       <section>

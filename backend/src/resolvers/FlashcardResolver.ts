@@ -1,5 +1,5 @@
 import { Arg, Field, InputType, Mutation, Resolver } from "type-graphql";
-import { DnDnpcCard, Flashcard } from "../entities/FlashCard";
+import { Flashcard } from "../entities/FlashCard";
 import { Scenario } from "../entities/Scenario";
 
 @InputType()
@@ -73,20 +73,10 @@ class FlashcardResolver {
       const scenario = await Scenario.findOneByOrFail({
         id: flashcardData.scenarioId,
       });
-      let flashcard: Flashcard;
-      switch (flashcardData.type) {
-        case "DnDnpcCard":
-          flashcard = await DnDnpcCard.create({
-            ...flashcardData,
-            scenario,
-          }).save();
-          break;
-        default:
-          flashcard = await Flashcard.create({
-            ...flashcardData,
-            scenario,
-          }).save();
-      }
+      const flashcard = await Flashcard.create({
+        ...flashcardData,
+        scenario,
+      }).save();
       return flashcard;
     } catch (err) {
       throw new Error("Failed to create Flashcard");

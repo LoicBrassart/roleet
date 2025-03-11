@@ -1,6 +1,6 @@
 import { dataSource } from "../../config/db";
 import { Campaign } from "../../entities/Campaign";
-import { DnDnpcCard, Flashcard } from "../../entities/FlashCard";
+import { Flashcard } from "../../entities/FlashCard";
 import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import { Scenario } from "../../entities/Scenario";
@@ -62,20 +62,10 @@ async function generateAndSaveFixtures() {
 
     const savedFlashcards = await Promise.all(
       flashcards.map(async (cardData) => {
-        let card: Flashcard;
-        switch (cardData.type) {
-          case "DnDnpcCard":
-            card = Object.assign(new DnDnpcCard(), {
-              ...cardData,
-              scenario: savedScenarios[cardData.scenarioIndex],
-            });
-            break;
-          default:
-            card = Object.assign(new Flashcard(), {
-              ...cardData,
-              scenario: savedScenarios[cardData.scenarioIndex],
-            });
-        }
+        const card = Object.assign(new Flashcard(), {
+          ...cardData,
+          scenario: savedScenarios[cardData.scenarioIndex],
+        });
         return card.save();
       }),
     );

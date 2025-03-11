@@ -1,6 +1,10 @@
+import type { Scenario } from "@/lib/graphql/generated/graphql-types";
 import { Text } from "../atoms/Text";
 
-export default function ScenarioList({ scenarios }) {
+type Props = {
+  scenarios: Pick<Scenario, "id" | "title">[];
+};
+export default function ScenarioList({ scenarios }: Props) {
   return (
     <ul className="list-disc pl-5">
       {scenarios.map((scenario) => (

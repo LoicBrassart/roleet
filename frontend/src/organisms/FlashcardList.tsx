@@ -1,9 +1,9 @@
-import type { FlashcardUnion } from "../lib/graphql/generated/graphql-types";
+import type { Flashcard } from "../lib/graphql/generated/graphql-types";
 import FlashCard from "../molecules/FlashCard";
 
 type Props = {
   title?: string;
-  data: FlashcardUnion[];
+  data: Flashcard[];
 };
 export default function FlashcardList(props: Props) {
   return (
@@ -12,7 +12,7 @@ export default function FlashcardList(props: Props) {
       <ul className="flex flex-wrap">
         {props.data.map((flashcard) => (
           <li key={flashcard.id}>
-            <FlashCard data={flashcard} />
+            <FlashCard card={flashcard} />
           </li>
         ))}
       </ul>

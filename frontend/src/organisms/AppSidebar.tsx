@@ -1,3 +1,12 @@
+import { Button } from "@/atoms/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/lib/shadcn/generated/ui/dialog";
 import {
   Sidebar,
   SidebarContent,
@@ -7,6 +16,8 @@ import {
   SidebarHeader,
 } from "@/lib/shadcn/generated/ui/sidebar";
 import { Link } from "react-router-dom";
+import CampaignForm from "./CampaignForm";
+import ScenarioForm from "./ScenarioForm";
 
 export default function AppSidebar() {
   return (
@@ -23,6 +34,35 @@ export default function AppSidebar() {
           <SidebarGroupLabel>Pages personnalisées</SidebarGroupLabel>
           <Link to="/dashboard">Dashboard</Link>
           <Link to="/campaigns">Mes Campagnes</Link>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Créer de nouveaux éléments</SidebarGroupLabel>
+          <Dialog>
+            <DialogTrigger>
+              <Button>Créer une campagne</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>D'humeur créatrice ?</DialogTitle>
+              </DialogHeader>
+              <DialogDescription>
+                <CampaignForm />
+              </DialogDescription>
+            </DialogContent>
+          </Dialog>
+          <Dialog>
+            <DialogTrigger>
+              <Button>Créer un scénario</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>D'humeur créatrice ?</DialogTitle>
+              </DialogHeader>
+              <DialogDescription>
+                <ScenarioForm />
+              </DialogDescription>
+            </DialogContent>
+          </Dialog>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />
