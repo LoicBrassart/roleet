@@ -1,6 +1,4 @@
-import {
-  useGetScenarioQuery,
-} from "@/lib/graphql/generated/graphql-types";
+import { useGetScenarioQuery } from "@/lib/graphql/generated/graphql-types";
 import ScenarioDetail from "@/organisms/ScenarioDetail";
 import { useParams } from "react-router-dom";
 

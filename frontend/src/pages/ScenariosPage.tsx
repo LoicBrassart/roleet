@@ -14,10 +14,7 @@ export default function ScenariosPage() {
 
   return (
     <>
-      <ScenarioList
-        title="Scenarios"
-        data={data.getAllScenarios}
-      />
+      <ScenarioList title="Scenarios" data={data.getAllScenarios} />
     </>
   );
 }

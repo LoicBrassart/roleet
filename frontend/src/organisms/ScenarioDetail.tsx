@@ -13,10 +13,10 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
+import type { Q } from "@/types/queries";
 import { type FormEvent, useState } from "react";
 import FlashcardList from "./FlashcardList";
 import PlanDetail from "./PlanDetail";
-import type { Q } from "@/types/queries";
 
 type Props = {
   scenario: Q.Scenario;

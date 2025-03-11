@@ -1,3 +1,4 @@
+import { GraphQLJSON } from "graphql-scalars";
 import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,
@@ -7,7 +8,6 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Scenario } from "./Scenario";
-import { GraphQLJSON } from "graphql-scalars";
 
 @ObjectType()
 @Entity()

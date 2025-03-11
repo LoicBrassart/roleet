@@ -1,5 +1,5 @@
-import FlashCard from "../molecules/FlashCard";
 import type { Q } from "@/types/queries";
+import FlashCard from "../molecules/FlashCard";
 
 type Props = {
   title?: string;

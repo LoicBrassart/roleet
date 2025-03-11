@@ -1,4 +1,5 @@
 import { Button } from "@/atoms/Button";
+import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -18,7 +19,6 @@ import {
 import { Link } from "react-router-dom";
 import CampaignForm from "./CampaignForm";
 import ScenarioForm from "./ScenarioForm";
-import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 
 export default function AppSidebar() {
   return (
