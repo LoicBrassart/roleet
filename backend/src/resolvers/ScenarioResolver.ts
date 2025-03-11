@@ -69,7 +69,6 @@ class ScenarioResolver {
 
       return scenario;
     } catch (err) {
-      console.error(err);
       throw new Error("Failed to create scenario");
     }
   }
@@ -80,7 +79,6 @@ class ScenarioResolver {
       const result = await Scenario.delete(id);
       return result.affected === 1;
     } catch (err) {
-      console.error(err);
       return false;
     }
   }
@@ -108,7 +106,6 @@ class ScenarioResolver {
 
       return true;
     } catch (err) {
-      console.error(err);
       return false;
     }
   }
