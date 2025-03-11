@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const SIGNUP = gql`
   mutation signup($data: NewUserInput!) {
@@ -28,7 +28,7 @@ export const GET_ALL_USERS = gql`
   }
 `;
 
-export const GETALLSCENARIOS = gql`
+export const GET_ALL_SCENARIOS = gql`
   query getAllScenarios {
     getAllScenarios {
       id
@@ -40,7 +40,7 @@ export const GETALLSCENARIOS = gql`
   }
 `;
 
-export const GETMYSCENARIOS = gql`
+export const GET_MY_SCENARIOS = gql`
   query getMyScenarios {
     getMyScenarios {
       id
@@ -84,13 +84,13 @@ export const GET_SCENARIO = gql`
   }
 `;
 
-export const UNSEALSCENARIO = gql`
+export const UNSEAL_SCENARIO = gql`
   mutation unsealScenario($unsealScenarioId: Float!) {
     unsealScenario(id: $unsealScenarioId)
   }
 `;
 
-export const GETMYCAMPAIGNS = gql`
+export const GET_MY_CAMPAIGNS = gql`
   query getMyCampaigns {
     getMyCampaigns {
       id
@@ -112,7 +112,7 @@ export const GETMYCAMPAIGNS = gql`
   }
 `;
 
-export const GETCAMPAIGN = gql`
+export const GET_CAMPAIGN = gql`
   query getCampaign($id: Float!) {
     getCampaign(id: $id) {
       id
@@ -134,7 +134,7 @@ export const GETCAMPAIGN = gql`
   }
 `;
 
-export const CREATECAMPAIGN = gql`
+export const CREATE_CAMPAIGN = gql`
   mutation createCampaign($data: NewCampaignInput!) {
     createCampaign(data: $data) {
       id
@@ -144,7 +144,7 @@ export const CREATECAMPAIGN = gql`
   }
 `;
 
-export const CREATESCENARIO = gql`
+export const CREATE_SCENARIO = gql`
   mutation createScenario($data: NewScenarioInput!) {
     createScenario(data: $data) {
       id
