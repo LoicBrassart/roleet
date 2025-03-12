@@ -29,7 +29,6 @@ class PointOfInterestResolver {
       }).save();
       return poi;
     } catch (err) {
-      console.error(err);
       throw new Error("Failed to create point of interest");
     }
   }
@@ -40,7 +39,6 @@ class PointOfInterestResolver {
       const result = await PointOfInterest.delete(id);
       return result.affected === 1;
     } catch (err) {
-      console.error(err);
       return false;
     }
   }
