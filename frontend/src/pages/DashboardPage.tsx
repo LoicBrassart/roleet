@@ -38,8 +38,8 @@ export default function DashboardPage() {
                 (campaign) =>
                   currentUser &&
                   campaign.players.some(
-                    (player) => player.name === currentUser.name
-                  )
+                    (player) => player.name === currentUser.name,
+                  ),
               )}
             />
             <CampaignList
@@ -48,7 +48,7 @@ export default function DashboardPage() {
                 dataCampaigns?.getMyCampaigns.filter(
                   (campaign) =>
                     currentUser &&
-                    campaign.storyteller.name === currentUser.name
+                    campaign.storyteller.name === currentUser.name,
                 ) ?? []
               }
             />

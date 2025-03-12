@@ -1,6 +1,6 @@
+import type { Q } from "@/types/queries";
 import PlayerList from "../molecules/PlayerList";
 import ScenarioList from "../molecules/ScenarioList";
-import { Q } from "@/types/queries";
 // TODO type props
 type Props = {
   campaign: Q.MyCampaign;

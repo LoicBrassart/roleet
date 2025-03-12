@@ -1,5 +1,3 @@
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Link } from "react-router-dom";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Card,
@@ -9,6 +7,8 @@ import {
   CardTitle,
 } from "@/lib/shadcn/generated/ui/card";
 import type { Q } from "@/types/queries";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Link } from "react-router-dom";
 
 type Props = {
   title: string;

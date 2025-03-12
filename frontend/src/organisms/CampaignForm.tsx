@@ -1,4 +1,6 @@
+import { Button } from "@/atoms/Button";
 import { FormMessage } from "@/atoms/FormMessage";
+import { Select } from "@/atoms/Select";
 import {
   type Campaign,
   useCreateCampaignMutation,
@@ -6,7 +8,7 @@ import {
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
 import { getOptions } from "@/lib/helpers/forms";
-import { formOptionsSchema, type Option } from "@/lib/helpers/zodSchemas";
+import { type Option, formOptionsSchema } from "@/lib/helpers/zodSchemas";
 import {
   Form,
   FormControl,
@@ -15,15 +17,13 @@ import {
   FormItem,
   FormLabel,
 } from "@/lib/shadcn/generated/ui/form";
+import { useUserStore } from "@/lib/zustand/userStore";
+import { EditableField } from "@/molecules/EditableField";
+import type { Q } from "@/types/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button } from "@/atoms/Button";
-import { Select } from "@/atoms/Select";
-import { EditableField } from "@/molecules/EditableField";
-import type { Q } from "@/types/queries";
-import { useUserStore } from "@/lib/zustand/userStore";
 
 type Props = {
   campaign?: Q.MyCampaign;
