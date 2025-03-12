@@ -49,19 +49,24 @@ class CampaignResolver {
   }
 
   @Authorized()
-  @Query(() => Campaign)
+  @Query(() => Campaign, { nullable: true })
   async getCampaign(@Arg("id") id: number, @Ctx() ctx: AuthContext) {
     const campaign = await Campaign.findOne({
       where: { id },
       relations: ["scenarios", "players", "storyteller"],
     });
+
     if (!campaign) return null;
+
+    const userId = Number(ctx.user?.id);
     if (
-      campaign.storyteller.id === ctx.user?.id ||
-      campaign.players.find((player) => player.id === ctx.user?.id)
-    )
-      return campaign;
-    return null;
+      campaign.storyteller.id !== userId &&
+      !campaign.players.some((player) => player.id === userId)
+    ) {
+      return null;
+    }
+
+    return campaign;
   }
 
   @Mutation(() => Campaign)
