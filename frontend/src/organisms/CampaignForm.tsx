@@ -1,12 +1,11 @@
 import { FormMessage } from "@/atoms/FormMessage";
 import {
-  type Campaign,
   useCreateCampaignMutation,
   useGetAllUsersQuery,
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
 import { getOptions } from "@/lib/helpers/forms";
-import { formOptionsSchema } from "@/lib/helpers/zodSchemas";
+import { formOptionsSchema, type Option } from "@/lib/helpers/zodSchemas";
 import {
   Form,
   FormControl,
@@ -19,18 +18,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button } from "../atoms/Button";
-import { type Option, Select } from "../atoms/Select";
-import { EditableField } from "../molecules/EditableField";
+import { Button } from "@/atoms/Button";
+import { Select } from "@/atoms/Select";
+import { EditableField } from "@/molecules/EditableField";
+import type { Q } from "@/types/queries";
+import { useUserStore } from "@/lib/zustand/userStore";
 
 type Props = {
-  campaign?: Pick<Campaign, "players" | "scenarios" | "title" | "bannerUrl">;
+  campaign?: Q.MyCampaign;
 };
 export default function CampaignForm({ campaign }: Props) {
+  const user = useUserStore((state) => state.user);
   const [createCampaign] = useCreateCampaignMutation();
   const navigate = useNavigate();
   let defaultPlayers: Option[] = [];
   let defaultScenarios: Option[] = [];
+
+  if (!user) return <p>User not found</p>;
 
   if (campaign) {
     defaultPlayers = getOptions(campaign.players, "id", "name");
@@ -65,15 +69,15 @@ export default function CampaignForm({ campaign }: Props) {
   const form = useForm({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
-      title: campaign ? campaign.title : "",
-      bannerUrl: campaign ? campaign.bannerUrl : "",
+      title: campaign?.title ?? "",
+      bannerUrl: campaign?.bannerUrl ?? "",
       players: defaultPlayers,
       scenarios: defaultScenarios,
     },
   });
 
   // TODO: Fix bannerUrl : mandatory or optional ?
-  const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) => {
+  const hUpdateCampaign = async (values: z.output<typeof campaignSchema>) => {
     const { data } = await createCampaign({ variables: { data: values } });
     if (!data) return;
     const campId = data.createCampaign.id;
@@ -82,6 +86,7 @@ export default function CampaignForm({ campaign }: Props) {
 
   return (
     <Form {...form}>
+      {/* @ts-ignore: values est transformé pendant l'envoi */}
       <form onSubmit={form.handleSubmit(hUpdateCampaign)} className="space-y-6">
         <EditableField label="Titre" name="title" control={form.control} />
         <EditableField
@@ -103,10 +108,12 @@ export default function CampaignForm({ campaign }: Props) {
                     name="players"
                     control={form.control}
                     isMulti
-                    options={usersData.getAllUsers.map((user) => ({
-                      value: user.id,
-                      label: user.name,
-                    }))}
+                    options={getOptions(
+                      usersData.getAllUsers,
+                      "id",
+                      "name",
+                      (player) => player.id !== user.id,
+                    )}
                     defaultValue={defaultPlayers}
                   />
                 </FormControl>
@@ -132,10 +139,7 @@ export default function CampaignForm({ campaign }: Props) {
                     name="scenarios"
                     control={form.control}
                     isMulti
-                    options={scenData.getMyScenarios.map((scenario) => ({
-                      value: scenario.id,
-                      label: scenario.title,
-                    }))}
+                    options={getOptions(scenData.getMyScenarios, "id", "title")}
                     defaultValue={defaultScenarios}
                   />
                 </FormControl>
