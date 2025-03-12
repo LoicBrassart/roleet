@@ -16,3 +16,8 @@ export const Select = <
 >(
   props: Props<TFieldValues, TName>,
 ) => <ReactSelect {...props} />;
+
+// export type Option<TValue = string, TLabel extends string = string> = {
+//   value: TValue;
+//   label: TLabel;
+// };
