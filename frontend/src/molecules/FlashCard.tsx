@@ -72,22 +72,22 @@ function DndNpcCard({ card }: DndNpcCardProps) {
               <hr />
               <ul className="flex">
                 <li>{`STR: ${card.data.strength} (${Math.floor(
-                  (card.data.strength - 10) / 2
+                  (card.data.strength - 10) / 2,
                 )})`}</li>
                 <li>{`DEX: ${card.data.dexterity} (${Math.floor(
-                  (card.data.dexterity - 10) / 2
+                  (card.data.dexterity - 10) / 2,
                 )})`}</li>
                 <li>{`CON: ${card.data.constitution} (${Math.floor(
-                  (card.data.constitution - 10) / 2
+                  (card.data.constitution - 10) / 2,
                 )})`}</li>
                 <li>{`INT: ${card.data.intelligence} (${Math.floor(
-                  (card.data.intelligence - 10) / 2
+                  (card.data.intelligence - 10) / 2,
                 )})`}</li>
                 <li>{`WIS: ${card.data.wisdom} (${Math.floor(
-                  (card.data.wisdom - 10) / 2
+                  (card.data.wisdom - 10) / 2,
                 )})`}</li>
                 <li>{`CHA: ${card.data.charisma} (${Math.floor(
-                  (card.data.charisma - 10) / 2
+                  (card.data.charisma - 10) / 2,
                 )})`}</li>
               </ul>
               <hr />
