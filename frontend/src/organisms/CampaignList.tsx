@@ -1,19 +1,20 @@
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
-import type { Campaign } from "../lib/graphql/generated/graphql-types";
-import { Button } from "../lib/shadcn/generated/ui/button";
+import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../lib/shadcn/generated/ui/card";
+} from "@/lib/shadcn/generated/ui/card";
+import type { Q } from "@/types/queries";
 
 type Props = {
   title: string;
-  data: Campaign[];
+  data: Q.MyCampaign[];
 };
+
 export default function CampaignList({ title, data }: Props) {
   if (!data.length)
     return (

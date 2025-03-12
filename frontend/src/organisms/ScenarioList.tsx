@@ -3,10 +3,6 @@ import { useUserStore } from "@/lib/zustand/userStore";
 import type { Q } from "@/types/queries";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
-import type {
-  GetAllScenariosQuery,
-  Scenario,
-} from "../lib/graphql/generated/graphql-types";
 import {
   Card,
   CardContent,
@@ -19,7 +15,7 @@ import ModalToOpenScenario from "./ModalToOpenScenario";
 
 type Props = {
   title: string;
-  data: Q.Scenario[];
+  data: Q.AllScenarios;
 };
 export default function ScenarioList({ title, data }: Props) {
   const currentUser = useUserStore((state) => state.user);

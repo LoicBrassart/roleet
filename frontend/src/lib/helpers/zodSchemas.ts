@@ -5,6 +5,8 @@ export const optionSchema = z.object({
   value: z.string(),
 });
 
+export type Option = z.infer<typeof optionSchema>;
+
 export const formOptionsSchema = z.array(
-  optionSchema.transform((val) => val.value),
+  optionSchema.transform((val) => val.value)
 );

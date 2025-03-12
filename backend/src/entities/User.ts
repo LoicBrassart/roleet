@@ -25,7 +25,7 @@ registerEnumType(Roles, {
 export class User extends BaseEntity {
   @Field((_type) => ID)
   @PrimaryGeneratedColumn()
-  readonly id: number;
+  readonly id!: number;
 
   @Field()
   @Column({ unique: true })
@@ -44,18 +44,12 @@ export class User extends BaseEntity {
   roles: Roles[];
 
   @Field((_type) => [Scenario], { nullable: false })
-  @ManyToMany(
-    (_type) => Scenario,
-    (scenario) => scenario.readers,
-  )
+  @ManyToMany((_type) => Scenario, (scenario) => scenario.readers)
   @JoinTable({ name: "scenarioSeals" })
   readScenarios: Scenario[];
 
   @Field((_type) => [Campaign], { nullable: false })
-  @ManyToMany(
-    (_type) => Campaign,
-    (campaign) => campaign.players,
-  )
+  @ManyToMany((_type) => Campaign, (campaign) => campaign.players)
   campaigns: Campaign[];
 
   @Field((_type) => [Campaign], { nullable: false })
@@ -64,7 +58,7 @@ export class User extends BaseEntity {
     (campaignsToLead) => campaignsToLead.storyteller,
     {
       cascade: true,
-    },
+    }
   )
   campaignsToLead: Campaign[];
 }

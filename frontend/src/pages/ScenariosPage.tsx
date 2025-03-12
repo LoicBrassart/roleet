@@ -1,8 +1,5 @@
-import {
-  type Scenario,
-  useGetAllScenariosQuery,
-} from "../lib/graphql/generated/graphql-types";
-import ScenarioList from "../organisms/ScenarioList";
+import { useGetAllScenariosQuery } from "@/lib/graphql/generated/graphql-types";
+import ScenarioList from "@/organisms/ScenarioList";
 
 export default function ScenariosPage() {
   const { loading, error, data } = useGetAllScenariosQuery();

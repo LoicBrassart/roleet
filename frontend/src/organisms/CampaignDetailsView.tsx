@@ -1,9 +1,9 @@
-import type { Campaign } from "@/lib/graphql/generated/graphql-types";
 import PlayerList from "../molecules/PlayerList";
 import ScenarioList from "../molecules/ScenarioList";
+import { Q } from "@/types/queries";
 // TODO type props
 type Props = {
-  campaign: Pick<Campaign, "players" | "scenarios">;
+  campaign: Q.MyCampaign;
 };
 export default function CampaignDetailsView({ campaign }: Props) {
   return (

@@ -4,7 +4,7 @@ import { devtools, persist } from "zustand/middleware";
 import type { Scenario } from "../graphql/generated/graphql-types";
 
 type User = {
-  mail: string;
+  id: string;
   name: string;
   roles: string[];
   readScenarios: string[];
@@ -34,7 +34,7 @@ export const useUserStore = create<UserState>()(
       }),
       {
         name: "user-store",
-      },
-    ),
-  ),
+      }
+    )
+  )
 );

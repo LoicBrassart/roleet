@@ -6,7 +6,7 @@ import {
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
 import { getOptions } from "@/lib/helpers/forms";
-import { formOptionsSchema } from "@/lib/helpers/zodSchemas";
+import { formOptionsSchema, type Option } from "@/lib/helpers/zodSchemas";
 import {
   Form,
   FormControl,
@@ -19,19 +19,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button } from "../atoms/Button";
-import { type Option, Select } from "../atoms/Select";
-import { EditableField } from "../molecules/EditableField";
+import { Button } from "@/atoms/Button";
+import { Select } from "@/atoms/Select";
+import { EditableField } from "@/molecules/EditableField";
+import type { Q } from "@/types/queries";
+import { useUserStore } from "@/lib/zustand/userStore";
 
 type Props = {
-  campaign?: Pick<Campaign, "players" | "scenarios" | "title" | "bannerUrl">;
+  campaign?: Q.MyCampaign;
 };
 export default function CampaignForm({ campaign }: Props) {
+  const user = useUserStore((state) => state.user);
   const [createCampaign] = useCreateCampaignMutation();
   const navigate = useNavigate();
+
+  if (!user) return <p>User not found</p>;
+
   let defaultPlayers: Option[] = [];
   let defaultScenarios: Option[] = [];
-
   if (campaign) {
     defaultPlayers = getOptions(campaign.players, "id", "name");
     defaultScenarios = getOptions(campaign.scenarios, "id", "title");
@@ -65,8 +70,8 @@ export default function CampaignForm({ campaign }: Props) {
   const form = useForm({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
-      title: campaign ? campaign.title : "",
-      bannerUrl: campaign ? campaign.bannerUrl : "",
+      title: campaign?.title ?? "",
+      bannerUrl: campaign?.bannerUrl ?? "",
       players: defaultPlayers,
       scenarios: defaultScenarios,
     },

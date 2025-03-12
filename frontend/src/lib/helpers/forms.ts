@@ -11,14 +11,20 @@ export function getOptions<
   // Value extends keyof T,
   Value extends KeysMatching<T, PropertyKey>,
   // Label extends keyof T,
-  Label extends KeysMatching<T, string>,
+  Label extends KeysMatching<T, string>
 >(
-  arr: T[],
+  arr: readonly T[],
   value: Value,
   label: Label,
+  filter?: Parameters<ReadonlyArray<T>["filter"]>[0]
 ): { value: T[Value]; label: T[Label] }[] {
-  return arr.map((item) => ({
+  let fArr = arr;
+  if (filter) {
+    fArr = arr.filter(filter);
+  }
+  const options = fArr.map((item) => ({
     value: item[value],
     label: item[label],
   }));
+  return options;
 }

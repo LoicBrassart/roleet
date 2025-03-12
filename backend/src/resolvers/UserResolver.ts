@@ -43,20 +43,22 @@ function setCookie(ctx: AuthContext, key: string, value: string) {
   myDate.setTime(expiryTStamp);
   ctx.res.setHeader(
     "Set-Cookie",
-    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`,
+    `${key}=${value};secure;httpOnly;SameSite=Strict;expires=${myDate.toUTCString()}`
   );
 }
+
 function getUserPublicProfile(user: User) {
   return {
-    id: user.id,
+    id: user.id.toString(),
     name: user.name,
     roles: user.roles,
     readScenarios: user.readScenarios.map((scen) => `${scen.id}`),
   };
 }
+
 function getUserTokenContent(user: User) {
   return {
-    id: user.id,
+    id: user.id.toString(),
     mail: user.mail,
     name: user.name,
     roles: user.roles,
@@ -82,7 +84,7 @@ class UserResolver {
 
       const isValid = await argon2.verify(
         user.hashedPassword,
-        userData.password,
+        userData.password
       );
       if (!isValid) throw new Error();
 
@@ -107,7 +109,7 @@ class UserResolver {
   @Mutation(() => String)
   async signup(
     @Arg("data") userData: NewUserInput,
-    @Ctx() context: AuthContext,
+    @Ctx() context: AuthContext
   ) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();

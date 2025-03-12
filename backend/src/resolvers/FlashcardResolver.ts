@@ -4,8 +4,9 @@ import { Scenario } from "../entities/Scenario";
 
 @InputType()
 class NewFlashcardInput implements Partial<Flashcard> {
+  // TODO: Find a more dynamic value for type
   @Field()
-  type: string;
+  type: "DndNpcCard" | "ItemCard";
 
   @Field()
   species: string;

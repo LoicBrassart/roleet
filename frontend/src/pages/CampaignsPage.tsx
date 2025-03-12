@@ -3,7 +3,7 @@ import CampaignList from "@/organisms/CampaignList";
 import {
   type Campaign,
   useGetMyCampaignsQuery,
-} from "../lib/graphql/generated/graphql-types";
+} from "@/lib/graphql/generated/graphql-types";
 
 export default function CampaignsPage() {
   const currentUser = useUserStore((state) => state.user);
@@ -19,24 +19,18 @@ export default function CampaignsPage() {
     <>
       <CampaignList
         title="Mes Campagnes (Joueur)"
-        data={
-          data.getMyCampaigns.filter(
-            (campaign) =>
-              currentUser &&
-              campaign.players.some(
-                (player) => player.name === currentUser.name,
-              ),
-          ) as Campaign[]
-        }
+        data={data.getMyCampaigns.filter(
+          (campaign) =>
+            currentUser &&
+            campaign.players.some((player) => player.name === currentUser.name)
+        )}
       />
       <CampaignList
         title="Mes Campagnes (Meneur)"
-        data={
-          data.getMyCampaigns.filter(
-            (campaign) =>
-              currentUser && campaign.storyteller.name === currentUser.name,
-          ) as Campaign[]
-        }
+        data={data.getMyCampaigns.filter(
+          (campaign) =>
+            currentUser && campaign.storyteller.name === currentUser.name
+        )}
       />
     </>
   );
