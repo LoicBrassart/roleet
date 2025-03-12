@@ -15,73 +15,18 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import type { FlashcardTyped, TDndNpcCard } from "@/types/flashcards";
 
-type DndNpcCardProps = {
-  card: TDndNpcCard;
+type Props = {
+  card: FlashcardTyped;
 };
-function DndNpcCard({ card }: DndNpcCardProps) {
-  return (
-    <Card className="w-96 h-96 m-1">
-      <CardHeader>
-        <CardTitle>{card.title}</CardTitle>
-        <CardDescription>
-          {`${card.species} de taille ${card.size}, ${card.alignment}`}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="description">
-          <TabsList>
-            <TabsTrigger value="description">Description</TabsTrigger>
-            <TabsTrigger value="stats">Stats</TabsTrigger>
-            <TabsTrigger value="attacks">Attacks</TabsTrigger>
-          </TabsList>
-          <TabsContent value="description">
-            <ScrollArea className="h-[200px]">{card.description}</ScrollArea>
-          </TabsContent>
-          <TabsContent value="stats">
-            <ScrollArea className="h-[200px]">
-              <p>Armure: {card.armorClass}</p>
-              <p>Points de vie: {card.health}</p>
-              <p>Vitesse: {card.speed}m</p>
-              <hr />
-              <ul className="flex">
-                <li>{`STR: ${card.strength} (${Math.floor(
-                  (card.strength - 10) / 2,
-                )})`}</li>
-                <li>{`DEX: ${card.dexterity} (${Math.floor(
-                  (card.dexterity - 10) / 2,
-                )})`}</li>
-                <li>{`CON: ${card.constitution} (${Math.floor(
-                  (card.constitution - 10) / 2,
-                )})`}</li>
-                <li>{`INT: ${card.intelligence} (${Math.floor(
-                  (card.intelligence - 10) / 2,
-                )})`}</li>
-                <li>{`WIS: ${card.wisdom} (${Math.floor(
-                  (card.wisdom - 10) / 2,
-                )})`}</li>
-                <li>{`CHA: ${card.charisma} (${Math.floor(
-                  (card.charisma - 10) / 2,
-                )})`}</li>
-              </ul>
-              <hr />
-              <p>Compétences: {card.skills}</p>
-              <p>Sens: {card.senses}</p>
-              <p>Langues: {card.languages}</p>
-              <p>Puissance: {card.dangerLevel}</p>
-            </ScrollArea>
-          </TabsContent>
-          <TabsContent value="attacks">
-            <ScrollArea className="h-[200px]">
-              <p>{card.behaviour}</p>
-              <hr />
-              <p>{card.actions}</p>
-            </ScrollArea>
-          </TabsContent>
-        </Tabs>
-      </CardContent>
-    </Card>
-  );
+export default function FlashCard({ card }: Props) {
+  switch (card.type) {
+    case "DndNpcCard":
+      return <DndNpcCard card={card} />;
+    default:
+      return <DefaultCard />;
+  }
 }
+
 function DefaultCard() {
   return (
     <Card className="w-96 h-96 m-1">
@@ -97,14 +42,70 @@ function DefaultCard() {
   );
 }
 
-type Props = {
-  card: FlashcardTyped;
+type DndNpcCardProps = {
+  card: TDndNpcCard;
 };
-export default function FlashCard({ card }: Props) {
-  switch (card.type) {
-    case "DndNpcCard":
-      return <DndNpcCard card={card} />;
-    default:
-      return <DefaultCard />;
-  }
+function DndNpcCard({ card }: DndNpcCardProps) {
+  return (
+    <Card className="w-96 h-96 m-1">
+      <CardHeader>
+        <CardTitle>{card.title}</CardTitle>
+        <CardDescription>
+          {`${card.data.species} de taille ${card.data.size}, ${card.data.alignment}`}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Tabs defaultValue="description">
+          <TabsList>
+            <TabsTrigger value="description">Description</TabsTrigger>
+            <TabsTrigger value="stats">Stats</TabsTrigger>
+            <TabsTrigger value="attacks">Attacks</TabsTrigger>
+          </TabsList>
+          <TabsContent value="description">
+            <ScrollArea className="h-[200px]">{card.description}</ScrollArea>
+          </TabsContent>
+          <TabsContent value="stats">
+            <ScrollArea className="h-[200px]">
+              <p>Armure: {card.data.armorClass}</p>
+              <p>Points de vie: {card.data.health}</p>
+              <p>Vitesse: {card.data.speed}m</p>
+              <hr />
+              <ul className="flex">
+                <li>{`STR: ${card.data.strength} (${Math.floor(
+                  (card.data.strength - 10) / 2
+                )})`}</li>
+                <li>{`DEX: ${card.data.dexterity} (${Math.floor(
+                  (card.data.dexterity - 10) / 2
+                )})`}</li>
+                <li>{`CON: ${card.data.constitution} (${Math.floor(
+                  (card.data.constitution - 10) / 2
+                )})`}</li>
+                <li>{`INT: ${card.data.intelligence} (${Math.floor(
+                  (card.data.intelligence - 10) / 2
+                )})`}</li>
+                <li>{`WIS: ${card.data.wisdom} (${Math.floor(
+                  (card.data.wisdom - 10) / 2
+                )})`}</li>
+                <li>{`CHA: ${card.data.charisma} (${Math.floor(
+                  (card.data.charisma - 10) / 2
+                )})`}</li>
+              </ul>
+              <hr />
+              <p>Compétences: {card.data.skills}</p>
+              <p>Sens: {card.data.senses}</p>
+              <p>Langues: {card.data.languages}</p>
+              <p>Puissance: {card.data.dangerLevel}</p>
+            </ScrollArea>
+          </TabsContent>
+          <TabsContent value="attacks">
+            <ScrollArea className="h-[200px]">
+              <p>{card.data.behaviour}</p>
+              <hr />
+              <p>{card.data.actions}</p>
+            </ScrollArea>
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+    </Card>
+  );
 }
