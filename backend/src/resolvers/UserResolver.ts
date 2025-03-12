@@ -48,15 +48,16 @@ function setCookie(ctx: AuthContext, key: string, value: string) {
 }
 function getUserPublicProfile(user: User) {
   return {
-    id: user.id,
+    id: user.id.toString(),
     name: user.name,
     roles: user.roles,
     readScenarios: user.readScenarios.map((scen) => `${scen.id}`),
   };
 }
+
 function getUserTokenContent(user: User) {
   return {
-    id: user.id,
+    id: user.id.toString(),
     mail: user.mail,
     name: user.name,
     roles: user.roles,

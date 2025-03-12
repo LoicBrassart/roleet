@@ -25,7 +25,7 @@ registerEnumType(Roles, {
 export class User extends BaseEntity {
   @Field((_type) => ID)
   @PrimaryGeneratedColumn()
-  readonly id: number;
+  readonly id!: number;
 
   @Field()
   @Column({ unique: true })
