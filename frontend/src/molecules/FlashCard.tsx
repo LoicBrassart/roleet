@@ -16,7 +16,7 @@ import {
 import type { FlashcardTyped, TDndNpcCard } from "@/types/flashcards";
 
 type DndNpcCardProps = {
-  card: DndNpcCard;
+  card: TDndNpcCard;
 };
 function DndNpcCard({ card }: DndNpcCardProps) {
   return (
@@ -45,22 +45,22 @@ function DndNpcCard({ card }: DndNpcCardProps) {
               <hr />
               <ul className="flex">
                 <li>{`STR: ${card.strength} (${Math.floor(
-                  (card.strength - 10) / 2,
+                  (card.strength - 10) / 2
                 )})`}</li>
                 <li>{`DEX: ${card.dexterity} (${Math.floor(
-                  (card.dexterity - 10) / 2,
+                  (card.dexterity - 10) / 2
                 )})`}</li>
                 <li>{`CON: ${card.constitution} (${Math.floor(
-                  (card.constitution - 10) / 2,
+                  (card.constitution - 10) / 2
                 )})`}</li>
                 <li>{`INT: ${card.intelligence} (${Math.floor(
-                  (card.intelligence - 10) / 2,
+                  (card.intelligence - 10) / 2
                 )})`}</li>
                 <li>{`WIS: ${card.wisdom} (${Math.floor(
-                  (card.wisdom - 10) / 2,
+                  (card.wisdom - 10) / 2
                 )})`}</li>
                 <li>{`CHA: ${card.charisma} (${Math.floor(
-                  (card.charisma - 10) / 2,
+                  (card.charisma - 10) / 2
                 )})`}</li>
               </ul>
               <hr />

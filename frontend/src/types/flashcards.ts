@@ -4,10 +4,9 @@ import type { Q } from "./queries";
 /*
 Ajouter un nouveau type de flashcards:
 1/ Ajouter un *CardData (description des champs specifiques)
-2/ - Ajouter un *Card
+2/ - Ajouter un T*Card
    - Mettre à jour l'Union FlashcardTyped
 3/ Ajouter un is*Card (type guard)
-4/ Mettre à jour le parser (nouveau case pour "*Card")
 */
 
 /* 1. Types spécifiques à chaque type de Flashcard */
