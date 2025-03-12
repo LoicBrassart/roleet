@@ -39,7 +39,7 @@ export class User extends BaseEntity {
   @Column()
   hashedPassword: string;
 
-  @Field(() => [Roles])
+  @Field(() => [Roles], { defaultValue: [Roles.USER] })
   @Column({ type: "enum", enum: Roles, array: true, default: [Roles.USER] })
   roles: Roles[];
 

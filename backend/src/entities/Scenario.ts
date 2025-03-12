@@ -54,7 +54,7 @@ export class Scenario extends BaseEntity {
     () => Flashcard,
     (flashcard) => flashcard.scenario,
   )
-  flashcards: (typeof Flashcard)[];
+  flashcards: Flashcard[];
 
   @Field((_type) => [User], { nullable: false })
   @ManyToMany(

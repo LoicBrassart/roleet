@@ -22,9 +22,9 @@ export class Campaign extends BaseEntity {
   @Column()
   title!: string;
 
-  @Field({ defaultValue: "" })
-  @Column({ default: "" })
-  bannerUrl: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  bannerUrl?: string;
 
   @Field((_type) => User)
   @ManyToOne(
