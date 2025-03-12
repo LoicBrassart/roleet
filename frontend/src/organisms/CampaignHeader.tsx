@@ -1,7 +1,7 @@
-import type { Campaign } from "@/lib/graphql/generated/graphql-types";
-import { Text } from "../atoms/Text";
+import { Text } from "@/atoms/Text";
+import type { Q } from "@/types/queries";
 type Props = {
-  campaign: Pick<Campaign, "id" | "title" | "storyteller">;
+  campaign: Q.MyCampaign;
 };
 export default function CampaignHeader({ campaign }: Props) {
   return (

@@ -1,10 +1,14 @@
 import { useUserStore } from "@/lib/zustand/userStore";
-import CampaignDetailsView from "../organisms/CampaignDetailsView";
-import CampaignForm from "../organisms/CampaignForm";
-import CampaignHeader from "../organisms/CampaignHeader";
+import CampaignDetailsView from "@/organisms/CampaignDetailsView";
+import CampaignForm from "@/organisms/CampaignForm";
+import CampaignHeader from "@/organisms/CampaignHeader";
+import type { Q } from "@/types/queries";
 
-// TODO type props
-export default function CampaignDetailsLayout({ campaign }) {
+type Props = {
+  campaign: Q.MyCampaign;
+};
+
+export default function CampaignDetailsLayout({ campaign }: Props) {
   const currentUser = useUserStore((state) => state.user);
 
   const isStoryteller = campaign.storyteller.name === currentUser?.name;

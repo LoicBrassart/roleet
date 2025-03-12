@@ -19,7 +19,7 @@ import ModalToOpenScenario from "./ModalToOpenScenario";
 
 type Props = {
   title: string;
-  data: Q.Scenario[];
+  data: Q.AllScenarios;
 };
 export default function ScenarioList({ title, data }: Props) {
   const currentUser = useUserStore((state) => state.user);
