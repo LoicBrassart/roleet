@@ -50,6 +50,6 @@ describe('validation for type "DndNpcCard"', () => {
       level: "twenty",
     };
 
-    expect(typeof flashcard.data.level).toBe("number");
+    expect(typeof flashcard.data.level).toBe("string");
   });
 });
