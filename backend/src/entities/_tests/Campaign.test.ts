@@ -5,6 +5,7 @@ describe("Campaign entity", () => {
   it("should instanciate with minimal inputs", () => {
     const campaign = new Campaign();
 
+    expect(campaign).toBeInstanceOf(Campaign);
     expect(campaign.title).toBeUndefined();
     expect(campaign.storyteller).toBeUndefined();
     expect(campaign.bannerUrl).toBeUndefined();

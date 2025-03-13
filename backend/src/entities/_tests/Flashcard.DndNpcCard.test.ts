@@ -50,7 +50,6 @@ describe('validation for type "DndNpcCard"', () => {
       level: "twenty",
     };
 
-    const isLevelNumber = typeof flashcard.data.level === "number";
-    expect(isLevelNumber).toBeFalsy();
+    expect(typeof flashcard.data.level).toBe("number");
   });
 });
