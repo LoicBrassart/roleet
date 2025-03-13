@@ -35,7 +35,7 @@ describe("PointOfInterestResolver (Unit Test)", () => {
 
     (PointOfInterest.create as jest.Mock).mockReturnValue(poiMock); // Simulation de la méthode create
 
-    const result = await resolver.createPointOfInterest({ data: poiData });
+    const result = await resolver.createPointOfInterest(poiData);
 
     expect(result).toHaveProperty("id");
     expect(result.code).toBe("POI001");
@@ -55,9 +55,9 @@ describe("PointOfInterestResolver (Unit Test)", () => {
       new Error("Plan not found"),
     ); // Simulation d'une erreur si le plan n'est pas trouvé
 
-    await expect(
-      resolver.createPointOfInterest({ data: poiData }),
-    ).rejects.toThrow("Failed to create point of interest");
+    await expect(resolver.createPointOfInterest(poiData)).rejects.toThrow(
+      "Failed to create point of interest",
+    );
   });
 
   it("should delete a PointOfInterest successfully", async () => {
