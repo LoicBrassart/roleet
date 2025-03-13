@@ -7,6 +7,7 @@ import type { ViteUserConfig } from "vitest/config";
 const config: ViteUserConfig = {
   plugins: [react()],
   server: {
+    allowedHosts: ["frontend-dev"],
     host: true,
     watch: {
       usePolling: true,

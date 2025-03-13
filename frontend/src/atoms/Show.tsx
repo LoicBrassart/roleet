@@ -4,6 +4,42 @@ type Props<T> = {
   children: React.ReactNode | ((whenValue: NonNullable<T>) => React.ReactNode);
 };
 
+/**
+ * Conditionally renders children based on the value of the `when` prop.
+ *
+ * If `when` is truthy, the child component will be rendered. If `when` is falsy, the
+ * fallback component will be rendered.
+ *
+ * If `children` is a function, it will be called with the value of `when` as its
+ * argument. Otherwise, `children` will be rendered directly.
+ *
+ * @example
+ * // Renders "Content" because `when` is true
+ * <Show when={true} fallback={<div>Fallback</div>}>
+ *   <div>Content</div>
+ * </Show>
+ *
+ * @example
+ * // Renders "isValid is true" when Math.random() is more than 0.5,
+ * // Otherwise renders "isValid is undefined"
+ * export default function() {
+ *   let isValid: boolean | undefined;
+ *   if (Math.random() > 0.5) {
+ *     isValid = true;
+ *   }
+ *   return (
+ *     <Show when={isValid} fallback={<div>isValid is undefined</div>}>
+ *       {(valid) => <div>isValid is {valid}</div>}
+ *     </Show>
+ *   );
+ * }
+ *
+ * @param {Props<T>} props
+ * @property {T} props.when - The condition to check if the children should be displayed. If it's falsy, the fallback component will be displayed instead.
+ * @property {React.ReactNode} [props.fallback] - The component to display when the condition is not valid.
+ * @property {React.ReactNode | ((whenValue: NonNullable<T>) => React.ReactNode)} props.children - The component to show when the condition is valid. If it's a function, it will be called with the value of the condition as its argument.
+ * @returns {React.ReactNode} The rendered component
+ */
 export function Show<T>({
   children,
   when,
@@ -22,22 +58,3 @@ export function Show<T>({
 
   return fallback;
 }
-
-/**
- * // Renders "Content" because `when` is true
- * <Show when={true} fallback={<div>Fallback</div>}>
- *   <div>Content</div>
- * </Show>
- *
- * // Renders "isValid is true" when Math.random() is more than 0.5,
- * // Otherwise renders "isValid is undefined"
- * let isValid: boolean | undefined;
- * if (Math.random() > 0.5) {
- *   isValid = true;
- * }
- * return (
- *   <Show when={isValid} fallback={<div>isValid is undefined</div>}>
- *     {(valid) => <div>isValid is {valid}</div>}
- *   </Show>
- * );
- */
