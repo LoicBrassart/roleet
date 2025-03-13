@@ -20,7 +20,7 @@ export type Scalars = {
 
 export type Campaign = {
   __typename?: 'Campaign';
-  bannerUrl: Scalars['String']['output'];
+  bannerUrl?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   players: Array<User>;
   scenarios: Array<Scenario>;
@@ -196,7 +196,7 @@ export type Query = {
   __typename?: 'Query';
   getAllScenarios: Array<Scenario>;
   getAllUsers: Array<User>;
-  getCampaign: Campaign;
+  getCampaign?: Maybe<Campaign>;
   getMyCampaigns: Array<Campaign>;
   getMyScenarios: Array<Scenario>;
   getScenario: Scenario;
@@ -300,21 +300,21 @@ export type UnsealScenarioMutation = { __typename?: 'Mutation', unsealScenario: 
 export type GetMyCampaignsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyCampaignsQuery = { __typename?: 'Query', getMyCampaigns: Array<{ __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> }> };
+export type GetMyCampaignsQuery = { __typename?: 'Query', getMyCampaigns: Array<{ __typename?: 'Campaign', id: string, bannerUrl?: string | null, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> }> };
 
 export type GetCampaignQueryVariables = Exact<{
   id: Scalars['Float']['input'];
 }>;
 
 
-export type GetCampaignQuery = { __typename?: 'Query', getCampaign: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> } };
+export type GetCampaignQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl?: string | null, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> } | null };
 
 export type CreateCampaignMutationVariables = Exact<{
   data: NewCampaignInput;
 }>;
 
 
-export type CreateCampaignMutation = { __typename?: 'Mutation', createCampaign: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string } };
+export type CreateCampaignMutation = { __typename?: 'Mutation', createCampaign: { __typename?: 'Campaign', id: string, bannerUrl?: string | null, title: string } };
 
 export type CreateScenarioMutationVariables = Exact<{
   data: NewScenarioInput;
