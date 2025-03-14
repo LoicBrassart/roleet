@@ -2,79 +2,111 @@ import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import PointOfInterestResolver from "../PointOfInterestResolver";
 
-// Mock de la base de données (ici Plan et PointOfInterest)
 jest.mock("../../entities/Plan");
 jest.mock("../../entities/PointOfInterest");
 
-describe("PointOfInterestResolver (Unit Test)", () => {
+describe("PointOfInterestResolver (Unit Tests)", () => {
   let resolver: PointOfInterestResolver;
+  const mockDataPlan = {
+    id: 1,
+    name: "Test Plan",
+  };
+  const mockDataPointOfInterest = {
+    id: 1,
+    code: "POI001",
+    title: "Ancient Door",
+    description: "A mysterious ancient door",
+    plan: mockDataPlan,
+  };
 
   beforeEach(() => {
+    jest.clearAllMocks();
     resolver = new PointOfInterestResolver();
   });
 
-  it("should create a PointOfInterest with valid data", async () => {
-    // Création d'un mock pour Plan
-    const planMock = { id: 1, name: "Test Plan" }; // Valeur du plan mocké
-    (Plan.findOneByOrFail as jest.Mock).mockResolvedValue(planMock);
+  describe("createPointOfInterest", () => {
+    it("should create a PointOfInterest with valid data", async () => {
+      // Mocks & Preparations
+      (Plan.findOneByOrFail as jest.Mock).mockResolvedValue(mockDataPlan);
 
-    const poiData = {
-      code: "POI001",
-      title: "Ancient Door",
-      description: "A mysterious ancient door",
-      planId: 1,
-    };
+      const poiInstance = {
+        ...mockDataPointOfInterest,
+        save: jest.fn().mockResolvedValue(mockDataPointOfInterest),
+      };
+      (PointOfInterest.create as jest.Mock).mockReturnValue(poiInstance);
 
-    // Mock pour PointOfInterest.create
-    const poiMock = {
-      id: 1,
-      ...poiData,
-      plan: planMock,
-      save: jest.fn().mockResolvedValue({ id: 1, ...poiData, plan: planMock }), // Simulation de l'enregistrement de l'objet
-    };
+      // Fonction à lancer
+      const inputData = {
+        ...mockDataPointOfInterest,
+        id: undefined,
+        plan: undefined,
+        planId: 1,
+      };
+      const result = await resolver.createPointOfInterest(inputData);
 
-    (PointOfInterest.create as jest.Mock).mockReturnValue(poiMock); // Simulation de la méthode create
+      // Tests
+      expect(Plan.findOneByOrFail).toHaveBeenCalledWith({
+        id: inputData.planId,
+      });
+      expect(PointOfInterest.create).toHaveBeenCalledWith({
+        ...inputData,
+        plan: mockDataPlan,
+      });
+      expect(poiInstance.save).toHaveBeenCalled();
 
-    const result = await resolver.createPointOfInterest({ data: poiData });
+      expect(result).toEqual(mockDataPointOfInterest);
+      expect(result).toHaveProperty("id");
+      expect(result.code).toBe(mockDataPointOfInterest.code);
+      expect(result.title).toBe(mockDataPointOfInterest.title);
+      expect(result.plan.id).toBe(mockDataPointOfInterest.id);
+    });
 
-    expect(result).toHaveProperty("id");
-    expect(result.code).toBe("POI001");
-    expect(result.title).toBe("Ancient Door");
-    expect(result.plan.id).toBe(1);
+    it("should throw an error when Plan is not found", async () => {
+      // Mocks & Preparations
+      (Plan.findOneByOrFail as jest.Mock).mockRejectedValue(
+        new Error("Plan not found"),
+      );
+
+      // Fonction à lancer
+      const inputData = {
+        ...mockDataPointOfInterest,
+        id: undefined,
+        plan: undefined,
+        planId: 999,
+      };
+      await expect(resolver.createPointOfInterest(inputData)).rejects.toThrow(
+        "Failed to create point of interest",
+      );
+
+      // Tests
+      expect(Plan.findOneByOrFail).toHaveBeenCalledWith({
+        id: inputData.planId,
+      });
+      expect(PointOfInterest.create).not.toHaveBeenCalled();
+    });
   });
 
-  it("should throw an error when the planId is invalid", async () => {
-    const poiData = {
-      code: "POI002",
-      title: "Mystic Gate",
-      description: "A mystical gate",
-      planId: 99999, // ID non valide
-    };
+  describe("deletePointOfInterest", () => {
+    it("should delete a PointOfInterest successfully", async () => {
+      // Mocks & Preparations
+      (PointOfInterest.delete as jest.Mock).mockResolvedValue({ affected: 1 });
 
-    (Plan.findOneByOrFail as jest.Mock).mockRejectedValue(
-      new Error("Plan not found"),
-    ); // Simulation d'une erreur si le plan n'est pas trouvé
+      // Fonction à lancer
+      const result = await resolver.deletePointOfInterest(1);
 
-    await expect(
-      resolver.createPointOfInterest({ data: poiData }),
-    ).rejects.toThrow("Failed to create point of interest");
-  });
+      // Tests
+      expect(result).toBe(true);
+    });
 
-  it("should delete a PointOfInterest successfully", async () => {
-    const poiMock = { id: 1, code: "POI003", title: "Forbidden Portal" };
+    it("should return false when trying to delete a non-existing PointOfInterest", async () => {
+      // Mocks & Preparations
+      (PointOfInterest.delete as jest.Mock).mockResolvedValue({ affected: 0 });
 
-    (PointOfInterest.delete as jest.Mock).mockResolvedValue({ affected: 1 }); // Simulation de la suppression réussie
+      // Fonction à lancer
+      const result = await resolver.deletePointOfInterest(99999);
 
-    const result = await resolver.deletePointOfInterest(1);
-
-    expect(result).toBe(true);
-  });
-
-  it("should return false when trying to delete a non-existing PointOfInterest", async () => {
-    (PointOfInterest.delete as jest.Mock).mockResolvedValue({ affected: 0 }); // Simulation de l'échec de la suppression
-
-    const result = await resolver.deletePointOfInterest(99999); // ID inexistant
-
-    expect(result).toBe(false);
+      // Tests
+      expect(result).toBe(false);
+    });
   });
 });
