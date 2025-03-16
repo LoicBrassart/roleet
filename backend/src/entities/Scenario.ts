@@ -3,7 +3,9 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -15,58 +17,68 @@ import { User } from "./User";
 @Entity()
 @ObjectType()
 export class Scenario extends BaseEntity {
-  @Field((_type) => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 64 })
   title!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 256 })
   teaser!: string;
 
   @Field()
-  @Column()
+  @Column("text")
   fullStory!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  bannerUrl?: string;
+  @Field()
+  @Column({ default: "banner.webp" })
+  bannerUrl: string;
 
   @Field()
-  @Column()
-  credits!: string;
+  @Column({ default: "Non attribué" })
+  credits: string;
 
-  @Field((_type) => [Plan], { nullable: false })
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (user) => user.ownedScenarios,
+    { onDelete: "CASCADE" },
+  )
+  owner!: User;
+
+  @Field(() => [Plan])
   @OneToMany(
-    (_type) => Plan,
+    () => Plan,
     (plan) => plan.scenario,
+    { cascade: true },
+  )
+  plans!: Plan[];
+
+  @Field(() => [Flashcard])
+  @OneToMany(
+    () => Flashcard,
+    (flashcard) => flashcard.scenario,
     {
       cascade: true,
     },
   )
-  plans: Plan[];
+  flashcards!: Flashcard[];
 
-  @Field(() => [Flashcard], { nullable: false })
-  @OneToMany(
-    () => Flashcard,
-    (flashcard) => flashcard.scenario,
-  )
-  flashcards: (typeof Flashcard)[];
-
-  @Field((_type) => [User], { nullable: false })
+  @Field(() => [User])
   @ManyToMany(
-    (_type) => User,
+    () => User,
     (user) => user.readScenarios,
   )
-  readers: User[];
+  @JoinTable({ name: "usersReadScenarios" })
+  readers!: User[];
 
-  @Field((_type) => [Campaign], { nullable: false })
+  @Field(() => [Campaign])
   @ManyToMany(
-    (_type) => Campaign,
+    () => Campaign,
     (campaign) => campaign.scenarios,
   )
-  campaigns: Campaign[];
+  campaigns!: Campaign[];
 }

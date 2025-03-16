@@ -11,7 +11,7 @@ import {
   Resolver,
 } from "type-graphql";
 import { Roles, User } from "../entities/User";
-import type AuthContext from "../types/AuthContext";
+import type CustomContext from "../types/CustomContext";
 
 dotenv.config();
 
@@ -30,13 +30,13 @@ class NewUserInput implements Partial<User> {
 @InputType()
 class UserInput {
   @Field()
-  mail!: string;
+  mail: string;
 
   @Field()
-  password!: string;
+  password: string;
 }
 
-function setCookie(ctx: AuthContext, key: string, value: string) {
+function setCookie(ctx: CustomContext, key: string, value: string) {
   if (!process.env.COOKIE_TTL) throw new Error("Missing ttl conf key!");
   const myDate = new Date();
   const expiryTStamp = myDate.getTime() + Number(process.env.COOKIE_TTL);
@@ -49,7 +49,7 @@ function setCookie(ctx: AuthContext, key: string, value: string) {
 
 function getUserPublicProfile(user: User) {
   return {
-    id: user.id.toString(),
+    id: user.id,
     name: user.name,
     roles: user.roles,
     readScenarios: user.readScenarios.map((scen) => `${scen.id}`),
@@ -58,7 +58,7 @@ function getUserPublicProfile(user: User) {
 
 function getUserTokenContent(user: User) {
   return {
-    id: user.id.toString(),
+    id: user.id,
     mail: user.mail,
     name: user.name,
     roles: user.roles,
@@ -73,7 +73,7 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async login(@Arg("data") userData: UserInput, @Ctx() context: AuthContext) {
+  async login(@Arg("data") userData: UserInput, @Ctx() context: CustomContext) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();
       const user = await User.findOne({
@@ -92,12 +92,12 @@ class UserResolver {
       setCookie(context, "roleetAuthToken", token);
       return JSON.stringify(getUserPublicProfile(user));
     } catch (err) {
-      return err;
+      throw new Error(`Failed to login: ${err.message}`);
     }
   }
 
   @Mutation(() => String)
-  async logout(@Ctx() context: AuthContext) {
+  async logout(@Ctx() context: CustomContext) {
     try {
       setCookie(context, "roleetAuthToken", "");
       return "Goodbye, your auth cookie was cleared";
@@ -109,7 +109,7 @@ class UserResolver {
   @Mutation(() => String)
   async signup(
     @Arg("data") userData: NewUserInput,
-    @Ctx() context: AuthContext,
+    @Ctx() context: CustomContext,
   ) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();

@@ -5,32 +5,48 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from "typeorm";
 import { Plan } from "./Plan";
+import { User } from "./User";
 
 @Entity()
 @ObjectType()
+@Unique(["plan", "code"]) // 👈 Composite key: code must be unique for each plan
 export class PointOfInterest extends BaseEntity {
-  @Field((_type) => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 16 })
   code!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  title?: string;
+  @Field()
+  @Column({ length: 64 })
+  title!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  description?: string;
+  @Field()
+  @Column("text")
+  description!: string;
 
-  @Field((_type) => Plan)
+  @Field(() => Plan)
   @ManyToOne(
-    (_type) => Plan,
+    () => Plan,
     (plan) => plan.pointsOfInterest,
+    {
+      onDelete: "CASCADE",
+    },
   )
   plan!: Plan;
+
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (user) => user.ownedPointsOfInterest,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  owner!: User;
 }

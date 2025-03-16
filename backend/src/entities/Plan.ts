@@ -9,35 +9,34 @@ import {
 } from "typeorm";
 import { PointOfInterest } from "./PointOfInterest";
 import { Scenario } from "./Scenario";
+import { User } from "./User";
 
 @Entity()
 @ObjectType()
 export class Plan extends BaseEntity {
-  @Field((_type) => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  title?: string;
+  @Field()
+  @Column({ length: 64 })
+  title!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  description?: string;
+  @Field()
+  @Column("text")
+  description!: string;
 
   @Field()
   @Column()
   pictureUrl!: string;
 
-  @Field((_type) => [PointOfInterest])
+  @Field(() => [PointOfInterest])
   @OneToMany(
-    (_type) => PointOfInterest,
+    () => PointOfInterest,
     (poi) => poi.plan,
-    {
-      cascade: true,
-    },
+    { cascade: true },
   )
-  pointsOfInterest: PointOfInterest[];
+  pointsOfInterest!: PointOfInterest[];
 
   @Field((_type) => Scenario)
   @ManyToOne(
@@ -45,4 +44,12 @@ export class Plan extends BaseEntity {
     (scenario) => scenario.plans,
   )
   scenario!: Scenario;
+
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (user) => user.ownedPlans,
+    { onDelete: "CASCADE" },
+  )
+  owner!: User;
 }

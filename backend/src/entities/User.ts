@@ -3,18 +3,21 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Campaign } from "./Campaign";
+import { Flashcard } from "./FlashCard";
+import { Plan } from "./Plan";
+import { PointOfInterest } from "./PointOfInterest";
 import { Scenario } from "./Scenario";
 
 export enum Roles {
   ADMIN = "ADMIN",
   USER = "USER",
 }
+
 registerEnumType(Roles, {
   name: "Roles",
   description: "Roles for users in this app",
@@ -23,9 +26,9 @@ registerEnumType(Roles, {
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field((_type) => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
   @Field()
   @Column({ unique: true })
@@ -43,28 +46,64 @@ export class User extends BaseEntity {
   @Column({ type: "enum", enum: Roles, array: true, default: [Roles.USER] })
   roles: Roles[];
 
-  @Field((_type) => [Scenario], { nullable: false })
+  @Field(() => [Scenario])
   @ManyToMany(
-    (_type) => Scenario,
+    () => Scenario,
     (scenario) => scenario.readers,
   )
-  @JoinTable({ name: "scenarioSeals" })
   readScenarios: Scenario[];
 
-  @Field((_type) => [Campaign], { nullable: false })
+  @Field(() => [Campaign])
   @ManyToMany(
-    (_type) => Campaign,
+    () => Campaign,
     (campaign) => campaign.players,
   )
-  campaigns: Campaign[];
+  campaignsToPlay: Campaign[];
 
-  @Field((_type) => [Campaign], { nullable: false })
+  @Field(() => [Campaign])
   @OneToMany(
-    (_type) => Campaign,
+    () => Campaign,
     (campaignsToLead) => campaignsToLead.storyteller,
-    {
-      cascade: true,
-    },
   )
   campaignsToLead: Campaign[];
+
+  @Field(() => [Scenario])
+  @OneToMany(
+    () => Scenario,
+    (scenario) => scenario.owner,
+    { cascade: true },
+  )
+  ownedScenarios: Scenario[];
+
+  @Field(() => [Plan])
+  @OneToMany(
+    () => Plan,
+    (plan) => plan.owner,
+    { cascade: true },
+  )
+  ownedPlans: Plan[];
+
+  @Field(() => [PointOfInterest])
+  @OneToMany(
+    () => PointOfInterest,
+    (poi) => poi.owner,
+    { cascade: true },
+  )
+  ownedPointsOfInterest: PointOfInterest[];
+
+  @Field(() => [Flashcard])
+  @OneToMany(
+    () => Flashcard,
+    (flashcard) => flashcard.owner,
+    { cascade: true },
+  )
+  ownedFlashcards: Flashcard[];
+
+  @Field(() => [Campaign])
+  @OneToMany(
+    () => Campaign,
+    (campaign) => campaign.owner,
+    { cascade: true },
+  )
+  ownedCampaigns: Campaign[];
 }
