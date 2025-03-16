@@ -8,12 +8,12 @@ import {
   Mutation,
   Query,
   Resolver,
-} from "type-graphql";
-import { type DeepPartial, In } from "typeorm";
-import { Campaign } from "../entities/Campaign";
-import type { Scenario } from "../entities/Scenario";
-import { User } from "../entities/User";
-import type AuthContext from "../types/AuthContext";
+} from 'type-graphql';
+import { type DeepPartial, In } from 'typeorm';
+import { Campaign } from '../entities/Campaign';
+import type { Scenario } from '../entities/Scenario';
+import { User } from '../entities/User';
+import type CustomContext from '../types/CustomContext';
 
 @InputType()
 class NewCampaignInput implements Partial<Campaign> {
@@ -34,9 +34,9 @@ class NewCampaignInput implements Partial<Campaign> {
 class CampaignResolver {
   @Authorized()
   @Query(() => [Campaign])
-  async getMyCampaigns(@Ctx() ctx: AuthContext) {
+  async getMyCampaigns(@Ctx() ctx: CustomContext) {
     return await Campaign.find({
-      relations: ["scenarios", "players", "storyteller"],
+      relations: ['scenarios', 'players', 'storyteller'],
       where: [
         {
           storyteller: { id: ctx.user?.id },
@@ -50,10 +50,10 @@ class CampaignResolver {
 
   @Authorized()
   @Query(() => Campaign, { nullable: true })
-  async getCampaign(@Arg("id") id: number, @Ctx() ctx: AuthContext) {
+  async getCampaign(@Arg('id') id: number, @Ctx() ctx: CustomContext) {
     const campaign = await Campaign.findOne({
       where: { id },
-      relations: ["scenarios", "players", "storyteller"],
+      relations: ['scenarios', 'players', 'storyteller'],
     });
 
     if (!campaign) return null;
@@ -71,8 +71,8 @@ class CampaignResolver {
 
   @Mutation(() => Campaign)
   async createCampaign(
-    @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: AuthContext,
+    @Arg('data') campaignData: NewCampaignInput,
+    @Ctx() ctx: CustomContext
   ) {
     try {
       if (!ctx.user) throw new Error();
@@ -86,7 +86,7 @@ class CampaignResolver {
       return campaign;
     } catch (err) {
       console.error(err);
-      throw new Error("Failed to create campaign");
+      throw new Error('Failed to create campaign');
     }
   }
 }

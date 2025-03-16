@@ -1,13 +1,14 @@
-import { GraphQLJSON } from "graphql-scalars";
-import { Field, ID, ObjectType } from "type-graphql";
+import { GraphQLJSON } from 'graphql-scalars';
+import { Field, ID, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { Scenario } from "./Scenario";
+} from 'typeorm';
+import { Scenario } from './Scenario';
+import { User } from './User';
 
 @ObjectType()
 @Entity()
@@ -28,14 +29,15 @@ export class Flashcard extends BaseEntity {
   @Column()
   type!: string;
 
+  @Field((_type) => User)
+  @ManyToOne((_type) => User, (storyteller) => storyteller.ownedScenarios)
+  owner!: User;
+
   @Field(() => Scenario)
-  @ManyToOne(
-    () => Scenario,
-    (scenario) => scenario.flashcards,
-  )
+  @ManyToOne(() => Scenario, (scenario) => scenario.flashcards)
   scenario!: Scenario;
 
   @Field(() => GraphQLJSON, { nullable: true })
-  @Column("jsonb", { nullable: true })
+  @Column('jsonb', { nullable: true })
   data?: Record<string, string | number>;
 }

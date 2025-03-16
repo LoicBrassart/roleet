@@ -196,7 +196,7 @@ export type Query = {
   __typename?: 'Query';
   getAllScenarios: Array<Scenario>;
   getAllUsers: Array<User>;
-  getCampaign: Campaign;
+  getCampaign?: Maybe<Campaign>;
   getMyCampaigns: Array<Campaign>;
   getMyScenarios: Array<Scenario>;
   getScenario: Scenario;
@@ -226,6 +226,7 @@ export type Scenario = {
   flashcards: Array<Flashcard>;
   fullStory: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  owner: User;
   plans: Array<Plan>;
   readers: Array<User>;
   teaser: Scalars['String']['output'];
@@ -240,6 +241,7 @@ export type User = {
   id: Scalars['ID']['output'];
   mail: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  ownedScenarios: Array<Scenario>;
   readScenarios: Array<Scenario>;
   roles: Array<Roles>;
 };
@@ -307,7 +309,7 @@ export type GetCampaignQueryVariables = Exact<{
 }>;
 
 
-export type GetCampaignQuery = { __typename?: 'Query', getCampaign: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> } };
+export type GetCampaignQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> } | null };
 
 export type CreateCampaignMutationVariables = Exact<{
   data: NewCampaignInput;
