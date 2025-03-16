@@ -43,5 +43,5 @@ export class Flashcard extends BaseEntity {
 
   @Field(() => GraphQLJSON)
   @Column("jsonb", { nullable: false, default: {} })
-  data!: Record<string, unknown>;
+  data!: Record<string, unknown>; // TODO: Find a way to better specify this structure related to type
 }
