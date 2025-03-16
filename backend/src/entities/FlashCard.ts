@@ -30,15 +30,23 @@ export class Flashcard extends BaseEntity {
   type!: string;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.ownedFlashcards, {
-    onDelete: "CASCADE",
-  })
+  @ManyToOne(
+    () => User,
+    (user) => user.ownedFlashcards,
+    {
+      onDelete: "CASCADE",
+    },
+  )
   owner!: User;
 
   @Field(() => Scenario)
-  @ManyToOne(() => Scenario, (scenario) => scenario.flashcards, {
-    onDelete: "CASCADE",
-  })
+  @ManyToOne(
+    () => Scenario,
+    (scenario) => scenario.flashcards,
+    {
+      onDelete: "CASCADE",
+    },
+  )
   scenario!: Scenario;
 
   @Field(() => GraphQLJSON)
