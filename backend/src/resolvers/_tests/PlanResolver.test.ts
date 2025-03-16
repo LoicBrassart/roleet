@@ -29,7 +29,7 @@ describe("PlanResolver (Unit Tests)", () => {
     it("should create a Plan with valid data", async () => {
       // Mocks & Preparations
       (Scenario.findOneByOrFail as jest.Mock).mockResolvedValue(
-        mockDataScenario,
+        mockDataScenario
       );
 
       const planInstance = {
@@ -68,7 +68,7 @@ describe("PlanResolver (Unit Tests)", () => {
     it("should throw an error when Scenario is not found", async () => {
       // Mocks & Preparations
       (Scenario.findOneByOrFail as jest.Mock).mockRejectedValue(
-        new Error("Scenario not found"),
+        new Error("Scenario not found")
       );
 
       // Fonction à lancer
@@ -79,7 +79,7 @@ describe("PlanResolver (Unit Tests)", () => {
         scenarioId: 999,
       };
       await expect(resolver.createPlan(inputData)).rejects.toThrow(
-        "Failed to create Plan",
+        "Failed to create Plan"
       );
 
       // Tests
