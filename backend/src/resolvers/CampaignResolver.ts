@@ -8,12 +8,12 @@ import {
   Mutation,
   Query,
   Resolver,
-} from 'type-graphql';
-import { type DeepPartial, In } from 'typeorm';
-import { Campaign } from '../entities/Campaign';
-import type { Scenario } from '../entities/Scenario';
-import { User } from '../entities/User';
-import type CustomContext from '../types/CustomContext';
+} from "type-graphql";
+import { type DeepPartial, In } from "typeorm";
+import { Campaign } from "../entities/Campaign";
+import type { Scenario } from "../entities/Scenario";
+import { User } from "../entities/User";
+import type CustomContext from "../types/CustomContext";
 
 @InputType()
 class NewCampaignInput implements Partial<Campaign> {
@@ -35,49 +35,50 @@ class CampaignResolver {
   @Authorized()
   @Query(() => [Campaign])
   async getMyCampaigns(@Ctx() ctx: CustomContext) {
-    return await Campaign.find({
-      relations: ['scenarios', 'players', 'storyteller'],
-      where: [
-        {
-          storyteller: { id: ctx.user?.id },
-        },
-        {
-          players: { id: ctx.user?.id },
-        },
-      ],
-    });
+    return await Campaign.createQueryBuilder("campaign")
+      .leftJoinAndSelect("campaign.scenarios", "scenario")
+      .leftJoinAndSelect("campaign.players", "player")
+      .leftJoinAndSelect("campaign.storyteller", "storyteller")
+      .where("campaign.storytellerId = :userId", { userId: ctx.user?.id })
+      .orWhere("player.id = :userId", { userId: ctx.user?.id })
+      .getMany();
   }
 
   @Authorized()
   @Query(() => Campaign, { nullable: true })
-  async getCampaign(@Arg('id') id: number, @Ctx() ctx: CustomContext) {
+  async getCampaign(@Arg("id") id: string, @Ctx() ctx: CustomContext) {
+    if (!ctx.user)
+      throw new Error("You must be authenticated to search for Campaigns");
+    const userId = ctx.user.id;
+
     const campaign = await Campaign.findOne({
       where: { id },
-      relations: ['scenarios', 'players', 'storyteller'],
+      relations: ["scenarios", "players", "storyteller"],
     });
 
-    if (!campaign) return null;
+    if (!campaign) throw new Error("Campaign not found");
 
-    const userId = Number(ctx.user?.id);
     if (
-      campaign.storyteller.id !== userId &&
-      !campaign.players.some((player) => player.id === userId)
+      campaign.storyteller.id === userId ||
+      campaign.owner.id === userId ||
+      campaign.players.some((player) => player.id === userId)
     ) {
-      return null;
+      return campaign;
     }
-
-    return campaign;
+    throw new Error("You don't have the right to view this Campaign");
   }
 
   @Mutation(() => Campaign)
   async createCampaign(
-    @Arg('data') campaignData: NewCampaignInput,
-    @Ctx() ctx: CustomContext
+    @Arg("data") campaignData: NewCampaignInput,
+    @Ctx() ctx: CustomContext,
   ) {
     try {
-      if (!ctx.user) throw new Error();
+      if (!ctx.user) throw new Error("User not authenticated");
+
       const campaign = Campaign.create(campaignData as DeepPartial<Campaign>);
       campaign.storyteller = ctx.user;
+      campaign.owner = ctx.user;
       const players = await User.findBy({ id: In(campaignData.players) });
       campaign.players = players;
 
@@ -85,8 +86,7 @@ class CampaignResolver {
 
       return campaign;
     } catch (err) {
-      console.error(err);
-      throw new Error('Failed to create campaign');
+      throw new Error(`Failed to create campaign: ${err}`);
     }
   }
 }

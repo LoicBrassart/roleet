@@ -4,8 +4,10 @@ import { useParams } from "react-router-dom";
 
 export default function ScenarioPage() {
   const { id } = useParams();
+  if (!id) throw new Error("Missing id!");
+
   const { loading, error, data } = useGetScenarioQuery({
-    variables: { id: Number(id) },
+    variables: { id },
   });
 
   if (error) return <p>Oops, something went awry...</p>;

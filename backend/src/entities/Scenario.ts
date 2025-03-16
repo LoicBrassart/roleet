@@ -1,64 +1,84 @@
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Campaign } from './Campaign';
-import { Flashcard } from './FlashCard';
-import { Plan } from './Plan';
-import { User } from './User';
+} from "typeorm";
+import { Campaign } from "./Campaign";
+import { Flashcard } from "./FlashCard";
+import { Plan } from "./Plan";
+import { User } from "./User";
 
 @Entity()
 @ObjectType()
 export class Scenario extends BaseEntity {
-  @Field((_type) => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 64 })
   title!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 256 })
   teaser!: string;
 
   @Field()
-  @Column()
+  @Column("text")
   fullStory!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  bannerUrl?: string;
+  @Field()
+  @Column({ default: "banner.webp" })
+  bannerUrl: string;
 
   @Field()
-  @Column()
-  credits!: string;
+  @Column({ default: "Non attribué" })
+  credits: string;
 
-  @Field((_type) => User)
-  @ManyToOne((_type) => User, (storyteller) => storyteller.ownedScenarios)
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (user) => user.ownedScenarios,
+    { onDelete: "CASCADE" },
+  )
   owner!: User;
 
-  @Field((_type) => [Plan], { nullable: false })
-  @OneToMany((_type) => Plan, (plan) => plan.scenario, {
-    cascade: true,
-  })
-  plans: Plan[];
+  @Field(() => [Plan])
+  @OneToMany(
+    () => Plan,
+    (plan) => plan.scenario,
+    { cascade: true },
+  )
+  plans!: Plan[];
 
-  @Field(() => [Flashcard], { nullable: false })
-  @OneToMany(() => Flashcard, (flashcard) => flashcard.scenario)
-  flashcards: (typeof Flashcard)[];
+  @Field(() => [Flashcard])
+  @OneToMany(
+    () => Flashcard,
+    (flashcard) => flashcard.scenario,
+    {
+      cascade: true,
+    },
+  )
+  flashcards!: Flashcard[];
 
-  @Field((_type) => [User], { nullable: false })
-  @ManyToMany((_type) => User, (user) => user.readScenarios)
-  readers: User[];
+  @Field(() => [User])
+  @ManyToMany(
+    () => User,
+    (user) => user.readScenarios,
+  )
+  @JoinTable({ name: "usersReadScenarios" })
+  readers!: User[];
 
-  @Field((_type) => [Campaign], { nullable: false })
-  @ManyToMany((_type) => Campaign, (campaign) => campaign.scenarios)
-  campaigns: Campaign[];
+  @Field(() => [Campaign])
+  @ManyToMany(
+    () => Campaign,
+    (campaign) => campaign.scenarios,
+  )
+  campaigns!: Campaign[];
 }

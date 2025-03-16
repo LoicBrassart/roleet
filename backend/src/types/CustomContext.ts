@@ -1,5 +1,5 @@
-import type { Request, Response } from 'express';
-import type { User } from '../entities/User';
+import type { Request, Response } from "express";
+import type { User } from "../entities/User";
 
 export default interface CustomContext {
   req: Request;

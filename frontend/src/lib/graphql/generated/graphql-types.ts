@@ -22,6 +22,7 @@ export type Campaign = {
   __typename?: 'Campaign';
   bannerUrl: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  owner: User;
   players: Array<User>;
   scenarios: Array<Scenario>;
   storyteller: User;
@@ -30,9 +31,10 @@ export type Campaign = {
 
 export type Flashcard = {
   __typename?: 'Flashcard';
-  data?: Maybe<Scalars['JSON']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
+  data: Scalars['JSON']['output'];
+  description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  owner: User;
   scenario: Scenario;
   title: Scalars['String']['output'];
   type: Scalars['String']['output'];
@@ -82,22 +84,22 @@ export type MutationCreateScenarioArgs = {
 
 
 export type MutationDeleteFlashcardArgs = {
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 };
 
 
 export type MutationDeletePlanArgs = {
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 };
 
 
 export type MutationDeletePointOfInterestArgs = {
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 };
 
 
 export type MutationDeleteScenarioArgs = {
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 };
 
 
@@ -112,7 +114,7 @@ export type MutationSignupArgs = {
 
 
 export type MutationUnsealScenarioArgs = {
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type NewCampaignInput = {
@@ -123,40 +125,25 @@ export type NewCampaignInput = {
 };
 
 export type NewFlashcardInput = {
-  actions: Scalars['String']['input'];
-  alignment: Scalars['String']['input'];
-  armorClass: Scalars['Float']['input'];
-  behaviour: Scalars['String']['input'];
-  charisma: Scalars['Float']['input'];
-  constitution: Scalars['Float']['input'];
-  dangerLevel: Scalars['Float']['input'];
-  dexterity: Scalars['Float']['input'];
-  health: Scalars['String']['input'];
-  intelligence: Scalars['Float']['input'];
-  languages: Scalars['String']['input'];
-  scenarioId: Scalars['Float']['input'];
-  senses: Scalars['String']['input'];
-  size: Scalars['String']['input'];
-  skills: Scalars['String']['input'];
-  species: Scalars['String']['input'];
-  speed: Scalars['String']['input'];
-  strength: Scalars['Float']['input'];
+  data?: InputMaybe<Scalars['JSON']['input']>;
+  description: Scalars['String']['input'];
+  scenarioId: Scalars['ID']['input'];
+  title: Scalars['String']['input'];
   type: Scalars['String']['input'];
-  wisdom: Scalars['Float']['input'];
 };
 
 export type NewPlanInput = {
-  description?: InputMaybe<Scalars['String']['input']>;
+  description: Scalars['String']['input'];
   pictureUrl: Scalars['String']['input'];
-  scenarioId: Scalars['Float']['input'];
-  title?: InputMaybe<Scalars['String']['input']>;
+  scenarioId: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type NewPointOfInterestInput = {
   code: Scalars['String']['input'];
-  description?: InputMaybe<Scalars['String']['input']>;
-  planId: Scalars['Float']['input'];
-  title?: InputMaybe<Scalars['String']['input']>;
+  description: Scalars['String']['input'];
+  planId: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type NewScenarioInput = {
@@ -175,21 +162,23 @@ export type NewUserInput = {
 
 export type Plan = {
   __typename?: 'Plan';
-  description?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  owner: User;
   pictureUrl: Scalars['String']['output'];
   pointsOfInterest: Array<PointOfInterest>;
   scenario: Scenario;
-  title?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export type PointOfInterest = {
   __typename?: 'PointOfInterest';
   code: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  owner: User;
   plan: Plan;
-  title?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
 };
 
 export type Query = {
@@ -204,12 +193,12 @@ export type Query = {
 
 
 export type QueryGetCampaignArgs = {
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 };
 
 
 export type QueryGetScenarioArgs = {
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 };
 
 /** Roles for users in this app */
@@ -220,7 +209,7 @@ export enum Roles {
 
 export type Scenario = {
   __typename?: 'Scenario';
-  bannerUrl?: Maybe<Scalars['String']['output']>;
+  bannerUrl: Scalars['String']['output'];
   campaigns: Array<Campaign>;
   credits: Scalars['String']['output'];
   flashcards: Array<Flashcard>;
@@ -235,12 +224,16 @@ export type Scenario = {
 
 export type User = {
   __typename?: 'User';
-  campaigns: Array<Campaign>;
   campaignsToLead: Array<Campaign>;
+  campaignsToPlay: Array<Campaign>;
   hashedPassword: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   mail: Scalars['String']['output'];
   name: Scalars['String']['output'];
+  ownedCampaigns: Array<Campaign>;
+  ownedFlashcards: Array<Flashcard>;
+  ownedPlans: Array<Plan>;
+  ownedPointsOfInterest: Array<PointOfInterest>;
   ownedScenarios: Array<Scenario>;
   readScenarios: Array<Scenario>;
   roles: Array<Roles>;
@@ -278,22 +271,22 @@ export type GetAllUsersQuery = { __typename?: 'Query', getAllUsers: Array<{ __ty
 export type GetAllScenariosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllScenariosQuery = { __typename?: 'Query', getAllScenarios: Array<{ __typename?: 'Scenario', id: string, title: string, teaser: string, bannerUrl?: string | null, credits: string }> };
+export type GetAllScenariosQuery = { __typename?: 'Query', getAllScenarios: Array<{ __typename?: 'Scenario', id: string, title: string, teaser: string, bannerUrl: string, credits: string }> };
 
 export type GetMyScenariosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyScenariosQuery = { __typename?: 'Query', getMyScenarios: Array<{ __typename?: 'Scenario', id: string, title: string, teaser: string, bannerUrl?: string | null, credits: string }> };
+export type GetMyScenariosQuery = { __typename?: 'Query', getMyScenarios: Array<{ __typename?: 'Scenario', id: string, title: string, teaser: string, bannerUrl: string, credits: string }> };
 
 export type GetScenarioQueryVariables = Exact<{
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 }>;
 
 
-export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl?: string | null, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'Flashcard', id: string, title: string, description?: string | null, type: string, data?: any | null }>, plans: Array<{ __typename?: 'Plan', id: string, title?: string | null, description?: string | null, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title?: string | null, description?: string | null }> }> } };
+export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl: string, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'Flashcard', id: string, title: string, description: string, type: string, data: any }>, plans: Array<{ __typename?: 'Plan', id: string, title: string, description: string, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title: string, description: string }> }> } };
 
 export type UnsealScenarioMutationVariables = Exact<{
-  unsealScenarioId: Scalars['Float']['input'];
+  unsealScenarioId: Scalars['String']['input'];
 }>;
 
 
@@ -305,7 +298,7 @@ export type GetMyCampaignsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetMyCampaignsQuery = { __typename?: 'Query', getMyCampaigns: Array<{ __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> }> };
 
 export type GetCampaignQueryVariables = Exact<{
-  id: Scalars['Float']['input'];
+  id: Scalars['String']['input'];
 }>;
 
 
@@ -323,7 +316,7 @@ export type CreateScenarioMutationVariables = Exact<{
 }>;
 
 
-export type CreateScenarioMutation = { __typename?: 'Mutation', createScenario: { __typename?: 'Scenario', id: string, title: string, teaser: string, fullStory: string, bannerUrl?: string | null, credits: string } };
+export type CreateScenarioMutation = { __typename?: 'Mutation', createScenario: { __typename?: 'Scenario', id: string, title: string, teaser: string, fullStory: string, bannerUrl: string, credits: string } };
 
 
 export const SignupDocument = gql`
@@ -546,7 +539,7 @@ export type GetMyScenariosLazyQueryHookResult = ReturnType<typeof useGetMyScenar
 export type GetMyScenariosSuspenseQueryHookResult = ReturnType<typeof useGetMyScenariosSuspenseQuery>;
 export type GetMyScenariosQueryResult = Apollo.QueryResult<GetMyScenariosQuery, GetMyScenariosQueryVariables>;
 export const GetScenarioDocument = gql`
-    query GetScenario($id: Float!) {
+    query GetScenario($id: String!) {
   getScenario(id: $id) {
     id
     bannerUrl
@@ -610,7 +603,7 @@ export type GetScenarioLazyQueryHookResult = ReturnType<typeof useGetScenarioLaz
 export type GetScenarioSuspenseQueryHookResult = ReturnType<typeof useGetScenarioSuspenseQuery>;
 export type GetScenarioQueryResult = Apollo.QueryResult<GetScenarioQuery, GetScenarioQueryVariables>;
 export const UnsealScenarioDocument = gql`
-    mutation unsealScenario($unsealScenarioId: Float!) {
+    mutation unsealScenario($unsealScenarioId: String!) {
   unsealScenario(id: $unsealScenarioId)
 }
     `;
@@ -694,7 +687,7 @@ export type GetMyCampaignsLazyQueryHookResult = ReturnType<typeof useGetMyCampai
 export type GetMyCampaignsSuspenseQueryHookResult = ReturnType<typeof useGetMyCampaignsSuspenseQuery>;
 export type GetMyCampaignsQueryResult = Apollo.QueryResult<GetMyCampaignsQuery, GetMyCampaignsQueryVariables>;
 export const GetCampaignDocument = gql`
-    query getCampaign($id: Float!) {
+    query getCampaign($id: String!) {
   getCampaign(id: $id) {
     id
     bannerUrl

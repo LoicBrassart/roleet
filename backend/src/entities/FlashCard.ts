@@ -1,43 +1,47 @@
-import { GraphQLJSON } from 'graphql-scalars';
-import { Field, ID, ObjectType } from 'type-graphql';
+import { GraphQLJSON } from "graphql-scalars";
+import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-} from 'typeorm';
-import { Scenario } from './Scenario';
-import { User } from './User';
+} from "typeorm";
+import { Scenario } from "./Scenario";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
 export class Flashcard extends BaseEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 64 })
   title!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  description?: string;
+  @Field()
+  @Column("text")
+  description!: string;
 
-  @Field(() => String)
-  @Column()
+  @Field()
+  @Column({ length: 32 })
   type!: string;
 
-  @Field((_type) => User)
-  @ManyToOne((_type) => User, (storyteller) => storyteller.ownedScenarios)
+  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.ownedFlashcards, {
+    onDelete: "CASCADE",
+  })
   owner!: User;
 
   @Field(() => Scenario)
-  @ManyToOne(() => Scenario, (scenario) => scenario.flashcards)
+  @ManyToOne(() => Scenario, (scenario) => scenario.flashcards, {
+    onDelete: "CASCADE",
+  })
   scenario!: Scenario;
 
-  @Field(() => GraphQLJSON, { nullable: true })
-  @Column('jsonb', { nullable: true })
-  data?: Record<string, string | number>;
+  @Field(() => GraphQLJSON)
+  @Column("jsonb", { nullable: false, default: {} })
+  data!: Record<string, unknown>;
 }

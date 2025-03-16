@@ -26,7 +26,7 @@ export default function ModalToOpenScenario({ scenario }: Props) {
 
   const hUnseal = async () => {
     const { data } = await unseal({
-      variables: { unsealScenarioId: Number(scenario.id) },
+      variables: { unsealScenarioId: scenario.id },
     });
     const result = data?.unsealScenario;
     if (result) {

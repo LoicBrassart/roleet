@@ -1,4 +1,3 @@
-import { IsOwner } from '../middlewares/isOwner';
 import {
   Arg,
   Authorized,
@@ -9,11 +8,12 @@ import {
   Query,
   Resolver,
   UseMiddleware,
-} from 'type-graphql';
-import type { DeepPartial } from 'typeorm';
-import { Scenario } from '../entities/Scenario';
-import { User } from '../entities/User';
-import type CustomContext from '../types/CustomContext';
+} from "type-graphql";
+import type { DeepPartial } from "typeorm";
+import { Scenario } from "../entities/Scenario";
+import { User } from "../entities/User";
+import { IsOwner } from "../middlewares/isOwner";
+import type CustomContext from "../types/CustomContext";
 
 @InputType()
 class NewScenarioInput {
@@ -37,20 +37,27 @@ class NewScenarioInput {
 class ScenarioResolver {
   @Query(() => [Scenario])
   async getAllScenarios() {
-    return await Scenario.find({ relations: ['plans', 'flashcards'] });
+    return await Scenario.find({
+      relations: ["plans", "flashcards", "campaigns"],
+    });
   }
 
   @Authorized()
   @Query(() => [Scenario])
   async getMyScenarios(@Ctx() ctx: CustomContext) {
-    return await Scenario.find({
-      where: { readers: { id: ctx.user?.id } },
-      relations: ['plans', 'flashcards'],
-    });
+    try {
+      if (!ctx.user) throw new Error("You must be authenticated to use this");
+      return await Scenario.find({
+        where: { readers: { id: ctx.user.id } },
+        relations: ["plans", "flashcards"],
+      });
+    } catch (err) {
+      throw new Error("Failed to create scenario");
+    }
   }
 
   @Query(() => Scenario)
-  async getScenario(@Arg('id') id: number) {
+  async getScenario(@Arg("id") id: string) {
     return await Scenario.findOne({
       where: { id },
       relations: {
@@ -64,43 +71,44 @@ class ScenarioResolver {
 
   @Authorized()
   @Mutation(() => Scenario)
-  async createScenario(@Arg('data') scenarioData: NewScenarioInput) {
+  async createScenario(@Arg("data") scenarioData: NewScenarioInput) {
     try {
       const scenario = Scenario.create(scenarioData as DeepPartial<Scenario>);
       await scenario.save();
 
       return scenario;
     } catch (err) {
-      console.error(err);
-      throw new Error('Failed to create scenario');
+      throw new Error("Failed to create scenario");
     }
   }
 
   @Authorized()
   @UseMiddleware(IsOwner(Scenario))
   @Mutation(() => Boolean)
-  async deleteScenario(@Arg('id') id: number) {
+  async deleteScenario(@Arg("id") id: string) {
     try {
       const result = await Scenario.delete(id);
-      return result.affected === 1;
+      if (result.affected === 0) {
+        throw new Error(`${id} not found`);
+      }
+      return true;
     } catch (err) {
-      console.error(err);
-      return false;
+      throw new Error(`Failed to delete Scenario: ${err.message}`);
     }
   }
 
   @Authorized()
   @Mutation(() => Boolean)
-  async unsealScenario(@Arg('id') id: number, @Ctx() ctx: CustomContext) {
+  async unsealScenario(@Arg("id") id: string, @Ctx() ctx: CustomContext) {
     try {
       const userId = ctx.user?.id;
-      if (!userId) throw new Error('Unauthorized');
+      if (!userId) throw new Error("Unauthorized");
 
       const scenario = await Scenario.findOne({
         where: { id },
-        relations: ['readers'],
+        relations: ["readers"],
       });
-      if (!scenario) throw new Error('Scenario not found');
+      if (!scenario) throw new Error("Scenario not found");
 
       if (scenario.readers.some((user) => user.id === userId)) {
         return true;
@@ -112,8 +120,7 @@ class ScenarioResolver {
 
       return true;
     } catch (err) {
-      console.error(err);
-      return false;
+      throw new Error(`Failed to unseal Scenario: ${err.message}`);
     }
   }
 }
