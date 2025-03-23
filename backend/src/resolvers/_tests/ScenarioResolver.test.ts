@@ -1,5 +1,5 @@
-import ScenarioResolver from "../ScenarioResolver";
 import { Scenario } from "../../entities/Scenario";
+import ScenarioResolver from "../ScenarioResolver";
 
 jest.mock("../../entities/Scenario");
 
