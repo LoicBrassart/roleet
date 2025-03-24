@@ -7,14 +7,14 @@ class NewPointOfInterestInput implements Partial<PointOfInterest> {
   @Field()
   code: string;
 
-  @Field({ nullable: true })
-  title?: string;
-
-  @Field({ nullable: true })
-  description?: string;
+  @Field()
+  title: string;
 
   @Field()
-  planId: number;
+  description: string;
+
+  @Field()
+  planId: string;
 }
 
 @Resolver(PointOfInterest)
@@ -29,19 +29,20 @@ class PointOfInterestResolver {
       }).save();
       return poi;
     } catch (err) {
-      console.error(err);
       throw new Error("Failed to create point of interest");
     }
   }
 
   @Mutation(() => Boolean)
-  async deletePointOfInterest(@Arg("id") id: number) {
+  async deletePointOfInterest(@Arg("id") id: string) {
     try {
       const result = await PointOfInterest.delete(id);
-      return result.affected === 1;
+      if (result.affected === 0) {
+        throw new Error(`${id} not found`);
+      }
+      return true;
     } catch (err) {
-      console.error(err);
-      return false;
+      throw new Error(`Failed to delete PoI: ${err.message}`);
     }
   }
 }

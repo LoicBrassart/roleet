@@ -14,32 +14,44 @@ import { User } from "./User";
 @Entity()
 @ObjectType()
 export class Campaign extends BaseEntity {
-  @Field((_type) => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @Field(() => ID)
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 64 })
   title!: string;
 
-  @Field({ defaultValue: "" })
-  @Column({ default: "" })
-  bannerUrl: string;
+  @Field()
+  @Column({ default: "banner.webp" })
+  bannerUrl!: string;
 
-  @Field((_type) => User)
+  @Field(() => User)
   @ManyToOne(
-    (_type) => User,
-    (storyteller) => storyteller.campaignsToLead,
+    () => User,
+    (user) => user.ownedCampaigns,
+    { onDelete: "CASCADE" },
+  )
+  owner!: User;
+
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (user) => user.campaignsToLead,
+    {
+      onDelete: "SET NULL",
+      nullable: true,
+    },
   )
   storyteller!: User;
 
-  @Field((_type) => [User], { nullable: false })
+  @Field(() => [User])
   @ManyToMany(
-    (_type) => User,
-    (user) => user.campaigns,
+    () => User,
+    (user) => user.campaignsToPlay,
   )
   @JoinTable({ name: "campaignPlayers" })
-  players: User[];
+  players!: User[];
 
   @Field((_type) => [Scenario], { nullable: false })
   @ManyToMany(

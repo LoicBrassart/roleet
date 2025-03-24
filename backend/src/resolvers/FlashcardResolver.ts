@@ -1,69 +1,24 @@
-import { Arg, Field, InputType, Mutation, Resolver } from "type-graphql";
+import { GraphQLJSON } from "graphql-scalars";
+import { Arg, Field, ID, InputType, Mutation, Resolver } from "type-graphql";
 import { Flashcard } from "../entities/FlashCard";
 import { Scenario } from "../entities/Scenario";
 
 @InputType()
 class NewFlashcardInput implements Partial<Flashcard> {
-  // TODO: Find a more dynamic value for type
   @Field()
-  type: "DndNpcCard" | "ItemCard";
+  title: string;
 
   @Field()
-  species: string;
+  description: string;
 
   @Field()
-  size: string;
+  type: string;
 
-  @Field()
-  alignment: string;
+  @Field(() => ID)
+  scenarioId: string;
 
-  @Field()
-  armorClass: number;
-
-  @Field()
-  health: string;
-
-  @Field()
-  speed: string;
-
-  @Field()
-  strength: number;
-
-  @Field()
-  dexterity: number;
-
-  @Field()
-  constitution: number;
-
-  @Field()
-  intelligence: number;
-
-  @Field()
-  wisdom: number;
-
-  @Field()
-  charisma: number;
-
-  @Field()
-  skills: string;
-
-  @Field()
-  senses: string;
-
-  @Field()
-  languages: string;
-
-  @Field()
-  dangerLevel: number;
-
-  @Field()
-  behaviour: string;
-
-  @Field()
-  actions: string;
-
-  @Field()
-  scenarioId: number;
+  @Field(() => GraphQLJSON, { nullable: true })
+  data: Record<string, unknown>;
 }
 
 @Resolver(Flashcard)
@@ -80,19 +35,20 @@ class FlashcardResolver {
       }).save();
       return flashcard;
     } catch (err) {
-      console.error(err);
       throw new Error("Failed to create Flashcard");
     }
   }
 
   @Mutation(() => Boolean)
-  async deleteFlashcard(@Arg("id") id: number) {
+  async deleteFlashcard(@Arg("id") id: string) {
     try {
       const result = await Flashcard.delete(id);
-      return result.affected === 1;
+      if (result.affected === 0) {
+        throw new Error(`${id} not found`);
+      }
+      return true;
     } catch (err) {
-      console.error(err);
-      return false;
+      throw new Error(`Failed to delete Flashcard: ${err.message}`);
     }
   }
 }

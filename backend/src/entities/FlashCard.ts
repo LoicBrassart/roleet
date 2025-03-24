@@ -8,34 +8,48 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Scenario } from "./Scenario";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
 export class Flashcard extends BaseEntity {
   @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  readonly id!: number;
+  @PrimaryGeneratedColumn("uuid")
+  readonly id!: string;
 
   @Field()
-  @Column()
+  @Column({ length: 64 })
   title!: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  description?: string;
+  @Field()
+  @Column("text")
+  description!: string;
 
-  @Field(() => String)
-  @Column()
+  @Field()
+  @Column({ length: 32 })
   type!: string;
+
+  @Field(() => User)
+  @ManyToOne(
+    () => User,
+    (user) => user.ownedFlashcards,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  owner!: User;
 
   @Field(() => Scenario)
   @ManyToOne(
     () => Scenario,
     (scenario) => scenario.flashcards,
+    {
+      onDelete: "CASCADE",
+    },
   )
   scenario!: Scenario;
 
-  @Field(() => GraphQLJSON, { nullable: true })
-  @Column("jsonb", { nullable: true })
-  data?: Record<string, string | number>;
+  @Field(() => GraphQLJSON)
+  @Column("jsonb", { nullable: false, default: {} })
+  data!: Record<string, unknown>; // TODO: Find a way to better specify this structure related to type
 }

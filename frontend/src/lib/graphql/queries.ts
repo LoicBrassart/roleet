@@ -53,7 +53,7 @@ export const GET_MY_SCENARIOS = gql`
 `;
 
 export const GET_SCENARIO = gql`
-  query GetScenario($id: Float!) {
+  query GetScenario($id: String!) {
     getScenario(id: $id) {
       id
       bannerUrl
@@ -85,7 +85,7 @@ export const GET_SCENARIO = gql`
 `;
 
 export const UNSEAL_SCENARIO = gql`
-  mutation unsealScenario($unsealScenarioId: Float!) {
+  mutation unsealScenario($unsealScenarioId: String!) {
     unsealScenario(id: $unsealScenarioId)
   }
 `;
@@ -113,7 +113,7 @@ export const GET_MY_CAMPAIGNS = gql`
 `;
 
 export const GET_CAMPAIGN = gql`
-  query getCampaign($id: Float!) {
+  query getCampaign($id: String!) {
     getCampaign(id: $id) {
       id
       bannerUrl

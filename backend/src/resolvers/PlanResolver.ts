@@ -4,17 +4,17 @@ import { Scenario } from "../entities/Scenario";
 
 @InputType()
 class NewPlanInput implements Partial<Plan> {
-  @Field({ nullable: true })
-  title?: string;
+  @Field()
+  title: string;
 
-  @Field({ nullable: true })
-  description?: string;
+  @Field()
+  description: string;
 
   @Field()
   pictureUrl: string;
 
   @Field()
-  scenarioId: number;
+  scenarioId: string;
 }
 
 @Resolver(Plan)
@@ -31,18 +31,19 @@ class PlanResolver {
       }).save();
       return plan;
     } catch (err) {
-      console.error(err);
       throw new Error("Failed to create Plan");
     }
   }
 
   @Mutation(() => Boolean)
-  async deletePlan(@Arg("id") id: number) {
+  async deletePlan(@Arg("id") id: string) {
     try {
       const result = await Plan.delete(id);
-      return result.affected === 1;
+      if (result.affected === 0) {
+        throw new Error(`${id} not found`);
+      }
+      return true;
     } catch (err) {
-      console.error(err);
       return false;
     }
   }

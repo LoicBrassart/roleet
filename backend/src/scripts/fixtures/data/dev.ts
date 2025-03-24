@@ -49,31 +49,31 @@ Chaque gobelin possède 18 pa.
 const plans = [
   {
     title: "L'antre des gobelins",
-    description: undefined,
+    description: "",
     pictureUrl: "map-antre-gobelins.png",
     scenarioIndex: 0,
   },
   {
     title: "1er étage",
-    description: undefined,
+    description: "",
     pictureUrl: "1er-etage.png",
     scenarioIndex: 1,
   },
   {
     title: "Second étage",
-    description: undefined,
+    description: "",
     pictureUrl: "2nd-etage.png",
     scenarioIndex: 1,
   },
   {
     title: "Rez de chaussée",
-    description: undefined,
+    description: "",
     pictureUrl: "rez-de-chaussee.png",
     scenarioIndex: 1,
   },
   {
     title: "Sous Sol",
-    description: undefined,
+    description: "",
     pictureUrl: "sous-sol.png",
     scenarioIndex: 1,
   },

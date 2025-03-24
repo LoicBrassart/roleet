@@ -4,8 +4,9 @@ import CampaignDetailsLayout from "../templates/CampaignDetailsLayout";
 
 export default function CampaignDetails() {
   const { id } = useParams();
+  if (!id) throw new Error("Missing id");
   const { loading, error, data } = useGetCampaignQuery({
-    variables: { id: Number(id) },
+    variables: { id },
   });
 
   if (error) return <p>Oops, something went awry...</p>;
