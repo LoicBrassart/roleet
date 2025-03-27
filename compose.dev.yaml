@@ -88,6 +88,21 @@ services:
       - ./files/src:/app/src/
       - ./persist/files-dev:/app/public
 
+  realtime-dev:
+    <<: *baseService
+    container_name: realtime-dev
+    build:
+      context: ./realtime
+      dockerfile: Dockerfile.dev
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://realtime-dev:4000/health'|| exit 1",
+        ]
+    volumes:
+      - ./realtime/src:/app/src/
+
   frontend-dev:
     <<: *baseService
     container_name: frontend-dev
@@ -107,6 +122,7 @@ services:
       - ./frontend/src:/app/src/
     environment:
       VITE_API_URL: ${VITE_API_URL}
+      VITE_WS_URL: ${VITE_WS_URL}
 
   codegen-dev:
     <<: *baseService

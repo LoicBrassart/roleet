@@ -1,4 +1,5 @@
 import type { Message } from "@/lib/graphql/generated/graphql-types";
+import { useSocket } from "@/lib/hooks/useSocket";
 import {
   Tooltip,
   TooltipContent,
@@ -12,6 +13,8 @@ type Props = {
 };
 
 export default function Chat({ title, data }: Props) {
+  const { isConnected } = useSocket();
+
   if (!data.length)
     return (
       <>
@@ -22,7 +25,9 @@ export default function Chat({ title, data }: Props) {
 
   return (
     <>
-      <h2>{title}</h2>
+      <h2>
+        {title} ({isConnected ? "🟢" : "🔴"})
+      </h2>
       <ul className="gap-4 border">
         {data.map((message) => {
           return (

@@ -1,0 +1,28 @@
+{
+  "name": "graphql-api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "nodemon --exec ts-node -- ./src/index.ts",
+    "start": "echo 'TODO: Run prod command'",
+    "unit-tests": "echo 'TODO: Run Unit Tests'",
+    "integration-tests": "echo 'TODO: Run Integration Tests'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^20.14.9",
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
