@@ -6,8 +6,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./User";
 import { Campaign } from "./Campaign";
+import { User } from "./User";
 
 @Entity()
 @ObjectType()
@@ -29,14 +29,22 @@ export class Message extends BaseEntity {
   createdAt!: Date;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.ownedPointsOfInterest, {
-    onDelete: "CASCADE",
-  })
+  @ManyToOne(
+    () => User,
+    (user) => user.ownedPointsOfInterest,
+    {
+      onDelete: "CASCADE",
+    },
+  )
   owner!: User;
 
   @Field(() => Campaign)
-  @ManyToOne(() => Campaign, (campaign) => campaign.messages, {
-    onDelete: "CASCADE",
-  })
+  @ManyToOne(
+    () => Campaign,
+    (campaign) => campaign.messages,
+    {
+      onDelete: "CASCADE",
+    },
+  )
   campaign!: Campaign;
 }

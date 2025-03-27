@@ -2,11 +2,11 @@ import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
 import { Campaign } from "../entities/Campaign";
 import { Flashcard } from "../entities/FlashCard";
+import { Message } from "../entities/Message";
 import { Plan } from "../entities/Plan";
 import { PointOfInterest } from "../entities/PointOfInterest";
 import { Scenario } from "../entities/Scenario";
 import { User } from "../entities/User";
-import { Message } from "../entities/Message";
 
 dotenv.config();
 const { DB_HOST, DB_USER, DB_DATABASE, DB_PASSWORD, DB_PORT } = process.env;

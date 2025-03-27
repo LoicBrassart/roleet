@@ -1,4 +1,4 @@
-import { Message } from "@/lib/graphql/generated/graphql-types";
+import type { Message } from "@/lib/graphql/generated/graphql-types";
 import {
   Tooltip,
   TooltipContent,
