@@ -6,12 +6,21 @@ import { Plan } from "../entities/Plan";
 import { PointOfInterest } from "../entities/PointOfInterest";
 import { Scenario } from "../entities/Scenario";
 import { User } from "../entities/User";
+import { Message } from "../entities/Message";
 
 dotenv.config();
 const { DB_HOST, DB_USER, DB_DATABASE, DB_PASSWORD, DB_PORT } = process.env;
 
 export const dataSource = new DataSource({
-  entities: [User, Scenario, Plan, PointOfInterest, Flashcard, Campaign],
+  entities: [
+    User,
+    Scenario,
+    Plan,
+    PointOfInterest,
+    Flashcard,
+    Campaign,
+    Message,
+  ],
 
   type: "postgres",
   host: DB_HOST,

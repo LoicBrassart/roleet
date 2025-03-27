@@ -130,6 +130,12 @@ export const GET_CAMPAIGN = gql`
         id
         name
       }
+      messages {
+        id
+        channel
+        content
+        createdAt
+      }
     }
   }
 `;
@@ -153,6 +159,17 @@ export const CREATE_SCENARIO = gql`
       fullStory
       bannerUrl
       credits
+    }
+  }
+`;
+
+export const GET_ALL_MESSAGES = gql`
+  query getAllMessages {
+    getAllMessages {
+      id
+      channel
+      content
+      createdAt
     }
   }
 `;

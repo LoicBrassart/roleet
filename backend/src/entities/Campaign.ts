@@ -6,10 +6,12 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Scenario } from "./Scenario";
 import { User } from "./User";
+import { Message } from "./Message";
 
 @Entity()
 @ObjectType()
@@ -27,37 +29,27 @@ export class Campaign extends BaseEntity {
   bannerUrl!: string;
 
   @Field(() => User)
-  @ManyToOne(
-    () => User,
-    (user) => user.ownedCampaigns,
-    { onDelete: "CASCADE" },
-  )
+  @ManyToOne(() => User, (user) => user.ownedCampaigns, { onDelete: "CASCADE" })
   owner!: User;
 
   @Field(() => User)
-  @ManyToOne(
-    () => User,
-    (user) => user.campaignsToLead,
-    {
-      onDelete: "SET NULL",
-      nullable: true,
-    },
-  )
+  @ManyToOne(() => User, (user) => user.campaignsToLead, {
+    onDelete: "SET NULL",
+    nullable: true,
+  })
   storyteller!: User;
 
   @Field(() => [User])
-  @ManyToMany(
-    () => User,
-    (user) => user.campaignsToPlay,
-  )
+  @ManyToMany(() => User, (user) => user.campaignsToPlay)
   @JoinTable({ name: "campaignPlayers" })
   players!: User[];
 
   @Field((_type) => [Scenario], { nullable: false })
-  @ManyToMany(
-    (_type) => Scenario,
-    (scenario) => scenario.campaigns,
-  )
+  @ManyToMany((_type) => Scenario, (scenario) => scenario.campaigns)
   @JoinTable({ name: "campaignScenarios" })
   scenarios: Scenario[];
+
+  @Field(() => [Message])
+  @OneToMany(() => Message, (msg) => msg.campaign, { cascade: true })
+  messages!: Message[];
 }

@@ -11,6 +11,7 @@ import PlanResolver from "./resolvers/PlanResolver";
 import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
 import ScenarioResolver from "./resolvers/ScenarioResolver";
 import UserResolver from "./resolvers/UserResolver";
+import MessageResolver from "./resolvers/MessageResolver";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ const start = async () => {
       PointOfInterestResolver,
       FlashcardResolver,
       CampaignResolver,
+      MessageResolver,
     ],
     authChecker: ({ context }, neededRoles) => {
       if (!context.user) return false;
@@ -33,7 +35,7 @@ const start = async () => {
       if (userRoles.includes("ADMIN")) return true;
 
       return !!neededRoles.filter((roleCandidate) =>
-        userRoles.includes(roleCandidate),
+        userRoles.includes(roleCandidate)
       ).length;
     },
   });

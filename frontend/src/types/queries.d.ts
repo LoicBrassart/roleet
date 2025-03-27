@@ -1,5 +1,6 @@
 import type {
   GetAllScenariosQuery,
+  GetCampaignQuery,
   GetMyCampaignsQuery,
   GetScenarioQuery,
 } from "@/lib/graphql/generated/graphql-types";
@@ -8,6 +9,6 @@ declare namespace Q {
   type ScenarioPlan = Scenario["plans"][number];
   type ScenarioFlashcard = Scenario["flashcards"][number];
   type AllScenarios = GetAllScenariosQuery["getAllScenarios"];
-  type MyCampaign = GetMyCampaignsQuery["getMyCampaigns"][number];
+  type Campaign = GetCampaignQuery["getCampaign"];
 }
 export type { Q };
