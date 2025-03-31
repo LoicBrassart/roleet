@@ -1,3 +1,4 @@
+import { Input } from "@/atoms/Input";
 import type { Message } from "@/lib/graphql/generated/graphql-types";
 import { useSocket } from "@/lib/hooks/useSocket";
 import {
@@ -6,14 +7,29 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/lib/shadcn/generated/ui/tooltip";
+import type { FormEvent } from "react";
 
 type Props = {
   title: string;
-  data: Omit<Message, "campaign" | "owner">[];
+  data: Omit<Message, "campaign" | "owner">[]; // TODO: Remove this Omit, bypassing a back technicality for now
 };
 
 export default function Chat({ title, data }: Props) {
-  const { isConnected } = useSocket();
+  const { socket, isConnected } = useSocket();
+
+  const hSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (!socket) return;
+
+    const form = evt.currentTarget;
+    const input = form.elements.namedItem("msg") as HTMLInputElement;
+    const message = input.value.trim();
+
+    if (message) {
+      socket.emit("message", { content: message });
+      input.value = "";
+    }
+  };
 
   if (!data.length)
     return (
@@ -50,6 +66,10 @@ export default function Chat({ title, data }: Props) {
           );
         })}
       </ul>
+      <form onSubmit={hSubmit}>
+        <input type="text" name="msg" placeholder="Message..." />
+        <input type="submit" value="Envoyer" />
+      </form>
     </>
   );
 }

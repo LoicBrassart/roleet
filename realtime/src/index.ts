@@ -17,10 +17,17 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  console.info("a user connected");
+  // TODO: Check authentication (as in backend, via JWT ?)
+
+  socket.on("message", (payload) => {
+    console.info(payload.content);
+    // TODO: Redispatch to whole playgroup
+    // TODO: Record in database
+  });
 
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.info("user disconnected");
   });
 });
 
