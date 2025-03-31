@@ -7,15 +7,35 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/lib/shadcn/generated/ui/tooltip";
-import type { FormEvent } from "react";
+import { useUserStore } from "@/lib/zustand/userStore";
+import { type FormEvent, useEffect, useState } from "react";
 
 type Props = {
   title: string;
+  room: string;
   data: Omit<Message, "campaign" | "owner">[]; // TODO: Remove this Omit, bypassing a back technicality for now
 };
 
-export default function Chat({ title, data }: Props) {
+export default function Chat({ title, data, room }: Props) {
   const { socket, isConnected } = useSocket();
+  const currentUser = useUserStore((state) => state.user);
+  const [messages, setMessages] = useState(data);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.on("message", (payload) => {
+      setMessages((oldMessages) => [
+        ...oldMessages,
+        {
+          channel: room,
+          ...payload,
+        },
+      ]);
+    });
+  }, [socket]);
+
+  if (!currentUser) return <p>Connectez vous pour accéder au Chat</p>;
 
   const hSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -26,7 +46,11 @@ export default function Chat({ title, data }: Props) {
     const message = input.value.trim();
 
     if (message) {
-      socket.emit("message", { content: message });
+      socket.emit("message", {
+        room,
+        content: message,
+        userId: currentUser.id,
+      });
       input.value = "";
     }
   };
@@ -45,7 +69,7 @@ export default function Chat({ title, data }: Props) {
         {title} ({isConnected ? "🟢" : "🔴"})
       </h2>
       <ul className="gap-4 border">
-        {data.map((message) => {
+        {messages.map((message) => {
           return (
             <li key={message.id} className="w-96">
               <TooltipProvider>

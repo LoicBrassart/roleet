@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { createServer } from "node:http";
 import cors from "cors";
 import express from "express";
@@ -18,12 +19,22 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
   console.info("a user connected");
+
+  const fakeRoom = "zert-zert-zert-zert"; // TODO: Remove this bouchon
+  socket.join(fakeRoom);
+
   // TODO: Check authentication (as in backend, via JWT ?)
 
   socket.on("message", (payload) => {
-    console.info(payload.content);
-    // TODO: Redispatch to whole playgroup
     // TODO: Record in database
+    // wtf how did i forget I'd have to contact my graphql api ? -_-
+
+    io.to(fakeRoom).to(payload.room).emit("message", {
+      content: payload.content,
+      userId: payload.userId,
+      id: randomUUID(),
+      createdAt: Date.now(),
+    });
   });
 
   socket.on("disconnect", () => {
