@@ -56,6 +56,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCampaign: Campaign;
   createFlashcard: Flashcard;
+  createMessage: Message;
   createPlan: Plan;
   createPointOfInterest: PointOfInterest;
   createScenario: Scenario;
@@ -77,6 +78,11 @@ export type MutationCreateCampaignArgs = {
 
 export type MutationCreateFlashcardArgs = {
   data: NewFlashcardInput;
+};
+
+
+export type MutationCreateMessageArgs = {
+  data: NewMessageInput;
 };
 
 
@@ -142,6 +148,12 @@ export type NewFlashcardInput = {
   scenarioId: Scalars['ID']['input'];
   title: Scalars['String']['input'];
   type: Scalars['String']['input'];
+};
+
+export type NewMessageInput = {
+  channel: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  ownerId: Scalars['String']['input'];
 };
 
 export type NewPlanInput = {
