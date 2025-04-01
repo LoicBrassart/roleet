@@ -26,15 +26,8 @@ async function generateAndSaveFixtures() {
     //   entities.push({ name: x.name, tableName: x.tableName })
     // );
     // console.log(entities);
-    // TODO: Clean DB without listing all entities manually
 
-    await dataSource.manager.delete(Campaign, {});
-    await dataSource.manager.delete(User, {});
-    await dataSource.manager.delete(Message, {});
-    await dataSource.manager.delete(Flashcard, {});
-    await dataSource.manager.delete(PointOfInterest, {});
-    await dataSource.manager.delete(Plan, {});
-    await dataSource.manager.delete(Scenario, {});
+    await dataSource.synchronize(true);
 
     const savedUsers = await Promise.all(
       users.map(async (userData) => {
