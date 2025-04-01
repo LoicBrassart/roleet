@@ -3,12 +3,13 @@ import { createServer } from "node:http";
 import cors from "cors";
 import express from "express";
 import { Server } from "socket.io";
+import type { ClientToServerEvents, ServerToClientEvents } from "./index.types";
 
 const port = 4000;
 const app = express();
 app.use(cors());
 const server = createServer(app);
-const io = new Server(server, {
+const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -25,16 +26,21 @@ io.on("connection", (socket) => {
 
   // TODO: Check authentication (as in backend, via JWT ?)
 
-  socket.on("message", (payload) => {
+  socket.on("send_message", async (payload) => {
     // TODO: Record in database
     // wtf how did i forget I'd have to contact my graphql api ? -_-
 
-    io.to(fakeRoom).to(payload.room).emit("message", {
+    // Simule l'ajout dans la db
+    const message = await Promise.resolve({
+      id: randomUUID(),
       content: payload.content,
       userId: payload.userId,
-      id: randomUUID(),
-      createdAt: Date.now(),
+      // Le type Date est une plaie, un number serait tellement mieux !
+      createdAt: new Date().toISOString().replace("Z", "").replace("T", " "),
+      channel: payload.channel,
     });
+
+    io.to(fakeRoom).to(payload.channel).emit("listen_message", message);
   });
 
   socket.on("disconnect", () => {
