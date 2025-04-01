@@ -5,11 +5,13 @@ import CampaignHeader from "@/organisms/CampaignHeader";
 import type { Q } from "@/types/queries";
 
 type Props = {
-  campaign: Q.MyCampaign;
+  campaign: Q.Campaign;
 };
 export default function CampaignDetailsLayout({ campaign }: Props) {
   const currentUser = useUserStore((state) => state.user);
-  const isStoryteller = campaign.storyteller.name === currentUser?.name;
+  if(!currentUser) throw new Error('User not found');
+
+  const isStoryteller = campaign.storyteller.name === currentUser.name;
 
   return (
     <div className="space-y-6">
