@@ -141,3 +141,20 @@ services:
     command: ["npm", "run", "codegen"]
     environment:
       VITE_API_URL: http://backend-dev:4000
+
+  rabbit-dev:
+    container_name: rabbit-dev
+    <<: *baseService
+    image: rabbitmq
+    volumes:
+      - ./persist/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./persist/rabbitmq/log/:/var/log/rabbitmq
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping || exit 1"]
+    ports:
+      - 5672:5672
+      - 15672:15672
+    command: >
+      sh -c "
+      rabbitmq-plugins enable rabbitmq_management &&
+      rabbitmq-server"

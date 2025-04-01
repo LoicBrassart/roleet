@@ -3,6 +3,7 @@ import { createServer } from "node:http";
 import cors from "cors";
 import express from "express";
 import { Server } from "socket.io";
+import RabbitMQ from "./services/messageBroker";
 
 const port = 4000;
 const app = express();
@@ -16,6 +17,7 @@ const io = new Server(server, {
   path: "/socket.io/",
   transports: ["websocket"],
 });
+const rabbitMQ = RabbitMQ.getInstance("amqp://rabbit-dev");
 
 io.on("connection", (socket) => {
   console.info("a user connected");
@@ -25,16 +27,16 @@ io.on("connection", (socket) => {
 
   // TODO: Check authentication (as in backend, via JWT ?)
 
-  socket.on("message", (payload) => {
-    // TODO: Record in database
-    // wtf how did i forget I'd have to contact my graphql api ? -_-
-
-    io.to(fakeRoom).to(payload.room).emit("message", {
+  socket.on("message", async (payload) => {
+    const message = {
       content: payload.content,
       userId: payload.userId,
-      id: randomUUID(),
-      createdAt: Date.now(),
-    });
+      id: randomUUID(), //TODO: remove this (get from persistence service ?)
+      createdAt: new Date(),
+    };
+    await rabbitMQ.sendMessage(message, "persistence");
+
+    io.to(fakeRoom).to(payload.room).emit("message", message);
   });
 
   socket.on("disconnect", () => {
