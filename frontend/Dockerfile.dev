@@ -1,12 +1,15 @@
 FROM node:lts-alpine
 WORKDIR /app
 RUN apk --no-cache add curl
-COPY *.json .
-COPY *.html .
-COPY *.ts .
-COPY *.js .
+COPY package*.json ./
+COPY tsconfig.json ./
+COPY codegen.ts ./
 RUN npm install
-COPY src src
 COPY public public
+COPY src src
+COPY index.html ./
+COPY components.json ./
+COPY *.config.ts ./
+COPY *.config.js ./
 
-CMD npm run dev
+CMD ["npm", "run", "dev"]

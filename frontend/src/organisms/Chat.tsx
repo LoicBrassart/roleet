@@ -1,4 +1,5 @@
-import { Input } from "@/atoms/Input";
+import { formatDate } from "@/lib/helpers/dateFormatter";
+import { useChat } from "@/lib/hooks/useChat";
 import type { Message } from "@/lib/graphql/generated/graphql-types";
 import { useSocket } from "@/lib/hooks/useSocket";
 import {
@@ -8,50 +9,32 @@ import {
   TooltipTrigger,
 } from "@/lib/shadcn/generated/ui/tooltip";
 import { useUserStore } from "@/lib/zustand/userStore";
-import { type FormEvent, useEffect, useState } from "react";
+import type { Q } from "@/types/queries";
+import type { FormEvent } from "react";
 
 type Props = {
   title: string;
   room: string;
-  data: Omit<Message, "campaign" | "owner">[]; // TODO: Remove this Omit, bypassing a back technicality for now
+  data: Q.CampaignMessage[];
 };
-
 export default function Chat({ title, data, room }: Props) {
-  const { socket, isConnected } = useSocket();
+  const { messages, sendMessage, isConnected } = useChat(data);
   const currentUser = useUserStore((state) => state.user);
-  const [messages, setMessages] = useState(data);
-
-  useEffect(() => {
-    if (!socket) return;
-
-    socket.on("message", (payload) => {
-      setMessages((oldMessages) => [
-        ...oldMessages,
-        {
-          channel: room,
-          ...payload,
-        },
-      ]);
-    });
-  }, [socket]);
-
   if (!currentUser) return <p>Connectez vous pour accéder au Chat</p>;
 
   const hSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    if (!socket) return;
 
-    const form = evt.currentTarget;
-    const input = form.elements.namedItem("msg") as HTMLInputElement;
-    const message = input.value.trim();
+    const data = new FormData(evt.currentTarget);
+    const message = (data.get("msg") as string).trim();
 
     if (message) {
-      socket.emit("message", {
-        room,
+      sendMessage({
+        channel: room,
         content: message,
         userId: currentUser.id,
       });
-      input.value = "";
+      evt.currentTarget.reset();
     }
   };
 
@@ -72,16 +55,13 @@ export default function Chat({ title, data, room }: Props) {
         {messages.map((message) => {
           return (
             <li key={message.id} className="w-96">
-              <TooltipProvider>
+              <TooltipProvider delayDuration={0}>
                 <Tooltip>
                   <p>
                     <TooltipTrigger>Xxxx:</TooltipTrigger>
                   </p>
                   <TooltipContent>
-                    {Intl.DateTimeFormat(undefined, {
-                      dateStyle: "medium",
-                      timeStyle: "medium",
-                    }).format(new Date(message.createdAt))}
+                    {formatDate(message.createdAt)}{" "}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

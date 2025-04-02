@@ -30,5 +30,5 @@ export const dataSource = new DataSource({
   port: Number(DB_PORT),
 
   synchronize: true,
-  logging: true,
+  logging: false,
 });

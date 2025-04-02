@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "nodemon --exec ts-node -- ./src/index.ts",
+    "dev": "npm run db:fixtures && nodemon --exec ts-node -- ./src/index.ts",
     "start": "node build/index.js",
     "db:fixtures": "ts-node ./src/scripts/fixtures/script.ts",
     "unit-tests": "echo 'TODO: Run Unit Tests'",

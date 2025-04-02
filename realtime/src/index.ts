@@ -4,12 +4,13 @@ import cors from "cors";
 import express from "express";
 import { Server } from "socket.io";
 import sendToPersist from "./services/messageBroker";
+import type { ClientToServerEvents, ServerToClientEvents } from "./types";
 
 const port = 4000;
 const app = express();
 app.use(cors());
 const server = createServer(app);
-const io = new Server(server, {
+const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
@@ -26,16 +27,17 @@ io.on("connection", (socket) => {
 
   // TODO: Check authentication (as in backend, via JWT ?)
 
-  socket.on("message", async (payload) => {
-    const message = {
+  socket.on("send_message", async (payload) => {
+    const message = await Promise.resolve({
+      id: randomUUID(),
       content: payload.content,
       userId: payload.userId,
-      id: randomUUID(), //TODO: remove this (get from persistence service ?)
-      createdAt: new Date(),
-    };
+      createdAt: new Date().toISOString().replace("Z", "").replace("T", " "), // TODO: Think about the type to use for dates
+      channel: payload.channel,
+    });
     sendToPersist(message);
 
-    io.to(fakeRoom).to(payload.room).emit("message", message);
+    io.to(fakeRoom).to(payload.channel).emit("listen_message", message);
   });
 
   socket.on("disconnect", () => {

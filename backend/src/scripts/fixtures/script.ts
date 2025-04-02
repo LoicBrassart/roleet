@@ -19,28 +19,13 @@ import {
 async function generateAndSaveFixtures() {
   try {
     await dataSource.initialize();
-
-    // type Entity = { name: string; tableName: string };
-    // let entities: Entity[] = [];
-    // await dataSource.entityMetadatas.forEach((x) =>
-    //   entities.push({ name: x.name, tableName: x.tableName })
-    // );
-    // console.log(entities);
-    // TODO: Clean DB without listing all entities manually
-
-    await dataSource.manager.delete(Campaign, {});
-    await dataSource.manager.delete(User, {});
-    await dataSource.manager.delete(Message, {});
-    await dataSource.manager.delete(Flashcard, {});
-    await dataSource.manager.delete(PointOfInterest, {});
-    await dataSource.manager.delete(Plan, {});
-    await dataSource.manager.delete(Scenario, {});
+    await dataSource.synchronize(true);
 
     const savedUsers = await Promise.all(
       users.map(async (userData) => {
         const user = Object.assign(new User(), { ...userData });
         return user.save();
-      }),
+      })
     );
     const userMap = new Map(savedUsers.map((user) => [user.name, user]));
 
@@ -49,7 +34,7 @@ async function generateAndSaveFixtures() {
         const scenario = Object.assign(new Scenario(), { ...scenarioData });
         scenario.owner = savedUsers[scenarioData.ownerIndex];
         return scenario.save();
-      }),
+      })
     );
 
     const savedPlans = await Promise.all(
@@ -60,7 +45,7 @@ async function generateAndSaveFixtures() {
           owner: savedUsers[planData.ownerIndex],
         });
         return plan.save();
-      }),
+      })
     );
 
     const savedPoI = await Promise.all(
@@ -71,7 +56,7 @@ async function generateAndSaveFixtures() {
           owner: savedUsers[poiData.ownerIndex],
         });
         return poi.save();
-      }),
+      })
     );
 
     const savedFlashcards = await Promise.all(
@@ -82,7 +67,7 @@ async function generateAndSaveFixtures() {
           owner: savedUsers[cardData.ownerIndex],
         });
         return card.save();
-      }),
+      })
     );
 
     const savedCampaigns = await Promise.all(
@@ -92,12 +77,12 @@ async function generateAndSaveFixtures() {
           storyteller: userMap.get(campaignData.storyteller)?.id,
           players: campaignData.players.map((player) => userMap.get(player)),
           scenarios: savedScenarios.filter((scenario) =>
-            campaignData.scenarios.includes(scenario.title),
+            campaignData.scenarios.includes(scenario.title)
           ),
           owner: savedUsers[campaignData.ownerIndex],
         });
         return campaign.save();
-      }),
+      })
     );
 
     const savedMessages = await Promise.all(
@@ -108,7 +93,7 @@ async function generateAndSaveFixtures() {
           campaign: savedCampaigns[messageData.campaignIndex],
         });
         return message.save();
-      }),
+      })
     );
 
     console.info(`

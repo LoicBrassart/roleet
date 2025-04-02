@@ -45,7 +45,7 @@ export default class RabbitMQ {
         throw new Error("Le canal RabbitMQ n'est pas initialisé.");
       }
       const queue = await this.channel.queue(queueName);
-      await queue.publish(JSON.stringify(message), { deliveryMode: 2 });
+      await queue.publish(JSON.stringify(message), { deliveryMode: 1 });
     } catch (error) {
       console.error("❌ Erreur lors de l'envoi du message :", error);
       throw error;
@@ -56,14 +56,14 @@ export default class RabbitMQ {
     try {
       if (!this.channel) {
         throw new Error(
-          "Le canal RabbitMQ n'est pas initialisé. Appelez connect() d'abord.",
+          "Le canal RabbitMQ n'est pas initialisé. Appelez connect() d'abord."
         );
       }
       await this.channel.queue(queueName, { durable: true });
     } catch (error) {
       console.error(
         `❌ Erreur lors de la création ou vérification de la queue '${queueName}':`,
-        error,
+        error
       );
       throw error;
     }
@@ -86,7 +86,7 @@ export default class RabbitMQ {
 
           await handler(JSON.parse(msgBody));
           await msg.ack();
-        },
+        }
       );
       return consumer;
     } catch (error) {
