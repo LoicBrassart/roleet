@@ -5,7 +5,6 @@ import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
 import { buildSchema } from "type-graphql";
 import { dataSource } from "./config/db";
-import { Message } from "./entities/Message";
 import CampaignResolver from "./resolvers/CampaignResolver";
 import FlashcardResolver from "./resolvers/FlashcardResolver";
 import MessageResolver from "./resolvers/MessageResolver";
@@ -13,7 +12,7 @@ import PlanResolver from "./resolvers/PlanResolver";
 import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
 import ScenarioResolver from "./resolvers/ScenarioResolver";
 import UserResolver from "./resolvers/UserResolver";
-import RabbitMQ from "./services/messageBroker";
+import subscribeToMessageBroker from "./services/messageBroker";
 
 dotenv.config();
 
@@ -63,15 +62,7 @@ const start = async () => {
     },
   });
 
-  const rabbitMQ = RabbitMQ.getInstance("amqp://rabbit-dev");
-  rabbitMQ.consume("persistence", async (msg) => {
-    const newMessage = Message.create();
-    newMessage.content = msg.content;
-    newMessage.createdAt = msg.createdAt;
-    newMessage.owner = msg.userId;
-    await newMessage.save();
-    console.log("Message persisté:", newMessage);
-  });
+  await subscribeToMessageBroker();
 
   console.info(`🚀  Server ready at: ${url}`);
 };

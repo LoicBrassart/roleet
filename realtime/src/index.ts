@@ -3,7 +3,7 @@ import { createServer } from "node:http";
 import cors from "cors";
 import express from "express";
 import { Server } from "socket.io";
-import RabbitMQ from "./services/messageBroker";
+import sendToPersist from "./services/messageBroker";
 
 const port = 4000;
 const app = express();
@@ -17,7 +17,6 @@ const io = new Server(server, {
   path: "/socket.io/",
   transports: ["websocket"],
 });
-const rabbitMQ = RabbitMQ.getInstance("amqp://rabbit-dev");
 
 io.on("connection", (socket) => {
   console.info("a user connected");
@@ -34,7 +33,7 @@ io.on("connection", (socket) => {
       id: randomUUID(), //TODO: remove this (get from persistence service ?)
       createdAt: new Date(),
     };
-    await rabbitMQ.sendMessage(message, "persistence");
+    sendToPersist(message);
 
     io.to(fakeRoom).to(payload.room).emit("message", message);
   });
