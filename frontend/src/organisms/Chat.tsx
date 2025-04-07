@@ -1,7 +1,5 @@
 import { formatDate } from "@/lib/helpers/dateFormatter";
 import { useChat } from "@/lib/hooks/useChat";
-import type { Message } from "@/lib/graphql/generated/graphql-types";
-import { useSocket } from "@/lib/hooks/useSocket";
 import {
   Tooltip,
   TooltipContent,
@@ -18,7 +16,7 @@ type Props = {
   data: Q.CampaignMessage[];
 };
 export default function Chat({ title, data, room }: Props) {
-  const { messages, sendMessage, isConnected } = useChat(data);
+  const { messages, sendMessage, isConnected } = useChat(room, data);
   const currentUser = useUserStore((state) => state.user);
   if (!currentUser) return <p>Connectez vous pour accéder au Chat</p>;
 

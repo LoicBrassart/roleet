@@ -1,10 +1,11 @@
 declare global {
   interface ServerToClientEvents {
-    receive_message: (message: Message) => void;
+    listen_message: (message: Message) => void;
   }
 
   interface ClientToServerEvents {
     send_message: (message: Omit<Message, "id" | "createdAt">) => void;
+    join_room: (room: string) => void;
   }
 
   // TODO: get from codegen instead ?

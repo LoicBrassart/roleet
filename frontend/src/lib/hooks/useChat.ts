@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "./useSocket";
 
-export function useChat(initialMessages: Message[]) {
+export function useChat(room: string, initialMessages: Message[]) {
   const { socket, isConnected } = useSocket<
     ServerToClientEvents,
     ClientToServerEvents
@@ -16,10 +16,12 @@ export function useChat(initialMessages: Message[]) {
   useEffect(() => {
     if (!socket) return;
 
-    socket.on("receive_message", (payload) => {
+    socket.emit("join_room", room);
+
+    socket.on("listen_message", (payload) => {
       setMessages((oldMessages) => [...oldMessages, payload]);
     });
-  }, []);
+  }, [socket, room]);
 
   return {
     messages,

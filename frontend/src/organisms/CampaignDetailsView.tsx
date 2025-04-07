@@ -13,11 +13,7 @@ export default function CampaignDetailsView({ campaign }: Props) {
     <div className="space-y-4">
       <PlayerList players={campaign.players} />
       <ScenarioList scenarios={campaign.scenarios} />
-      <Chat
-        title="Chat"
-        data={campaign.messages}
-        room={`campaign-${campaign.id}`}
-      />
+      <Chat title="Chat" data={campaign.messages} room={campaign.id} />
     </div>
   );
 }

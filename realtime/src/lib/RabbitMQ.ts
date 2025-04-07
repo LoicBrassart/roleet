@@ -1,3 +1,4 @@
+import type { MessageInput } from "@/types";
 import {
   type AMQPChannel,
   AMQPClient,
@@ -36,6 +37,7 @@ export default class RabbitMQ {
     }
   }
 
+  //TODO: Replace any with Record<string,string> or something as generic
   async sendMessage(message: any, queueName: string) {
     try {
       if (!this.isConnected) {
@@ -56,19 +58,20 @@ export default class RabbitMQ {
     try {
       if (!this.channel) {
         throw new Error(
-          "Le canal RabbitMQ n'est pas initialisé. Appelez connect() d'abord."
+          "Le canal RabbitMQ n'est pas initialisé. Appelez connect() d'abord.",
         );
       }
       await this.channel.queue(queueName, { durable: true });
     } catch (error) {
       console.error(
         `❌ Erreur lors de la création ou vérification de la queue '${queueName}':`,
-        error
+        error,
       );
       throw error;
     }
   }
 
+  //TODO: Replace any with Record<string,string> or something as generic
   async consume(queueName: string, handler: (message: any) => Promise<void>) {
     try {
       if (!this.isConnected) {
@@ -86,7 +89,7 @@ export default class RabbitMQ {
 
           await handler(JSON.parse(msgBody));
           await msg.ack();
-        }
+        },
       );
       return consumer;
     } catch (error) {
@@ -107,7 +110,7 @@ export default class RabbitMQ {
       }
       this.isConnected = false;
       RabbitMQ.instance = null;
-      console.log("🔌 Connexion RabbitMQ fermée.");
+      console.info("🔌 Connexion RabbitMQ fermée.");
     } catch (error) {
       console.error("❌ Erreur lors de la fermeture de RabbitMQ :", error);
       throw error;

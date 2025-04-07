@@ -9,8 +9,8 @@ declare global {
     [Key in keyof O]: Key extends K
       ? T
       : O[Key] extends object
-      ? TypeKey<O[Key], K, T>
-      : O[Key];
+        ? TypeKey<O[Key], K, T>
+        : O[Key];
   };
 }
 

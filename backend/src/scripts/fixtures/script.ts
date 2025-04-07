@@ -25,7 +25,7 @@ async function generateAndSaveFixtures() {
       users.map(async (userData) => {
         const user = Object.assign(new User(), { ...userData });
         return user.save();
-      })
+      }),
     );
     const userMap = new Map(savedUsers.map((user) => [user.name, user]));
 
@@ -34,7 +34,7 @@ async function generateAndSaveFixtures() {
         const scenario = Object.assign(new Scenario(), { ...scenarioData });
         scenario.owner = savedUsers[scenarioData.ownerIndex];
         return scenario.save();
-      })
+      }),
     );
 
     const savedPlans = await Promise.all(
@@ -45,7 +45,7 @@ async function generateAndSaveFixtures() {
           owner: savedUsers[planData.ownerIndex],
         });
         return plan.save();
-      })
+      }),
     );
 
     const savedPoI = await Promise.all(
@@ -56,7 +56,7 @@ async function generateAndSaveFixtures() {
           owner: savedUsers[poiData.ownerIndex],
         });
         return poi.save();
-      })
+      }),
     );
 
     const savedFlashcards = await Promise.all(
@@ -67,7 +67,7 @@ async function generateAndSaveFixtures() {
           owner: savedUsers[cardData.ownerIndex],
         });
         return card.save();
-      })
+      }),
     );
 
     const savedCampaigns = await Promise.all(
@@ -77,12 +77,12 @@ async function generateAndSaveFixtures() {
           storyteller: userMap.get(campaignData.storyteller)?.id,
           players: campaignData.players.map((player) => userMap.get(player)),
           scenarios: savedScenarios.filter((scenario) =>
-            campaignData.scenarios.includes(scenario.title)
+            campaignData.scenarios.includes(scenario.title),
           ),
           owner: savedUsers[campaignData.ownerIndex],
         });
         return campaign.save();
-      })
+      }),
     );
 
     const savedMessages = await Promise.all(
@@ -93,7 +93,7 @@ async function generateAndSaveFixtures() {
           campaign: savedCampaigns[messageData.campaignIndex],
         });
         return message.save();
-      })
+      }),
     );
 
     console.info(`

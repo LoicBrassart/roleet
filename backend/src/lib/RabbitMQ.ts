@@ -36,6 +36,7 @@ export default class RabbitMQ {
     }
   }
 
+  //TODO: Replace any with Record<string,string> or something as generic
   async sendMessage(message: any, queueName: string) {
     try {
       if (!this.isConnected) {
@@ -69,6 +70,7 @@ export default class RabbitMQ {
     }
   }
 
+  //TODO: Replace any with Record<string,string> or something as generic
   async consume(queueName: string, handler: (message: any) => Promise<void>) {
     try {
       if (!this.isConnected) {
@@ -107,7 +109,7 @@ export default class RabbitMQ {
       }
       this.isConnected = false;
       RabbitMQ.instance = null;
-      console.log("🔌 Connexion RabbitMQ fermée.");
+      console.info("🔌 Connexion RabbitMQ fermée.");
     } catch (error) {
       console.error("❌ Erreur lors de la fermeture de RabbitMQ :", error);
       throw error;
