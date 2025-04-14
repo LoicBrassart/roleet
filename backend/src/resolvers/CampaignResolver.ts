@@ -71,7 +71,7 @@ class CampaignResolver {
   @Mutation(() => Campaign)
   async createCampaign(
     @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: CustomContext
+    @Ctx() ctx: CustomContext,
   ) {
     try {
       if (!ctx.user) throw new Error("User not authenticated");

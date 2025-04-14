@@ -40,7 +40,7 @@ export const ioServer = new Server<ClientToServerEvents, ServerToClientEvents>(
     },
     path: "/socket.io/",
     transports: ["websocket"],
-  }
+  },
 );
 subscribeToMessageBroker();
 
@@ -49,7 +49,7 @@ ioServer.use((socket: AuthenticatedSocket, next) => {
   if (!cookieHeader) return next(new Error("No cookies found in request"));
 
   const cookies: { [key: string]: string } = {};
-  for (let cookie of cookieHeader.split(";")) {
+  for (const cookie of cookieHeader.split(";")) {
     const [name, ...valueParts] = cookie.trim().split("=");
     if (name && valueParts.length > 0) {
       cookies[name] = valueParts.join("=").trim();
