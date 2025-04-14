@@ -1,9 +1,9 @@
-import type { Rabbit } from "@/types/rabbitMQ";
 import {
   type AMQPChannel,
   AMQPClient,
   type AMQPMessage,
 } from "@cloudamqp/amqp-client";
+import type { Rabbit } from "../types/rabbit";
 
 export default class RabbitMQ {
   private static instance: RabbitMQ | null = null;
@@ -71,7 +71,7 @@ export default class RabbitMQ {
     handler: (message: V) => Promise<void>,
   ) {
     try {
-      this.connectIfNotConnected();
+      await this.connectIfNotConnected();
       assertsChannelInitialized(this.channel);
 
       const queue = await this.channel.queue(queueName);

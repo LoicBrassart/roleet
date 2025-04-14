@@ -11,7 +11,7 @@ export default function subscribeToMessageBroker() {
     newMessage.content = msg.content;
     newMessage.channel = "tests"; // TODO: use separate rooms for every purpose
     newMessage.createdAt = msg.createdAt;
-    newMessage.owner = msg.userId;
+    newMessage.owner = msg.owner;
     newMessage.campaign = campaign;
     await newMessage.save();
 
