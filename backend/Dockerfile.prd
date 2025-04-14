@@ -1,15 +1,14 @@
 FROM node:lts-alpine AS builder
 WORKDIR /app
 COPY *.json .
-RUN npm install
-RUN npm install -g typescript
+RUN npm i
+RUN npm i -g typescript
 COPY src/ .
 RUN tsc
 
-FROM node:lts-alpine
-RUN apk --no-cache add curl
+FROM node:lts-alpine 
 WORKDIR /app
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/package*.json .
-RUN npm install --production
+COPY package*.json .
+RUN npm i --production
 CMD ["npm", "run", "start"]

@@ -23,6 +23,8 @@ services:
         condition: service_healthy
       adminer-dev:
         condition: service_started
+      realtime-dev:
+        condition: service_started
 
   db-dev:
     <<: *baseService
@@ -88,6 +90,23 @@ services:
       - ./files/src:/app/src/
       - ./persist/files-dev:/app/public
 
+  realtime-dev:
+    <<: *baseService
+    container_name: realtime-dev
+    build:
+      context: ./realtime
+      dockerfile: Dockerfile.dev
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://realtime-dev:4000/health'|| exit 1",
+        ]
+    volumes:
+      - ./realtime/src:/app/src/
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+
   frontend-dev:
     <<: *baseService
     container_name: frontend-dev
@@ -107,6 +126,7 @@ services:
       - ./frontend/src:/app/src/
     environment:
       VITE_API_URL: ${VITE_API_URL}
+      VITE_WS_URL: ${VITE_WS_URL}
 
   codegen-dev:
     <<: *baseService
@@ -123,3 +143,20 @@ services:
     command: ["npm", "run", "codegen"]
     environment:
       VITE_API_URL: http://backend-dev:4000
+
+  rabbit-dev:
+    container_name: rabbit-dev
+    <<: *baseService
+    image: rabbitmq
+    volumes:
+      - ./persist/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./persist/rabbitmq/log/:/var/log/rabbitmq
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping || exit 1"]
+    ports:
+      - 5672:5672
+      - 15672:15672
+    command: >
+      sh -c "
+      rabbitmq-plugins enable rabbitmq_management &&
+      rabbitmq-server"

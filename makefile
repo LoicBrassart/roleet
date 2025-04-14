@@ -15,14 +15,3 @@ run:
 	else \
 		echo "Fichier $$ENV_FILE ou $$COMPOSE_FILE non trouvé."; \
 	fi
-
-# ie. `make enter dev adminer`
-enter:
-	@ENV=$(word 2,$(MAKECMDGOALS)); \
-	COMPOSE_FILE=compose.$${ENV}.yaml; \
-	CONTAINER_NAME=$(word 3,$(MAKECMDGOALS))-$${ENV}; \
-	if [ -f "$$COMPOSE_FILE" ]; then \
-		docker compose -f $$COMPOSE_FILE exec $$CONTAINER_NAME sh; \
-	else \
-		echo "Fichier $$COMPOSE_FILE non trouvé."; \
-	fi

@@ -12,9 +12,11 @@ jobs:
     strategy:
       matrix:
         # Add services here
-        service: 
+        service:
           - frontend
           - backend
+          - files
+          - realtime
 
     steps:
       - name: Checkout code
@@ -23,7 +25,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
@@ -32,7 +34,7 @@ jobs:
 
       - name: Run Biome
         run: biome ci .
-        
+
       - name: Filter changed files
         id: filter
         uses: dorny/paths-filter@v2
@@ -43,6 +45,10 @@ jobs:
               - 'frontend/**'
             backend:
               - 'backend/**'
+            files:
+              - 'files/**'
+            realtime:
+              - 'realtime/**'
 
       - name: Run unit tests
         if: ${{ steps.filter.outputs[matrix.service] == 'true' }}

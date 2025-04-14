@@ -1,6 +1,7 @@
 import { dataSource } from "../../config/db";
 import { Campaign } from "../../entities/Campaign";
 import { Flashcard } from "../../entities/FlashCard";
+import { Message } from "../../entities/Message";
 import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import { Scenario } from "../../entities/Scenario";
@@ -8,6 +9,7 @@ import { User } from "../../entities/User";
 import {
   campaigns,
   flashcards,
+  messages,
   plans,
   pois,
   scenarios,
@@ -17,25 +19,20 @@ import {
 async function generateAndSaveFixtures() {
   try {
     await dataSource.initialize();
+    await dataSource.synchronize(true);
 
-    // type Entity = { name: string; tableName: string };
-    // let entities: Entity[] = [];
-    // await dataSource.entityMetadatas.forEach((x) =>
-    //   entities.push({ name: x.name, tableName: x.tableName })
-    // );
-    // console.log(entities);
-    // TODO: Clean DB without listing all entities manually
-
-    await dataSource.manager.delete(Campaign, {});
-    await dataSource.manager.delete(User, {});
-    await dataSource.manager.delete(Flashcard, {});
-    await dataSource.manager.delete(PointOfInterest, {});
-    await dataSource.manager.delete(Plan, {});
-    await dataSource.manager.delete(Scenario, {});
+    const savedUsers = await Promise.all(
+      users.map(async (userData) => {
+        const user = Object.assign(new User(), { ...userData });
+        return user.save();
+      }),
+    );
+    const userMap = new Map(savedUsers.map((user) => [user.name, user]));
 
     const savedScenarios = await Promise.all(
       scenarios.map(async (scenarioData) => {
         const scenario = Object.assign(new Scenario(), { ...scenarioData });
+        scenario.owner = savedUsers[scenarioData.ownerIndex];
         return scenario.save();
       }),
     );
@@ -45,6 +42,7 @@ async function generateAndSaveFixtures() {
         const plan = Object.assign(new Plan(), {
           ...planData,
           scenario: savedScenarios[planData.scenarioIndex],
+          owner: savedUsers[planData.ownerIndex],
         });
         return plan.save();
       }),
@@ -55,6 +53,7 @@ async function generateAndSaveFixtures() {
         const poi = Object.assign(new PointOfInterest(), {
           ...poiData,
           plan: savedPlans[poiData.planIndex],
+          owner: savedUsers[poiData.ownerIndex],
         });
         return poi.save();
       }),
@@ -65,18 +64,11 @@ async function generateAndSaveFixtures() {
         const card = Object.assign(new Flashcard(), {
           ...cardData,
           scenario: savedScenarios[cardData.scenarioIndex],
+          owner: savedUsers[cardData.ownerIndex],
         });
         return card.save();
       }),
     );
-
-    const savedUsers = await Promise.all(
-      users.map(async (userData) => {
-        const user = Object.assign(new User(), { ...userData });
-        return user.save();
-      }),
-    );
-    const userMap = new Map(savedUsers.map((user) => [user.name, user]));
 
     const savedCampaigns = await Promise.all(
       campaigns.map(async (campaignData) => {
@@ -87,8 +79,20 @@ async function generateAndSaveFixtures() {
           scenarios: savedScenarios.filter((scenario) =>
             campaignData.scenarios.includes(scenario.title),
           ),
+          owner: savedUsers[campaignData.ownerIndex],
         });
         return campaign.save();
+      }),
+    );
+
+    const savedMessages = await Promise.all(
+      messages.map(async (messageData) => {
+        const message = Object.assign(new Message(), {
+          ...messageData,
+          owner: savedUsers[messageData.ownerIndex],
+          campaign: savedCampaigns[messageData.campaignIndex],
+        });
+        return message.save();
       }),
     );
 
@@ -100,6 +104,7 @@ async function generateAndSaveFixtures() {
     - ${savedFlashcards.length} Flashcards
     - ${savedUsers.length} Utilisateurs
     - ${savedCampaigns.length} Campagnes
+    - ${savedMessages.length} Messages
     `);
   } catch (error) {
     console.error("❌ Erreur lors de l'enregistrement des fixtures:", error);

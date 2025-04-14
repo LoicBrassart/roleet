@@ -1,0 +1,123 @@
+x-baseService: &baseService
+  restart: always
+  healthcheck:
+    interval: 1s
+    timeout: 2s
+    retries: 100
+
+services:
+  gateway-prd:
+    <<: *baseService
+    container_name: gateway-prd
+    image: nginx
+    volumes:
+      - ./nginx.prd.conf:/etc/nginx/nginx.conf
+    ports:
+      - ${GATEWAY_PORT}:80
+    depends_on:
+      backend-prd:
+        condition: service_healthy
+      files-prd:
+        condition: service_healthy
+      # frontend-prd:
+      #   condition: service_healthy
+      realtime-prd:
+        condition: service_started
+
+  db-prd:
+    <<: *baseService
+    container_name: db-prd
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_DATABASE} -U ${DB_USER}"]
+    volumes:
+      - ./persist/db-prd:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_HOST: ${DB_HOST}
+
+  backend-prd:
+    <<: *baseService
+    container_name: backend-prd
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prd
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-prd:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
+        ]
+    depends_on:
+      db-prd:
+        condition: service_healthy
+    volumes:
+      - ./persist/backend-prd:/app/static
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_HOST: ${DB_HOST}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_TTL: ${COOKIE_TTL}
+
+  files-prd:
+    <<: *baseService
+    container_name: files-prd
+    build:
+      context: ./files
+      dockerfile: Dockerfile.prd
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://files-prd:4000/health'|| exit 1",
+        ]
+    volumes:
+      - ./persist/files-prd:/app/public
+
+  realtime-prd:
+    <<: *baseService
+    container_name: realtime-prd
+    build:
+      context: ./realtime
+      dockerfile: Dockerfile.prd
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://realtime-prd:4000/health'|| exit 1",
+        ]
+
+  frontend-prd:
+    <<: *baseService
+    container_name: frontend-prd
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prd
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://frontend-prd:5173' || exit 1",
+        ]
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_WS_URL: ${VITE_WS_URL}
+
+  rabbit-prd:
+    container_name: rabbit-prd
+    <<: *baseService
+    image: rabbitmq
+    volumes:
+      - ./persist/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./persist/rabbitmq/log/:/var/log/rabbitmq
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping || exit 1"]
+    ports:
+      - 5672:5672
+    command: >
+      sh -c "
+      rabbitmq-plugins enable rabbitmq-server"

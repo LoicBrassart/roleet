@@ -12,7 +12,7 @@ export default function CampaignDetails() {
   if (error) return <p>Oops, something went awry...</p>;
   if (loading)
     return <p>Enhance your calm, we're still fetching this data...</p>;
-  if (!data) return <p>We found nothing to display.</p>;
+  if (!data?.getCampaign) return <p>We found nothing to display.</p>;
 
   return <CampaignDetailsLayout campaign={data.getCampaign} />;
 }

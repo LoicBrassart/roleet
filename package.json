@@ -4,7 +4,8 @@
   "description": "## Content",
   "main": "index.js",
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "cp:images": "sudo cp backend/src/scripts/fixtures/img/* persist/files-dev"
   },
   "keywords": [],
   "author": "",

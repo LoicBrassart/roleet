@@ -11,7 +11,7 @@ import {
 } from "type-graphql";
 import { type DeepPartial, In } from "typeorm";
 import { Campaign } from "../entities/Campaign";
-import type { Scenario } from "../entities/Scenario";
+import { Scenario } from "../entities/Scenario";
 import { User } from "../entities/User";
 import type CustomContext from "../types/CustomContext";
 
@@ -53,7 +53,7 @@ class CampaignResolver {
 
     const campaign = await Campaign.findOne({
       where: { id },
-      relations: ["scenarios", "players", "storyteller"],
+      relations: ["scenarios", "players", "storyteller", "messages"],
     });
 
     if (!campaign) throw new Error("Campaign not found");
@@ -81,6 +81,10 @@ class CampaignResolver {
       campaign.owner = ctx.user;
       const players = await User.findBy({ id: In(campaignData.players) });
       campaign.players = players;
+      const scenarios = await Scenario.findBy({
+        id: In(campaignData.scenarios),
+      });
+      campaign.scenarios = scenarios;
 
       await campaign.save();
 

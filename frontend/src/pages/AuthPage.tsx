@@ -24,7 +24,7 @@ export default function AuthPage() {
     return (
       <>
         <p>You're logged in as {currentUser.name}</p>
-        <pre>{JSON.stringify(currentUser)}</pre>
+        <pre>{JSON.stringify(currentUser, null, 4)}</pre>
         <Button type="submit" onClick={hLogout}>
           Se déconnecter
         </Button>

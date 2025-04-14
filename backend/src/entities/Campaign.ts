@@ -6,8 +6,10 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { Message } from "./Message";
 import { Scenario } from "./Scenario";
 import { User } from "./User";
 
@@ -60,4 +62,12 @@ export class Campaign extends BaseEntity {
   )
   @JoinTable({ name: "campaignScenarios" })
   scenarios: Scenario[];
+
+  @Field(() => [Message])
+  @OneToMany(
+    () => Message,
+    (msg) => msg.campaign,
+    { cascade: true },
+  )
+  messages!: Message[];
 }

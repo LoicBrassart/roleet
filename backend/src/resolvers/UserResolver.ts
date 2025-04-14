@@ -9,9 +9,9 @@ import {
   Mutation,
   Query,
   Resolver,
-} from 'type-graphql';
-import { Roles, User } from '../entities/User';
-import type CustomContext from '../types/CustomContext';
+} from "type-graphql";
+import { Roles, User } from "../entities/User";
+import type CustomContext from "../types/CustomContext";
 
 dotenv.config();
 
@@ -37,7 +37,7 @@ class UserInput {
 }
 
 function setCookie(ctx: CustomContext, key: string, value: string) {
-  if (!process.env.COOKIE_TTL) throw new Error('Missing ttl conf key!');
+  if (!process.env.COOKIE_TTL) throw new Error("Missing ttl conf key!");
   const myDate = new Date();
   const expiryTStamp = myDate.getTime() + Number(process.env.COOKIE_TTL);
   myDate.setTime(expiryTStamp);
@@ -73,14 +73,14 @@ class UserResolver {
   }
 
   @Mutation(() => String)
-  async login(@Arg('data') userData: UserInput, @Ctx() context: CustomContext) {
+  async login(@Arg("data") userData: UserInput, @Ctx() context: CustomContext) {
     try {
-      if (!process.env.JWT_SECRET) throw new Error('Missing env variable!');
+      if (!process.env.JWT_SECRET) throw new Error("Missing env variable!");
       const user = await User.findOne({
         where: { mail: userData.mail },
         relations: ['readScenarios'],
       });
-      if (!user) throw new Error('User not found!');
+      if (!user) throw new Error("User not found!");
 
       const isValid = await argon2.verify(
         user.hashedPassword,
@@ -108,8 +108,8 @@ class UserResolver {
 
   @Mutation(() => String)
   async signup(
-    @Arg('data') userData: NewUserInput,
-    @Ctx() context: CustomContext
+    @Arg("data") userData: NewUserInput,
+    @Ctx() context: CustomContext,
   ) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();

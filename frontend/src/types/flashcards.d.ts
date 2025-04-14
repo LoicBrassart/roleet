@@ -6,7 +6,6 @@ Ajouter un nouveau type de flashcards:
 1/ Ajouter un *CardData (description des champs specifiques)
 2/ - Ajouter un T*Card
    - Mettre à jour l'Union FlashcardTyped
-3/ Ajouter un is*Card (type guard)
 */
 
 /* 1. Types spécifiques à chaque type de Flashcard */
@@ -41,8 +40,3 @@ export type TDndNpcCard = FlashcardBase & { type: "DndNpcCard" } & {
 
 // Union de toutes les flashcards spécialisées
 export type FlashcardTyped = FlashcardBase | TDndNpcCard; // | OtherFlashcard | ...
-
-/* 3. Type Guards (pour sécuriser dynamiquement) */
-export function isDndNpcCard(card: Q.ScenarioFlashcard): card is TDndNpcCard {
-  return card.type === "DndNpcCard";
-}

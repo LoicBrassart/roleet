@@ -2,7 +2,7 @@ name: Compile Code & Send Images to DockerHub
 
 on:
   push:
-    branches: 
+    branches:
       - staging
 
 jobs:
@@ -12,9 +12,11 @@ jobs:
     strategy:
       matrix:
         # Add services here
-        service: 
+        service:
           - frontend
           - backend
+          - files
+          - realtime
 
     steps:
       - name: Checkout code
@@ -25,10 +27,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-        
+
       - name: Build and push images
         uses: docker/build-push-action@v2
         with:
@@ -36,7 +38,7 @@ jobs:
           file: ./${{ matrix.service }}/Dockerfile.prd
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}-${{ matrix.service }}:latest
-  
+
   notify-server:
     needs: build-and-push
     runs-on: ubuntu-latest
