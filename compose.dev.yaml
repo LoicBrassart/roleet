@@ -104,6 +104,8 @@ services:
         ]
     volumes:
       - ./realtime/src:/app/src/
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
 
   frontend-dev:
     <<: *baseService
