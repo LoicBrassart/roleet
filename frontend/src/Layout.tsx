@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
 import "./globals.css";
+import AppSidebar from "./layout/AppSidebar";
 import {
   SidebarProvider,
   SidebarTrigger,
 } from "./lib/shadcn/generated/ui/sidebar";
-import AppSidebar from "./layout/AppSidebar";
 
 export default function Layout() {
   return (

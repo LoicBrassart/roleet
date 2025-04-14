@@ -22,14 +22,14 @@ export default function CampaignListPage() {
         data={data.getMyCampaigns.filter(
           (campaign) =>
             currentUser &&
-            campaign.players.some((player) => player.name === currentUser.name)
+            campaign.players.some((player) => player.name === currentUser.name),
         )}
       />
       <CampaignList
         title="Mes Campagnes (Meneur)"
         data={data.getMyCampaigns.filter(
           (campaign) =>
-            currentUser && campaign.storyteller.name === currentUser.name
+            currentUser && campaign.storyteller.name === currentUser.name,
         )}
       />
     </>

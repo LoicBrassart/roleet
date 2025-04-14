@@ -1,7 +1,7 @@
+import { Text } from "@/atoms/Text";
 import type { Q } from "@/types/queries";
 import PlayerList from "../User/PlayerList";
 import Chat from "./Chat";
-import { Text } from "@/atoms/Text";
 
 type Props = {
   campaign: Q.Campaign;

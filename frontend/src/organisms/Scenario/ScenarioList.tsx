@@ -3,6 +3,7 @@ import { useUserStore } from "@/lib/zustand/userStore";
 import type { Q } from "@/types/queries";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
+import ModalToAuth from "../../layout/ModalToAuth";
 import {
   Card,
   CardContent,
@@ -10,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../../lib/shadcn/generated/ui/card";
-import ModalToAuth from "../../layout/ModalToAuth";
 import ModalToOpenScenario from "./ModalToOpenScenario";
 
 type Props = {

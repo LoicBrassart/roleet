@@ -71,7 +71,7 @@ export default function ScenarioDetail({ scenario }: Props) {
           />
           <FlashcardList
             data={scenario.flashcards.filter((fcard) =>
-              fcard.title.toLowerCase().includes(needle.toLowerCase())
+              fcard.title.toLowerCase().includes(needle.toLowerCase()),
             )}
           />
         </TabsContent>
