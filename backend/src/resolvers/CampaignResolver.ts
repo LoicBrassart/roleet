@@ -53,7 +53,7 @@ class CampaignResolver {
 
     const campaign = await Campaign.findOne({
       where: { id },
-      relations: ["scenarios", "players", "storyteller", "messages"],
+      relations: ["scenarios", "players", "storyteller", "owner", "messages"],
     });
 
     if (!campaign) throw new Error("Campaign not found");
@@ -71,7 +71,7 @@ class CampaignResolver {
   @Mutation(() => Campaign)
   async createCampaign(
     @Arg("data") campaignData: NewCampaignInput,
-    @Ctx() ctx: CustomContext,
+    @Ctx() ctx: CustomContext
   ) {
     try {
       if (!ctx.user) throw new Error("User not authenticated");

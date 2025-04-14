@@ -106,6 +106,9 @@ services:
       - ./realtime/src:/app/src/
     environment:
       JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      rabbit-dev:
+        condition: service_healthy
 
   frontend-dev:
     <<: *baseService
