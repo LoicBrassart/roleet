@@ -59,8 +59,8 @@ class CampaignResolver {
     if (!campaign) throw new Error("Campaign not found");
 
     if (
-      campaign.storyteller?.id === userId ||
-      campaign.owner?.id === userId ||
+      campaign.storyteller.id === userId ||
+      campaign.owner.id === userId ||
       campaign.players.some((player) => player.id === userId)
     ) {
       return campaign;
