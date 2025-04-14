@@ -1,3 +1,4 @@
+import type { Rabbit } from "@/types/rabbitMQ";
 import {
   type AMQPChannel,
   AMQPClient,
@@ -22,29 +23,27 @@ export default class RabbitMQ {
     return RabbitMQ.instance;
   }
 
-  async connect() {
-    if (!this.isConnected) {
-      try {
-        this.connection = new AMQPClient(this.url);
-        const connection = await this.connection.connect();
-        this.channel = await connection.channel();
-        this.isConnected = true;
-      } catch (error) {
-        console.error("❌ Erreur de connexion à RabbitMQ :", error);
-        throw error;
-      }
+  async connectIfNotConnected() {
+    if (this.isConnected) return;
+
+    try {
+      this.connection = new AMQPClient(this.url);
+      const connection = await this.connection.connect();
+      this.channel = await connection.channel();
+      this.isConnected = true;
+    } catch (error) {
+      console.error("❌ Erreur de connexion à RabbitMQ :", error);
+      throw error;
     }
   }
 
-  //TODO: Replace any with Record<string,string> or something as generic
-  async sendMessage(message: any, queueName: string) {
+  async sendMessage<
+    K extends keyof Rabbit.SendMessage,
+    V extends Rabbit.SendMessage[K],
+  >(message: V, queueName: K) {
     try {
-      if (!this.isConnected) {
-        await this.connect();
-      }
-      if (!this.channel) {
-        throw new Error("Le canal RabbitMQ n'est pas initialisé.");
-      }
+      this.connectIfNotConnected();
+      assertsChannelInitialized(this.channel);
       const queue = await this.channel.queue(queueName);
       await queue.publish(JSON.stringify(message), { deliveryMode: 1 });
     } catch (error) {
@@ -55,11 +54,8 @@ export default class RabbitMQ {
 
   async ensureQueue(queueName: string) {
     try {
-      if (!this.channel) {
-        throw new Error(
-          "Le canal RabbitMQ n'est pas initialisé. Appelez connect() d'abord.",
-        );
-      }
+      this.connectIfNotConnected();
+      assertsChannelInitialized(this.channel);
       await this.channel.queue(queueName, { durable: true });
     } catch (error) {
       console.error(
@@ -70,15 +66,14 @@ export default class RabbitMQ {
     }
   }
 
-  //TODO: Replace any with Record<string,string> or something as generic
-  async consume(queueName: string, handler: (message: any) => Promise<void>) {
+  async consume<K extends keyof Rabbit.Consume, V extends Rabbit.Consume[K]>(
+    queueName: K,
+    handler: (message: V) => Promise<void>,
+  ) {
     try {
-      if (!this.isConnected) {
-        await this.connect();
-      }
-      if (!this.channel) {
-        throw new Error("Le canal RabbitMQ n'est pas initialisé.");
-      }
+      this.connectIfNotConnected();
+      assertsChannelInitialized(this.channel);
+
       const queue = await this.channel.queue(queueName);
       const consumer = await queue.subscribe(
         { noAck: false },
@@ -114,5 +109,15 @@ export default class RabbitMQ {
       console.error("❌ Erreur lors de la fermeture de RabbitMQ :", error);
       throw error;
     }
+  }
+}
+
+function assertsChannelInitialized(
+  channel: AMQPChannel | null,
+): asserts channel is AMQPChannel {
+  if (!channel) {
+    throw new Error(
+      "Le canal RabbitMQ n'est pas initialisé. Appelez connectIfNotConnected() d'abord.",
+    );
   }
 }
