@@ -9,8 +9,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../lib/shadcn/generated/ui/card";
-import ModalToAuth from "./ModalToAuth";
+} from "../../lib/shadcn/generated/ui/card";
+import ModalToAuth from "../../layout/ModalToAuth";
 import ModalToOpenScenario from "./ModalToOpenScenario";
 
 type Props = {

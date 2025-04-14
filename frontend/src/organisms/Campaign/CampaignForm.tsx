@@ -18,7 +18,7 @@ import {
   FormLabel,
 } from "@/lib/shadcn/generated/ui/form";
 import { useUserStore } from "@/lib/zustand/userStore";
-import { EditableField } from "@/molecules/EditableField";
+import { EditableField } from "@/atoms/EditableField";
 import type { Q } from "@/types/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";

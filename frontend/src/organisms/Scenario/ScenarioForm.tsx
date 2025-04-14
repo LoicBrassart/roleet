@@ -7,8 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button } from "../atoms/Button";
-import { EditableField } from "../molecules/EditableField";
+import { Button } from "../../atoms/Button";
+import { EditableField } from "../../atoms/EditableField";
 
 type Props = {
   scenario?: Scenario;

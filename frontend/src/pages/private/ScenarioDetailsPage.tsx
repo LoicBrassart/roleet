@@ -1,8 +1,8 @@
 import { useGetScenarioQuery } from "@/lib/graphql/generated/graphql-types";
-import ScenarioDetail from "@/organisms/ScenarioDetail";
+import ScenarioDetail from "@/organisms/Scenario/ScenarioDetail";
 import { useParams } from "react-router-dom";
 
-export default function ScenarioPage() {
+export default function ScenarioDetailsPage() {
   const { id } = useParams();
   if (!id) throw new Error("Missing id!");
 

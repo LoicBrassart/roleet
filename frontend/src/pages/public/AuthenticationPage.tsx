@@ -7,10 +7,10 @@ import {
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
 import { useUserStore } from "@/lib/zustand/userStore";
-import LoginForm from "@/organisms/LoginForm";
-import SignupForm from "@/organisms/SignupForm";
+import LoginForm from "@/layout/LoginForm";
+import SignupForm from "@/layout/SignupForm";
 
-export default function AuthPage() {
+export default function AuthenticationPage() {
   const currentUser = useUserStore((state) => state.user);
   const [logout] = useLogoutMutation();
   const unsetUserToStore = useUserStore((state) => state.logout);

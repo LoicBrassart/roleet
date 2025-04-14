@@ -1,7 +1,7 @@
 import type { Q } from "@/types/queries";
-import PlayerList from "../molecules/PlayerList";
-import ScenarioList from "../molecules/ScenarioList";
+import PlayerList from "../User/PlayerList";
 import Chat from "./Chat";
+import { Text } from "@/atoms/Text";
 
 type Props = {
   campaign: Q.Campaign;
@@ -12,7 +12,14 @@ export default function CampaignDetailsView({ campaign }: Props) {
   return (
     <div className="space-y-4">
       <PlayerList players={campaign.players} />
-      <ScenarioList scenarios={campaign.scenarios} />
+      <ul className="list-disc pl-5">
+        {campaign.scenarios.map((scenario) => (
+          <li key={scenario.id}>
+            <Text>{scenario.title}</Text>
+          </li>
+        ))}
+      </ul>
+
       <Chat title="Chat" data={campaign.messages} room={campaign.id} />
     </div>
   );

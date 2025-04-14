@@ -1,7 +1,7 @@
 import { useGetAllScenariosQuery } from "@/lib/graphql/generated/graphql-types";
-import ScenarioList from "@/organisms/ScenarioList";
+import ScenarioList from "@/organisms/Scenario/ScenarioList";
 
-export default function ScenariosPage() {
+export default function ScenarioListPage() {
   const { loading, error, data } = useGetAllScenariosQuery();
 
   if (error) return <p>Oops, something went awry...</p>;

@@ -15,8 +15,8 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import type { Q } from "@/types/queries";
 import { type FormEvent, useState } from "react";
-import FlashcardList from "./FlashcardList";
-import PlanDetail from "./PlanDetail";
+import FlashcardList from "../Flashcard/FlashcardList";
+import PlanDetail from "../Plan/PlanDetail";
 
 type Props = {
   scenario: Q.Scenario;
@@ -71,7 +71,7 @@ export default function ScenarioDetail({ scenario }: Props) {
           />
           <FlashcardList
             data={scenario.flashcards.filter((fcard) =>
-              fcard.title.toLowerCase().includes(needle.toLowerCase()),
+              fcard.title.toLowerCase().includes(needle.toLowerCase())
             )}
           />
         </TabsContent>

@@ -4,7 +4,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "./lib/shadcn/generated/ui/sidebar";
-import AppSidebar from "./organisms/AppSidebar";
+import AppSidebar from "./layout/AppSidebar";
 
 export default function Layout() {
   return (

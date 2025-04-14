@@ -1,8 +1,8 @@
 import { useGetCampaignQuery } from "@/lib/graphql/generated/graphql-types";
 import { useParams } from "react-router-dom";
-import CampaignDetailsLayout from "../templates/CampaignDetailsLayout";
+import CampaignDetailsLayout from "../../organisms/Campaign/CampaignDetailsLayout";
 
-export default function CampaignDetails() {
+export default function CampaignDetailsPage() {
   const { id } = useParams();
   if (!id) throw new Error("Missing id");
   const { loading, error, data } = useGetCampaignQuery({

@@ -4,8 +4,8 @@ import {
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
 import { useUserStore } from "@/lib/zustand/userStore";
-import CampaignList from "@/organisms/CampaignList";
-import ScenarioList from "@/organisms/ScenarioList";
+import CampaignList from "@/organisms/Campaign/CampaignList";
+import ScenarioList from "@/organisms/Scenario/ScenarioList";
 
 export default function DashboardPage() {
   const currentUser = useUserStore((state) => state.user);
@@ -38,8 +38,8 @@ export default function DashboardPage() {
                 (campaign) =>
                   currentUser &&
                   campaign.players.some(
-                    (player) => player.name === currentUser.name,
-                  ),
+                    (player) => player.name === currentUser.name
+                  )
               )}
             />
             <CampaignList
@@ -48,7 +48,7 @@ export default function DashboardPage() {
                 dataCampaigns?.getMyCampaigns.filter(
                   (campaign) =>
                     currentUser &&
-                    campaign.storyteller.name === currentUser.name,
+                    campaign.storyteller.name === currentUser.name
                 ) ?? []
               }
             />

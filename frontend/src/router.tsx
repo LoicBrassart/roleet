@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
-import AuthPage from "./pages/AuthPage";
-import CampaignPage from "./pages/CampaignDetails";
-import CampaignsPage from "./pages/CampaignsPage";
-import DashboardPage from "./pages/DashboardPage";
-import ErrorPage from "./pages/ErrorPage";
-import HomePage from "./pages/HomePage";
-import ScenarioPage from "./pages/ScenarioPage";
-import ScenariosPage from "./pages/ScenariosPage";
+import AuthenticationPage from "./pages/public/AuthenticationPage";
+import CampaignDetailsPage from "./pages/private/CampaignDetailsPage";
+import CampaignListPage from "./pages/private/CampaignListPage";
+import DashboardPage from "./pages/private/DashboardPage";
+import ErrorPage from "./pages/public/ErrorPage";
+import HomePage from "./pages/public/HomePage";
+import ScenarioDetailsPage from "./pages/private/ScenarioDetailsPage";
+import ScenarioListPage from "./pages/public/ScenarioListPage";
 
 const router = createBrowserRouter([
   {
@@ -28,23 +28,23 @@ const router = createBrowserRouter([
       {
         path: "/auth",
         index: true,
-        element: <AuthPage />,
+        element: <AuthenticationPage />,
       },
       {
         path: "/scenarios",
-        element: <ScenariosPage />,
+        element: <ScenarioListPage />,
       },
       {
         path: "/scenario/:id",
-        element: <ScenarioPage />,
+        element: <ScenarioDetailsPage />,
       },
       {
         path: "/campaigns",
-        element: <CampaignsPage />,
+        element: <CampaignListPage />,
       },
       {
         path: "/campaign/:id",
-        element: <CampaignPage />,
+        element: <CampaignDetailsPage />,
       },
     ],
   },
