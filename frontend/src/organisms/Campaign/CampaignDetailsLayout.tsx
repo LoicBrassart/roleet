@@ -1,7 +1,7 @@
 import { useUserStore } from "@/lib/zustand/userStore";
-import CampaignDetailsView from "@/organisms/CampaignDetailsView";
-import CampaignForm from "@/organisms/CampaignForm";
-import CampaignHeader from "@/organisms/CampaignHeader";
+import CampaignDetailsView from "@/organisms/Campaign/CampaignDetailsView";
+import CampaignForm from "@/organisms/Campaign/CampaignForm";
+import CampaignHeader from "@/organisms/Campaign/CampaignHeader";
 import type { Q } from "@/types/queries";
 
 type Props = {

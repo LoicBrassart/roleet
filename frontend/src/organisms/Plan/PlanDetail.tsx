@@ -11,7 +11,7 @@ import {
 } from "@/lib/shadcn/generated/ui/resizable";
 import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
 import type { Q } from "@/types/queries";
-import type { Plan } from "../lib/graphql/generated/graphql-types";
+import type { Plan } from "../../lib/graphql/generated/graphql-types";
 
 type Props = {
   plan: Q.ScenarioPlan;

@@ -5,7 +5,7 @@ import {
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
 import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
-import { Input } from "../atoms/Input";
+import { Input } from "./Input";
 
 type Props<
   TFieldValues extends FieldValues = FieldValues,

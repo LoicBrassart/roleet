@@ -1,4 +1,3 @@
-import { Button } from "@/atoms/Button";
 import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
@@ -15,15 +14,18 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
+  SidebarTrigger,
 } from "@/lib/shadcn/generated/ui/sidebar";
 import { Link } from "react-router-dom";
-import CampaignForm from "./CampaignForm";
-import ScenarioForm from "./ScenarioForm";
+import CampaignForm from "../organisms/Campaign/CampaignForm";
+import ScenarioForm from "../organisms/Scenario/ScenarioFormCreate";
 
 export default function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>Roleet!</SidebarHeader>
+      <SidebarHeader>
+        Roleet! <SidebarTrigger />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Pages publiques</SidebarGroupLabel>

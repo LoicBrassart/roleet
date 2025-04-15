@@ -1,8 +1,21 @@
-# Realtime
+# Refacto frontend folder structure
 
-- pourquoi pas des subscriptions GraphQL ? (needs socketIO, purement declaratif)
-- bdd secondaire mongo pour la messagerie ?
-- schema zod central ? class-validator ?
-  - script js/sh supplémentaire ?
-- nestJS
-  - express/fastify -> prisma
+- src
+
+  - atoms
+  - pages
+  - types
+  - libs (?)
+
+  - "metier"
+    - Scenario
+    - Campaign
+    - Flashcard
+    - Plan (ex-Map)
+    - PoI
+    - User
+    - xxx
+      - xxxThumb
+      - xxxDetail
+      - xxxFormNew
+      - xxxFormEdit

@@ -15,8 +15,8 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import type { Q } from "@/types/queries";
 import { type FormEvent, useState } from "react";
-import FlashcardList from "./FlashcardList";
-import PlanDetail from "./PlanDetail";
+import FlashcardList from "../Flashcard/FlashcardList";
+import PlanDetail from "../Plan/PlanDetail";
 
 type Props = {
   scenario: Q.Scenario;

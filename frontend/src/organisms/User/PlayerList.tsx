@@ -1,5 +1,5 @@
 import type { User } from "@/lib/graphql/generated/graphql-types";
-import { Text } from "../atoms/Text";
+import { Text } from "../../atoms/Text";
 
 type Props = {
   players: Pick<User, "id" | "name">[];
