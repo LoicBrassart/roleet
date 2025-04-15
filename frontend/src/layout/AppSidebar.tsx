@@ -1,4 +1,3 @@
-import { Button } from "@/atoms/Button";
 import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
@@ -19,7 +18,7 @@ import {
 } from "@/lib/shadcn/generated/ui/sidebar";
 import { Link } from "react-router-dom";
 import CampaignForm from "../organisms/Campaign/CampaignForm";
-import ScenarioForm from "../organisms/Scenario/ScenarioForm";
+import ScenarioForm from "../organisms/Scenario/ScenarioFormCreate";
 
 export default function AppSidebar() {
   return (

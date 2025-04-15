@@ -13,7 +13,7 @@ import { EditableField } from "../../atoms/EditableField";
 type Props = {
   scenario?: Scenario;
 };
-export default function ScenarioForm({ scenario }: Props) {
+export default function ScenarioFormCreate({ scenario }: Props) {
   const [createScenario] = useCreateScenarioMutation();
   const navigate = useNavigate();
 
