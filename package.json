@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky",
-    "cp:images": "sudo cp backend/src/scripts/fixtures/img/* persist/files-dev"
+    "cp:images": "sudo cp backend/src/scripts/fixtures/img/* persist/files-dev",
+    "install:deps": "bash install_deps.sh . ./frontend ./backend ./realtime"
   },
   "keywords": [],
   "author": "",
