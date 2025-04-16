@@ -3,13 +3,12 @@ import { EditableField } from "@/atoms/EditableField";
 import { FormMessage } from "@/atoms/FormMessage";
 import { Select } from "@/atoms/Select";
 import {
-  type Campaign,
   useCreateCampaignMutation,
   useGetAllUsersQuery,
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
 import { getOptions } from "@/lib/helpers/forms";
-import { type Option, formOptionsSchema } from "@/lib/helpers/zodSchemas";
+import type { Option } from "@/lib/helpers/zodSchemas";
 import {
   Form,
   FormControl,
@@ -58,36 +57,35 @@ export default function CampaignForm({ campaign }: Props) {
       })
       .max(256, {
         message: "doit contenir au maximum 256 caractères.",
-      })
-      .default(""),
-    players: formOptionsSchema.default(defaultPlayers),
-    scenarios: formOptionsSchema.default(defaultScenarios),
+      }),
+    players: z.array(z.string()),
+    scenarios: z.array(z.string()),
   });
 
   const { data: scenData } = useGetMyScenariosQuery();
   const { data: usersData } = useGetAllUsersQuery();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof campaignSchema>>({
     resolver: zodResolver(campaignSchema),
     defaultValues: {
       title: campaign?.title ?? "",
       bannerUrl: campaign?.bannerUrl ?? "",
-      players: defaultPlayers,
-      scenarios: defaultScenarios,
     },
   });
 
   // TODO: Fix bannerUrl : mandatory or optional ?
-  const hUpdateCampaign = async (values: z.input<typeof campaignSchema>) => {
-    const { data } = await createCampaign({ variables: { data: values } });
-    if (!data) return;
-    const campId = data.createCampaign.id;
-    navigate(`/campaign/${campId}`);
+  const handleSubmit = () => {
+    return form.handleSubmit(async (values) => {
+      const { data } = await createCampaign({ variables: { data: values } });
+      if (!data) return;
+      const campId = data.createCampaign.id;
+      navigate(`/campaign/${campId}`);
+    });
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(hUpdateCampaign)} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6" method="post">
         <EditableField label="Titre" name="title" control={form.control} />
         <EditableField
           label="Bannière"
@@ -108,10 +106,7 @@ export default function CampaignForm({ campaign }: Props) {
                     name="players"
                     control={form.control}
                     isMulti
-                    options={usersData.getAllUsers.map((user) => ({
-                      value: user.id,
-                      label: user.name,
-                    }))}
+                    options={getOptions(usersData.getAllUsers, "id", "name")}
                     defaultValue={defaultPlayers}
                   />
                 </FormControl>
@@ -137,10 +132,7 @@ export default function CampaignForm({ campaign }: Props) {
                     name="scenarios"
                     control={form.control}
                     isMulti
-                    options={scenData.getMyScenarios.map((scenario) => ({
-                      value: scenario.id,
-                      label: scenario.title,
-                    }))}
+                    options={getOptions(scenData.getMyScenarios, "id", "title")}
                     defaultValue={defaultScenarios}
                   />
                 </FormControl>
