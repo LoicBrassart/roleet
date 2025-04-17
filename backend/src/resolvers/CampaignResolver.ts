@@ -30,6 +30,24 @@ class NewCampaignInput implements Partial<Campaign> {
   scenarios!: Scenario[];
 }
 
+@InputType()
+class UpdateCampaignInput implements Partial<Campaign> {
+  @Field()
+  id: string;
+
+  @Field()
+  title: string;
+
+  @Field()
+  bannerUrl: string;
+
+  @Field(() => [ID])
+  players!: User[];
+
+  @Field(() => [ID])
+  scenarios!: Scenario[];
+}
+
 @Resolver(Campaign)
 class CampaignResolver {
   @Authorized()
@@ -76,21 +94,55 @@ class CampaignResolver {
     try {
       if (!ctx.user) throw new Error("User not authenticated");
 
-      const campaign = Campaign.create(campaignData as DeepPartial<Campaign>);
-      campaign.storyteller = ctx.user;
-      campaign.owner = ctx.user;
-      const players = await User.findBy({ id: In(campaignData.players) });
-      campaign.players = players;
-      const scenarios = await Scenario.findBy({
-        id: In(campaignData.scenarios),
-      });
-      campaign.scenarios = scenarios;
+      const campaign = {
+        title: campaignData.title,
+        bannerUrl: campaignData.bannerUrl,
+        // players: await User.findBy({ id: In(campaignData.players) }),
+        // scenarios: await Scenario.findBy({ id: In(campaignData.scenarios) }),
+        players: campaignData.players.map((p) => ({ id: p.id })),
+        scenarios: campaignData.scenarios.map((s) => ({ id: s.id })),
+        // players: campaignData.players,
+        // scenarios: campaignData.scenarios,
+        owner: ctx.user,
+        storyteller: ctx.user,
+      };
 
-      await campaign.save();
+      const newCampaign = Campaign.create(campaign as DeepPartial<Campaign>);
+      // await newCampaign.save();
+
+      return newCampaign;
+    } catch (err) {
+      throw new Error(`Failed to create campaign: ${err}`);
+    }
+  }
+
+  @Authorized()
+  @Mutation(() => Campaign)
+  async updateCampaign(
+    @Arg("data") campaignData: UpdateCampaignInput,
+    @Ctx() ctx: CustomContext,
+  ) {
+    try {
+      if (!ctx.user) throw new Error("User not authenticated");
+
+      const campaign_ = await this.getCampaign(campaignData.id, ctx);
+      if (ctx.user.id !== campaign_.owner.id) {
+        throw new Error("Not authorized");
+      }
+
+      const campaign = await Campaign.update(
+        { id: campaignData.id },
+        {
+          title: campaignData.title,
+          bannerUrl: campaignData.bannerUrl,
+          players: await User.findBy({ id: In(campaignData.players) }),
+          scenarios: await Scenario.findBy({ id: In(campaignData.scenarios) }),
+        },
+      );
 
       return campaign;
     } catch (err) {
-      throw new Error(`Failed to create campaign: ${err}`);
+      throw new Error(`Failed to update campaign: ${err}`);
     }
   }
 }
