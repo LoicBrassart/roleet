@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import type { Scenario } from "../graphql/generated/graphql-types";
 
-type User = {
+export type User = {
   id: string;
   name: string;
   roles: string[];
@@ -38,3 +38,6 @@ export const useUserStore = create<UserState>()(
     ),
   ),
 );
+
+export const useConnectedUser = () => useUserStore((state) => state.user);
+export const useLogout = () => useUserStore((state) => state.logout);
