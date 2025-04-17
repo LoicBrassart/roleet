@@ -36,9 +36,9 @@ const start = async () => {
       const userRoles = context.user.roles.split(",");
       if (userRoles.includes("ADMIN")) return true;
 
-      return !!neededRoles.filter((roleCandidate) =>
+      return neededRoles.some((roleCandidate) =>
         userRoles.includes(roleCandidate),
-      ).length;
+      );
     },
   });
 
@@ -62,7 +62,7 @@ const start = async () => {
     },
   });
 
-  await subscribeToMessageBroker();
+  subscribeToMessageBroker();
 
   console.info(`🚀  Server ready at: ${url}`);
 };
