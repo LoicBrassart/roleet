@@ -1,16 +1,13 @@
-import {
-  type Campaign,
-  useGetMyCampaignsQuery,
-} from "@/lib/graphql/generated/graphql-types";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useGetMyCampaignsQuery } from "@/lib/graphql/generated/graphql-types";
+import { handleError } from "@/lib/helpers/handleError";
+import { useConnectedUser } from "@/lib/zustand/userStore";
 import CampaignList from "@/organisms/Campaign/CampaignList";
 
 export default function CampaignListPage() {
-  const currentUser = useUserStore((state) => state.user);
-
+  const currentUser = useConnectedUser();
   const { loading, error, data } = useGetMyCampaignsQuery();
 
-  if (error) return <p>Oops, something went awry...</p>;
+  if (error) return handleError(error);
   if (loading)
     return <p>Enhance your calm, we're still fetching this data...</p>;
   if (!data) return <p>We found nothing to display.</p>;
