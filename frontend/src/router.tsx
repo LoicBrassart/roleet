@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
+import ProtectedRoute from "./layout/ProtectedRoute";
+import { useConnectedUser } from "./lib/zustand/userStore";
 import CampaignDetailsPage from "./pages/private/CampaignDetailsPage";
 import CampaignListPage from "./pages/private/CampaignListPage";
 import DashboardPage from "./pages/private/DashboardPage";
@@ -8,6 +10,10 @@ import AuthenticationPage from "./pages/public/AuthenticationPage";
 import ErrorPage from "./pages/public/ErrorPage";
 import HomePage from "./pages/public/HomePage";
 import ScenarioListPage from "./pages/public/ScenarioListPage";
+
+const authLoader = () => {
+  return useConnectedUser();
+};
 
 const router = createBrowserRouter([
   {
@@ -40,11 +46,18 @@ const router = createBrowserRouter([
       },
       {
         path: "/campaigns",
-        element: <CampaignListPage />,
+        element: (
+          <ProtectedRoute element={<CampaignListPage />} loader={authLoader} />
+        ),
       },
       {
         path: "/campaign/:id",
-        element: <CampaignDetailsPage />,
+        element: (
+          <ProtectedRoute
+            element={<CampaignDetailsPage />}
+            loader={authLoader}
+          />
+        ),
       },
     ],
   },
