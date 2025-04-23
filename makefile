@@ -4,7 +4,8 @@ stop:
 	docker stop $(shell docker ps -a -q)
 
 clean:
-	docker system prune -af --volumes
+	docker system prune -af --volumes; \
+	sudo rm -rf persist/
 
 # ie. `make run dev`
 run:
