@@ -11,10 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@commitlint/cli": "^19.4.0",
-    "@commitlint/config-conventional": "^19.2.2",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
     "cz-conventional-changelog": "^3.3.0",
-    "husky": "^9.1.5"
+    "husky": "^9.1.7"
   },
   "config": {
     "commitizen": {
