@@ -53,7 +53,7 @@ export const GET_MY_SCENARIOS = gql`
 `;
 
 export const GET_SCENARIO = gql`
-  query GetScenario($id: String!) {
+  query getScenario($id: String!) {
     getScenario(id: $id) {
       id
       bannerUrl
@@ -163,6 +163,19 @@ export const CREATE_SCENARIO = gql`
   }
 `;
 
+export const UPDATE_SCENARIO = gql`
+  mutation updateScenario($id: String!, $data: ScenarioInput!) {
+    updateScenario(id: $id, data: $data) {
+      id
+      title
+      teaser
+      fullStory
+      bannerUrl
+      credits
+    }
+  }
+`;
+
 export const GET_ALL_MESSAGES = gql`
   query getAllMessages {
     getAllMessages {
@@ -170,6 +183,22 @@ export const GET_ALL_MESSAGES = gql`
       channel
       content
       createdAt
+    }
+  }
+`;
+
+export const CREATE_POI = gql`
+  mutation createPointOfInterest($data: NewPointOfInterestInput!) {
+    createPointOfInterest(data: $data) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_POI = gql`
+  mutation updatePointOfInterest($id: String!, $data: PointOfInterestInput!) {
+    updatePointOfInterest(id: $id, data: $data) {
+      id
     }
   }
 `;

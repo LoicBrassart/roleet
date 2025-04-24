@@ -16,6 +16,20 @@ class NewPointOfInterestInput implements Partial<PointOfInterest> {
   @Field()
   planId: string;
 }
+@InputType()
+class PointOfInterestInput implements Partial<PointOfInterest> {
+  @Field()
+  code: string;
+
+  @Field()
+  title: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  planId: string;
+}
 
 @Resolver(PointOfInterest)
 class PointOfInterestResolver {
@@ -44,6 +58,18 @@ class PointOfInterestResolver {
     } catch (err) {
       throw new Error(`Failed to delete PoI: ${err.message}`);
     }
+  }
+
+  @Mutation(() => PointOfInterest)
+  async updatePointOfInterest(
+    @Arg("id") id: string,
+    @Arg("data") data: PointOfInterestInput,
+  ) {
+    let poi = await PointOfInterest.findOneByOrFail({ id });
+    poi = await Object.assign(poi, { ...data });
+    await poi.save();
+
+    return poi;
   }
 }
 

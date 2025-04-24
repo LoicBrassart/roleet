@@ -33,7 +33,7 @@ export default function ScenarioList({ title, data }: Props) {
       <h2>{title}</h2>
       <ul className="flex gap-4">
         {data.map((scenario) => {
-          const url = `http://localhost:7000/files/${scenario.bannerUrl}`;
+          const url = `/files/${scenario.bannerUrl}`;
           return (
             <li key={scenario.id} className="w-96">
               <Card

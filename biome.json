@@ -4,7 +4,7 @@
     "ignore": [
       "**/build/*",
       "**/*.template.*",
-      "**/generated",
+      "**/generated/*",
       "**/tsconfig*.json",
       "coverage",
       "**/node_modules",

@@ -68,6 +68,8 @@ export type Mutation = {
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
   unsealScenario: Scalars['Boolean']['output'];
+  updatePointOfInterest: PointOfInterest;
+  updateScenario: Scenario;
 };
 
 
@@ -132,6 +134,18 @@ export type MutationSignupArgs = {
 
 
 export type MutationUnsealScenarioArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdatePointOfInterestArgs = {
+  data: PointOfInterestInput;
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateScenarioArgs = {
+  data: ScenarioInput;
   id: Scalars['String']['input'];
 };
 
@@ -205,6 +219,13 @@ export type PointOfInterest = {
   title: Scalars['String']['output'];
 };
 
+export type PointOfInterestInput = {
+  code: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  planId: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getAllMessages: Array<Message>;
@@ -245,6 +266,14 @@ export type Scenario = {
   readers: Array<User>;
   teaser: Scalars['String']['output'];
   title: Scalars['String']['output'];
+};
+
+export type ScenarioInput = {
+  bannerUrl?: InputMaybe<Scalars['String']['input']>;
+  credits: Scalars['String']['input'];
+  fullStory: Scalars['String']['input'];
+  teaser: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type User = {
@@ -343,10 +372,33 @@ export type CreateScenarioMutationVariables = Exact<{
 
 export type CreateScenarioMutation = { __typename?: 'Mutation', createScenario: { __typename?: 'Scenario', id: string, title: string, teaser: string, fullStory: string, bannerUrl: string, credits: string } };
 
+export type UpdateScenarioMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: ScenarioInput;
+}>;
+
+
+export type UpdateScenarioMutation = { __typename?: 'Mutation', updateScenario: { __typename?: 'Scenario', id: string, title: string, teaser: string, fullStory: string, bannerUrl: string, credits: string } };
+
 export type GetAllMessagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllMessagesQuery = { __typename?: 'Query', getAllMessages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }> };
+
+export type CreatePointOfInterestMutationVariables = Exact<{
+  data: NewPointOfInterestInput;
+}>;
+
+
+export type CreatePointOfInterestMutation = { __typename?: 'Mutation', createPointOfInterest: { __typename?: 'PointOfInterest', id: string } };
+
+export type UpdatePointOfInterestMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: PointOfInterestInput;
+}>;
+
+
+export type UpdatePointOfInterestMutation = { __typename?: 'Mutation', updatePointOfInterest: { __typename?: 'PointOfInterest', id: string } };
 
 
 export const SignupDocument = gql`
@@ -569,7 +621,7 @@ export type GetMyScenariosLazyQueryHookResult = ReturnType<typeof useGetMyScenar
 export type GetMyScenariosSuspenseQueryHookResult = ReturnType<typeof useGetMyScenariosSuspenseQuery>;
 export type GetMyScenariosQueryResult = Apollo.QueryResult<GetMyScenariosQuery, GetMyScenariosQueryVariables>;
 export const GetScenarioDocument = gql`
-    query GetScenario($id: String!) {
+    query getScenario($id: String!) {
   getScenario(id: $id) {
     id
     bannerUrl
@@ -849,6 +901,45 @@ export function useCreateScenarioMutation(baseOptions?: Apollo.MutationHookOptio
 export type CreateScenarioMutationHookResult = ReturnType<typeof useCreateScenarioMutation>;
 export type CreateScenarioMutationResult = Apollo.MutationResult<CreateScenarioMutation>;
 export type CreateScenarioMutationOptions = Apollo.BaseMutationOptions<CreateScenarioMutation, CreateScenarioMutationVariables>;
+export const UpdateScenarioDocument = gql`
+    mutation updateScenario($id: String!, $data: ScenarioInput!) {
+  updateScenario(id: $id, data: $data) {
+    id
+    title
+    teaser
+    fullStory
+    bannerUrl
+    credits
+  }
+}
+    `;
+export type UpdateScenarioMutationFn = Apollo.MutationFunction<UpdateScenarioMutation, UpdateScenarioMutationVariables>;
+
+/**
+ * __useUpdateScenarioMutation__
+ *
+ * To run a mutation, you first call `useUpdateScenarioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateScenarioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateScenarioMutation, { data, loading, error }] = useUpdateScenarioMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateScenarioMutation(baseOptions?: Apollo.MutationHookOptions<UpdateScenarioMutation, UpdateScenarioMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateScenarioMutation, UpdateScenarioMutationVariables>(UpdateScenarioDocument, options);
+      }
+export type UpdateScenarioMutationHookResult = ReturnType<typeof useUpdateScenarioMutation>;
+export type UpdateScenarioMutationResult = Apollo.MutationResult<UpdateScenarioMutation>;
+export type UpdateScenarioMutationOptions = Apollo.BaseMutationOptions<UpdateScenarioMutation, UpdateScenarioMutationVariables>;
 export const GetAllMessagesDocument = gql`
     query getAllMessages {
   getAllMessages {
@@ -891,3 +982,70 @@ export type GetAllMessagesQueryHookResult = ReturnType<typeof useGetAllMessagesQ
 export type GetAllMessagesLazyQueryHookResult = ReturnType<typeof useGetAllMessagesLazyQuery>;
 export type GetAllMessagesSuspenseQueryHookResult = ReturnType<typeof useGetAllMessagesSuspenseQuery>;
 export type GetAllMessagesQueryResult = Apollo.QueryResult<GetAllMessagesQuery, GetAllMessagesQueryVariables>;
+export const CreatePointOfInterestDocument = gql`
+    mutation createPointOfInterest($data: NewPointOfInterestInput!) {
+  createPointOfInterest(data: $data) {
+    id
+  }
+}
+    `;
+export type CreatePointOfInterestMutationFn = Apollo.MutationFunction<CreatePointOfInterestMutation, CreatePointOfInterestMutationVariables>;
+
+/**
+ * __useCreatePointOfInterestMutation__
+ *
+ * To run a mutation, you first call `useCreatePointOfInterestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePointOfInterestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPointOfInterestMutation, { data, loading, error }] = useCreatePointOfInterestMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreatePointOfInterestMutation(baseOptions?: Apollo.MutationHookOptions<CreatePointOfInterestMutation, CreatePointOfInterestMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePointOfInterestMutation, CreatePointOfInterestMutationVariables>(CreatePointOfInterestDocument, options);
+      }
+export type CreatePointOfInterestMutationHookResult = ReturnType<typeof useCreatePointOfInterestMutation>;
+export type CreatePointOfInterestMutationResult = Apollo.MutationResult<CreatePointOfInterestMutation>;
+export type CreatePointOfInterestMutationOptions = Apollo.BaseMutationOptions<CreatePointOfInterestMutation, CreatePointOfInterestMutationVariables>;
+export const UpdatePointOfInterestDocument = gql`
+    mutation updatePointOfInterest($id: String!, $data: PointOfInterestInput!) {
+  updatePointOfInterest(id: $id, data: $data) {
+    id
+  }
+}
+    `;
+export type UpdatePointOfInterestMutationFn = Apollo.MutationFunction<UpdatePointOfInterestMutation, UpdatePointOfInterestMutationVariables>;
+
+/**
+ * __useUpdatePointOfInterestMutation__
+ *
+ * To run a mutation, you first call `useUpdatePointOfInterestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePointOfInterestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePointOfInterestMutation, { data, loading, error }] = useUpdatePointOfInterestMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdatePointOfInterestMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePointOfInterestMutation, UpdatePointOfInterestMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePointOfInterestMutation, UpdatePointOfInterestMutationVariables>(UpdatePointOfInterestDocument, options);
+      }
+export type UpdatePointOfInterestMutationHookResult = ReturnType<typeof useUpdatePointOfInterestMutation>;
+export type UpdatePointOfInterestMutationResult = Apollo.MutationResult<UpdatePointOfInterestMutation>;
+export type UpdatePointOfInterestMutationOptions = Apollo.BaseMutationOptions<UpdatePointOfInterestMutation, UpdatePointOfInterestMutationVariables>;

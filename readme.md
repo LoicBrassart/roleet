@@ -1,21 +1,10 @@
-# Refacto frontend folder structure
+# Build forms for my entities
 
-- src
+_Source: https://ui.shadcn.com/docs/components/form_
 
-  - atoms
-  - pages
-  - types
-  - libs (?)
+- construire schema Zod qui matche avec mes inputTypes côté backend
+- créer un form via le hook useForm
+- créer un state par défaut
+- écrire hSubmit
 
-  - "metier"
-    - Scenario
-    - Campaign
-    - Flashcard
-    - Plan (ex-Map)
-    - PoI
-    - User
-    - xxx
-      - xxxThumb
-      - xxxDetail
-      - xxxFormNew
-      - xxxFormEdit
+- ❓Comment imbriquer des forms d'entités distinctes ? Possible ?

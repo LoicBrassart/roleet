@@ -33,6 +33,24 @@ class NewScenarioInput {
   credits: string;
 }
 
+@InputType()
+class ScenarioInput {
+  @Field()
+  title: string;
+
+  @Field()
+  teaser: string;
+
+  @Field()
+  fullStory: string;
+
+  @Field({ nullable: true })
+  bannerUrl?: string;
+
+  @Field()
+  credits: string;
+}
+
 @Resolver(Scenario)
 class ScenarioResolver {
   @Query(() => [Scenario])
@@ -65,6 +83,9 @@ class ScenarioResolver {
           pointsOfInterest: true,
         },
         flashcards: true,
+        campaigns: true,
+        owner: true,
+        readers: true,
       },
     });
   }
@@ -79,6 +100,23 @@ class ScenarioResolver {
       return scenario;
     } catch (err) {
       throw new Error("Failed to create scenario");
+    }
+  }
+
+  @Authorized()
+  @Mutation(() => Scenario)
+  async updateScenario(
+    @Arg("id") id: string,
+    @Arg("data") data: ScenarioInput,
+  ) {
+    try {
+      let scenario = await Scenario.findOneByOrFail({ id });
+      scenario = await Object.assign(scenario, { ...data });
+      await scenario.save();
+
+      return scenario;
+    } catch (err) {
+      throw new Error("Failed to update scenario");
     }
   }
 
