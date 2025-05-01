@@ -14,15 +14,17 @@ import {
   DialogTrigger,
 } from "@/lib/shadcn/generated/ui/dialog";
 import { useUserStore } from "@/lib/zustand/userStore";
+import type { Q } from "@/types/queries";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  scenario: Pick<Scenario, "id" | "title">;
+  scenario: Q.Scenario;
 };
 export default function ModalToOpenScenario({ scenario }: Props) {
   const [unseal] = useUnsealScenarioMutation();
   const navigate = useNavigate();
   const currentUser = useUserStore((state) => state.user);
+  const unsealToStore = useUserStore((state) => state.readScenario);
 
   const hUnseal = async () => {
     const { data } = await unseal({
@@ -31,6 +33,7 @@ export default function ModalToOpenScenario({ scenario }: Props) {
     const result = data?.unsealScenario;
     if (result) {
       currentUser?.readScenarios.push(`${scenario.id}`);
+      unsealToStore(scenario);
       navigate(`/scenario/${scenario.id}`);
     }
   };

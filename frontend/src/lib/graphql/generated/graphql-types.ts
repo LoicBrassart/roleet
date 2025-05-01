@@ -68,6 +68,7 @@ export type Mutation = {
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
   unsealScenario: Scalars['Boolean']['output'];
+  updatePlan: Plan;
   updatePointOfInterest: PointOfInterest;
   updateScenario: Scenario;
 };
@@ -134,6 +135,12 @@ export type MutationSignupArgs = {
 
 
 export type MutationUnsealScenarioArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdatePlanArgs = {
+  data: PlanInput;
   id: Scalars['String']['input'];
 };
 
@@ -207,6 +214,12 @@ export type Plan = {
   pointsOfInterest: Array<PointOfInterest>;
   scenario: Scenario;
   title: Scalars['String']['output'];
+};
+
+export type PlanInput = {
+  description: Scalars['String']['input'];
+  pictureUrl: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type PointOfInterest = {
@@ -399,6 +412,21 @@ export type UpdatePointOfInterestMutationVariables = Exact<{
 
 
 export type UpdatePointOfInterestMutation = { __typename?: 'Mutation', updatePointOfInterest: { __typename?: 'PointOfInterest', id: string } };
+
+export type CreatePlanMutationVariables = Exact<{
+  data: NewPlanInput;
+}>;
+
+
+export type CreatePlanMutation = { __typename?: 'Mutation', createPlan: { __typename?: 'Plan', id: string } };
+
+export type UpdatePlanMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  data: PlanInput;
+}>;
+
+
+export type UpdatePlanMutation = { __typename?: 'Mutation', updatePlan: { __typename?: 'Plan', id: string } };
 
 
 export const SignupDocument = gql`
@@ -1049,3 +1077,70 @@ export function useUpdatePointOfInterestMutation(baseOptions?: Apollo.MutationHo
 export type UpdatePointOfInterestMutationHookResult = ReturnType<typeof useUpdatePointOfInterestMutation>;
 export type UpdatePointOfInterestMutationResult = Apollo.MutationResult<UpdatePointOfInterestMutation>;
 export type UpdatePointOfInterestMutationOptions = Apollo.BaseMutationOptions<UpdatePointOfInterestMutation, UpdatePointOfInterestMutationVariables>;
+export const CreatePlanDocument = gql`
+    mutation createPlan($data: NewPlanInput!) {
+  createPlan(data: $data) {
+    id
+  }
+}
+    `;
+export type CreatePlanMutationFn = Apollo.MutationFunction<CreatePlanMutation, CreatePlanMutationVariables>;
+
+/**
+ * __useCreatePlanMutation__
+ *
+ * To run a mutation, you first call `useCreatePlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPlanMutation, { data, loading, error }] = useCreatePlanMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreatePlanMutation(baseOptions?: Apollo.MutationHookOptions<CreatePlanMutation, CreatePlanMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePlanMutation, CreatePlanMutationVariables>(CreatePlanDocument, options);
+      }
+export type CreatePlanMutationHookResult = ReturnType<typeof useCreatePlanMutation>;
+export type CreatePlanMutationResult = Apollo.MutationResult<CreatePlanMutation>;
+export type CreatePlanMutationOptions = Apollo.BaseMutationOptions<CreatePlanMutation, CreatePlanMutationVariables>;
+export const UpdatePlanDocument = gql`
+    mutation updatePlan($id: String!, $data: PlanInput!) {
+  updatePlan(id: $id, data: $data) {
+    id
+  }
+}
+    `;
+export type UpdatePlanMutationFn = Apollo.MutationFunction<UpdatePlanMutation, UpdatePlanMutationVariables>;
+
+/**
+ * __useUpdatePlanMutation__
+ *
+ * To run a mutation, you first call `useUpdatePlanMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePlanMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePlanMutation, { data, loading, error }] = useUpdatePlanMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdatePlanMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePlanMutation, UpdatePlanMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePlanMutation, UpdatePlanMutationVariables>(UpdatePlanDocument, options);
+      }
+export type UpdatePlanMutationHookResult = ReturnType<typeof useUpdatePlanMutation>;
+export type UpdatePlanMutationResult = Apollo.MutationResult<UpdatePlanMutation>;
+export type UpdatePlanMutationOptions = Apollo.BaseMutationOptions<UpdatePlanMutation, UpdatePlanMutationVariables>;

@@ -27,6 +27,7 @@ class PointOfInterestInput implements Partial<PointOfInterest> {
   @Field()
   description: string;
 
+  //TODO: Delete ?
   @Field()
   planId: string;
 }

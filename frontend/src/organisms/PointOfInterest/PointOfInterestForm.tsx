@@ -16,6 +16,7 @@ type Props = {
   plan: Plan;
   poi?: Plan["pointsOfInterest"][number];
 };
+// TODO: add poi owner
 export default function PointOfInterestForm({ plan, poi }: Props) {
   const [createPoI] = useCreatePointOfInterestMutation();
   const [updatePoI] = useUpdatePointOfInterestMutation();
@@ -38,7 +39,6 @@ export default function PointOfInterestForm({ plan, poi }: Props) {
     }
   };
 
-  // TODO Fix bannerUrl
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(hSubmitPoI)} className="space-y-6">

@@ -202,3 +202,19 @@ export const UPDATE_POI = gql`
     }
   }
 `;
+
+export const CREATE_PLAN = gql`
+  mutation createPlan($data: NewPlanInput!) {
+    createPlan(data: $data) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_PLAN = gql`
+  mutation updatePlan($id: String!, $data: PlanInput!) {
+    updatePlan(id: $id, data: $data) {
+      id
+    }
+  }
+`;

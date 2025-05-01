@@ -1,25 +1,19 @@
 import { useGetScenarioQuery } from "@/lib/graphql/generated/graphql-types";
-import PointOfInterestForm from "@/organisms/PointOfInterest/PointOfInterestForm";
-import PointOfInterestList from "@/organisms/PointOfInterest/PointOfInterestList";
+import PlanForm from "@/organisms/Plan/PlanForm";
 
 export default function SandboxPage() {
   const { data } = useGetScenarioQuery({
-    variables: { id: "6cde2d42-ceaa-4ca0-9942-30faa7e1cbe4" },
+    variables: { id: "5d6c54b5-2ce7-4ba7-954a-d9931f7f53a1" },
   });
 
   return (
     <>
       <h1>Bienvenue au Labo !</h1>
       {data?.getScenario && (
-        <>
-          <PointOfInterestForm
-            plan={data?.getScenario.plans[0]}
-            poi={data?.getScenario.plans[0].pointsOfInterest[0]}
-          />
-          <PointOfInterestList
-            data={data?.getScenario.plans[0].pointsOfInterest}
-          />
-        </>
+        <PlanForm
+          scenario={data?.getScenario}
+          plan={data?.getScenario.plans[0]}
+        />
       )}
     </>
   );

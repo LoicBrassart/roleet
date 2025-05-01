@@ -16,6 +16,17 @@ class NewPlanInput implements Partial<Plan> {
   @Field()
   scenarioId: string;
 }
+@InputType()
+class PlanInput implements Partial<Plan> {
+  @Field()
+  title: string;
+
+  @Field()
+  description: string;
+
+  @Field()
+  pictureUrl: string;
+}
 
 @Resolver(Plan)
 class PlanResolver {
@@ -46,6 +57,15 @@ class PlanResolver {
     } catch (err) {
       return false;
     }
+  }
+
+  @Mutation(() => Plan)
+  async updatePlan(@Arg("id") id: string, @Arg("data") data: PlanInput) {
+    let plan = await Plan.findOneByOrFail({ id });
+    plan = await Object.assign(plan, { ...data });
+    await plan.save();
+
+    return plan;
   }
 }
 

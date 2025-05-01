@@ -15,7 +15,7 @@ export default function PlanDetail({ plan }: Props) {
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel className="h-[90vh]">
         <img
-          src={`/files/${plan.pictureUrl}`}
+          src={plan.pictureUrl}
           alt={plan.title ?? `Plan for scenario ${plan.title}`}
         />
       </ResizablePanel>
