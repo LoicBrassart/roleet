@@ -10,9 +10,8 @@ declare namespace Q {
   type ScenarioPlan = Scenario["plans"][number];
   type ScenarioFlashcard = Scenario["flashcards"][number];
   type AllScenarios = GetAllScenariosQuery["getAllScenarios"];
-  type Campaign = Defined<GetCampaignQuery["getCampaign"]>;
+  type Campaign = NonNullable<GetCampaignQuery["getCampaign"]>;
   type CampaignMessage = Campaign["messages"][number];
-
-  type MyCampaign = Defined<GetMyCampaignsQuery["getMyCampaigns"]>[number];
+  type MyCampaign = NonNullable<GetMyCampaignsQuery["getMyCampaigns"]>[number];
 }
 export type { Q };

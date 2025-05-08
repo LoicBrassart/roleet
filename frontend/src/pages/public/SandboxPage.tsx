@@ -1,20 +1,15 @@
-import { useGetScenarioQuery } from "@/lib/graphql/generated/graphql-types";
-import PlanForm from "@/organisms/Plan/PlanForm";
+import { useGetCampaignQuery } from "@/lib/graphql/generated/graphql-types";
+import CampaignForm from "@/organisms/Campaign/CampaignForm";
 
 export default function SandboxPage() {
-  const { data } = useGetScenarioQuery({
-    variables: { id: "5d6c54b5-2ce7-4ba7-954a-d9931f7f53a1" },
+  const { data } = useGetCampaignQuery({
+    variables: { id: "c9a99b9c-3645-4340-b0a0-96f0c2818fae" },
   });
 
   return (
     <>
       <h1>Bienvenue au Labo !</h1>
-      {data?.getScenario && (
-        <PlanForm
-          scenario={data?.getScenario}
-          plan={data?.getScenario.plans[0]}
-        />
-      )}
+      {data?.getCampaign && <CampaignForm campaign={data?.getCampaign} />}
     </>
   );
 }
