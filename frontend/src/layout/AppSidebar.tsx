@@ -23,7 +23,7 @@ import ScenarioForm from "../organisms/Scenario/ScenarioForm";
 export default function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>
+      <SidebarHeader className="flex flex-row justify-between">
         Roleet! <SidebarTrigger />
       </SidebarHeader>
       <SidebarContent>

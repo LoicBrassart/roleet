@@ -3,12 +3,12 @@ import {
   useGetMyCampaignsQuery,
   useGetMyScenariosQuery,
 } from "@/lib/graphql/generated/graphql-types";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useCurrentUser } from "@/lib/zustand/userStore";
 import CampaignList from "@/organisms/Campaign/CampaignList";
 import ScenarioList from "@/organisms/Scenario/ScenarioList";
 
 export default function DashboardPage() {
-  const currentUser = useUserStore((state) => state.user);
+  const currentUser = useCurrentUser();
   const {
     loading: loadCampaigns,
     error: errCampaigns,

@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/lib/shadcn/generated/ui/dialog";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useCurrentUser, useUnsealScenario } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
 import { useNavigate } from "react-router-dom";
 
@@ -18,19 +18,19 @@ type Props = {
   scenario: Entities.Scenario;
 };
 export default function ModalToOpenScenario({ scenario }: Props) {
-  const [unseal] = useUnsealScenarioMutation();
+  const [unsealMutation] = useUnsealScenarioMutation();
   const navigate = useNavigate();
-  const currentUser = useUserStore((state) => state.user);
-  const unsealToStore = useUserStore((state) => state.readScenario);
+  const currentUser = useCurrentUser();
+  const unseal = useUnsealScenario();
 
   const hUnseal = async () => {
-    const { data } = await unseal({
+    const { data } = await unsealMutation({
       variables: { unsealScenarioId: scenario.id },
     });
     const result = data?.unsealScenario;
     if (result) {
       currentUser?.readScenarios.push(`${scenario.id}`);
-      unsealToStore(scenario);
+      unseal(scenario);
       navigate(`/scenario/${scenario.id}`);
     }
   };

@@ -96,8 +96,9 @@ class ScenarioResolver {
   @Mutation(() => Scenario)
   async createScenario(@Arg("data") scenarioData: NewScenarioInput) {
     try {
-      const scenario = Scenario.create(scenarioData as DeepPartial<Scenario>);
-      await scenario.save();
+      const scenario = await Scenario.create(
+        scenarioData as DeepPartial<Scenario>,
+      ).save();
 
       return scenario;
     } catch (err) {

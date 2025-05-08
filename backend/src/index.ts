@@ -1,8 +1,8 @@
-import "reflect-metadata";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import * as dotenv from "dotenv";
 import * as jwt from "jsonwebtoken";
+import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { dataSource } from "./config/db";
 import CampaignResolver from "./resolvers/CampaignResolver";
@@ -11,6 +11,7 @@ import MessageResolver from "./resolvers/MessageResolver";
 import PlanResolver from "./resolvers/PlanResolver";
 import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
 import ScenarioResolver from "./resolvers/ScenarioResolver";
+import StatsResolver from "./resolvers/StatsResolver";
 import UserResolver from "./resolvers/UserResolver";
 import subscribeToMessageBroker from "./services/messageBroker";
 
@@ -27,6 +28,7 @@ const start = async () => {
       FlashcardResolver,
       CampaignResolver,
       MessageResolver,
+      StatsResolver,
     ],
     //validate:true,
     authChecker: ({ context }, neededRoles) => {

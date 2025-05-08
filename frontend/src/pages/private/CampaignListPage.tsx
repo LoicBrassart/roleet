@@ -1,12 +1,9 @@
-import {
-  type Campaign,
-  useGetMyCampaignsQuery,
-} from "@/lib/graphql/generated/graphql-types";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useGetMyCampaignsQuery } from "@/lib/graphql/generated/graphql-types";
+import { useCurrentUser } from "@/lib/zustand/userStore";
 import CampaignList from "@/organisms/Campaign/CampaignList";
 
 export default function CampaignListPage() {
-  const currentUser = useUserStore((state) => state.user);
+  const currentUser = useCurrentUser();
 
   const { loading, error, data } = useGetMyCampaignsQuery();
 

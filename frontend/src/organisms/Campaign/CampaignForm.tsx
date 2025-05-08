@@ -10,7 +10,7 @@ import { getOptions } from "@/lib/helpers/forms";
 import type { Option } from "@/lib/helpers/zodSchemas";
 import { Form } from "@/lib/shadcn/generated/ui/form";
 import campaignSchema from "@/lib/zod/campaign";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -21,7 +21,7 @@ type Props = {
   campaign?: Entities.Campaign;
 };
 export default function CampaignForm({ campaign }: Props) {
-  const user = useUserStore((state) => state.user);
+  const user = useCurrentUser();
   const [createCampaign] = useCreateCampaignMutation();
   const navigate = useNavigate();
   const { data: scenData } = useGetMyScenariosQuery();

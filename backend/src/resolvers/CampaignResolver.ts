@@ -9,10 +9,10 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
-import { type DeepPartial, In } from "typeorm";
+import type { DeepPartial } from "typeorm";
 import { Campaign } from "../entities/Campaign";
-import { Scenario } from "../entities/Scenario";
-import { User } from "../entities/User";
+import type { Scenario } from "../entities/Scenario";
+import type { User } from "../entities/User";
 import type CustomContext from "../types/CustomContext";
 
 @InputType()
@@ -76,19 +76,20 @@ class CampaignResolver {
     try {
       if (!ctx.user) throw new Error("User not authenticated");
 
-      const campaign = Campaign.create(campaignData as DeepPartial<Campaign>);
-      campaign.storyteller = ctx.user;
-      campaign.owner = ctx.user;
-      const players = await User.findBy({ id: In(campaignData.players) });
-      campaign.players = players;
-      const scenarios = await Scenario.findBy({
-        id: In(campaignData.scenarios),
-      });
-      campaign.scenarios = scenarios;
+      const campaign = {
+        title: campaignData.title,
+        bannerUrl: campaignData.bannerUrl,
+        players: campaignData.players.map((p) => ({ id: p.id })),
+        scenarios: campaignData.scenarios.map((s) => ({ id: s.id })),
+        owner: ctx.user,
+        storyteller: ctx.user,
+      };
 
-      await campaign.save();
+      const newCampaign = Campaign.create(
+        campaign as DeepPartial<Campaign>,
+      ).save();
 
-      return campaign;
+      return newCampaign;
     } catch (err) {
       throw new Error(`Failed to create campaign: ${err}`);
     }
