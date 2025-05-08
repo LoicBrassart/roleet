@@ -1,7 +1,4 @@
-import {
-  type Scenario,
-  useUnsealScenarioMutation,
-} from "@/lib/graphql/generated/graphql-types";
+import { useUnsealScenarioMutation } from "@/lib/graphql/generated/graphql-types";
 import { Button, buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
@@ -14,11 +11,11 @@ import {
   DialogTrigger,
 } from "@/lib/shadcn/generated/ui/dialog";
 import { useUserStore } from "@/lib/zustand/userStore";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  scenario: Q.Scenario;
+  scenario: Entities.Scenario;
 };
 export default function ModalToOpenScenario({ scenario }: Props) {
   const [unseal] = useUnsealScenarioMutation();

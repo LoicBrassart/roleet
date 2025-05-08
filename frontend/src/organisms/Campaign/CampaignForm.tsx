@@ -11,14 +11,14 @@ import type { Option } from "@/lib/helpers/zodSchemas";
 import { Form } from "@/lib/shadcn/generated/ui/form";
 import campaignSchema from "@/lib/zod/campaign";
 import { useUserStore } from "@/lib/zustand/userStore";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import type { z } from "zod";
 
 type Props = {
-  campaign?: Q.MyCampaign;
+  campaign?: Entities.Campaign;
 };
 export default function CampaignForm({ campaign }: Props) {
   const user = useUserStore((state) => state.user);
@@ -58,12 +58,8 @@ export default function CampaignForm({ campaign }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(hUpdateCampaign)} className="space-y-6">
-        <EditableField label="Titre" name="title" control={form.control} />
-        <EditableField
-          label="Bannière"
-          name="bannerUrl"
-          control={form.control}
-        />
+        <EditableField label="Titre" {...register("title")} />
+        <EditableField label="Bannière" {...register("bannerUrl")} />
         {usersData && (
           <Select
             label="Joueurs"

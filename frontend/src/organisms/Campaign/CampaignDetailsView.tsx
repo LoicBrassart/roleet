@@ -1,10 +1,10 @@
 import { Text } from "@/atoms/Text";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import PlayerList from "../User/PlayerList";
 import Chat from "./Chat";
 
 type Props = {
-  campaign: Q.Campaign;
+  campaign: Entities.Campaign;
 };
 export default function CampaignDetailsView({ campaign }: Props) {
   if (!campaign) return <p>Nothing to display here !</p>;

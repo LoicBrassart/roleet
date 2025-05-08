@@ -1,6 +1,6 @@
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import { useUserStore } from "@/lib/zustand/userStore";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 import ModalToAuth from "../../layout/ModalToAuth";
@@ -15,7 +15,7 @@ import ModalToOpenScenario from "./ModalToOpenScenario";
 
 type Props = {
   title: string;
-  data: Q.AllScenarios;
+  data: Array<Entities.Scenario>;
 };
 export default function ScenarioList({ title, data }: Props) {
   const currentUser = useUserStore((state) => state.user);

@@ -76,7 +76,7 @@ class ScenarioResolver {
 
   @Query(() => Scenario)
   async getScenario(@Arg("id") id: string) {
-    return await Scenario.findOne({
+    const scenario = await Scenario.findOne({
       where: { id },
       relations: {
         plans: {
@@ -88,6 +88,8 @@ class ScenarioResolver {
         readers: true,
       },
     });
+    if (!scenario) throw new Error("Scenario not found");
+    return scenario;
   }
 
   @Authorized()

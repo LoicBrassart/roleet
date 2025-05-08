@@ -1,4 +1,4 @@
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { produce } from "immer";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -14,7 +14,7 @@ type UserState = {
   user: User | null;
   login: (user: User) => void;
   logout: () => void;
-  readScenario: (scenario: Q.Scenario) => void;
+  readScenario: (scenario: Entities.Scenario) => void;
 };
 
 export const useUserStore = create<UserState>()(
@@ -24,7 +24,7 @@ export const useUserStore = create<UserState>()(
         user: null,
         login: (user: User) => set(() => ({ user: user })),
         logout: () => set(() => ({ user: null })),
-        readScenario: (scenario: Q.Scenario) => {
+        readScenario: (scenario: Entities.Scenario) => {
           set(
             produce((state: UserState) => {
               if (

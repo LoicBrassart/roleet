@@ -4,14 +4,14 @@ import {
 } from "@/lib/graphql/generated/graphql-types";
 import { Form } from "@/lib/shadcn/generated/ui/form";
 import { planSchema } from "@/lib/zod/plan";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
 
-type Scenario = Q.Scenario;
+type Scenario = Entities.Scenario;
 type Props = {
   scenario: Scenario;
   plan?: Scenario["plans"][number];

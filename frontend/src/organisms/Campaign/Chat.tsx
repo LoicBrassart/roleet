@@ -7,13 +7,13 @@ import {
   TooltipTrigger,
 } from "@/lib/shadcn/generated/ui/tooltip";
 import { useUserStore } from "@/lib/zustand/userStore";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import type { FormEvent } from "react";
 
 type Props = {
   title: string;
   room: string;
-  data: Q.CampaignMessage[];
+  data: Entities.Message[];
 };
 export default function Chat({ title, data, room }: Props) {
   const { messages, sendMessage, isConnected } = useChat(room, data);

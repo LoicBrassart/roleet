@@ -5,7 +5,7 @@ import {
 } from "@/lib/graphql/generated/graphql-types";
 import { Form } from "@/lib/shadcn/generated/ui/form";
 import { scenarioSchema } from "@/lib/zod/scenario";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
 
 type Props = {
-  scenario?: Q.Scenario;
+  scenario?: Entities.Scenario;
 };
 export default function ScenarioForm({ scenario }: Props) {
   const [createScenario] = useCreateScenarioMutation();

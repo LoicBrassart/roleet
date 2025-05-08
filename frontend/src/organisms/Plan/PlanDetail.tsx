@@ -4,11 +4,11 @@ import {
   ResizablePanelGroup,
 } from "@/lib/shadcn/generated/ui/resizable";
 import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import PointOfInterestList from "../PointOfInterest/PointOfInterestList";
 
 type Props = {
-  plan: Q.ScenarioPlan;
+  plan: Entities.Plan;
 };
 export default function PlanDetail({ plan }: Props) {
   return (

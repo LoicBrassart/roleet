@@ -4,17 +4,16 @@ import {
 } from "@/lib/graphql/generated/graphql-types";
 import { Form } from "@/lib/shadcn/generated/ui/form";
 import { poiSchema } from "@/lib/zod/poi";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
 
-type Plan = Q.Scenario["plans"][number];
 type Props = {
-  plan: Plan;
-  poi?: Plan["pointsOfInterest"][number];
+  plan: Entities.Plan;
+  poi?: Entities.PoI;
 };
 // TODO: add poi owner
 export default function PointOfInterestForm({ plan, poi }: Props) {

@@ -4,10 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/lib/shadcn/generated/ui/accordion";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 
 type Props = {
-  data: Q.Scenario["plans"][number]["pointsOfInterest"];
+  data: Entities.PoI[];
 };
 export default function PointOfInterestList({ data }: Props) {
   if (!data.length) return <p>Rien à afficher ici :shrug: </p>;
