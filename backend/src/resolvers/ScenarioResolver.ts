@@ -107,6 +107,7 @@ class ScenarioResolver {
   }
 
   @Authorized()
+  @UseMiddleware(IsOwner(Scenario))
   @Mutation(() => Scenario)
   async updateScenario(
     @Arg("id") id: string,

@@ -248,6 +248,7 @@ export type Query = {
   getMyCampaigns: Array<Campaign>;
   getMyScenarios: Array<Scenario>;
   getScenario: Scenario;
+  getStats: Stats;
 };
 
 
@@ -287,6 +288,15 @@ export type ScenarioInput = {
   fullStory: Scalars['String']['input'];
   teaser: Scalars['String']['input'];
   title: Scalars['String']['input'];
+};
+
+export type Stats = {
+  __typename?: 'Stats';
+  campaigns: Scalars['Float']['output'];
+  flashcards: Scalars['Float']['output'];
+  plans: Scalars['Float']['output'];
+  scenarios: Scalars['Float']['output'];
+  users: Scalars['Float']['output'];
 };
 
 export type User = {
