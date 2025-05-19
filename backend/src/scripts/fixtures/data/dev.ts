@@ -1,4 +1,4 @@
-import { Roles } from "../../../entities/User";
+import { Role } from "../../../entities/User";
 
 const scenarios = [
   {
@@ -592,7 +592,7 @@ const users = [
     name: "ValhallaCode",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER, Roles.ADMIN],
+    roles: [Role.USER, Role.ADMIN],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -602,7 +602,7 @@ const users = [
     name: "Lily",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -612,7 +612,7 @@ const users = [
     name: "Shyzen",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -622,7 +622,7 @@ const users = [
     name: "Missy",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -632,7 +632,7 @@ const users = [
     name: "LunaCraft",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -695,4 +695,4 @@ const messages = [
     campaignIndex: 0,
   },
 ];
-export { scenarios, plans, pois, flashcards, users, campaigns, messages };
+export { campaigns, flashcards, messages, plans, pois, scenarios, users };

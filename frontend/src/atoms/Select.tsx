@@ -12,7 +12,6 @@ import ReactSelect, {
   type OptionsOrGroups,
 } from "react-select";
 
-// TODO Refactor this, it's unsufferable
 type Props<
   Option,
   Group extends GroupBase<Option>,

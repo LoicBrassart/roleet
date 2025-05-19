@@ -218,3 +218,15 @@ export const UPDATE_PLAN = gql`
     }
   }
 `;
+
+export const GET_STATS = gql`
+  query getStats {
+    getStats {
+      campaigns
+      flashcards
+      plans
+      scenarios
+      users
+    }
+  }
+`;
