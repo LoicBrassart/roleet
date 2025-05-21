@@ -1,14 +1,14 @@
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useCurrentUser } from "@/lib/zustand/userStore";
 import CampaignDetailsView from "@/organisms/Campaign/CampaignDetailsView";
 import CampaignForm from "@/organisms/Campaign/CampaignForm";
 import CampaignHeader from "@/organisms/Campaign/CampaignHeader";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 
 type Props = {
-  campaign: Q.Campaign;
+  campaign: Entities.Campaign;
 };
 export default function CampaignDetailsLayout({ campaign }: Props) {
-  const currentUser = useUserStore((state) => state.user);
+  const currentUser = useCurrentUser();
   if (!currentUser) throw new Error("User not found");
   const isStoryteller = campaign.storyteller.name === currentUser.name;
 

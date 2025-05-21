@@ -1,8 +1,8 @@
 import { Text } from "@/atoms/Text";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 
 type Props = {
-  campaign: Q.MyCampaign;
+  campaign: Entities.Campaign;
 };
 export default function CampaignHeader({ campaign }: Props) {
   return (

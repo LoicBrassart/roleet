@@ -1,4 +1,3 @@
-import { dataSource } from "../../config/db";
 import { Campaign } from "../../entities/Campaign";
 import { Flashcard } from "../../entities/FlashCard";
 import { Message } from "../../entities/Message";
@@ -6,6 +5,7 @@ import { Plan } from "../../entities/Plan";
 import { PointOfInterest } from "../../entities/PointOfInterest";
 import { Scenario } from "../../entities/Scenario";
 import { User } from "../../entities/User";
+import { dataSource } from "../../lib/typeorm/dataSource";
 import {
   campaigns,
   flashcards,

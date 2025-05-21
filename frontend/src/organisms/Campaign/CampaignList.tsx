@@ -6,13 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/lib/shadcn/generated/ui/card";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 
 type Props = {
   title: string;
-  data: Q.MyCampaign[];
+  data: Entities.Campaign[];
 };
 
 export default function CampaignList({ title, data }: Props) {

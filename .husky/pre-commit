@@ -1,1 +1,1 @@
-npx @biomejs/biome check --write .
+lint-staged

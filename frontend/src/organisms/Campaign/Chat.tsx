@@ -6,18 +6,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/lib/shadcn/generated/ui/tooltip";
-import { useUserStore } from "@/lib/zustand/userStore";
-import type { Q } from "@/types/queries";
+import { useCurrentUser } from "@/lib/zustand/userStore";
+import type { Entities } from "@/types/entities";
 import type { FormEvent } from "react";
 
 type Props = {
   title: string;
   room: string;
-  data: Q.CampaignMessage[];
+  data: Entities.Message[];
 };
 export default function Chat({ title, data, room }: Props) {
   const { messages, sendMessage, isConnected } = useChat(room, data);
-  const currentUser = useUserStore((state) => state.user);
+  const currentUser = useCurrentUser();
   if (!currentUser) return <p>Connectez vous pour accéder au Chat</p>;
 
   const hSubmit = (evt: FormEvent<HTMLFormElement>) => {

@@ -1,9 +1,11 @@
 x-baseService: &baseService
   restart: always
   healthcheck:
-    interval: 1s
-    timeout: 2s
-    retries: 100
+    interval: 300s
+    timeout: 30s
+    retries: 5
+    start_period: 30s
+    start_interval: 5s
 
 services:
   gateway-dev:
@@ -24,7 +26,7 @@ services:
       adminer-dev:
         condition: service_started
       realtime-dev:
-        condition: service_started
+        condition: service_healthy
 
   db-dev:
     <<: *baseService
@@ -63,6 +65,9 @@ services:
     depends_on:
       db-dev:
         condition: service_healthy
+      rabbit-dev:
+        condition: service_healthy
+
     volumes:
       - ./backend/src:/app/src/
       - ./persist/backend-dev:/app/static

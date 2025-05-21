@@ -18,12 +18,12 @@ import {
 } from "@/lib/shadcn/generated/ui/sidebar";
 import { Link } from "react-router-dom";
 import CampaignForm from "../organisms/Campaign/CampaignForm";
-import ScenarioForm from "../organisms/Scenario/ScenarioFormCreate";
+import ScenarioForm from "../organisms/Scenario/ScenarioForm";
 
 export default function AppSidebar() {
   return (
     <Sidebar>
-      <SidebarHeader>
+      <SidebarHeader className="flex flex-row justify-between">
         Roleet! <SidebarTrigger />
       </SidebarHeader>
       <SidebarContent>

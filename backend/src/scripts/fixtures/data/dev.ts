@@ -1,4 +1,4 @@
-import { Roles } from "../../../entities/User";
+import { Role } from "../../../entities/User";
 
 const scenarios = [
   {
@@ -53,35 +53,35 @@ const plans = [
     title: "L'antre des gobelins",
     ownerIndex: 0,
     description: "",
-    pictureUrl: "map-antre-gobelins.png",
+    pictureUrl: "/files/map-antre-gobelins.png",
     scenarioIndex: 0,
   },
   {
     title: "1er étage",
     ownerIndex: 0,
     description: "",
-    pictureUrl: "1er-etage.png",
+    pictureUrl: "/files/1er-etage.png",
     scenarioIndex: 1,
   },
   {
     title: "Second étage",
     ownerIndex: 0,
     description: "",
-    pictureUrl: "2nd-etage.png",
+    pictureUrl: "/files/2nd-etage.png",
     scenarioIndex: 1,
   },
   {
     title: "Rez de chaussée",
     ownerIndex: 0,
     description: "",
-    pictureUrl: "rez-de-chaussee.png",
+    pictureUrl: "/files/rez-de-chaussee.png",
     scenarioIndex: 1,
   },
   {
     title: "Sous Sol",
     ownerIndex: 0,
     description: "",
-    pictureUrl: "sous-sol.png",
+    pictureUrl: "/files/sous-sol.png",
     scenarioIndex: 1,
   },
 ];
@@ -592,7 +592,7 @@ const users = [
     name: "ValhallaCode",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER, Roles.ADMIN],
+    roles: [Role.USER, Role.ADMIN],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -602,7 +602,7 @@ const users = [
     name: "Lily",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -612,7 +612,7 @@ const users = [
     name: "Shyzen",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -622,7 +622,7 @@ const users = [
     name: "Missy",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -632,7 +632,7 @@ const users = [
     name: "LunaCraft",
     hashedPassword:
       "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
-    roles: [Roles.USER],
+    roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
@@ -695,4 +695,4 @@ const messages = [
     campaignIndex: 0,
   },
 ];
-export { scenarios, plans, pois, flashcards, users, campaigns, messages };
+export { campaigns, flashcards, messages, plans, pois, scenarios, users };
