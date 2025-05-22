@@ -15,7 +15,7 @@ type Props = {
   plan: Entities.Plan;
   poi?: Entities.PoI;
 };
-// TODO: add poi owner
+// TODO: add poi owner ? Maybe not, should be dynamically generated in backend
 export default function PointOfInterestForm({ plan, poi }: Props) {
   const [createPoI] = useCreatePointOfInterestMutation();
   const [updatePoI] = useUpdatePointOfInterestMutation();

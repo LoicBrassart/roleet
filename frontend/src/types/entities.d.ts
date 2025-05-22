@@ -12,7 +12,9 @@ declare namespace Entities {
   type Campaign = NonNullable<GetCampaignQuery["getCampaign"]>;
   type Message = Campaign["messages"][number];
 
-  //TODO: Ce serait bien mais je vois pas comment l'avoir
+  //TODO: Ce serait bien mais je vois pas comment l'avoir - Si porbleme de typage:
+  // - fix côté backend
+  // - maj comportement store Zustand ?
   // type User = LoginMutation["login"];
 }
 export type { Entities };

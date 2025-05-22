@@ -47,7 +47,6 @@ export default function HomePage() {
         <>
           <h2>Stats</h2>
           <ul>
-            {/* TODO: créer une Query pour récupérer des stats d'usage du site */}
             <li>Scenarios:{data.getStats.scenarios}</li>
             <li>Utilisateurs:{data.getStats.users}</li>
             <li>Campagnes:{data.getStats.campaigns}</li>
