@@ -27,7 +27,7 @@ export class Flashcard extends BaseEntity {
 
   @Field()
   @Column({ length: 32 })
-  type!: "DndNpcCard" | "ItemCard" | (string & {});
+  type!: string;
 
   @Field(() => User)
   @ManyToOne(

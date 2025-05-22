@@ -34,7 +34,7 @@ export type Campaign = {
 
 export type Flashcard = {
   __typename?: 'Flashcard';
-  data: Scalars['JSON']['output'];
+  data: Scalars['JSONObject']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   owner: User;
