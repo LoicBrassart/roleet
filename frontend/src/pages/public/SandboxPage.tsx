@@ -1,15 +1,15 @@
-import { useGetCampaignQuery } from "@/lib/graphql/generated/graphql-types";
-import CampaignForm from "@/organisms/Campaign/CampaignForm";
+import { useGetScenarioQuery } from "@/lib/graphql/generated/graphql-types";
+import EditableMarkdown from "../../atoms/EditableMarkdown";
 
 export default function SandboxPage() {
-  const { data } = useGetCampaignQuery({
-    variables: { id: "c9a99b9c-3645-4340-b0a0-96f0c2818fae" },
+  const { data } = useGetScenarioQuery({
+    variables: { id: "7fb089c5-0a5f-4312-8821-c4c36e241ced" },
   });
 
   return (
     <>
       <h1>Bienvenue au Labo !</h1>
-      {data?.getCampaign && <CampaignForm campaign={data?.getCampaign} />}
+      {data && <EditableMarkdown source={data.getScenario.fullStory} />}
     </>
   );
 }

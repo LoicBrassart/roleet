@@ -20,7 +20,7 @@ export default function PlanDetail({ plan }: Props) {
         />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel>
+      <ResizablePanel className="h-[90vh]">
         <ScrollArea className="h-[90vh] px-2">
           <PointOfInterestList data={plan.pointsOfInterest} />
         </ScrollArea>
