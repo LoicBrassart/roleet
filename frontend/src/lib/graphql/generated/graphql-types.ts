@@ -64,7 +64,6 @@ export type Mutation = {
   deletePlan: Scalars['Boolean']['output'];
   deletePointOfInterest: Scalars['Boolean']['output'];
   deleteScenario: Scalars['Boolean']['output'];
-  deleteUser: Scalars['Boolean']['output'];
   login: Scalars['String']['output'];
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
@@ -121,11 +120,6 @@ export type MutationDeletePointOfInterestArgs = {
 
 
 export type MutationDeleteScenarioArgs = {
-  id: Scalars['String']['input'];
-};
-
-
-export type MutationDeleteUserArgs = {
   id: Scalars['String']['input'];
 };
 

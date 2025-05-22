@@ -1,6 +1,6 @@
 import { Arg, Field, InputType, Mutation, Resolver } from "type-graphql";
 import { Plan } from "../entities/Plan";
-import { Scenario } from "../entities/Scenario";
+import { handleDatabaseError } from "../lib/helpers/handleDatabaseError";
 
 @InputType()
 class NewPlanInput implements Partial<Plan> {
@@ -31,41 +31,27 @@ class PlanInput implements Partial<Plan> {
 @Resolver(Plan)
 class PlanResolver {
   @Mutation(() => Plan)
-  async createPlan(@Arg("data") planData: NewPlanInput) {
-    try {
-      const scenario = await Scenario.findOneByOrFail({
-        id: planData.scenarioId,
-      });
-      const plan = await Plan.create({
-        ...planData,
-        scenario,
-      }).save();
-      return plan;
-    } catch (err) {
-      throw new Error("Failed to create Plan");
-    }
+  createPlan(@Arg("data") planData: NewPlanInput) {
+    return Plan.create({
+      ...planData,
+      scenario: { id: planData.scenarioId },
+    })
+      .save()
+      .catch(handleDatabaseError("Failed to create plan"));
   }
 
   @Mutation(() => Boolean)
-  async deletePlan(@Arg("id") id: string) {
-    try {
-      const result = await Plan.delete(id);
-      if (result.affected === 0) {
-        throw new Error(`${id} not found`);
-      }
-      return true;
-    } catch (err) {
-      return false;
-    }
+  deletePlan(@Arg("id") id: string) {
+    return Plan.delete(id)
+      .then((result) => result.affected === 1)
+      .catch(handleDatabaseError("Failed to delete plan"));
   }
 
   @Mutation(() => Plan)
-  async updatePlan(@Arg("id") id: string, @Arg("data") data: PlanInput) {
-    let plan = await Plan.findOneByOrFail({ id });
-    plan = await Object.assign(plan, { ...data });
-    await plan.save();
-
-    return plan;
+  updatePlan(@Arg("id") id: string, @Arg("data") data: PlanInput) {
+    return Plan.update({ id }, { ...data })
+      .then(() => Plan.findOneByOrFail({ id }))
+      .catch(handleDatabaseError("Failed to update plan"));
   }
 }
 

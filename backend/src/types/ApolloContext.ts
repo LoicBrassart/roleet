@@ -6,8 +6,10 @@ type BaseContext = {
   res: ServerResponse<IncomingMessage>;
 };
 
-export type AnonContext = BaseContext & { user?: undefined };
+export type AnonContext = Prettify<BaseContext & { user?: undefined }>;
 
-export type AuthContext = BaseContext & {
-  user: UserToken;
-};
+export type AuthContext = Prettify<
+  BaseContext & {
+    user: UserToken;
+  }
+>;
