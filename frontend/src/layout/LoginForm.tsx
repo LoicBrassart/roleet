@@ -26,7 +26,7 @@ export default function LoginForm() {
     });
 
     if (!data) return;
-    const profile = currentUserSchema.parse(JSON.parse(data.login));
+    const profile = currentUserSchema.parse(data.login);
     setUserToStore(profile);
   };
 
