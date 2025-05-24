@@ -1,8 +1,8 @@
 import path from "node:path";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import type { ViteUserConfig } from "vitest/config";
-import tailwindcss from "@tailwindcss/vite";
 
 // https://vitejs.dev/config/
 const config: ViteUserConfig = {
@@ -16,6 +16,7 @@ const config: ViteUserConfig = {
       port: 7000,
       path: "/hmr",
     },
+    allowedHosts: ["frontend-dev"],
   },
   build: {
     outDir: "./build",
