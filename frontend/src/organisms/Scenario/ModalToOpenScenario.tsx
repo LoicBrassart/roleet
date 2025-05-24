@@ -27,9 +27,9 @@ export default function ModalToOpenScenario({ scenario }: Props) {
     const { data } = await unsealMutation({
       variables: { unsealScenarioId: scenario.id },
     });
-    const result = data?.unsealScenario;
-    if (result) {
-      currentUser?.readScenarios.push(`${scenario.id}`);
+
+    if (data?.unsealScenario) {
+      currentUser?.readScenarios.push(scenario.id);
       unseal(scenario);
       navigate(`/scenario/${scenario.id}`);
     }
@@ -37,7 +37,9 @@ export default function ModalToOpenScenario({ scenario }: Props) {
 
   return (
     <Dialog>
-      <DialogTrigger className={buttonVariants()}>Découvrir</DialogTrigger>
+      <DialogTrigger className={buttonVariants({ variant: "secondary" })}>
+        Découvrir
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Désceller le scenario: {scenario.title} ?</DialogTitle>
