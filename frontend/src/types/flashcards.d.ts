@@ -1,5 +1,4 @@
 import type { Flashcard as GqlFlashcard } from "@/lib/graphql/generated/graphql-types";
-import type { Q } from "./queries";
 
 /*
 Ajouter un nouveau type de flashcards:
