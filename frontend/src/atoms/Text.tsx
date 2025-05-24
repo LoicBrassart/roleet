@@ -1,12 +1,12 @@
 import { cn } from "@/lib/shadcn/generated/utils";
+import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";
-import type { PropsWithChildren } from "react";
 
 const variants = cva("text-base", {
   variants: {
     variant: {
-      title: "text-2xl font-bold",
-      subtitle: "text-lg font-semibold",
+      title: "font-bold text-2xl",
+      subtitle: "font-semibold text-lg",
       body: "text-base",
     },
   },
@@ -15,9 +15,10 @@ const variants = cva("text-base", {
   },
 });
 
-export function Text({
-  variant,
-  children,
-}: PropsWithChildren<VariantProps<typeof variants>>) {
-  return <p className={cn(variants({ variant }))}>{children}</p>;
+export function Text({ variant }: VariantProps<typeof variants>) {
+  return (
+    <p className={cn(variants({ variant }))}>
+      <Slot />
+    </p>
+  );
 }
