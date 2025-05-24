@@ -1,7 +1,7 @@
 import { Button } from "@/lib/shadcn/generated/ui/button";
+import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 import ModalToAuth from "../../layout/ModalToAuth";
 import {
@@ -33,20 +33,17 @@ export default function ScenarioList({ title, data }: Props) {
       <h2>{title}</h2>
       <ul className="flex gap-4">
         {data.map((scenario) => {
-          const url = `/files/${scenario.bannerUrl}`;
           return (
-            <li key={scenario.id} className="w-96">
+            <li key={scenario.id}>
               <Card
-                className="m-1 w-96 h-40"
-                style={{
-                  backgroundImage: `url(${url})`,
-                }}
+                className="m-1 h-60 w-96 gap-4"
+                style={{ backgroundImage: `url(/files/${scenario.bannerUrl})` }}
               >
                 <CardHeader>
                   <CardTitle>{scenario.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <ScrollArea>{scenario.teaser}</ScrollArea>
+                <CardContent className="flex-1">
+                  <ScrollArea className="h-full">{scenario.teaser}</ScrollArea>
                 </CardContent>
                 <CardFooter>
                   {currentUser ? (
