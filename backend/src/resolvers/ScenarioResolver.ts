@@ -89,16 +89,18 @@ class ScenarioResolver {
 
   @Authorized()
   @Mutation(() => Scenario)
-  createScenario(
+  async createScenario(
     @Arg("data") scenarioData: NewScenarioInput,
     @Ctx() context: AuthContext,
   ) {
-    return Scenario.create({
+    const newScenario = await Scenario.create({
       ...scenarioData,
       owner: { id: context.user.id },
+      readers: [{ id: context.user.id }],
     })
       .save()
       .catch(handleDatabaseError("Failed to create scenario"));
+    return newScenario;
   }
 
   @Authorized()

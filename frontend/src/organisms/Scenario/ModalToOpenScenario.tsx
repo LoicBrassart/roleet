@@ -28,8 +28,8 @@ export default function ModalToOpenScenario({ scenario }: Props) {
       variables: { unsealScenarioId: scenario.id },
     });
     if (data?.unsealScenario) {
-      currentUser?.readScenarios.push(`${scenario.id}`);
-      unseal(scenario);
+      currentUser?.readScenarios.push(scenario.id);
+      unseal(scenario.id);
       navigate(`/scenario/${scenario.id}`);
     }
   };
