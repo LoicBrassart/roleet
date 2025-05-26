@@ -1,5 +1,4 @@
 import type { Flashcard as GqlFlashcard } from "@/lib/graphql/generated/graphql-types";
-import type { Q } from "./queries";
 
 /*
 Ajouter un nouveau type de flashcards:
@@ -31,12 +30,16 @@ export type DndNpcCardData = {
 };
 
 /* 2. Flashcard spécialisées (union discriminée) */
-type FlashcardBase = Omit<GqlFlashcard, "data" | "type" | "scenario"> & {
-  type: string;
-};
-export type TDndNpcCard = FlashcardBase & { type: "DndNpcCard" } & {
-  data: DndNpcCardData;
-};
+type FlashcardBase = Prettify<
+  Omit<GqlFlashcard, "data" | "type" | "scenario"> & {
+    type: string;
+  }
+>;
+export type TDndNpcCard = Prettify<
+  FlashcardBase & { type: "DndNpcCard" } & {
+    data: DndNpcCardData;
+  }
+>;
 
 // Union de toutes les flashcards spécialisées
 export type FlashcardTyped = FlashcardBase | TDndNpcCard; // | OtherFlashcard | ...

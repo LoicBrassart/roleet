@@ -1,6 +1,6 @@
-import type { UserToken } from "@/lib/helpers/getUserFromReq";
 import * as argon2 from "argon2";
 import * as dotenv from "dotenv";
+import { GraphQLJSONObject } from "graphql-scalars";
 import * as jwt from "jsonwebtoken";
 import {
   Arg,
@@ -12,6 +12,7 @@ import {
   Resolver,
 } from "type-graphql";
 import { Role, User } from "../entities/User";
+import type { UserToken } from "../lib/helpers/getUserFromReq";
 import type { AuthContext } from "../types/ApolloContext";
 
 dotenv.config();
@@ -69,15 +70,16 @@ function getUserTokenContent(user: User): UserToken {
 @Resolver(User)
 class UserResolver {
   @Query(() => [User])
-  async getAllUsers() {
-    return await User.find();
+  getAllUsers() {
+    return User.find();
   }
 
-  @Mutation(() => String)
+  @Mutation(() => GraphQLJSONObject)
   async login(@Arg("data") userData: UserInput, @Ctx() context: AuthContext) {
     try {
       if (!process.env.JWT_SECRET) throw new Error("Missing env variable!");
       const user = await User.findOne({
+        select: ["id", "mail", "hashedPassword", "name", "roles"],
         where: { mail: userData.mail },
         relations: ["readScenarios"],
       });
@@ -91,7 +93,7 @@ class UserResolver {
 
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
       setCookie(context, "roleetAuthToken", token);
-      return JSON.stringify(getUserPublicProfile(user));
+      return getUserPublicProfile(user);
     } catch (err) {
       throw new Error(`Failed to login: ${err.message}`);
     }
@@ -121,8 +123,8 @@ class UserResolver {
         name: userData.name,
         hashedPassword,
         roles: [Role.USER],
+        readScenarios: [],
       });
-      user.readScenarios = []; //TODO: Better syntax ? somewhere else ?
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
       setCookie(context, "roleetAuthToken", token);
       return JSON.stringify(getUserPublicProfile(user));

@@ -1,6 +1,6 @@
 import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
 import { Message } from "../entities/Message";
-import { User } from "../entities/User";
+import { handleDatabaseError } from "../lib/helpers/handleDatabaseError";
 
 @InputType()
 class NewMessageInput implements Partial<Message> {
@@ -16,25 +16,19 @@ class NewMessageInput implements Partial<Message> {
 @Resolver(Message)
 class MessageResolver {
   @Query(() => [Message])
-  async getAllMessages() {
-    return await Message.find({
-      relations: ["owner"],
-    });
+  getAllMessages() {
+    return Message.find({ relations: ["owner"] });
   }
 
   @Mutation(() => Message)
   async createMessage(@Arg("data") msgData: NewMessageInput) {
-    try {
-      const owner = await User.findOneByOrFail({ id: msgData.ownerId });
-      const message = await Message.create({
-        ...msgData,
-        createdAt: new Date(),
-        owner,
-      }).save();
-      return message;
-    } catch (err) {
-      throw new Error("Failed to create message");
-    }
+    return Message.create({
+      ...msgData,
+      createdAt: new Date(),
+      owner: { id: msgData.ownerId },
+    })
+      .save()
+      .catch(handleDatabaseError("Failed to create message"));
   }
 }
 

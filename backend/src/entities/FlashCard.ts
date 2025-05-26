@@ -1,4 +1,4 @@
-import { GraphQLJSON } from "graphql-scalars";
+import { GraphQLJSONObject } from "graphql-scalars";
 import { Field, ID, ObjectType } from "type-graphql";
 import {
   BaseEntity,
@@ -49,7 +49,7 @@ export class Flashcard extends BaseEntity {
   )
   scenario!: Scenario;
 
-  @Field(() => GraphQLJSON)
+  @Field(() => GraphQLJSONObject)
   @Column("jsonb", { nullable: false, default: {} })
   data!: Record<string, unknown>; // TODO: Find a way to better specify this structure related to type
 }

@@ -13,6 +13,10 @@ import type { DeepPartial } from "typeorm";
 import { Campaign } from "../entities/Campaign";
 import type { Scenario } from "../entities/Scenario";
 import type { User } from "../entities/User";
+import {
+  DatabaseError,
+  handleDatabaseError,
+} from "../lib/helpers/handleDatabaseError";
 import type { AuthContext } from "../types/ApolloContext";
 
 @InputType()
@@ -35,13 +39,10 @@ class CampaignResolver {
   @Authorized()
   @Query(() => [Campaign])
   async getMyCampaigns(@Ctx() ctx: AuthContext) {
-    return await Campaign.createQueryBuilder("campaign")
-      .leftJoinAndSelect("campaign.scenarios", "scenario")
-      .leftJoinAndSelect("campaign.players", "player")
-      .leftJoinAndSelect("campaign.storyteller", "storyteller")
-      .where("campaign.storytellerId = :userId", { userId: ctx.user?.id })
-      .orWhere("player.id = :userId", { userId: ctx.user?.id })
-      .getMany();
+    return Campaign.find({
+      where: [{ owner: { id: ctx.user.id } }, { players: { id: ctx.user.id } }],
+      relations: ["scenarios", "players", "storyteller"],
+    });
   }
 
   @Authorized()
@@ -54,7 +55,7 @@ class CampaignResolver {
       relations: ["scenarios", "players", "storyteller", "owner", "messages"],
     });
 
-    if (!campaign) throw new Error("Campaign not found");
+    if (!campaign) throw new DatabaseError("Campaign not found");
 
     if (
       campaign.storyteller.id === userId ||
@@ -72,7 +73,7 @@ class CampaignResolver {
     @Arg("data") campaignData: NewCampaignInput,
     @Ctx() ctx: AuthContext,
   ) {
-    const campaign = {
+    const campaign: DeepPartial<Campaign> = {
       title: campaignData.title,
       bannerUrl: campaignData.bannerUrl,
       players: campaignData.players.map((p) => ({ id: p.id })),
@@ -80,12 +81,11 @@ class CampaignResolver {
       owner: ctx.user,
       storyteller: ctx.user,
     };
-    const newCampaign = Campaign.create(
-      campaign as DeepPartial<Campaign>,
-    ).save();
-
-    if (!newCampaign) throw new Error("Failed to create campaign");
-    return newCampaign;
+    return Campaign.create(campaign)
+      .save()
+      .catch(
+        handleDatabaseError("Failed to create campaign. Are you logged in?"),
+      );
   }
 }
 

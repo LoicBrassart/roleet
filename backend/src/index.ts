@@ -3,6 +3,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import * as dotenv from "dotenv";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
+import { authChecker } from "./lib/helpers/authChecker";
 import getUserFromReq from "./lib/helpers/getUserFromReq";
 import { dataSource } from "./lib/typeorm/dataSource";
 import resolvers from "./resolvers";
@@ -16,17 +17,7 @@ const start = async () => {
   const schema = await buildSchema({
     resolvers,
     //validate:true,
-    authChecker: ({ context }, neededRoles) => {
-      if (!context.user) return false;
-      if (!neededRoles.length) return true;
-
-      const userRoles = context.user.roles.split(",");
-      if (userRoles.includes("ADMIN")) return true;
-
-      return neededRoles.some((roleCandidate) =>
-        userRoles.includes(roleCandidate),
-      );
-    },
+    authChecker,
   });
 
   const server = new ApolloServer({ schema });

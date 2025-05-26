@@ -7,8 +7,8 @@ import {
   Mutation,
   Resolver,
 } from "type-graphql";
-import { Plan } from "../entities/Plan";
 import { PointOfInterest } from "../entities/PointOfInterest";
+import { handleDatabaseError } from "../lib/helpers/handleDatabaseError";
 import type { AuthContext } from "../types/ApolloContext";
 
 @InputType()
@@ -44,52 +44,40 @@ class PointOfInterestInput implements Partial<PointOfInterest> {
 class PointOfInterestResolver {
   @Authorized()
   @Mutation(() => PointOfInterest)
-  async createPointOfInterest(
+  createPointOfInterest(
     @Arg("data") poiData: NewPointOfInterestInput,
     @Ctx() context: AuthContext,
   ) {
-    const plan = await Plan.findOneByOrFail({
-      id: poiData.planId,
-      owner: { id: context.user.id },
-    });
-    const poi = await PointOfInterest.create({
+    return PointOfInterest.create({
       ...poiData,
-      plan,
-    }).save();
-    if (!poi) throw new Error("Failed to create point of interest");
-    return poi;
+      owner: { id: context.user.id },
+      plan: { id: poiData.planId },
+    })
+      .save()
+      .catch(handleDatabaseError("Failed to create point of interest"));
   }
 
   @Authorized()
   @Mutation(() => Boolean)
-  async deletePointOfInterest(
-    @Arg("id") id: string,
-    @Ctx() context: AuthContext,
-  ) {
-    const result = await PointOfInterest.delete({
-      id,
-      owner: { id: context.user.id },
-    });
-    if (result.affected === 0) {
-      throw new Error(`PoI #${id} not found or ownership problem`);
-    }
-    return true;
+  deletePointOfInterest(@Arg("id") id: string, @Ctx() context: AuthContext) {
+    return PointOfInterest.delete({ id, owner: { id: context.user.id } })
+      .then((result) => result.affected === 1)
+      .catch(handleDatabaseError("Failed to delete point of interest"));
   }
 
   @Mutation(() => PointOfInterest)
-  async updatePointOfInterest(
+  updatePointOfInterest(
     @Arg("id") id: string,
     @Arg("data") data: PointOfInterestInput,
     @Ctx() context: AuthContext,
   ) {
-    let poi = await PointOfInterest.findOneByOrFail({
-      id,
-      owner: { id: context.user.id },
-    });
-    poi = await Object.assign(poi, { ...data });
-    await poi.save();
-
-    return poi;
+    const { planId, ...poi } = data;
+    return PointOfInterest.update(
+      { id, owner: { id: context.user.id } },
+      { ...poi, plan: { id: planId } },
+    )
+      .then(() => PointOfInterest.findOneByOrFail({ id }))
+      .catch(handleDatabaseError("Failed to update point of interest"));
   }
 }
 

@@ -17,6 +17,7 @@ export type Scalars = {
   Float: { input: number; output: number; }
   DateTimeISO: { input: any; output: any; }
   JSON: { input: any; output: any; }
+  JSONObject: { input: any; output: any; }
 };
 
 export type Campaign = {
@@ -33,7 +34,7 @@ export type Campaign = {
 
 export type Flashcard = {
   __typename?: 'Flashcard';
-  data: Scalars['JSON']['output'];
+  data: Scalars['JSONObject']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   owner: User;
@@ -64,7 +65,7 @@ export type Mutation = {
   deletePlan: Scalars['Boolean']['output'];
   deletePointOfInterest: Scalars['Boolean']['output'];
   deleteScenario: Scalars['Boolean']['output'];
-  login: Scalars['String']['output'];
+  login: Scalars['JSONObject']['output'];
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
   unsealScenario: Scalars['Boolean']['output'];
@@ -333,7 +334,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: string };
+export type LoginMutation = { __typename?: 'Mutation', login: any };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 

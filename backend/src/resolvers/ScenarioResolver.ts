@@ -8,9 +8,12 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
-import type { DeepPartial } from "typeorm";
 import { Scenario } from "../entities/Scenario";
 import { User } from "../entities/User";
+import {
+  DatabaseError,
+  handleDatabaseError,
+} from "../lib/helpers/handleDatabaseError";
 import type { AuthContext } from "../types/ApolloContext";
 
 @InputType()
@@ -52,16 +55,16 @@ class ScenarioInput {
 @Resolver(Scenario)
 class ScenarioResolver {
   @Query(() => [Scenario])
-  async getAllScenarios() {
-    return await Scenario.find({
+  getAllScenarios() {
+    return Scenario.find({
       relations: ["plans", "flashcards", "campaigns"],
     });
   }
 
   @Authorized()
   @Query(() => [Scenario])
-  async getMyScenarios(@Ctx() ctx: AuthContext) {
-    return await Scenario.find({
+  getMyScenarios(@Ctx() ctx: AuthContext) {
+    return Scenario.find({
       where: { readers: { id: ctx.user.id } },
       relations: ["plans", "flashcards"],
     });
@@ -69,9 +72,9 @@ class ScenarioResolver {
 
   @Authorized()
   @Query(() => Scenario)
-  async getScenario(@Arg("id") id: string, @Ctx() ctx: AuthContext) {
-    const scenario = await Scenario.findOne({
-      where: { id, readers: { id: ctx.user.id } },
+  getScenario(@Arg("id") id: string, @Ctx() context: AuthContext) {
+    return Scenario.findOne({
+      where: { id, readers: { id: context.user.id } },
       relations: {
         plans: {
           pointsOfInterest: true,
@@ -82,79 +85,70 @@ class ScenarioResolver {
         readers: true,
       },
     });
-    return scenario;
   }
 
   @Authorized()
   @Mutation(() => Scenario)
-  async createScenario(
+  createScenario(
     @Arg("data") scenarioData: NewScenarioInput,
-    @Ctx() ctx: AuthContext,
+    @Ctx() context: AuthContext,
   ) {
-    try {
-      // TODO: Refactor using "insert" ?
-      const scenario = await Scenario.create({
-        ...scenarioData,
-        owner: ctx.user,
-      } as DeepPartial<Scenario>).save();
-
-      return scenario;
-    } catch (err) {
-      throw new Error("Failed to create scenario");
-    }
+    return Scenario.create({
+      ...scenarioData,
+      owner: { id: context.user.id },
+    })
+      .save()
+      .catch(handleDatabaseError("Failed to create scenario"));
   }
 
   @Authorized()
   @Mutation(() => Scenario)
-  async updateScenario(
+  updateScenario(
     @Arg("id") id: string,
     @Arg("data") data: ScenarioInput,
     @Ctx() context: AuthContext,
   ) {
-    // TODO: Refactor using .update({where}) to spare a query ?
-    let scenario = await Scenario.findOneByOrFail({
-      id,
-      owner: { id: context.user.id },
-    });
-    scenario = await Object.assign(scenario, { ...data }).save();
-    return scenario;
+    return Scenario.update(
+      {
+        id,
+        owner: { id: context.user.id },
+      },
+      { ...data },
+    )
+      .then(() => Scenario.findOneByOrFail({ id }))
+      .catch(handleDatabaseError("Failed to update scenario"));
   }
 
   @Authorized()
   @Mutation(() => Boolean)
-  async deleteScenario(@Arg("id") id: string, @Ctx() context: AuthContext) {
-    const result = await Scenario.delete({
-      id,
-      owner: { id: context.user.id },
-    });
-    if (result.affected === 0) {
-      throw new Error(`Scenario #${id} not found`);
-    }
-    return true;
+  deleteScenario(@Arg("id") id: string, @Ctx() context: AuthContext) {
+    return Scenario.delete({ id, owner: { id: context.user.id } })
+      .then((result) => result.affected === 1)
+      .catch(handleDatabaseError("Failed to delete scenario"));
   }
 
   @Authorized()
   @Mutation(() => Boolean)
-  async unsealScenario(@Arg("id") id: string, @Ctx() ctx: AuthContext) {
-    const userId = ctx.user?.id;
-    if (!userId) throw new Error("Unauthorized");
-
-    const scenario = await Scenario.findOne({
+  unsealScenario(@Arg("id") id: string, @Ctx() context: AuthContext) {
+    return Scenario.findOne({
       where: { id },
       relations: ["readers"],
-    });
-    if (!scenario) throw new Error("Scenario not found");
+    })
+      .then(async (scenario) => {
+        if (!scenario) throw new DatabaseError("Scenario not found");
 
-    if (scenario.readers.some((user) => user.id === userId)) {
-      return true;
-    }
+        if (scenario.readers.some((user) => user.id === context.user.id)) {
+          return true;
+        }
 
-    const user = await User.findOneByOrFail({ id: userId });
-    scenario.readers.push(user);
-    await scenario.save();
+        await User.findOneByOrFail({ id: context.user.id }).then((user) => {
+          scenario.readers.push(user);
+          return scenario.save();
+        });
 
-    return true;
+        return true;
+      })
+      .catch(handleDatabaseError("Failed to unseal scenario"));
   }
 }
-
 export default ScenarioResolver;
