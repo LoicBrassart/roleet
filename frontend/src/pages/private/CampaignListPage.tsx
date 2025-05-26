@@ -5,6 +5,7 @@ import CampaignList from "@/organisms/Campaign/CampaignList";
 export default function CampaignListPage() {
   const currentUser = useCurrentUser();
 
+  // TODO: Faire correspondre les types entre cette query et celle du composant CampaignList
   const { loading, error, data } = useGetMyCampaignsQuery();
 
   if (error) return <p>Oops, something went awry...</p>;
