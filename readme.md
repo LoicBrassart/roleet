@@ -1,21 +1,9 @@
-# Refacto frontend folder structure
+## last updates
 
-- src
-
-  - atoms
-  - pages
-  - types
-  - libs (?)
-
-  - "metier"
-    - Scenario
-    - Campaign
-    - Flashcard
-    - Plan (ex-Map)
-    - PoI
-    - User
-    - xxx
-      - xxxThumb
-      - xxxDetail
-      - xxxFormNew
-      - xxxFormEdit
+- add Prettify type for DX
+- mutualize db error management
+- move some code around (authchecker, etc)
+- refactor resolvers to be more efficient
+- bump biome
+- bump TWind to v4 ⚠️
+- bump Shadcn components

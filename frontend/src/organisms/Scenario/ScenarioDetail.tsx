@@ -13,17 +13,17 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import { type FormEvent, useState } from "react";
 import FlashcardList from "../Flashcard/FlashcardList";
 import PlanDetail from "../Plan/PlanDetail";
 
 type Props = {
-  scenario: Q.Scenario;
+  scenario: Entities.Scenario;
 };
 export default function ScenarioDetail({ scenario }: Props) {
   const [needle, setNeedle] = useState<string>("");
-  const [currPlan, setCurrPlan] = useState<Q.ScenarioPlan>(scenario.plans[0]);
+  const [currPlan, setCurrPlan] = useState<Entities.Plan>(scenario.plans[0]);
   const hChangeCardNeedle = (evt: FormEvent<HTMLInputElement>) => {
     setNeedle(evt.currentTarget.value);
   };

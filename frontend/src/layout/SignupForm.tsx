@@ -10,14 +10,15 @@ import {
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
 import { Input } from "@/lib/shadcn/generated/ui/input";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { currentUserSchema } from "@/lib/zod/auth";
+import { useLogin } from "@/lib/zustand/userStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function SignupForm() {
   const [signup] = useSignupMutation();
-  const setUserToStore = useUserStore((state) => state.login);
+  const setUserToStore = useLogin();
 
   const formSchema = z.object({
     name: z
@@ -61,7 +62,7 @@ export default function SignupForm() {
     });
 
     if (!data) return;
-    const profile = JSON.parse(data.signup);
+    const profile = currentUserSchema.parse(JSON.parse(data.signup));
     setUserToStore(profile);
   }
   return (
