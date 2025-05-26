@@ -8,12 +8,12 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useCurrentUser, useLogout } from "@/lib/zustand/userStore";
 
 export default function AuthenticationPage() {
-  const currentUser = useUserStore((state) => state.user);
+  const currentUser = useCurrentUser();
   const [logout] = useLogoutMutation();
-  const unsetUserToStore = useUserStore((state) => state.logout);
+  const unsetUserToStore = useLogout();
 
   const hLogout = () => {
     logout();

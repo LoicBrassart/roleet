@@ -1,43 +1,28 @@
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/lib/shadcn/generated/ui/accordion";
-import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/lib/shadcn/generated/ui/resizable";
 import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
-import type { Q } from "@/types/queries";
-import type { Plan } from "../../lib/graphql/generated/graphql-types";
+import type { Entities } from "@/types/entities";
+import PointOfInterestList from "../PointOfInterest/PointOfInterestList";
 
 type Props = {
-  plan: Q.ScenarioPlan;
+  plan: Entities.Plan;
 };
 export default function PlanDetail({ plan }: Props) {
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel className="h-[90vh]">
         <img
-          src={`http://localhost:7000/files/${plan.pictureUrl}`}
+          src={plan.pictureUrl}
           alt={plan.title ?? `Plan for scenario ${plan.title}`}
         />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel>
-        <ScrollArea className="h-[90vh]">
-          <Accordion type="single" collapsible className="w-full">
-            {plan.pointsOfInterest.map((poi) => (
-              <AccordionItem value={`key-${poi.id}`} key={poi.id}>
-                <AccordionTrigger>
-                  {poi.code} - {poi.title}
-                </AccordionTrigger>
-                <AccordionContent>{poi.description}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      <ResizablePanel className="h-[90vh]">
+        <ScrollArea className="h-[90vh] px-2">
+          <PointOfInterestList data={plan.pointsOfInterest} />
         </ScrollArea>
       </ResizablePanel>
     </ResizablePanelGroup>

@@ -1,45 +1,23 @@
-import "reflect-metadata";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import * as dotenv from "dotenv";
-import * as jwt from "jsonwebtoken";
+import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import { dataSource } from "./config/db";
-import CampaignResolver from "./resolvers/CampaignResolver";
-import FlashcardResolver from "./resolvers/FlashcardResolver";
-import MessageResolver from "./resolvers/MessageResolver";
-import PlanResolver from "./resolvers/PlanResolver";
-import PointOfInterestResolver from "./resolvers/PointOfInterestResolver";
-import ScenarioResolver from "./resolvers/ScenarioResolver";
-import UserResolver from "./resolvers/UserResolver";
+import { authChecker } from "./lib/helpers/authChecker";
+import getUserFromReq from "./lib/helpers/getUserFromReq";
+import { dataSource } from "./lib/typeorm/dataSource";
+import resolvers from "./resolvers";
 import subscribeToMessageBroker from "./services/messageBroker";
+import type { AnonContext, AuthContext } from "./types/ApolloContext";
 
 dotenv.config();
 
 const start = async () => {
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [
-      UserResolver,
-      ScenarioResolver,
-      PlanResolver,
-      PointOfInterestResolver,
-      FlashcardResolver,
-      CampaignResolver,
-      MessageResolver,
-    ],
+    resolvers,
     //validate:true,
-    authChecker: ({ context }, neededRoles) => {
-      if (!context.user) return false;
-      if (!neededRoles.length) return true;
-
-      const userRoles = context.user.roles.split(",");
-      if (userRoles.includes("ADMIN")) return true;
-
-      return !!neededRoles.filter((roleCandidate) =>
-        userRoles.includes(roleCandidate),
-      ).length;
-    },
+    authChecker,
   });
 
   const server = new ApolloServer({ schema });
@@ -47,18 +25,12 @@ const start = async () => {
   const { url } = await startStandaloneServer(server, {
     listen: { port: 4000 },
     context: async ({ req, res }) => {
-      if (!process.env.JWT_SECRET) return { res };
-      if (!req.headers.cookie) return { res };
-
-      const match = req.headers.cookie.match(/roleetAuthToken=([^;]+)/);
-      if (!match) return { res };
-
-      const token = match[1];
-
-      const user = jwt.verify(token, process.env.JWT_SECRET);
-      if (typeof user === "string") return { res };
-
-      return { user, res };
+      const context: AnonContext | AuthContext = {
+        req,
+        res,
+        user: getUserFromReq(req),
+      };
+      return context;
     },
   });
 

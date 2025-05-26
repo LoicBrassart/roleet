@@ -1,6 +1,6 @@
 import { Button } from "@/lib/shadcn/generated/ui/button";
-import { useUserStore } from "@/lib/zustand/userStore";
-import type { Q } from "@/types/queries";
+import { useCurrentUser } from "@/lib/zustand/userStore";
+import type { Entities } from "@/types/entities";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Link } from "react-router-dom";
 import ModalToAuth from "../../layout/ModalToAuth";
@@ -15,10 +15,10 @@ import ModalToOpenScenario from "./ModalToOpenScenario";
 
 type Props = {
   title: string;
-  data: Q.AllScenarios;
+  data: Array<Entities.Scenario>;
 };
 export default function ScenarioList({ title, data }: Props) {
-  const currentUser = useUserStore((state) => state.user);
+  const currentUser = useCurrentUser();
 
   if (!data.length)
     return (
@@ -33,7 +33,7 @@ export default function ScenarioList({ title, data }: Props) {
       <h2>{title}</h2>
       <ul className="flex gap-4">
         {data.map((scenario) => {
-          const url = `http://localhost:7000/files/${scenario.bannerUrl}`;
+          const url = `/files/${scenario.bannerUrl}`;
           return (
             <li key={scenario.id} className="w-96">
               <Card

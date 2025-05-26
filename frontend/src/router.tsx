@@ -7,6 +7,7 @@ import ScenarioDetailsPage from "./pages/private/ScenarioDetailsPage";
 import AuthenticationPage from "./pages/public/AuthenticationPage";
 import ErrorPage from "./pages/public/ErrorPage";
 import HomePage from "./pages/public/HomePage";
+import SandboxPage from "./pages/public/SandboxPage";
 import ScenarioListPage from "./pages/public/ScenarioListPage";
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/campaign/:id",
         element: <CampaignDetailsPage />,
+      },
+      {
+        path: "/labo",
+        element: <SandboxPage />,
       },
     ],
   },

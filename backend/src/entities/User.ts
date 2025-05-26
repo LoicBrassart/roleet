@@ -13,12 +13,12 @@ import { Plan } from "./Plan";
 import { PointOfInterest } from "./PointOfInterest";
 import { Scenario } from "./Scenario";
 
-export enum Roles {
+export enum Role {
   ADMIN = "ADMIN",
   USER = "USER",
 }
 
-registerEnumType(Roles, {
+registerEnumType(Role, {
   name: "Roles",
   description: "Roles for users in this app",
 });
@@ -42,9 +42,9 @@ export class User extends BaseEntity {
   @Column()
   hashedPassword: string;
 
-  @Field(() => [Roles])
-  @Column({ type: "enum", enum: Roles, array: true, default: [Roles.USER] })
-  roles: Roles[];
+  @Field(() => [Role])
+  @Column({ type: "enum", enum: Role, array: true, default: [Role.USER] })
+  roles: Role[];
 
   @Field(() => [Scenario])
   @ManyToMany(

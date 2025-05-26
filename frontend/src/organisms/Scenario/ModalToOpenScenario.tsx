@@ -1,7 +1,4 @@
-import {
-  type Scenario,
-  useUnsealScenarioMutation,
-} from "@/lib/graphql/generated/graphql-types";
+import { useUnsealScenarioMutation } from "@/lib/graphql/generated/graphql-types";
 import { Button, buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
@@ -13,24 +10,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/lib/shadcn/generated/ui/dialog";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { useCurrentUser, useUnsealScenario } from "@/lib/zustand/userStore";
+import type { Entities } from "@/types/entities";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
-  scenario: Pick<Scenario, "id" | "title">;
+  scenario: Entities.Scenario;
 };
 export default function ModalToOpenScenario({ scenario }: Props) {
-  const [unseal] = useUnsealScenarioMutation();
+  const [unsealMutation] = useUnsealScenarioMutation();
   const navigate = useNavigate();
-  const currentUser = useUserStore((state) => state.user);
+  const currentUser = useCurrentUser();
+  const unseal = useUnsealScenario();
 
   const hUnseal = async () => {
-    const { data } = await unseal({
+    const { data } = await unsealMutation({
       variables: { unsealScenarioId: scenario.id },
     });
     const result = data?.unsealScenario;
     if (result) {
       currentUser?.readScenarios.push(`${scenario.id}`);
+      unseal(scenario);
       navigate(`/scenario/${scenario.id}`);
     }
   };

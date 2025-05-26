@@ -1,5 +1,6 @@
 import * as argon2 from "argon2";
 import * as dotenv from "dotenv";
+import { GraphQLJSONObject } from "graphql-scalars";
 import * as jwt from "jsonwebtoken";
 import {
   Arg,
@@ -10,8 +11,9 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
-import { Roles, User } from "../entities/User";
-import type CustomContext from "../types/CustomContext";
+import { Role, User } from "../entities/User";
+import type { UserToken } from "../lib/helpers/getUserFromReq";
+import type { AuthContext } from "../types/ApolloContext";
 
 dotenv.config();
 
@@ -36,7 +38,7 @@ class UserInput {
   password: string;
 }
 
-function setCookie(ctx: CustomContext, key: string, value: string) {
+function setCookie(ctx: AuthContext, key: string, value: string) {
   if (!process.env.COOKIE_TTL) throw new Error("Missing ttl conf key!");
   const myDate = new Date();
   const expiryTStamp = myDate.getTime() + Number(process.env.COOKIE_TTL);
@@ -56,7 +58,7 @@ function getUserPublicProfile(user: User) {
   };
 }
 
-function getUserTokenContent(user: User) {
+function getUserTokenContent(user: User): UserToken {
   return {
     id: user.id,
     mail: user.mail,
@@ -68,15 +70,16 @@ function getUserTokenContent(user: User) {
 @Resolver(User)
 class UserResolver {
   @Query(() => [User])
-  async getAllUsers() {
-    return await User.find();
+  getAllUsers() {
+    return User.find();
   }
 
-  @Mutation(() => String)
-  async login(@Arg("data") userData: UserInput, @Ctx() context: CustomContext) {
+  @Mutation(() => GraphQLJSONObject)
+  async login(@Arg("data") userData: UserInput, @Ctx() context: AuthContext) {
     try {
       if (!process.env.JWT_SECRET) throw new Error("Missing env variable!");
       const user = await User.findOne({
+        select: ["id", "mail", "hashedPassword", "name", "roles"],
         where: { mail: userData.mail },
         relations: ["readScenarios"],
       });
@@ -90,14 +93,14 @@ class UserResolver {
 
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
       setCookie(context, "roleetAuthToken", token);
-      return JSON.stringify(getUserPublicProfile(user));
+      return getUserPublicProfile(user);
     } catch (err) {
       throw new Error(`Failed to login: ${err.message}`);
     }
   }
 
   @Mutation(() => String)
-  async logout(@Ctx() context: CustomContext) {
+  async logout(@Ctx() context: AuthContext) {
     try {
       setCookie(context, "roleetAuthToken", "");
       return "Goodbye, your auth cookie was cleared";
@@ -109,7 +112,7 @@ class UserResolver {
   @Mutation(() => String)
   async signup(
     @Arg("data") userData: NewUserInput,
-    @Ctx() context: CustomContext,
+    @Ctx() context: AuthContext,
   ) {
     try {
       if (!process.env.JWT_SECRET) throw new Error();
@@ -119,7 +122,8 @@ class UserResolver {
         mail: userData.mail,
         name: userData.name,
         hashedPassword,
-        roles: [Roles.USER],
+        roles: [Role.USER],
+        readScenarios: [],
       });
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
       setCookie(context, "roleetAuthToken", token);

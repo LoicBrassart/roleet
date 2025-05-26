@@ -1,9 +1,9 @@
-import type { Q } from "@/types/queries";
+import type { Entities } from "@/types/entities";
 import FlashCard from "./FlashCard";
 
 type Props = {
   title?: string;
-  data: Q.ScenarioFlashcard[];
+  data: Entities.Flashcard[];
 };
 export default function FlashcardList(props: Props) {
   return (

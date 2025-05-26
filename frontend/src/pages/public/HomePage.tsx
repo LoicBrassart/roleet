@@ -1,4 +1,8 @@
+import { useGetStatsQuery } from "@/lib/graphql/generated/graphql-types";
+
 export default function HomePage() {
+  const { data } = useGetStatsQuery();
+
   return (
     <>
       <h1>Salut, Etranger !</h1>
@@ -39,15 +43,18 @@ export default function HomePage() {
           </ul>
         </section>
       </div>
-      <h2>Stats</h2>
-      <ul>
-        {/* TODO: créer une Query pour récupérer des stats d'usage du site */}
-        <li>Scenarios:</li>
-        <li>Utilisateurs:</li>
-        <li>Campagnes:</li>
-        <li>Plans:</li>
-        <li>Monstres & PNJ:</li>
-      </ul>
+      {data && (
+        <>
+          <h2>Stats</h2>
+          <ul>
+            <li>Scenarios:{data.getStats.scenarios}</li>
+            <li>Utilisateurs:{data.getStats.users}</li>
+            <li>Campagnes:{data.getStats.campaigns}</li>
+            <li>Plans:{data.getStats.plans}</li>
+            <li>Monstres & PNJ:{data.getStats.flashcards}</li>
+          </ul>
+        </>
+      )}
     </>
   );
 }

@@ -10,14 +10,15 @@ import {
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
 import { Input } from "@/lib/shadcn/generated/ui/input";
-import { useUserStore } from "@/lib/zustand/userStore";
+import { currentUserSchema } from "@/lib/zod/auth";
+import { useLogin } from "@/lib/zustand/userStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function LoginForm() {
   const [login] = useLoginMutation();
-  const setUserToStore = useUserStore((state) => state.login);
+  const setUserToStore = useLogin();
 
   const hLogin = async (values: z.infer<typeof userSchema>) => {
     const { data } = await login({
@@ -25,7 +26,7 @@ export default function LoginForm() {
     });
 
     if (!data) return;
-    const profile = JSON.parse(data.login);
+    const profile = currentUserSchema.parse(data.login);
     setUserToStore(profile);
   };
 
