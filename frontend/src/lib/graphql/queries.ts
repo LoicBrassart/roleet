@@ -61,6 +61,9 @@ export const GET_SCENARIO = gql`
       fullStory
       teaser
       title
+      owner {
+        id
+      }
       flashcards {
         id
         title
@@ -87,6 +90,12 @@ export const GET_SCENARIO = gql`
 export const UNSEAL_SCENARIO = gql`
   mutation unsealScenario($unsealScenarioId: String!) {
     unsealScenario(id: $unsealScenarioId)
+  }
+`;
+
+export const DELETE_SCENARIO = gql`
+  mutation deleteScenario($deleteScenarioId: String!) {
+    deleteScenario(id: $deleteScenarioId)
   }
 `;
 

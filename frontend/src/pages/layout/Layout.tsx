@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import "./globals.css";
-import AppSidebar from "./layout/AppSidebar";
 import {
   SidebarProvider,
   SidebarTrigger,
-} from "./lib/shadcn/generated/ui/sidebar";
+} from "../../lib/shadcn/generated/ui/sidebar";
+import AppSidebar from "./AppSidebar";
+import "./globals.css";
 
 export default function Layout() {
   const [open, setOpen] = useState(false);

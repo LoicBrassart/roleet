@@ -71,7 +71,9 @@ export class User extends BaseEntity {
   @OneToMany(
     () => Scenario,
     (scenario) => scenario.owner,
-    { cascade: true },
+    {
+      onDelete: "CASCADE",
+    },
   )
   ownedScenarios: Scenario[];
 
@@ -79,7 +81,9 @@ export class User extends BaseEntity {
   @OneToMany(
     () => Plan,
     (plan) => plan.owner,
-    { cascade: true },
+    {
+      onDelete: "CASCADE",
+    },
   )
   ownedPlans: Plan[];
 
@@ -87,7 +91,9 @@ export class User extends BaseEntity {
   @OneToMany(
     () => PointOfInterest,
     (poi) => poi.owner,
-    { cascade: true },
+    {
+      onDelete: "CASCADE",
+    },
   )
   ownedPointsOfInterest: PointOfInterest[];
 
@@ -95,7 +101,9 @@ export class User extends BaseEntity {
   @OneToMany(
     () => Flashcard,
     (flashcard) => flashcard.owner,
-    { cascade: true },
+    {
+      onDelete: "CASCADE",
+    },
   )
   ownedFlashcards: Flashcard[];
 
@@ -103,7 +111,9 @@ export class User extends BaseEntity {
   @OneToMany(
     () => Campaign,
     (campaign) => campaign.owner,
-    { cascade: true },
+    {
+      onDelete: "CASCADE",
+    },
   )
   ownedCampaigns: Campaign[];
 }
