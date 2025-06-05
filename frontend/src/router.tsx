@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "./Layout";
+import Layout from "./pages/layout/Layout";
 import CampaignDetailsPage from "./pages/private/CampaignDetailsPage";
 import CampaignListPage from "./pages/private/CampaignListPage";
 import DashboardPage from "./pages/private/DashboardPage";

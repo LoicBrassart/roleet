@@ -45,27 +45,26 @@ export class Scenario extends BaseEntity {
   @ManyToOne(
     () => User,
     (user) => user.ownedScenarios,
-    { onDelete: "CASCADE" },
   )
-  owner!: User;
+  owner: User;
 
   @Field(() => [Plan])
   @OneToMany(
     () => Plan,
     (plan) => plan.scenario,
-    { cascade: true },
+    { onDelete: "CASCADE" },
   )
-  plans!: Plan[];
+  plans: Plan[];
 
   @Field(() => [Flashcard])
   @OneToMany(
     () => Flashcard,
     (flashcard) => flashcard.scenario,
     {
-      cascade: true,
+      onDelete: "CASCADE",
     },
   )
-  flashcards!: Flashcard[];
+  flashcards: Flashcard[];
 
   @Field(() => [User])
   @ManyToMany(
@@ -73,12 +72,12 @@ export class Scenario extends BaseEntity {
     (user) => user.readScenarios,
   )
   @JoinTable({ name: "usersReadScenarios" })
-  readers!: User[];
+  readers: User[];
 
   @Field(() => [Campaign])
   @ManyToMany(
     () => Campaign,
     (campaign) => campaign.scenarios,
   )
-  campaigns!: Campaign[];
+  campaigns: Campaign[];
 }

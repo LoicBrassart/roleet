@@ -89,16 +89,18 @@ class ScenarioResolver {
 
   @Authorized()
   @Mutation(() => Scenario)
-  createScenario(
+  async createScenario(
     @Arg("data") scenarioData: NewScenarioInput,
     @Ctx() context: AuthContext,
   ) {
-    return Scenario.create({
+    const newScenario = await Scenario.create({
       ...scenarioData,
       owner: { id: context.user.id },
+      readers: [{ id: context.user.id }],
     })
       .save()
       .catch(handleDatabaseError("Failed to create scenario"));
+    return newScenario;
   }
 
   @Authorized()
@@ -124,7 +126,7 @@ class ScenarioResolver {
   deleteScenario(@Arg("id") id: string, @Ctx() context: AuthContext) {
     return Scenario.delete({ id, owner: { id: context.user.id } })
       .then((result) => result.affected === 1)
-      .catch(handleDatabaseError("Failed to delete scenario"));
+      .catch(handleDatabaseError("Failed to delete scenario", true));
   }
 
   @Authorized()
@@ -148,7 +150,7 @@ class ScenarioResolver {
 
         return true;
       })
-      .catch(handleDatabaseError("Failed to unseal scenario"));
+      .catch(handleDatabaseError("Failed to unseal scenario", true));
   }
 }
 export default ScenarioResolver;

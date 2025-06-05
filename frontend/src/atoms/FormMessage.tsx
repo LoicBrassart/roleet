@@ -1,5 +1,5 @@
 import { FormMessage as ShadFormMessage } from "@/lib/shadcn/generated/ui/form";
-import type { ComponentProps } from "react";
-export const FormMessage = (props: ComponentProps<typeof ShadFormMessage>) => (
-  <ShadFormMessage {...props} />
-);
+
+export const FormMessage = (
+  props: React.ComponentProps<typeof ShadFormMessage>,
+) => <ShadFormMessage {...props} />;

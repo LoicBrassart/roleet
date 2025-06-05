@@ -1,4 +1,6 @@
+import { Button } from "@/atoms/Button";
 import Markdown from "@/atoms/Markdown";
+import { useDeleteScenarioMutation } from "@/lib/graphql/generated/graphql-types";
 import { Input } from "@/lib/shadcn/generated/ui/input";
 import {
   Select,
@@ -13,8 +15,10 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
+import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
 import { type FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FlashcardList from "../Flashcard/FlashcardList";
 import PlanDetail from "../Plan/PlanDetail";
 
@@ -24,12 +28,24 @@ type Props = {
 export default function ScenarioDetail({ scenario }: Props) {
   const [needle, setNeedle] = useState<string>("");
   const [currPlan, setCurrPlan] = useState<Entities.Plan>(scenario.plans[0]);
+  const currentUser = useCurrentUser();
+  const [deleteScenario] = useDeleteScenarioMutation();
+  const navigate = useNavigate();
+
   const hChangeCardNeedle = (evt: FormEvent<HTMLInputElement>) => {
     setNeedle(evt.currentTarget.value);
   };
   const hChangePlan = (evt: string) => {
     const newPlan = scenario.plans.find((plan) => plan.id === evt);
     if (newPlan) setCurrPlan(newPlan);
+  };
+  const hDeleteScenario = async () => {
+    const { errors } = await deleteScenario({
+      variables: { deleteScenarioId: scenario.id },
+    });
+    if (!errors) {
+      navigate("/scenarios");
+    }
   };
   return (
     <>
@@ -39,6 +55,9 @@ export default function ScenarioDetail({ scenario }: Props) {
           <TabsTrigger value="home">Home</TabsTrigger>
           <TabsTrigger value="plans">Plans</TabsTrigger>
           <TabsTrigger value="flashcards">FlashCards</TabsTrigger>
+          {currentUser?.id === scenario.owner.id && (
+            <TabsTrigger value="actions">🛞 Actions</TabsTrigger>
+          )}
         </TabsList>
         <TabsContent value="home">
           <Markdown value={scenario.fullStory} />
@@ -75,6 +94,14 @@ export default function ScenarioDetail({ scenario }: Props) {
             )}
           />
         </TabsContent>
+        {currentUser?.id === scenario.owner.id && (
+          <TabsContent value="actions">
+            <h2>Actions</h2>
+            <Button variant={"destructive"} onClick={hDeleteScenario}>
+              Delete
+            </Button>
+          </TabsContent>
+        )}
       </Tabs>
     </>
   );
