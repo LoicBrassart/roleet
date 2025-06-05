@@ -78,6 +78,8 @@ services:
       DB_HOST: ${DB_HOST}
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_TTL: ${COOKIE_TTL}
+      CACHE_PORT: ${CACHE_PORT}
+      CACHE_HOST: ${CACHE_HOST}
 
   files-dev:
     <<: *baseService
@@ -168,3 +170,15 @@ services:
       sh -c "
       rabbitmq-plugins enable rabbitmq_management &&
       rabbitmq-server"
+
+  cache-dev:
+    <<: *baseService
+    container_name: cache-dev
+    image: redis
+    depends_on:
+      backend-dev:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    ports:
+      - ${CACHE_PORT}:6379

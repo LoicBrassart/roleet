@@ -1,9 +1,7 @@
-## last updates
+## Cache
 
-- add Prettify type for DX
-- mutualize db error management
-- move some code around (authchecker, etc)
-- refactor resolvers to be more efficient
-- bump biome
-- bump TWind to v4 ⚠️
-- bump Shadcn components
+- ✅ redis pour le cache
+  - compose.yaml
+- ✅ communication backend <-> redis
+- implémenter méthode de cache
+- ✅ _appeler_ la méthode de cache
