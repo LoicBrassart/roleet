@@ -16,8 +16,8 @@ import {
   SidebarTrigger,
 } from "@/lib/shadcn/generated/ui/sidebar";
 import { Link } from "react-router-dom";
-import CampaignForm from "../organisms/Campaign/CampaignForm";
-import ScenarioForm from "../organisms/Scenario/ScenarioForm";
+import CampaignForm from "../../organisms/Campaign/CampaignForm";
+import ScenarioForm from "../../organisms/Scenario/ScenarioForm";
 
 export default function AppSidebar() {
   return (
