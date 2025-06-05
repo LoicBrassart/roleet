@@ -3,7 +3,7 @@ import EditableMarkdown from "../../atoms/EditableMarkdown";
 
 export default function SandboxPage() {
   const { data, error } = useGetScenarioQuery({
-    variables: { id: "7b6684bc-2696-4557-a028-6cb9880f3e68" },
+    variables: { id: "5aad4812-04c6-47d8-a775-fee604028b84" },
   });
 
   return (

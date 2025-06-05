@@ -2,7 +2,6 @@ import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -40,32 +39,30 @@ export default function AppSidebar() {
         </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>Créer de nouveaux éléments</SidebarGroupLabel>
-          <Dialog>
-            <DialogTrigger className={buttonVariants()}>
-              Créer une campagne
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>D'humeur créatrice ?</DialogTitle>
-              </DialogHeader>
-              <DialogDescription>
+          <div className="space-y-2 [&>*]:w-full">
+            <Dialog>
+              <DialogTrigger className={buttonVariants()}>
+                Créer une campagne
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>D'humeur créatrice ?</DialogTitle>
+                </DialogHeader>
                 <CampaignForm />
-              </DialogDescription>
-            </DialogContent>
-          </Dialog>
-          <Dialog>
-            <DialogTrigger className={buttonVariants()}>
-              Créer un scénario
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>D'humeur créatrice ?</DialogTitle>
-              </DialogHeader>
-              <DialogDescription>
+              </DialogContent>
+            </Dialog>
+            <Dialog>
+              <DialogTrigger className={buttonVariants()}>
+                Créer un scénario
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>D'humeur créatrice ?</DialogTitle>
+                </DialogHeader>
                 <ScenarioForm />
-              </DialogDescription>
-            </DialogContent>
-          </Dialog>
+              </DialogContent>
+            </Dialog>
+          </div>
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter />

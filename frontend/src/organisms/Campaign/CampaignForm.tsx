@@ -41,8 +41,8 @@ export default function CampaignForm({ campaign }: Props) {
     defaultValues: {
       title: campaign?.title ?? "",
       bannerUrl: campaign?.bannerUrl ?? "",
-      players: defaultPlayers as unknown as string[],
-      scenarios: defaultScenarios as unknown as string[],
+      players: defaultPlayers,
+      scenarios: defaultScenarios,
     },
   });
   const { handleSubmit, register } = form;

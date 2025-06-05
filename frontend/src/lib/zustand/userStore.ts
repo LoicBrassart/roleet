@@ -1,5 +1,4 @@
 import type { CurrentUser } from "@/lib/zod/auth";
-import type { Entities } from "@/types/entities";
 import { produce } from "immer";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
@@ -8,7 +7,7 @@ type State = {
   user: CurrentUser | null;
   login: (user: CurrentUser) => void;
   logout: () => void;
-  readScenario: (scenario: Entities.Scenario) => void;
+  readScenario: (scenId: string) => void;
 };
 
 const useStore = create<State>()(
@@ -18,14 +17,11 @@ const useStore = create<State>()(
         user: null,
         login: (user: CurrentUser) => set(() => ({ user: user })),
         logout: () => set(() => ({ user: null })),
-        readScenario: (scenario: Entities.Scenario) => {
+        readScenario: (scenId: string) => {
           set(
             produce((state: State) => {
-              if (
-                state.user &&
-                !state.user.readScenarios.includes(scenario.id)
-              ) {
-                state.user.readScenarios.push(scenario.id);
+              if (state.user && !state.user.readScenarios.includes(scenId)) {
+                state.user.readScenarios.push(scenId);
               }
             }),
           );

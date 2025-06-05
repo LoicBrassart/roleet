@@ -361,7 +361,7 @@ export type GetScenarioQueryVariables = Exact<{
 }>;
 
 
-export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl: string, credits: string, fullStory: string, teaser: string, title: string, flashcards: Array<{ __typename?: 'Flashcard', id: string, title: string, description: string, type: string, data: any }>, plans: Array<{ __typename?: 'Plan', id: string, title: string, description: string, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title: string, description: string }> }> } };
+export type GetScenarioQuery = { __typename?: 'Query', getScenario: { __typename?: 'Scenario', id: string, bannerUrl: string, credits: string, fullStory: string, teaser: string, title: string, owner: { __typename?: 'User', id: string }, flashcards: Array<{ __typename?: 'Flashcard', id: string, title: string, description: string, type: string, data: any }>, plans: Array<{ __typename?: 'Plan', id: string, title: string, description: string, pictureUrl: string, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title: string, description: string }> }> } };
 
 export type UnsealScenarioMutationVariables = Exact<{
   unsealScenarioId: Scalars['String']['input'];
@@ -369,6 +369,13 @@ export type UnsealScenarioMutationVariables = Exact<{
 
 
 export type UnsealScenarioMutation = { __typename?: 'Mutation', unsealScenario: boolean };
+
+export type DeleteScenarioMutationVariables = Exact<{
+  deleteScenarioId: Scalars['String']['input'];
+}>;
+
+
+export type DeleteScenarioMutation = { __typename?: 'Mutation', deleteScenario: boolean };
 
 export type GetMyCampaignsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -673,6 +680,9 @@ export const GetScenarioDocument = gql`
     fullStory
     teaser
     title
+    owner {
+      id
+    }
     flashcards {
       id
       title
@@ -759,6 +769,37 @@ export function useUnsealScenarioMutation(baseOptions?: Apollo.MutationHookOptio
 export type UnsealScenarioMutationHookResult = ReturnType<typeof useUnsealScenarioMutation>;
 export type UnsealScenarioMutationResult = Apollo.MutationResult<UnsealScenarioMutation>;
 export type UnsealScenarioMutationOptions = Apollo.BaseMutationOptions<UnsealScenarioMutation, UnsealScenarioMutationVariables>;
+export const DeleteScenarioDocument = gql`
+    mutation deleteScenario($deleteScenarioId: String!) {
+  deleteScenario(id: $deleteScenarioId)
+}
+    `;
+export type DeleteScenarioMutationFn = Apollo.MutationFunction<DeleteScenarioMutation, DeleteScenarioMutationVariables>;
+
+/**
+ * __useDeleteScenarioMutation__
+ *
+ * To run a mutation, you first call `useDeleteScenarioMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteScenarioMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteScenarioMutation, { data, loading, error }] = useDeleteScenarioMutation({
+ *   variables: {
+ *      deleteScenarioId: // value for 'deleteScenarioId'
+ *   },
+ * });
+ */
+export function useDeleteScenarioMutation(baseOptions?: Apollo.MutationHookOptions<DeleteScenarioMutation, DeleteScenarioMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteScenarioMutation, DeleteScenarioMutationVariables>(DeleteScenarioDocument, options);
+      }
+export type DeleteScenarioMutationHookResult = ReturnType<typeof useDeleteScenarioMutation>;
+export type DeleteScenarioMutationResult = Apollo.MutationResult<DeleteScenarioMutation>;
+export type DeleteScenarioMutationOptions = Apollo.BaseMutationOptions<DeleteScenarioMutation, DeleteScenarioMutationVariables>;
 export const GetMyCampaignsDocument = gql`
     query getMyCampaigns {
   getMyCampaigns {

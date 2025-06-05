@@ -19,6 +19,26 @@
       "recommended": true,
       "suspicious": {
         "noConsoleLog": "warn"
+      },
+      "correctness": {
+        "noUnusedVariables": {
+          "fix": "safe",
+          "level": "error"
+        },
+        "noUnusedImports": {
+          "fix": "safe",
+          "level": "error"
+        }
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "fix": "safe",
+          "level": "error",
+          "options": {
+            "attributes": ["className"],
+            "functions": ["clsx", "cva", "tw"]
+          }
+        }
       }
     }
   },

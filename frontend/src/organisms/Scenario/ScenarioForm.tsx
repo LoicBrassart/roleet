@@ -1,10 +1,10 @@
 import {
-  type Scenario,
   useCreateScenarioMutation,
   useUpdateScenarioMutation,
 } from "@/lib/graphql/generated/graphql-types";
 import { Form } from "@/lib/shadcn/generated/ui/form";
 import { scenarioSchema } from "@/lib/zod/scenario";
+import { useCurrentUser, useUnsealScenario } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,8 @@ export default function ScenarioForm({ scenario }: Props) {
   const [createScenario] = useCreateScenarioMutation();
   const [updateScenario] = useUpdateScenarioMutation();
   const navigate = useNavigate();
+  const currentUser = useCurrentUser();
+  const unseal = useUnsealScenario();
 
   const form = useForm({
     resolver: zodResolver(scenarioSchema),
@@ -45,8 +47,11 @@ export default function ScenarioForm({ scenario }: Props) {
       const { data } = await createScenario({ variables: { data: values } });
       if (!data) return;
       scenId = data.createScenario.id;
+
+      currentUser?.readScenarios.push(scenId);
+      unseal(scenId);
+      navigate(`/scenario/${scenId}`);
     }
-    navigate(`/scenario/${scenId}`);
   };
 
   // TODO Fix bannerUrl

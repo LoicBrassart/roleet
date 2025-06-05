@@ -9,6 +9,7 @@ import ScenarioList from "@/organisms/Scenario/ScenarioList";
 
 export default function DashboardPage() {
   const currentUser = useCurrentUser();
+  // TODO: Faire correspondre les types entre ces queries et celles du composant CampaignList
   const {
     loading: loadCampaigns,
     error: errCampaigns,
