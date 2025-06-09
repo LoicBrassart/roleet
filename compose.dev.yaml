@@ -67,6 +67,8 @@ services:
         condition: service_healthy
       rabbit-dev:
         condition: service_healthy
+      cache-dev:
+        condition: service_healthy
 
     volumes:
       - ./backend/src:/app/src/
@@ -175,9 +177,6 @@ services:
     <<: *baseService
     container_name: cache-dev
     image: redis
-    depends_on:
-      backend-dev:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
     ports:
