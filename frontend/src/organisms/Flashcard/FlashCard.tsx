@@ -1,4 +1,3 @@
-import type { Flashcard } from "@/lib/graphql/generated/graphql-types";
 import {
   Card,
   CardContent,
@@ -29,7 +28,7 @@ export default function FlashCard({ card }: Props) {
 
 function DefaultCard() {
   return (
-    <Card className="w-96 h-96 m-1">
+    <Card className="m-1 h-96 w-96">
       <CardHeader>
         <CardTitle>N/A</CardTitle>
       </CardHeader>
@@ -47,7 +46,7 @@ type DndNpcCardProps = {
 };
 function DndNpcCard({ card }: DndNpcCardProps) {
   return (
-    <Card className="w-96 h-96 m-1">
+    <Card className="m-1 h-96 w-96">
       <CardHeader>
         <CardTitle>{card.title}</CardTitle>
         <CardDescription>
