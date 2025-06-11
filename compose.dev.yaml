@@ -23,10 +23,10 @@ services:
         condition: service_healthy
       frontend-dev:
         condition: service_healthy
-      adminer-dev:
-        condition: service_started
       realtime-dev:
         condition: service_healthy
+      adminer-dev:
+        condition: service_started
 
   db-dev:
     <<: *baseService
