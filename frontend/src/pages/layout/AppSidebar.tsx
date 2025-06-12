@@ -2,6 +2,7 @@ import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -47,6 +48,10 @@ export default function AppSidebar() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>D'humeur créatrice ?</DialogTitle>
+                  <DialogDescription>
+                    Vous pouvez ici renseigner les premières infos pour votre
+                    nouvelle campagne
+                  </DialogDescription>
                 </DialogHeader>
                 <CampaignForm />
               </DialogContent>
@@ -58,6 +63,10 @@ export default function AppSidebar() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>D'humeur créatrice ?</DialogTitle>
+                  <DialogDescription>
+                    Vous pouvez ici renseigner les premières infos pour votre
+                    nouveau scenario
+                  </DialogDescription>
                 </DialogHeader>
                 <ScenarioForm />
               </DialogContent>
