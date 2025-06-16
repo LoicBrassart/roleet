@@ -9,7 +9,9 @@ function generateKey(info: GraphQLResolveInfo, args: ArgsDictionary) {
   return `query:${operationName};args:${argsHash}.`;
 }
 
-export default function CheckCache(timeout: number): MiddlewareFn {
+export default function CheckCache(
+  cacheDurationInSeconds: number,
+): MiddlewareFn {
   return async ({ info, args }, next) => {
     const key = generateKey(info, args);
     const cachedData = await redisClient.get(key);
@@ -19,7 +21,7 @@ export default function CheckCache(timeout: number): MiddlewareFn {
     }
     const result = await next();
     await redisClient.set(key, JSON.stringify(result));
-    await redisClient.expire(key, timeout);
+    await redisClient.expire(key, cacheDurationInSeconds);
     return result;
   };
 }

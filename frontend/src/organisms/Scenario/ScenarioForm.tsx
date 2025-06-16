@@ -21,6 +21,15 @@ export default function ScenarioForm({ scenario }: Props) {
   const currentUser = useCurrentUser();
   const unseal = useUnsealScenario();
 
+  const defaultScenario = {
+    title: "",
+    bannerUrl: "",
+    teaser: "",
+    fullStory: "",
+    credits: "",
+    ...scenario,
+  };
+
   const hSubmitScenario = async (values: z.input<typeof scenarioSchema>) => {
     let scenId: string;
     if (scenario) {
@@ -45,7 +54,7 @@ export default function ScenarioForm({ scenario }: Props) {
     <Form
       onSubmit={hSubmitScenario}
       schema={scenarioSchema}
-      defaultValues={scenario}
+      defaultValues={defaultScenario}
       className="space-y-6"
     >
       {({ register }) => (

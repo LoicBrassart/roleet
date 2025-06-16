@@ -12,6 +12,7 @@ type Props<TFieldValues extends FieldValues> = {
   schema: z.ZodType<TFieldValues>;
   defaultValues?: DefaultValues<TFieldValues>;
   onSubmit: (data: z.output<z.ZodType<TFieldValues>>) => void;
+  className?: string;
   children: ({
     register,
   }: {
@@ -24,6 +25,7 @@ export function Form<TFieldValues extends FieldValues>({
   schema,
   defaultValues,
   onSubmit,
+  className,
 }: Props<TFieldValues>): React.ReactNode {
   const form = useForm({
     resolver: zodResolver(schema),
@@ -34,7 +36,7 @@ export function Form<TFieldValues extends FieldValues>({
 
   return (
     <ShadForm {...form}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className={className}>
         {children({ register })}
       </form>
     </ShadForm>
