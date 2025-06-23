@@ -2,14 +2,12 @@ import {
   useCreatePointOfInterestMutation,
   useUpdatePointOfInterestMutation,
 } from "@/lib/graphql/generated/graphql-types";
-import { Form } from "@/lib/shadcn/generated/ui/form";
 import { poiSchema } from "@/lib/zod/poi";
 import type { Entities } from "@/types/entities";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
+import { Form } from "../../atoms/Form";
 
 type Props = {
   plan: Entities.Plan;
@@ -19,16 +17,6 @@ type Props = {
 export default function PointOfInterestForm({ plan, poi }: Props) {
   const [createPoI] = useCreatePointOfInterestMutation();
   const [updatePoI] = useUpdatePointOfInterestMutation();
-  const form = useForm({
-    resolver: zodResolver(poiSchema),
-    defaultValues: {
-      code: poi?.code ?? "",
-      title: poi?.title ?? "",
-      description: poi?.description ?? "",
-      planId: plan.id,
-    },
-  });
-  const { register, handleSubmit } = form;
 
   const hSubmitPoI = async (values: z.input<typeof poiSchema>) => {
     if (poi) {
@@ -39,13 +27,20 @@ export default function PointOfInterestForm({ plan, poi }: Props) {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={handleSubmit(hSubmitPoI)} className="space-y-6">
-        <EditableField label="Code" {...register("code")} />
-        <EditableField label="Titre" {...register("title")} />
-        <EditableField label="Description" {...register("description")} />
-        <Button type="submit">Sauvegarder</Button>
-      </form>
+    <Form
+      onSubmit={hSubmitPoI}
+      schema={poiSchema}
+      defaultValues={{ ...poi, planId: plan.id }}
+      className="space-y-6"
+    >
+      {({ register }) => (
+        <>
+          <EditableField label="Code" {...register("code")} />
+          <EditableField label="Titre" {...register("title")} />
+          <EditableField label="Description" {...register("description")} />
+          <Button type="submit">Sauvegarder</Button>
+        </>
+      )}
     </Form>
   );
 }

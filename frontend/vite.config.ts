@@ -16,6 +16,7 @@ const config: ViteUserConfig = {
       port: 7000,
       path: "/hmr",
     },
+    allowedHosts: true,
   },
   build: {
     outDir: "./build",

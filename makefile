@@ -15,7 +15,7 @@ run:
 	if [ -f "$$ENV_FILE" ] && [ -f "$$COMPOSE_FILE" ]; then \
 		docker compose --env-file $$ENV_FILE -f $$COMPOSE_FILE up --build -d; \
 		if [ $$ENV = "dev" ]; then \
-			npm run install:all; \
+			npm install; \
 			npm run cp:images;\
 		fi \
 	else \

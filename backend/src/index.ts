@@ -3,6 +3,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import * as dotenv from "dotenv";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
+import redisClient from "./lib/Redis";
 import { authChecker } from "./lib/helpers/authChecker";
 import getUserFromReq from "./lib/helpers/getUserFromReq";
 import { dataSource } from "./lib/typeorm/dataSource";
@@ -33,6 +34,8 @@ const start = async () => {
       return context;
     },
   });
+
+  redisClient.connect();
 
   await subscribeToMessageBroker();
 

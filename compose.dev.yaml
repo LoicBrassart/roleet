@@ -23,10 +23,10 @@ services:
         condition: service_healthy
       frontend-dev:
         condition: service_healthy
-      adminer-dev:
-        condition: service_started
       realtime-dev:
         condition: service_healthy
+      adminer-dev:
+        condition: service_started
 
   db-dev:
     <<: *baseService
@@ -67,6 +67,8 @@ services:
         condition: service_healthy
       rabbit-dev:
         condition: service_healthy
+      cache-dev:
+        condition: service_healthy
 
     volumes:
       - ./backend/src:/app/src/
@@ -78,6 +80,8 @@ services:
       DB_HOST: ${DB_HOST}
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_TTL: ${COOKIE_TTL}
+      CACHE_PORT: ${CACHE_PORT}
+      CACHE_HOST: ${CACHE_HOST}
 
   files-dev:
     <<: *baseService
@@ -168,3 +172,12 @@ services:
       sh -c "
       rabbitmq-plugins enable rabbitmq_management &&
       rabbitmq-server"
+
+  cache-dev:
+    <<: *baseService
+    container_name: cache-dev
+    image: redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    ports:
+      - ${CACHE_PORT}:6379

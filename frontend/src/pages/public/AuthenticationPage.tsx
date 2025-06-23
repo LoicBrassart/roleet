@@ -1,5 +1,3 @@
-import LoginForm from "@/layout/LoginForm";
-import SignupForm from "@/layout/SignupForm";
 import { useLogoutMutation } from "@/lib/graphql/generated/graphql-types";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
@@ -9,6 +7,8 @@ import {
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
 import { useCurrentUser, useLogout } from "@/lib/zustand/userStore";
+import LoginForm from "../layout/LoginForm";
+import SignupForm from "../layout/SignupForm";
 
 export default function AuthenticationPage() {
   const currentUser = useCurrentUser();

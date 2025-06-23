@@ -2,16 +2,14 @@ import {
   useCreateScenarioMutation,
   useUpdateScenarioMutation,
 } from "@/lib/graphql/generated/graphql-types";
-import { Form } from "@/lib/shadcn/generated/ui/form";
 import { scenarioSchema } from "@/lib/zod/scenario";
 import { useCurrentUser, useUnsealScenario } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import type { z } from "zod";
 import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
+import { Form } from "../../atoms/Form";
 
 type Props = {
   scenario?: Entities.Scenario;
@@ -23,17 +21,14 @@ export default function ScenarioForm({ scenario }: Props) {
   const currentUser = useCurrentUser();
   const unseal = useUnsealScenario();
 
-  const form = useForm({
-    resolver: zodResolver(scenarioSchema),
-    defaultValues: {
-      title: scenario?.title ?? "",
-      bannerUrl: scenario?.bannerUrl ?? "",
-      teaser: scenario?.teaser ?? "",
-      fullStory: scenario?.fullStory ?? "",
-      credits: scenario?.credits ?? "",
-    },
-  });
-  const { register, handleSubmit } = form;
+  const defaultScenario = {
+    title: "",
+    bannerUrl: "",
+    teaser: "",
+    fullStory: "",
+    credits: "",
+    ...scenario,
+  };
 
   const hSubmitScenario = async (values: z.input<typeof scenarioSchema>) => {
     let scenId: string;
@@ -56,15 +51,22 @@ export default function ScenarioForm({ scenario }: Props) {
 
   // TODO Fix bannerUrl
   return (
-    <Form {...form}>
-      <form onSubmit={handleSubmit(hSubmitScenario)} className="space-y-6">
-        <EditableField label="Titre" {...register("title")} />
-        <EditableField label="Bannière" {...register("bannerUrl")} />
-        <EditableField label="Teaser" {...register("teaser")} />
-        <EditableField label="Histoire" {...register("fullStory")} />
-        <EditableField label="Credits" {...register("credits")} />
-        <Button type="submit">Sauvegarder</Button>
-      </form>
+    <Form
+      onSubmit={hSubmitScenario}
+      schema={scenarioSchema}
+      defaultValues={defaultScenario}
+      className="space-y-6"
+    >
+      {({ register }) => (
+        <>
+          <EditableField label="Titre" {...register("title")} />
+          <EditableField label="Bannière" {...register("bannerUrl")} />
+          <EditableField label="Teaser" {...register("teaser")} />
+          <EditableField label="Histoire" {...register("fullStory")} />
+          <EditableField label="Credits" {...register("credits")} />
+          <Button type="submit">Sauvegarder</Button>
+        </>
+      )}
     </Form>
   );
 }
