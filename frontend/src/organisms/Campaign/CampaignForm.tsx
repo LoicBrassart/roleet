@@ -35,16 +35,22 @@ export default function CampaignForm({ campaign }: Props) {
   }
 
   const defaultCampaign = {
-    title: "",
-    bannerUrl: "",
+    title: campaign?.title ?? "",
+    bannerUrl: campaign?.bannerUrl ?? "",
     players: defaultPlayers,
     scenarios: defaultScenarios,
-    ...campaign,
   };
 
   // TODO: Fix bannerUrl : mandatory or optional ?
   const hUpdateCampaign = async (values: z.output<typeof campaignSchema>) => {
-    const { data } = await createCampaign({ variables: { data: values } });
+    const formattedValues = {
+      ...values,
+      players: values.players.map((player) => player.value),
+      scenarios: values.scenarios.map((scenario) => scenario.value),
+    };
+    const { data } = await createCampaign({
+      variables: { data: formattedValues },
+    });
     if (!data) return;
     const campId = data.createCampaign.id;
     navigate(`/campaign/${campId}`);

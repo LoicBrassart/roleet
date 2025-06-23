@@ -34,8 +34,16 @@ export default function LoginForm() {
     >
       {({ register }) => (
         <>
-          <EditableField label="Adresse email" {...register("mail")} />
-          <EditableField label="Password" {...register("password")} />
+          <EditableField
+            label="Adresse email"
+            description="Ne sera jamais affichée aux autres utilisateurs"
+            {...register("mail")}
+          />
+          <EditableField
+            label="Password"
+            description="Votre password, doit être composé de 2-64 caractères"
+            {...register("password")}
+          />
           <Button type="submit">Se connecter</Button>
         </>
       )}

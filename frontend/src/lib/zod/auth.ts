@@ -8,48 +8,42 @@ export const currentUserSchema = z.object({
 });
 export type CurrentUser = z.infer<typeof currentUserSchema>;
 
+const mailSchema = z
+  .string()
+  .min(4, {
+    message: "L'adresse mail doit contenir au moins 2 caractères.",
+  })
+  .max(64, {
+    message: "L'adresse mail doit contenir au maximum 64 caractères.",
+  });
+
+const passwordSchema = z
+  .string()
+  .min(4, {
+    message: "Le mot de passe doit contenir au moins 2 caractères.",
+  })
+  .max(64, {
+    message: "Le mot de passe doit contenir au maximum 64 caractères.",
+  });
+
+const nameSchema = z
+  .string()
+  .min(4, {
+    message: "Le nom d'utilisateur doit contenir au moins 2 caractères.",
+  })
+  .max(64, {
+    message: "Le nom d'utilisateur doit contenir au maximum 64 caractères.",
+  });
+
 export const loginSchema = z.object({
-  mail: z
-    .string()
-    .min(4, {
-      message: "L'adresse mail doit contenir au moins 2 caractères.",
-    })
-    .max(64, {
-      message: "L'adresse mail doit contenir au maximum 64 caractères.",
-    }),
-  password: z
-    .string()
-    .min(4, {
-      message: "Le mot de passe doit contenir au moins 2 caractères.",
-    })
-    .max(64, {
-      message: "Le mot de passe doit contenir au maximum 64 caractères.",
-    }),
+  mail: mailSchema,
+  password: passwordSchema,
 });
+export type LoginInput = z.infer<typeof loginSchema>;
 
 export const signupSchema = z.object({
-  name: z
-    .string()
-    .min(4, {
-      message: "Le nom d'utilisateur doit contenir au moins 2 caractères.",
-    })
-    .max(64, {
-      message: "Le nom d'utilisateur doit contenir au maximum 64 caractères.",
-    }),
-  password: z
-    .string()
-    .min(4, {
-      message: "Le mot de passe doit contenir au moins 2 caractères.",
-    })
-    .max(64, {
-      message: "Le mot de passe doit contenir au maximum 64 caractères.",
-    }),
-  mail: z
-    .string()
-    .min(4, {
-      message: "L'email doit contenir au moins 2 caractères.",
-    })
-    .max(64, {
-      message: "L'email doit contenir au maximum 64 caractères.",
-    }),
+  name: nameSchema,
+  mail: mailSchema,
+  password: passwordSchema,
 });
+export type SignupInput = z.infer<typeof signupSchema>;

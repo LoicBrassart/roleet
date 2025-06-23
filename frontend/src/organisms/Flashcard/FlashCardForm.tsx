@@ -1,3 +1,4 @@
+import { Button } from "@/atoms/Button";
 import { EditableField } from "@/atoms/EditableField";
 import {
   Card,
@@ -48,16 +49,40 @@ type DndNpcCardProps = {
   card: TDndNpcCard;
 };
 function DndNpcCardForm({ card }: DndNpcCardProps) {
-  const hSubmitScenario = async (values: z.input<typeof dndNpcCardSchema>) => {
+  const hSubmitCard = async (values: z.input<typeof dndNpcCardSchema>) => {
     console.log(values);
+  };
+  const defaultCard = {
+    title: "",
+    species: "",
+    size: "",
+    alignment: "",
+    description: "",
+    armorClass: 10,
+    health: "",
+    speed: "", //TODO: bug! Error msg "wanted string, got number" where the true reason lies in the min value length
+    dangerLevel: 1,
+    strength: 10,
+    dexterity: 10,
+    constitution: 10,
+    intelligence: 10,
+    wisdom: 10,
+    charisma: 10,
+    skills: "",
+    senses: "",
+    languages: "",
+    behaviour: "",
+    actions: "",
+    ...card,
+    ...card.data,
   };
 
   return (
     <Card className="m-1 h-96 w-96">
       <Form
-        onSubmit={hSubmitScenario}
+        onSubmit={hSubmitCard}
         schema={dndNpcCardSchema}
-        defaultValues={card}
+        defaultValues={defaultCard}
         className="space-y-6"
       >
         {({ register }) => (
@@ -158,6 +183,7 @@ function DndNpcCardForm({ card }: DndNpcCardProps) {
                 </TabsContent>
               </Tabs>
             </CardContent>
+            <Button type="submit">Sauvegarder</Button>
           </>
         )}
       </Form>
