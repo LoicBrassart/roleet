@@ -59,7 +59,7 @@ export default function Chat({ title, data, room }: Props) {
                     <TooltipTrigger>Xxxx:</TooltipTrigger>
                   </p>
                   <TooltipContent>
-                    {formatDate(message.createdAt)}{" "}
+                    {formatDate(message.createdAt)}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

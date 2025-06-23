@@ -2,6 +2,7 @@ import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -16,8 +17,8 @@ import {
   SidebarTrigger,
 } from "@/lib/shadcn/generated/ui/sidebar";
 import { Link } from "react-router-dom";
-import CampaignForm from "../organisms/Campaign/CampaignForm";
-import ScenarioForm from "../organisms/Scenario/ScenarioForm";
+import CampaignForm from "../../organisms/Campaign/CampaignForm";
+import ScenarioForm from "../../organisms/Scenario/ScenarioForm";
 
 export default function AppSidebar() {
   return (
@@ -47,6 +48,10 @@ export default function AppSidebar() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>D'humeur créatrice ?</DialogTitle>
+                  <DialogDescription>
+                    Vous pouvez ici renseigner les premières infos pour votre
+                    nouvelle campagne
+                  </DialogDescription>
                 </DialogHeader>
                 <CampaignForm />
               </DialogContent>
@@ -58,6 +63,10 @@ export default function AppSidebar() {
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>D'humeur créatrice ?</DialogTitle>
+                  <DialogDescription>
+                    Vous pouvez ici renseigner les premières infos pour votre
+                    nouveau scenario
+                  </DialogDescription>
                 </DialogHeader>
                 <ScenarioForm />
               </DialogContent>

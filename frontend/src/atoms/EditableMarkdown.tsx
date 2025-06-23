@@ -24,7 +24,7 @@ export default function EditableMarkdown({ source }: Props) {
         <ResizablePanel className="h-[90vh]">
           <ScrollArea className="h-[90vh] px-2">
             <Textarea
-              className="w-full h-full"
+              className="h-full w-full"
               defaultValue={value}
               onChange={hChange}
             />
@@ -34,7 +34,7 @@ export default function EditableMarkdown({ source }: Props) {
         <ResizablePanel className="h-[90vh]">
           <ScrollArea className="h-[90vh] px-2 ">
             <MarkdownPreview
-              className="h-full p-4 overflow-y-scroll"
+              className="h-full overflow-y-scroll p-4"
               source={value}
             />
           </ScrollArea>
