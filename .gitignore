@@ -9,3 +9,4 @@ persist/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+/tests-examples/
