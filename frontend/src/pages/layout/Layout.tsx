@@ -1,3 +1,4 @@
+import { Toaster } from "@/lib/shadcn/generated/ui/sonner";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import "../../globals.css";
@@ -28,6 +29,7 @@ export default function Layout() {
         <SidebarTrigger />
         <Outlet />
       </main>
+      <Toaster />
     </SidebarProvider>
   );
 }

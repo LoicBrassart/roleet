@@ -3,3 +3,9 @@ node_modules/
 persist/
 **/.env.*
 !.env.sample
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

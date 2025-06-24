@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "## Content",
   "main": "index.js",
-  "workspaces": ["frontend", "backend", "realtime", "files"],
+  "workspaces": [
+    "frontend",
+    "backend",
+    "realtime",
+    "files"
+  ],
   "scripts": {
     "prepare": "husky",
     "cp:images": "sudo cp backend/src/scripts/fixtures/img/* persist/files-dev"
@@ -15,6 +20,8 @@
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^24.0.3",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.0"
