@@ -87,7 +87,7 @@ export default class RabbitMQ {
       );
       return consumer;
     } catch (error) {
-      console.error("❌ Erreur lors de la consommation de la queue :", error);
+      `❌ Erreur lors de la consommation de la queue ${queueName} : ${error}`;
       throw error;
     }
   }
