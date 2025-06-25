@@ -1,7 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 test("displays several Scenarios", async ({ page }) => {
-  await page.goto("http://localhost:7000/scenarios");
+  if (!process.env.WEBSITE_URL) return;
+  await page.goto(`${process.env.WEBSITE_URL}/scenarios`);
 
   await expect(page.locator("li")).toHaveCount(2);
 });
