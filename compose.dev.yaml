@@ -60,7 +60,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-dev:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
+          'curl -m 5 --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-dev:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
         ]
     depends_on:
       db-dev:
@@ -94,7 +94,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://files-dev:4000/health'|| exit 1",
+          "curl -m 5 --fail --request GET --url 'http://files-dev:4000/health'|| exit 1",
         ]
     volumes:
       - ./files/src:/app/src/
@@ -110,7 +110,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://realtime-dev:4000/health'|| exit 1",
+          "curl -m 5 --fail --request GET --url 'http://realtime-dev:4000/health'|| exit 1",
         ]
     volumes:
       - ./realtime/src:/app/src/
@@ -131,7 +131,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://frontend-dev:5173' || exit 1",
+          "curl -m 5 --fail --request GET --url 'http://frontend-dev:5173' || exit 1",
         ]
     depends_on:
       codegen-dev:
