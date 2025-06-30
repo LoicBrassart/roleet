@@ -7,7 +7,6 @@ export default defineConfig({
       "__unit-tests__/**/*.test.ts",
       "__integration-tests__/**/*.test.ts",
     ],
-    setupFiles: ["./vitest.setup.ts"],
     globals: true,
     environment: "node",
     coverage: {

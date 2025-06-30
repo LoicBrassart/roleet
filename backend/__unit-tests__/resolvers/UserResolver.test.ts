@@ -6,8 +6,8 @@ describe("UserResolver (unit)", () => {
   it("getAllUsers returns mocked data", async () => {
     const mockUsers = [{ id: "1" } as InstanceType<typeof User>];
     const mockUserRepo = {
-      find: vi.fn().mockResolvedValue(mockUsers),
-      findAll: vi.fn().mockResolvedValue([]),
+      find: vi.fn().mockResolvedValue(mockUsers[0]),
+      findAll: vi.fn().mockResolvedValue(mockUsers),
       findByMail: vi.fn().mockResolvedValue(User),
       create: vi.fn().mockResolvedValue(Promise<typeof User>),
     };
@@ -16,6 +16,6 @@ describe("UserResolver (unit)", () => {
     const result = await resolver.getAllUsers();
 
     expect(result).toEqual(mockUsers);
-    expect(mockUserRepo.find).toHaveBeenCalledOnce();
+    expect(mockUserRepo.findAll).toHaveBeenCalledOnce();
   });
 });
