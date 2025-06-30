@@ -2,6 +2,10 @@ import type { NewUserInput } from "@/resolvers/UserResolver";
 import { Role, User } from "../entities/User";
 
 export default class UserService implements IUserService {
+  find(): Promise<User> {
+    throw new Error("Method not implemented.");
+  }
+
   async findAll(): Promise<User[]> {
     return User.find();
   }
@@ -26,6 +30,7 @@ export default class UserService implements IUserService {
 }
 
 export interface IUserService {
+  find(): Promise<User>;
   findAll(): Promise<User[]>;
   findByMail(mail: string): Promise<User | null>;
   create(data: NewUserInput): Promise<User>;

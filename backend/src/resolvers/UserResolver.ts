@@ -14,11 +14,11 @@ import {
 import { User } from "../entities/User";
 import type { UserToken } from "../lib/helpers/getUserFromReq";
 import UserService, { type IUserService } from "../models/UserService";
-import type { AuthContext } from "../types/ApolloContext";
+import type { AnonContext, AuthContext } from "../types/ApolloContext";
 
 dotenv.config();
 
-function setCookie(ctx: AuthContext, key: string, value: string) {
+function setCookie(ctx: AnonContext | AuthContext, key: string, value: string) {
   if (!process.env.COOKIE_TTL) throw new Error("Missing ttl conf key!");
   const myDate = new Date();
   const expiryTStamp = myDate.getTime() + Number(process.env.COOKIE_TTL);
@@ -82,7 +82,7 @@ export default class UserResolver {
   }
 
   @Mutation(() => GraphQLJSONObject)
-  async login(@Arg("data") userData: UserInput, @Ctx() context: AuthContext) {
+  async login(@Arg("data") userData: UserInput, @Ctx() context: AnonContext) {
     try {
       if (!process.env.JWT_SECRET) throw new Error("Missing env variable!");
 
@@ -116,10 +116,11 @@ export default class UserResolver {
   @Mutation(() => String)
   async signup(
     @Arg("data") userData: NewUserInput,
-    @Ctx() context: AuthContext,
+    @Ctx() context: AnonContext,
   ) {
     try {
-      if (!process.env.JWT_SECRET) throw new Error();
+      if (!process.env.JWT_SECRET)
+        throw new Error("Missing env variable: JWT_SECRET");
 
       const hashedPassword = await argon2.hash(userData.password);
 
@@ -129,7 +130,7 @@ export default class UserResolver {
       });
       const token = jwt.sign(getUserTokenContent(user), process.env.JWT_SECRET);
       setCookie(context, "roleetAuthToken", token);
-      return JSON.stringify(getUserPublicProfile(user));
+      return getUserPublicProfile(user);
     } catch (err) {
       console.error(err);
       return err;
