@@ -1,7 +1,7 @@
+import "reflect-metadata";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import * as dotenv from "dotenv";
-import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import redisClient from "./lib/Redis";
 import { authChecker } from "./lib/helpers/authChecker";

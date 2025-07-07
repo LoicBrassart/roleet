@@ -1,40 +1,40 @@
-## Presentation
+## Authentification
 
-- package.json
+### Concepts
 
-  - workspaces: factorisation du node_modules et des installations
-  - commitizen: forcer à faire des commits corrects
+- ✅ Enregistrement
 
-- services clés en main hors fomration
+  - Décliner mon identité complète
 
-  - redis: db key:value
-  - rabbitMQ: (db) messages interservices asynchrones
+- ✅ Authentification (🇺🇸 Authentication)
 
-- realtime
+  - Décliner mon identité et une info permettant de prouver mes dires (password), et recevoir une preuve du serveur
 
-  - temps reel et messages serveur->client
-  - prise en compte de l'auth
-    - ❓possibilité d'externaliser l'auth ?
+- ✅ Autorisation (🇺🇸 Authorization)
+  - Le serveur détermine en fonction de mon identité quelles actions je peux mener
 
-- files
+### Backend
 
-  - serveur Express simple
-  - stockage des uploads dans un volume pour la persistence
-    - (inutile pour le moment puisque le persist est detruit à chaque reboot en dev)
-
-- backend
-
-  - middlewares: Cache
-  - entities:PoI: @Unique
-  - ❓entities:Stats: pas eu le choix pour cette methode
-  - entities, resolvers: index.ts contient la liste ( ⚠️à tenir à jour)
-  - seeding:
-    - separation script/data
-    - 🧰 pas encore factorisé, redondances
-
-- frontend:
-  - types:entities: calculé à partir du backend dispo pour la cohérence
-  - atomic design simplifié
-    - atoms: remplacements de balises html
-    - organisms:entities: permet d'entreproser les briques de construction des entités métier
-    - pages: contient aussi le layout et une séparation des pages publiques/privées
+- Créer une entité User
+  - id
+  - mail
+  - hashedPassword
+  - roles
+  - [optionnel] name
+- Créer un UserResolver pour l'api GraphQL
+  - mutation signup
+    - hash de password
+    - création/sauvegarde d'User
+    - [optionnel]créer un token
+    - [optionnel]enregistrer enregistrer en cookie
+    - [optionnel] renvoyer un profil public
+  - mutation login
+    - chercher un User compatible
+    - vérifier les hashs des passwords (fourni vs enregistré en db)
+    - créer un token
+    - enregistrer le token en cookie
+    - [optionnel] renvoyer un profil public
+  - [optionnel] mutation logout
+    - détruire le cookie
+- Implement authChecker and context middleware
+- Add logic to AdResolver to protect routes and link author to content
