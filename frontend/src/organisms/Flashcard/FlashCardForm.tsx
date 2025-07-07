@@ -1,5 +1,6 @@
 import { Button } from "@/atoms/Button";
 import { EditableField } from "@/atoms/EditableField";
+import { triggerCustomEvent } from "@/lib/hooks/useEventListener";
 import {
   Card,
   CardContent,
@@ -51,6 +52,7 @@ type DndNpcCardProps = {
 function DndNpcCardForm({ card }: DndNpcCardProps) {
   const hSubmitCard = async (values: z.input<typeof dndNpcCardSchema>) => {
     console.log(values);
+    triggerCustomEvent("FormWrapper-submit-child", {});
   };
   const defaultCard = {
     title: "",
