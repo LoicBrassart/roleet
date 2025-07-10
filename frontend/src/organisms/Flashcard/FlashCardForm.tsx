@@ -42,7 +42,6 @@ function BlankCardForm() {
     case "DndNpcCard":
       return <DndNpcCardForm card={{}} />;
     default:
-      console.log("good");
       return (
         <Card className="m-1 h-96 w-96">
           <CardHeader>
@@ -50,7 +49,7 @@ function BlankCardForm() {
           </CardHeader>
           <CardContent>
             <select onChange={(evt) => setCardType(evt.currentTarget.value)}>
-              <option value="">---Selecrt card type---</option>
+              <option value="">---Select card type---</option>
               <option value="DndNpcCard">DnD NPC Card</option>
             </select>
           </CardContent>
