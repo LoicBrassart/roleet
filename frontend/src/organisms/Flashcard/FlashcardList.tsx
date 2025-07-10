@@ -1,3 +1,4 @@
+import FormWrapper from "@/atoms/FormWrapper";
 import type { Entities } from "@/types/entities";
 import FlashCard from "./FlashCard";
 import FlashCardForm from "./FlashCardForm";
@@ -14,11 +15,11 @@ export default function FlashcardList(props: Props) {
       <ul className="flex flex-wrap">
         {props.data.map((flashcard) => (
           <li key={flashcard.id}>
-            {props.isEditing ? (
-              <FlashCardForm card={flashcard} />
-            ) : (
-              <FlashCard card={flashcard} />
-            )}
+            <FormWrapper
+              baseComp={<FlashCard card={flashcard} {...props} />}
+              formComp={<FlashCardForm card={flashcard} {...props} />}
+              locked={!props.isEditing}
+            />
           </li>
         ))}
       </ul>

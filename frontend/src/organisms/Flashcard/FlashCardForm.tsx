@@ -56,6 +56,7 @@ function DndNpcCardForm({ card, formCompId }: DndNpcCardProps) {
     console.log(values);
     if (formCompId)
       triggerCustomEvent("FormWrapper-submit-child", { uuid: formCompId });
+    else console.log("formCompId not found");
   };
   const defaultCard = {
     title: "",
