@@ -21,11 +21,12 @@ import { Form } from "../../atoms/Form";
 
 type Props = {
   card: FlashcardTyped;
+  formCompId?: string;
 };
-export default function FlashCardForm({ card }: Props) {
+export default function FlashCardForm({ card, formCompId, ...props }: Props) {
   switch (card.type) {
     case "DndNpcCard":
-      return <DndNpcCardForm card={card} />;
+      return <DndNpcCardForm card={card} formCompId={formCompId} {...props} />;
     default:
       return <DefaultCardForm />;
   }
@@ -48,11 +49,13 @@ function DefaultCardForm() {
 
 type DndNpcCardProps = {
   card: TDndNpcCard;
+  formCompId?: string;
 };
-function DndNpcCardForm({ card }: DndNpcCardProps) {
+function DndNpcCardForm({ card, formCompId }: DndNpcCardProps) {
   const hSubmitCard = async (values: z.input<typeof dndNpcCardSchema>) => {
     console.log(values);
-    triggerCustomEvent("FormWrapper-submit-child", {});
+    if (formCompId)
+      triggerCustomEvent("FormWrapper-submit-child", { uuid: formCompId });
   };
   const defaultCard = {
     title: "",

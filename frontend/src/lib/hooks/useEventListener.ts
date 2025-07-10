@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 export interface CustomEvents {
-  // biome-ignore lint/complexity/noBannedTypes: <explanation>
   "FormWrapper-submit-child": {
     uuid: string;
   };

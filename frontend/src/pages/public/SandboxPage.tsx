@@ -5,8 +5,8 @@ import { useEventListener } from "@/lib/hooks/useEventListener";
 import FlashCard from "@/organisms/Flashcard/FlashCard";
 import FlashCardForm from "@/organisms/Flashcard/FlashCardForm";
 import {
-  type ReactNode,
-  createElement,
+  type ReactElement,
+  cloneElement,
   useEffect,
   useId,
   useState,
@@ -107,8 +107,8 @@ export default function SandboxPage() {
 }
 
 type FormWrapperProps = {
-  baseComp: ReactNode;
-  formComp: ReactNode;
+  baseComp: ReactElement;
+  formComp: ReactElement<{ formCompId: string }>;
   locked: boolean;
 };
 function FormWrapper({ baseComp, formComp, locked }: FormWrapperProps) {
@@ -117,9 +117,8 @@ function FormWrapper({ baseComp, formComp, locked }: FormWrapperProps) {
   const toggleEditable = () => {
     setEditable(!editable);
   };
-  useEventListener("FormWrapper-submit-child", () => {
-    console.log("My child has submitted!");
-    setEditable(false);
+  useEventListener("FormWrapper-submit-child", (detail) => {
+    if (detail.uuid === id) setEditable(false);
   });
 
   useEffect(() => {
@@ -128,7 +127,9 @@ function FormWrapper({ baseComp, formComp, locked }: FormWrapperProps) {
 
   return (
     <div className="relative">
-      {editable ? createElement(formComp, { id }) : baseComp}
+      {editable
+        ? cloneElement(formComp, { formCompId: id })
+        : cloneElement(baseComp)}
       {!locked && (
         <div className="absolute right-0 bottom-0">
           {!editable && <Button onClick={toggleEditable}>✏️</Button>}
