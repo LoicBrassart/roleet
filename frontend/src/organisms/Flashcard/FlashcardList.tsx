@@ -1,3 +1,4 @@
+import { Button } from "@/atoms/Button";
 import FormWrapper from "@/atoms/FormWrapper";
 import type { Entities } from "@/types/entities";
 import FlashCard from "./FlashCard";
@@ -6,7 +7,7 @@ import FlashCardForm from "./FlashCardForm";
 type Props = {
   title?: string;
   data: Entities.Flashcard[];
-  isEditing: boolean;
+  locked: boolean;
 };
 export default function FlashcardList(props: Props) {
   return (
@@ -18,10 +19,17 @@ export default function FlashcardList(props: Props) {
             <FormWrapper
               baseComp={<FlashCard card={flashcard} {...props} />}
               formComp={<FlashCardForm card={flashcard} {...props} />}
-              locked={!props.isEditing}
+              locked={props.locked}
             />
           </li>
         ))}
+        <li>
+          <FormWrapper
+            baseComp={<Button />}
+            formComp={<FlashCardForm {...props} />}
+            locked={props.locked}
+          />
+        </li>
       </ul>
     </>
   );

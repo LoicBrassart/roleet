@@ -104,7 +104,7 @@ export default function ScenarioDetail({ scenario }: Props) {
             data={scenario.flashcards.filter((fcard) =>
               fcard.title.toLowerCase().includes(needle.toLowerCase()),
             )}
-            isEditing={!locked}
+            locked={locked}
           />
         </TabsContent>
         {currentUser?.id === scenario.owner.id && (
