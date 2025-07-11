@@ -15,6 +15,8 @@ export default function FormWrapper({
 }: FormWrapperProps) {
   const [editable, setEditable, toggleEditable] = useToggleState(locked);
   const id = useId();
+  const canBeEdited = !locked && !editable;
+
   useEventListener("FormWrapper-submit-child", (detail) => {
     if (detail.uuid === id) setEditable(false);
   });
@@ -28,9 +30,9 @@ export default function FormWrapper({
       {editable
         ? cloneElement(formComp, { formCompId: id })
         : cloneElement(baseComp)}
-      {!locked && (
-        <div className="absolute right-0 bottom-0">
-          {!editable && <Button onClick={toggleEditable}>✏️</Button>}
+      {canBeEdited && (
+        <div className="absolute right-2 bottom-2">
+          <Button onClick={toggleEditable}>✏️</Button>
         </div>
       )}
     </div>
