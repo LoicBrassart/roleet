@@ -2,6 +2,7 @@ import { useSignupMutation } from "@/lib/graphql/generated/graphql-types";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import { currentUserSchema, signupSchema } from "@/lib/zod/auth";
 import { useLogin } from "@/lib/zustand/userStore";
+import { toast } from "sonner";
 import type { z } from "zod";
 import { EditableField } from "../../atoms/EditableField";
 import { Form } from "../../atoms/Form";
@@ -17,13 +18,18 @@ export default function SignupForm() {
   };
 
   async function hSignup(values: z.infer<typeof signupSchema>) {
-    const { data } = await signup({
-      variables: { data: values },
-    });
+    try {
+      const { data } = await signup({
+        variables: { data: values },
+      });
 
-    if (!data) return;
-    const profile = currentUserSchema.parse(JSON.parse(data.signup));
-    setUserToStore(profile);
+      if (!data) return;
+
+      const profile = currentUserSchema.parse(JSON.parse(data.signup));
+      setUserToStore(profile);
+    } catch (_err) {
+      toast.error("An error occured, sorry about that");
+    }
   }
   return (
     <Form

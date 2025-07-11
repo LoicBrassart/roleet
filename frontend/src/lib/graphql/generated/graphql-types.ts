@@ -310,6 +310,7 @@ export type User = {
   name: Scalars['String']['output'];
   ownedCampaigns: Array<Campaign>;
   ownedFlashcards: Array<Flashcard>;
+  ownedMessages: Array<Message>;
   ownedPlans: Array<Plan>;
   ownedPointsOfInterest: Array<PointOfInterest>;
   ownedScenarios: Array<Scenario>;

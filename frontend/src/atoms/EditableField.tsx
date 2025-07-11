@@ -1,4 +1,5 @@
 import {
+  FormControl,
   FormDescription,
   FormField,
   FormItem,
@@ -10,7 +11,7 @@ import { Input } from "./Input";
 
 type Props<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = Prettify<
   Pick<ControllerProps<TFieldValues, TName>, "control" | "name"> & {
     label: string;
@@ -21,7 +22,7 @@ type Props<
 
 export function EditableField<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({
   label,
   description,
@@ -36,7 +37,9 @@ export function EditableField<
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
-          <Input {...field} className={className} />
+          <FormControl>
+            <Input {...field} className={className} />
+          </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>

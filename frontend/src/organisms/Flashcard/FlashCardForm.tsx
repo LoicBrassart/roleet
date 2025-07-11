@@ -1,5 +1,6 @@
 import { Button } from "@/atoms/Button";
 import { EditableField } from "@/atoms/EditableField";
+import { triggerCustomEvent } from "@/lib/hooks/useEventListener";
 import {
   Card,
   CardContent,
@@ -15,18 +16,45 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import { dndNpcCardSchema } from "@/lib/zod/dndNpcCard";
 import type { FlashcardTyped, TDndNpcCard } from "@/types/flashcards";
+import { useState } from "react";
 import type { z } from "zod";
 import { Form } from "../../atoms/Form";
 
 type Props = {
   card: FlashcardTyped;
+  formCompId?: string;
 };
-export default function FlashCardForm({ card }: Props) {
+export default function FlashCardForm({ card, formCompId, ...props }: Props) {
+  if (!card) return <BlankCardForm />;
+
   switch (card.type) {
     case "DndNpcCard":
-      return <DndNpcCardForm card={card} />;
+      return <DndNpcCardForm card={card} formCompId={formCompId} {...props} />;
     default:
       return <DefaultCardForm />;
+  }
+}
+
+function BlankCardForm() {
+  const [cardType, setCardType] = useState("");
+
+  switch (cardType) {
+    case "DndNpcCard":
+      return <DndNpcCardForm card={{}} />;
+    default:
+      return (
+        <Card className="m-1 h-96 w-96">
+          <CardHeader>
+            <CardTitle>Choose your card type</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <select onChange={(evt) => setCardType(evt.currentTarget.value)}>
+              <option value="">---Select card type---</option>
+              <option value="DndNpcCard">DnD NPC Card</option>
+            </select>
+          </CardContent>
+        </Card>
+      );
   }
 }
 
@@ -47,10 +75,14 @@ function DefaultCardForm() {
 
 type DndNpcCardProps = {
   card: TDndNpcCard;
+  formCompId?: string;
 };
-function DndNpcCardForm({ card }: DndNpcCardProps) {
+function DndNpcCardForm({ card, formCompId }: DndNpcCardProps) {
   const hSubmitCard = async (values: z.input<typeof dndNpcCardSchema>) => {
     console.log(values);
+    if (formCompId)
+      triggerCustomEvent("FormWrapper-submit-child", { uuid: formCompId });
+    else console.log("formCompId not found");
   };
   const defaultCard = {
     title: "",
