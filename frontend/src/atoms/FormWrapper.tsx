@@ -1,11 +1,6 @@
 import { useEventListener } from "@/lib/hooks/useEventListener";
-import {
-  type ReactElement,
-  cloneElement,
-  useEffect,
-  useId,
-  useState,
-} from "react";
+import { useToggleState } from "@/lib/hooks/useToggleState";
+import { type ReactElement, cloneElement, useEffect, useId } from "react";
 import { Button } from "./Button";
 
 type FormWrapperProps = {
@@ -18,18 +13,15 @@ export default function FormWrapper({
   formComp,
   locked,
 }: FormWrapperProps) {
-  const [editable, setEditable] = useState<boolean>(locked);
+  const [editable, setEditable, toggleEditable] = useToggleState(locked);
   const id = useId();
-  const toggleEditable = () => {
-    setEditable(!editable);
-  };
   useEventListener("FormWrapper-submit-child", (detail) => {
     if (detail.uuid === id) setEditable(false);
   });
 
   useEffect(() => {
     if (locked) setEditable(false);
-  }, [locked]);
+  }, [locked, setEditable]);
 
   return (
     <div className="relative">
