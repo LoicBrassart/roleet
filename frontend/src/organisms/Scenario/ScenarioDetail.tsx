@@ -18,6 +18,7 @@ import {
 } from "@/lib/zustand/adminScenarioStore";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
+import { Lock, LockOpen } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FlashcardList from "../Flashcard/FlashcardList";
@@ -29,11 +30,12 @@ type Props = {
 export default function ScenarioDetail({ scenario }: Props) {
   const currentUser = useCurrentUser();
   const isOwner = currentUser?.id === scenario.owner.id;
+  const isLocked = useIsScenarioLocked(scenario.id);
 
   return (
     <>
       <h2>{scenario.title}</h2>
-      <div className="flex">
+      <div className="relative">
         <AnimatedTabs
           className="h-auto min-h-full"
           tabs={
@@ -62,6 +64,13 @@ export default function ScenarioDetail({ scenario }: Props) {
           }
           defaultTabValue=""
         />
+        <div className="absolute top-3 right-2">
+          {isLocked ? (
+            <Lock className="text-red-500" />
+          ) : (
+            <LockOpen className="text-green-500" />
+          )}
+        </div>
       </div>
     </>
   );
