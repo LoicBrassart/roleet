@@ -1,11 +1,6 @@
 import { useEventListener } from "@/lib/hooks/useEventListener";
-import {
-  type ReactElement,
-  cloneElement,
-  useEffect,
-  useId,
-  useState,
-} from "react";
+import { useToggleState } from "@/lib/hooks/useToggleState";
+import { type ReactElement, cloneElement, useEffect, useId } from "react";
 import { Button } from "./Button";
 
 type FormWrapperProps = {
@@ -18,27 +13,26 @@ export default function FormWrapper({
   formComp,
   locked,
 }: FormWrapperProps) {
-  const [editable, setEditable] = useState<boolean>(locked);
+  const [editable, setEditable, toggleEditable] = useToggleState(locked);
   const id = useId();
-  const toggleEditable = () => {
-    setEditable(!editable);
-  };
+  const canBeEdited = !locked && !editable;
+
   useEventListener("FormWrapper-submit-child", (detail) => {
     if (detail.uuid === id) setEditable(false);
   });
 
   useEffect(() => {
     if (locked) setEditable(false);
-  }, [locked]);
+  }, [locked, setEditable]);
 
   return (
     <div className="relative">
       {editable
         ? cloneElement(formComp, { formCompId: id })
         : cloneElement(baseComp)}
-      {!locked && (
-        <div className="absolute right-0 bottom-0">
-          {!editable && <Button onClick={toggleEditable}>✏️</Button>}
+      {canBeEdited && (
+        <div className="absolute right-2 bottom-2">
+          <Button onClick={toggleEditable}>✏️</Button>
         </div>
       )}
     </div>

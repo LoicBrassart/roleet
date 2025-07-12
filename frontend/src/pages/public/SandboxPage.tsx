@@ -2,9 +2,9 @@ import { Button } from "@/atoms/Button";
 import EditableMarkdown from "@/atoms/EditableMarkdown";
 import FormWrapper from "@/atoms/FormWrapper";
 import Markdown from "@/atoms/Markdown";
+import { useToggleState } from "@/lib/hooks/useToggleState";
 import FlashCard from "@/organisms/Flashcard/FlashCard";
 import FlashCardForm from "@/organisms/Flashcard/FlashCardForm";
-import { useState } from "react";
 
 const scenario = {
   title: "A la chasse aux gobs",
@@ -53,10 +53,10 @@ const card = {
   data: {
     species: "Humanoïde (Humain)",
     size: "M",
-    alignment: "Neutre",
+    alignment: "N",
     armorClass: 10,
     health: "7 (2d8-2)",
-    speed: 9,
+    speed: 10,
     strength: 10,
     dexterity: 10,
     constitution: 9,
@@ -74,10 +74,8 @@ const card = {
 };
 
 export default function SandboxPage() {
-  const [locked, setLocked] = useState<boolean>(true);
-  const toggleLocked = () => {
-    setLocked(!locked);
-  };
+  const [locked, , toggleLocked] = useToggleState(true);
+
   return (
     <>
       <h1>Bienvenue au Labo !</h1>

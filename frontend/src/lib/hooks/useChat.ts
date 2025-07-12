@@ -1,7 +1,8 @@
+import type { Entities } from "@/types/entities";
 import { useEffect, useState } from "react";
 import { useSocket } from "./useSocket";
 
-export function useChat(room: string, initialMessages: Message[]) {
+export function useChat(room: string, initialMessages: Entities.Message[]) {
   const { socket, isConnected } = useSocket<
     ServerToClientEvents,
     ClientToServerEvents
