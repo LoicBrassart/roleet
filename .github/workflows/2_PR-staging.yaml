@@ -61,4 +61,4 @@ jobs:
 
       - name: Build and Run E2E Tests
         run: |
-          docker compose -f compose.e2e.yaml run e2e-tests
+          docker compose -f compose.e2e.yaml run playwright-e2e
