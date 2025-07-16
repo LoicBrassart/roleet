@@ -1,3 +1,4 @@
+import { cva, type VariantProps } from "class-variance-authority";
 import {
   CardContent,
   CardDescription,
@@ -7,7 +8,6 @@ import {
 } from "@/lib/shadcn/generated/ui/card";
 import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
 import { cn } from "@/lib/shadcn/generated/utils";
-import { type VariantProps, cva } from "class-variance-authority";
 
 const cardVariants = cva("m-1 size-96", {
   variants: {

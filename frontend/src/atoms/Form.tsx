@@ -1,4 +1,3 @@
-import { Form as ShadForm } from "@/lib/shadcn/generated/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   type DefaultValues,
@@ -7,6 +6,7 @@ import {
   useForm,
 } from "react-hook-form";
 import type { z } from "zod";
+import { Form as ShadForm } from "@/lib/shadcn/generated/ui/form";
 
 type Props<TFieldValues extends FieldValues> = {
   schema: z.ZodType<TFieldValues>;

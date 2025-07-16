@@ -1,3 +1,5 @@
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Link } from "react-router-dom";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Card,
@@ -7,8 +9,6 @@ import {
   CardTitle,
 } from "@/lib/shadcn/generated/ui/card";
 import type { Entities } from "@/types/entities";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Link } from "react-router-dom";
 
 type Props = {
   title: string;
@@ -32,7 +32,7 @@ export default function CampaignList({ title, data }: Props) {
           return (
             <li key={campaign.id} className="w-96">
               <Card
-                className="w-96 m-1 h-40"
+                className="m-1 h-40 w-96"
                 style={{
                   backgroundImage: `url('http://localhost:7000/files/${campaign.bannerUrl}')`,
                 }}

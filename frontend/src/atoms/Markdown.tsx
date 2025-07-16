@@ -1,14 +1,14 @@
 import {
   type HTMLAttributes,
   type ImgHTMLAttributes,
-  type PropsWithChildren,
   memo,
+  type PropsWithChildren,
   useMemo,
 } from "react";
 import MarkdownRender from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const PLUGINS_REMARK = [[remarkGfm]];
+const _PLUGINS_REMARK = [[remarkGfm]];
 
 // TODO: styles for Markdown are defined in /src/globals.css, couldn't make it work any other satisfying manner
 const MarkdownComponent = ({ value = "" }) => {

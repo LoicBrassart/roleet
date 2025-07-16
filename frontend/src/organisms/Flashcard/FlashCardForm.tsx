@@ -1,3 +1,5 @@
+import { useState } from "react";
+import type { z } from "zod";
 import { Button } from "@/atoms/Button";
 import { Card } from "@/atoms/Card";
 import { EditableField } from "@/atoms/EditableField";
@@ -11,8 +13,6 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import { dndNpcCardSchema } from "@/lib/zod/dndNpcCard";
 import type { FlashcardTyped, TDndNpcCard } from "@/types/flashcards";
-import { useState } from "react";
-import type { z } from "zod";
 import { Form } from "../../atoms/Form";
 
 type Props = {
@@ -64,7 +64,7 @@ type DndNpcCardProps = {
 };
 function DndNpcCardForm({ card, formCompId }: DndNpcCardProps) {
   const hSubmitCard = async (values: z.input<typeof dndNpcCardSchema>) => {
-    console.log(values);
+    console.warn(values); // TODO call api
     if (formCompId) {
       triggerCustomEvent("FormWrapper-submit-child", { uuid: formCompId });
     }

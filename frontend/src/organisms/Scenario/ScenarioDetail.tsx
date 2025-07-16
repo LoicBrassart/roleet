@@ -1,3 +1,5 @@
+import { type FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/atoms/Button";
 import EditableMarkdown from "@/atoms/EditableMarkdown";
 import FormWrapper from "@/atoms/FormWrapper";
@@ -20,8 +22,6 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
-import { type FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import FlashcardList from "../Flashcard/FlashcardList";
 import PlanDetail from "../Plan/PlanDetail";
 

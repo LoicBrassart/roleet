@@ -1,6 +1,6 @@
+import { useParams } from "react-router-dom";
 import { useGetScenarioQuery } from "@/lib/graphql/generated/graphql-types";
 import ScenarioDetail from "@/organisms/Scenario/ScenarioDetail";
-import { useParams } from "react-router-dom";
 
 export default function ScenarioDetailsPage() {
   const { id } = useParams();

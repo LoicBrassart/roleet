@@ -1,7 +1,7 @@
-import type { CurrentUser } from "@/lib/zod/auth";
 import { produce } from "immer";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+import type { CurrentUser } from "@/lib/zod/auth";
 
 type State = {
   user: CurrentUser | null;
