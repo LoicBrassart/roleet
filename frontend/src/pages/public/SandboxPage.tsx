@@ -2,9 +2,9 @@ import { Button } from "@/atoms/Button";
 import EditableMarkdown from "@/atoms/EditableMarkdown";
 import FormWrapper from "@/atoms/FormWrapper";
 import Markdown from "@/atoms/Markdown";
+import { useToggle } from "@/lib/hooks/useToggle";
 import FlashCard from "@/organisms/Flashcard/FlashCard";
 import FlashCardForm from "@/organisms/Flashcard/FlashCardForm";
-import { useState } from "react";
 
 const scenario = {
   title: "A la chasse aux gobs",
@@ -74,10 +74,8 @@ const card = {
 };
 
 export default function SandboxPage() {
-  const [locked, setLocked] = useState<boolean>(true);
-  const toggleLocked = () => {
-    setLocked(!locked);
-  };
+  const [locked, toggleLocked] = useToggle(true);
+
   return (
     <>
       <h1>Bienvenue au Labo !</h1>

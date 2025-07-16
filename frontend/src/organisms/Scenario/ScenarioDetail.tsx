@@ -3,6 +3,7 @@ import EditableMarkdown from "@/atoms/EditableMarkdown";
 import FormWrapper from "@/atoms/FormWrapper";
 import Markdown from "@/atoms/Markdown";
 import { useDeleteScenarioMutation } from "@/lib/graphql/generated/graphql-types";
+import { useToggle } from "@/lib/hooks/useToggle";
 import { Input } from "@/lib/shadcn/generated/ui/input";
 import {
   Select,
@@ -28,11 +29,7 @@ type Props = {
   scenario: Entities.Scenario;
 };
 export default function ScenarioDetail({ scenario }: Props) {
-  const [locked, setLocked] = useState<boolean>(true);
-  const toggleLocked = () => {
-    setLocked(!locked);
-  };
-
+  const [locked, toggleLocked] = useToggle(true);
   const [needle, setNeedle] = useState<string>("");
   const [currPlan, setCurrPlan] = useState<Entities.Plan>(scenario.plans[0]);
   const currentUser = useCurrentUser();
