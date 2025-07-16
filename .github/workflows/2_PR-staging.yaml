@@ -46,6 +46,11 @@ jobs:
       DB_HOST: ${{ secrets.DB_HOST }}
       COOKIE_TTL: ${{ secrets.COOKIE_TTL }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      VITE_API_URL: ${{ secrets.VITE_API_URL}}
+      VITE_WS_URL: ${{ secrets.VITE_WS_URL}}
+      CACHE_PORT: ${{ secrets.CACHE_PORT}}
+      CACHE_HOST: ${{ secrets.CACHE_HOST}}
+      REALTIME_HOST: ${{ secrets.REALTIME_HOST}}
 
     steps:
       - name: Checkout code
