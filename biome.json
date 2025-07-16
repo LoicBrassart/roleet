@@ -2,12 +2,13 @@
   "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
   "files": {
     "includes": [
-      "*.*",
       "backend/**",
       "e2e/**",
       "files/**",
       "frontend/**",
-      "realtime/**"
+      "realtime/**",
+      "!**/generated/**",
+      "!persist/**"
     ]
   },
   "formatter": { "indentStyle": "space" },
