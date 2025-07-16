@@ -1,6 +1,6 @@
+import { describe, expect, it, vi } from "vitest";
 import type { IUserService } from "@/models/UserService";
 import type { AnonContext, AuthContext } from "@/types/ApolloContext";
-import { describe, expect, it, vi } from "vitest";
 import { Role, User } from "../../src/entities/User";
 import UserResolver, {
   type NewUserInput,

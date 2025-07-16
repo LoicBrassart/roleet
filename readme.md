@@ -1,40 +1,75 @@
-## Authentification
+# TODO list d'une app
 
-### Concepts
+## Infra
 
-- ✅ Enregistrement
+- makefile
+- .env
+- .gitignore
+- compose.yaml
+  - gateway
+    - nginx 🧰
+  - db
+  - adminer 🧰
+  - backend
+  - frontend
+- CI 🧰
+- Deploiement
+  - CD
+  - manips sur VPS
 
-  - Décliner mon identité complète
+## Frontend
 
-- ✅ Authentification (🇺🇸 Authentication)
+- Dockerfile
+- tests unitaires + integration
+- tests e2e
+- zustand 🧰
+- zod
+- react
+  - hooks custom
+- design atomique
+- ShadCN / TWind / design system
+- GraphQL
+  - Cache Apollo 🧰
+- types custom 🧰
+- codegen
+  - hooks d'api GraphQL
 
-  - Décliner mon identité et une info permettant de prouver mes dires (password), et recevoir une preuve du serveur
+## Backend
 
-- ✅ Autorisation (🇺🇸 Authorization)
-  - Le serveur détermine en fonction de mon identité quelles actions je peux mener
+- Dockerfile
+- tests unitaires + integration
+- GraphQL + Apollo
+- authentification
+  - cookies 🧰
+  - argon2
+  - jwt
+- autorisation 🧰
+  - authChecker
+  - context
+- TypeORM
+  - entities
+  - resolvers
+  - repositories 🧰
+- Seeding / fixtures 🧰
+- middlewares 🧰
+- types custom 🧰
 
-### Backend
+## Organisation
 
-- Créer une entité User
-  - id
-  - mail
-  - hashedPassword
-  - roles
-  - [optionnel] name
-- Créer un UserResolver pour l'api GraphQL
-  - mutation signup
-    - hash de password
-    - création/sauvegarde d'User
-    - [optionnel]créer un token
-    - [optionnel]enregistrer enregistrer en cookie
-    - [optionnel] renvoyer un profil public
-  - mutation login
-    - chercher un User compatible
-    - vérifier les hashs des passwords (fourni vs enregistré en db)
-    - créer un token
-    - enregistrer le token en cookie
-    - [optionnel] renvoyer un profil public
-  - [optionnel] mutation logout
-    - détruire le cookie
-- Implement authChecker and context middleware
-- Add logic to AdResolver to protect routes and link author to content
+- Scrum
+  - PBacklog
+  - SBacklog
+  - Rituels
+    - Daily
+    - Retrospective
+    - Restitution
+    - Planning Poker
+- Git/GitHub
+  - config repo
+  - git workflow
+
+# Ideas
+
+- mailer 🧰
+- paiement 🧰
+- upload 🧰

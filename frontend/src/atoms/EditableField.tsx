@@ -1,3 +1,4 @@
+import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import {
   FormControl,
   FormDescription,
@@ -6,12 +7,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
-import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import { Input } from "./Input";
 
 type Props<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > = Prettify<
   Pick<ControllerProps<TFieldValues, TName>, "control" | "name"> & {
     label: string;
@@ -22,7 +22,7 @@ type Props<
 
 export function EditableField<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   label,
   description,

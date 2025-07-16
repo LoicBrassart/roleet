@@ -6,7 +6,7 @@ type Props = {
 };
 export default function CampaignHeader({ campaign }: Props) {
   return (
-    <header className="flex justify-between items-center p-4 border-b">
+    <header className="flex items-center justify-between border-b p-4">
       <Text variant="title">{campaign.title}</Text>
       <Text variant="subtitle">Meneur : {campaign.storyteller.name}</Text>
     </header>

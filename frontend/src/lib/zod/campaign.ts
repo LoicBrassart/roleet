@@ -17,8 +17,7 @@ const campaignSchema = z.object({
     })
     .max(256, {
       message: "doit contenir au maximum 256 caractères.",
-    })
-    .default(""),
+    }),
   players: formOptionsSchema,
   scenarios: formOptionsSchema,
 });
