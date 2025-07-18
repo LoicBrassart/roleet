@@ -1,10 +1,10 @@
-import type { z } from "zod";
 import {
   useCreatePointOfInterestMutation,
   useUpdatePointOfInterestMutation,
 } from "@/lib/graphql/generated/graphql-types";
 import { poiSchema } from "@/lib/zod/poi";
 import type { Entities } from "@/types/entities";
+import type { z } from "zod";
 import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
 import { Form } from "../../atoms/Form";

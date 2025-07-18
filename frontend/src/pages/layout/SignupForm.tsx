@@ -1,9 +1,9 @@
-import { toast } from "sonner";
-import type { z } from "zod";
 import { useSignupMutation } from "@/lib/graphql/generated/graphql-types";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import { currentUserSchema, signupSchema } from "@/lib/zod/auth";
 import { useLogin } from "@/lib/zustand/userStore";
+import { toast } from "sonner";
+import type { z } from "zod";
 import { EditableField } from "../../atoms/EditableField";
 import { Form } from "../../atoms/Form";
 

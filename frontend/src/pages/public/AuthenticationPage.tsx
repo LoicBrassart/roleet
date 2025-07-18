@@ -32,17 +32,19 @@ export default function AuthenticationPage() {
     );
 
   return (
-    <Tabs defaultValue="login">
-      <TabsList>
-        <TabsTrigger value="login">Se connecter</TabsTrigger>
-        <TabsTrigger value="signup">S'inscrire</TabsTrigger>
-      </TabsList>
-      <TabsContent value="login">
-        <LoginForm />
-      </TabsContent>
-      <TabsContent value="signup">
-        <SignupForm />
-      </TabsContent>
-    </Tabs>
+    <>
+      <Tabs defaultValue="login">
+        <TabsList>
+          <TabsTrigger value="login">Se connecter</TabsTrigger>
+          <TabsTrigger value="signup">S'inscrire</TabsTrigger>
+        </TabsList>
+        <TabsContent value="login">
+          <LoginForm />
+        </TabsContent>
+        <TabsContent value="signup">
+          <SignupForm />
+        </TabsContent>
+      </Tabs>
+    </>
   );
 }

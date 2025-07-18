@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import type { z } from "zod";
 import {
   useCreateScenarioMutation,
   useUpdateScenarioMutation,
@@ -7,6 +5,8 @@ import {
 import { scenarioSchema } from "@/lib/zod/scenario";
 import { useCurrentUser, useUnsealScenario } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
+import { useNavigate } from "react-router-dom";
+import type { z } from "zod";
 import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
 import { Form } from "../../atoms/Form";

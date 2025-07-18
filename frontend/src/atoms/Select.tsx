@@ -1,8 +1,3 @@
-import type { FieldPath, FieldValues, RegisterOptions } from "react-hook-form";
-import ReactSelect, {
-  type GroupBase,
-  type OptionsOrGroups,
-} from "react-select";
 import {
   FormControl,
   FormDescription,
@@ -11,6 +6,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
+import type { FieldPath, FieldValues, RegisterOptions } from "react-hook-form";
+import ReactSelect, {
+  type GroupBase,
+  type OptionsOrGroups,
+} from "react-select";
 
 type Props<
   Option,

@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
 import { useGetCampaignQuery } from "@/lib/graphql/generated/graphql-types";
+import { useParams } from "react-router-dom";
 import CampaignDetailsLayout from "../../organisms/Campaign/CampaignDetailsLayout";
 
 export default function CampaignDetailsPage() {

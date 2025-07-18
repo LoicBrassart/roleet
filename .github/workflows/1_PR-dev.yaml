@@ -1,4 +1,4 @@
-name: Lint, Format & Cherry-picked Unit Tests
+name: Lint, Format & UT
 
 on:
   pull_request:

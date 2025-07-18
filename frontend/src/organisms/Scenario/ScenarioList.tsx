@@ -1,8 +1,8 @@
-import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Link } from "react-router-dom";
 import { Button } from "@/lib/shadcn/generated/ui/button";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardContent,

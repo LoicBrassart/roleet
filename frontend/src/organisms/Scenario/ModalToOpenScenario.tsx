@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useUnsealScenarioMutation } from "@/lib/graphql/generated/graphql-types";
 import { Button, buttonVariants } from "@/lib/shadcn/generated/ui/button";
 import {
@@ -13,6 +12,7 @@ import {
 } from "@/lib/shadcn/generated/ui/dialog";
 import { useCurrentUser, useUnsealScenario } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   scenario: Entities.Scenario;

@@ -20,7 +20,7 @@ type Props = {
 export default function FlashCard({ card }: Props) {
   switch (card.type) {
     case "DndNpcCard":
-      return <DndNpcCard card={card as TDndNpcCard} />;
+      return <DndNpcCard card={card} />;
     default:
       return <DefaultCard />;
   }
@@ -70,24 +70,24 @@ function DndNpcCard({ card }: DndNpcCardProps) {
               <p>Vitesse: {card.data.speed}m</p>
               <hr />
               <ul className="flex">
-                <li>
-                  <StatItem label="STR" value={card.data.strength} />
-                </li>
-                <li>
-                  <StatItem label="DEX" value={card.data.dexterity} />
-                </li>
-                <li>
-                  <StatItem label="CON" value={card.data.constitution} />
-                </li>
-                <li>
-                  <StatItem label="INT" value={card.data.intelligence} />
-                </li>
-                <li>
-                  <StatItem label="WIS" value={card.data.wisdom} />
-                </li>
-                <li>
-                  <StatItem label="CHA" value={card.data.charisma} />
-                </li>
+                <li>{`STR: ${card.data.strength} (${Math.floor(
+                  (card.data.strength - 10) / 2,
+                )})`}</li>
+                <li>{`DEX: ${card.data.dexterity} (${Math.floor(
+                  (card.data.dexterity - 10) / 2,
+                )})`}</li>
+                <li>{`CON: ${card.data.constitution} (${Math.floor(
+                  (card.data.constitution - 10) / 2,
+                )})`}</li>
+                <li>{`INT: ${card.data.intelligence} (${Math.floor(
+                  (card.data.intelligence - 10) / 2,
+                )})`}</li>
+                <li>{`WIS: ${card.data.wisdom} (${Math.floor(
+                  (card.data.wisdom - 10) / 2,
+                )})`}</li>
+                <li>{`CHA: ${card.data.charisma} (${Math.floor(
+                  (card.data.charisma - 10) / 2,
+                )})`}</li>
               </ul>
               <hr />
               <p>Compétences: {card.data.skills}</p>
@@ -106,13 +106,5 @@ function DndNpcCard({ card }: DndNpcCardProps) {
         </Tabs>
       </CardContent>
     </Card>
-  );
-}
-function StatItem({ label, value }: { label: string; value: number }) {
-  const mod = Math.floor((value - 10) / 2);
-  return (
-    <>
-      {label}: {value} ({mod >= 0 ? `+${mod}` : mod})
-    </>
   );
 }

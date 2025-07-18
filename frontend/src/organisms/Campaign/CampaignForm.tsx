@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-import type { z } from "zod";
 import { Button } from "@/atoms/Button";
 import { EditableField } from "@/atoms/EditableField";
 import { Form } from "@/atoms/Form";
@@ -14,6 +12,8 @@ import type { Option } from "@/lib/helpers/zodSchemas";
 import campaignSchema from "@/lib/zod/campaign";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
+import { useNavigate } from "react-router-dom";
+import type { z } from "zod";
 
 type Props = {
   campaign?: Entities.Campaign;

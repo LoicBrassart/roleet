@@ -1,10 +1,10 @@
 x-baseService: &baseService
   restart: always
   healthcheck:
-    interval: 5s
-    timeout: 2s
-    retries: 3
-    start_period: 10s
+    interval: 300s
+    timeout: 30s
+    retries: 5
+    start_period: 30s
     start_interval: 5s
 
 services:

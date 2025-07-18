@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { io, type Socket } from "socket.io-client";
+import { type Socket, io } from "socket.io-client";
 
 const SOCKET_URL = import.meta.env.VITE_WS_URL;
 

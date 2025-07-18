@@ -320,10 +320,10 @@ const flashcards = [
     data: {
       species: "Humanoïde (Humain)",
       size: "M",
-      alignment: "NN",
+      alignment: "Neutre",
       armorClass: 10,
       health: "7 (2d8-2)",
-      speed: 10,
+      speed: 9,
       strength: 10,
       dexterity: 10,
       constitution: 9,

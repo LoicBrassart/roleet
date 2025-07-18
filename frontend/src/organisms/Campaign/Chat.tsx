@@ -1,4 +1,3 @@
-import type { FormEvent } from "react";
 import { formatDate } from "@/lib/helpers/dateFormatter";
 import { useChat } from "@/lib/hooks/useChat";
 import {
@@ -9,6 +8,7 @@ import {
 } from "@/lib/shadcn/generated/ui/tooltip";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
+import type { FormEvent } from "react";
 
 type Props = {
   title: string;

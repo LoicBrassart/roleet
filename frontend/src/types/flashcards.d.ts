@@ -1,4 +1,5 @@
-import type { Entities } from "./entities";
+import type { Flashcard as GqlFlashcard } from "@/lib/graphql/generated/graphql-types";
+
 /*
 Ajouter un nouveau type de flashcards:
 1/ Ajouter un *CardData (description des champs specifiques)
@@ -30,12 +31,12 @@ export type DndNpcCardData = {
 
 /* 2. Flashcard spécialisées (union discriminée) */
 type FlashcardBase = Prettify<
-  Omit<Entities.Flashcard, "type" | "scenario"> & {
-    type: "DndNpcCard" | (string & {});
+  Omit<GqlFlashcard, "data" | "type" | "scenario"> & {
+    type: string;
   }
 >;
 export type TDndNpcCard = Prettify<
-  Omit<FlashcardBase, "data"> & { type: "DndNpcCard" } & {
+  FlashcardBase & { type: "DndNpcCard" } & {
     data: DndNpcCardData;
   }
 >;

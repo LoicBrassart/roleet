@@ -1,8 +1,8 @@
 import {
   type HTMLAttributes,
   type ImgHTMLAttributes,
-  memo,
   type PropsWithChildren,
+  memo,
   useMemo,
 } from "react";
 import MarkdownRender from "react-markdown";

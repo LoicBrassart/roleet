@@ -1,4 +1,3 @@
-import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import {
   FormControl,
   FormDescription,
@@ -7,6 +6,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
+import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import { Input } from "./Input";
 
 type Props<
