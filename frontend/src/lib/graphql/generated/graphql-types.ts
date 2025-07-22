@@ -248,12 +248,18 @@ export type Query = {
   getCampaign?: Maybe<Campaign>;
   getMyCampaigns: Array<Campaign>;
   getMyScenarios: Array<Scenario>;
+  getPlan: Plan;
   getScenario: Scenario;
   getStats: Stats;
 };
 
 
 export type QueryGetCampaignArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryGetPlanArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -446,6 +452,13 @@ export type UpdatePlanMutationVariables = Exact<{
 
 
 export type UpdatePlanMutation = { __typename?: 'Mutation', updatePlan: { __typename?: 'Plan', id: string } };
+
+export type GetPlanQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetPlanQuery = { __typename?: 'Query', getPlan: { __typename?: 'Plan', id: string, title: string, description: string, pictureUrl: string, owner: { __typename?: 'User', id: string }, pointsOfInterest: Array<{ __typename?: 'PointOfInterest', id: string, code: string, title: string, description: string }>, scenario: { __typename?: 'Scenario', id: string, bannerUrl: string, credits: string, fullStory: string, teaser: string, title: string } } };
 
 export type GetStatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1202,6 +1215,66 @@ export function useUpdatePlanMutation(baseOptions?: Apollo.MutationHookOptions<U
 export type UpdatePlanMutationHookResult = ReturnType<typeof useUpdatePlanMutation>;
 export type UpdatePlanMutationResult = Apollo.MutationResult<UpdatePlanMutation>;
 export type UpdatePlanMutationOptions = Apollo.BaseMutationOptions<UpdatePlanMutation, UpdatePlanMutationVariables>;
+export const GetPlanDocument = gql`
+    query getPlan($id: String!) {
+  getPlan(id: $id) {
+    id
+    title
+    description
+    pictureUrl
+    owner {
+      id
+    }
+    pointsOfInterest {
+      id
+      code
+      title
+      description
+    }
+    scenario {
+      id
+      bannerUrl
+      credits
+      fullStory
+      teaser
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPlanQuery__
+ *
+ * To run a query within a React component, call `useGetPlanQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPlanQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPlanQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetPlanQuery(baseOptions: Apollo.QueryHookOptions<GetPlanQuery, GetPlanQueryVariables> & ({ variables: GetPlanQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPlanQuery, GetPlanQueryVariables>(GetPlanDocument, options);
+      }
+export function useGetPlanLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPlanQuery, GetPlanQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPlanQuery, GetPlanQueryVariables>(GetPlanDocument, options);
+        }
+export function useGetPlanSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPlanQuery, GetPlanQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetPlanQuery, GetPlanQueryVariables>(GetPlanDocument, options);
+        }
+export type GetPlanQueryHookResult = ReturnType<typeof useGetPlanQuery>;
+export type GetPlanLazyQueryHookResult = ReturnType<typeof useGetPlanLazyQuery>;
+export type GetPlanSuspenseQueryHookResult = ReturnType<typeof useGetPlanSuspenseQuery>;
+export type GetPlanQueryResult = Apollo.QueryResult<GetPlanQuery, GetPlanQueryVariables>;
 export const GetStatsDocument = gql`
     query getStats {
   getStats {

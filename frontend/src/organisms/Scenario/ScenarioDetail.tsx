@@ -1,7 +1,7 @@
 import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/atoms/Button";
-import EditableMarkdown from "@/atoms/EditableMarkdown";
+// import EditableMarkdown from "@/atoms/EditableMarkdown";
 import FormWrapper from "@/atoms/FormWrapper";
 import Markdown from "@/atoms/Markdown";
 import { useDeleteScenarioMutation } from "@/lib/graphql/generated/graphql-types";
@@ -24,6 +24,8 @@ import { useCurrentUser } from "@/lib/zustand/userStore";
 import type { Entities } from "@/types/entities";
 import FlashcardList from "../Flashcard/FlashcardList";
 import PlanDetail from "../Plan/PlanDetail";
+import PlanForm from "../Plan/PlanForm";
+import FullStoryForm from "./FullStoryForm";
 
 type Props = {
   scenario: Entities.Scenario;
@@ -67,7 +69,7 @@ export default function ScenarioDetail({ scenario }: Props) {
         <TabsContent value="home">
           <FormWrapper
             baseComp={<Markdown value={scenario.fullStory} />}
-            formComp={<EditableMarkdown source={scenario.fullStory} />}
+            formComp={<FullStoryForm scenario={scenario} />}
             locked={locked}
           />
         </TabsContent>
@@ -86,7 +88,11 @@ export default function ScenarioDetail({ scenario }: Props) {
                   ))}
                 </SelectContent>
               </Select>
-              <PlanDetail plan={currPlan} />
+              <FormWrapper
+                baseComp={<PlanDetail plan={currPlan} />}
+                formComp={<PlanForm plan={currPlan} scenarioId={scenario.id} />}
+                locked={locked}
+              />
             </>
           )}
         </TabsContent>

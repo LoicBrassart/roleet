@@ -1,4 +1,12 @@
-import { Arg, Field, InputType, Mutation, Resolver } from "type-graphql";
+import {
+  Arg,
+  Authorized,
+  Field,
+  InputType,
+  Mutation,
+  Query,
+  Resolver,
+} from "type-graphql";
 import { Plan } from "../entities/Plan";
 import { handleDatabaseError } from "../lib/helpers/handleDatabaseError";
 
@@ -52,6 +60,15 @@ class PlanResolver {
     return Plan.update({ id }, { ...data })
       .then(() => Plan.findOneByOrFail({ id }))
       .catch(handleDatabaseError("Failed to update plan"));
+  }
+
+  @Authorized()
+  @Query(() => Plan)
+  getPlan(@Arg("id") id: string) {
+    return Plan.findOne({
+      where: { id },
+      relations: { owner: true, pointsOfInterest: true, scenario: true },
+    });
   }
 }
 

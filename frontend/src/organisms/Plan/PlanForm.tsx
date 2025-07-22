@@ -3,18 +3,19 @@ import {
   useCreatePlanMutation,
   useUpdatePlanMutation,
 } from "@/lib/graphql/generated/graphql-types";
+import { triggerCustomEvent } from "@/lib/hooks/useEventListener";
 import { planSchema } from "@/lib/zod/plan";
 import type { Entities } from "@/types/entities";
 import { Button } from "../../atoms/Button";
 import { EditableField } from "../../atoms/EditableField";
 import { Form } from "../../atoms/Form";
 
-type Scenario = Entities.Scenario;
 type Props = {
-  scenario: Scenario;
-  plan?: Scenario["plans"][number];
+  scenarioId: Entities.Scenario["id"];
+  plan?: Entities.Plan;
+  formCompId?: string;
 };
-export default function PlanForm({ scenario, plan }: Props) {
+export default function PlanForm({ plan, scenarioId, formCompId }: Props) {
   const [createPlan] = useCreatePlanMutation();
   const [updatePlan] = useUpdatePlanMutation();
 
@@ -23,8 +24,11 @@ export default function PlanForm({ scenario, plan }: Props) {
       await updatePlan({ variables: { data: values, id: plan.id } });
     } else {
       await createPlan({
-        variables: { data: { ...values, scenarioId: scenario.id } },
+        variables: { data: { ...values, scenarioId: scenarioId } },
       });
+    }
+    if (formCompId) {
+      triggerCustomEvent("FormWrapper-submit-child", { uuid: formCompId });
     }
   };
 
@@ -32,7 +36,7 @@ export default function PlanForm({ scenario, plan }: Props) {
     <Form
       onSubmit={hSubmitPlan}
       schema={planSchema}
-      defaultValues={scenario}
+      defaultValues={plan}
       className="space-y-6"
     >
       {({ register }) => (
