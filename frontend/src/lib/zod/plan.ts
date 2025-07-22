@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { uuidSchema } from "./uuid";
 
 export const planSchema = z.object({
   title: z

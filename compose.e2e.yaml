@@ -1,0 +1,171 @@
+x-baseService: &baseService
+  restart: always
+  healthcheck:
+    interval: 300s
+    timeout: 30s
+    retries: 5
+    start_period: 30s
+    start_interval: 5s
+
+services:
+  gateway-e2e:
+    <<: *baseService
+    container_name: gateway-e2e
+    image: nginx
+    volumes:
+      - ./nginx.e2e.conf:/etc/nginx/nginx.conf
+    ports:
+      - ${GATEWAY_PORT}:80
+    depends_on:
+      backend-e2e:
+        condition: service_healthy
+      files-e2e:
+        condition: service_healthy
+      frontend-e2e:
+        condition: service_healthy
+      realtime-e2e:
+        condition: service_healthy
+
+  db-e2e:
+    <<: *baseService
+    container_name: db-e2e
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_DATABASE} -U ${DB_USER}"]
+    volumes:
+      - ./persist/db-e2e:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_HOST: ${DB_HOST}
+
+  backend-e2e:
+    <<: *baseService
+    container_name: backend-e2e
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.e2e
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-e2e:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
+        ]
+    depends_on:
+      db-e2e:
+        condition: service_healthy
+      rabbit-e2e:
+        condition: service_healthy
+      cache-e2e:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/src/
+      - ./persist/backend-e2e:/app/static
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_HOST: ${DB_HOST}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_TTL: ${COOKIE_TTL}
+      CACHE_PORT: ${CACHE_PORT}
+      CACHE_HOST: ${CACHE_HOST}
+      REALTIME_HOST: ${REALTIME_HOST}
+
+  files-e2e:
+    <<: *baseService
+    container_name: files-e2e
+    build:
+      context: ./files
+      dockerfile: Dockerfile.e2e
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://files-e2e:4000/health'|| exit 1",
+        ]
+    volumes:
+      - ./files/src:/app/src/
+      - ./persist/files-e2e:/app/public
+
+  realtime-e2e:
+    <<: *baseService
+    container_name: realtime-e2e
+    build:
+      context: ./realtime
+      dockerfile: Dockerfile.e2e
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://realtime-e2e:4000/health'|| exit 1",
+        ]
+    volumes:
+      - ./realtime/src:/app/src/
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      REALTIME_HOST: ${REALTIME_HOST}
+    depends_on:
+      rabbit-e2e:
+        condition: service_healthy
+
+  frontend-e2e:
+    <<: *baseService
+    container_name: frontend-e2e
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.e2e
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://frontend-e2e:5173' || exit 1",
+        ]
+    volumes:
+      - ./frontend/src:/app/src/
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_WS_URL: ${VITE_WS_URL}
+
+  rabbit-e2e:
+    container_name: rabbit-e2e
+    <<: *baseService
+    image: rabbitmq
+    volumes:
+      - ./persist/rabbitmq-e2e/data/:/var/lib/rabbitmq/
+      - ./persist/rabbitmq-e2e/log/:/var/log/rabbitmq/
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping || exit 1"]
+    ports:
+      - 5672:5672
+      - 15672:15672
+    command: >
+      sh -c "
+      rabbitmq-plugins enable rabbitmq_management &&
+      rabbitmq-server"
+
+  cache-e2e:
+    <<: *baseService
+    container_name: cache-e2e
+    image: redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    ports:
+      - ${CACHE_PORT}:6379
+
+  playwright-e2e:
+    <<: *baseService
+    container_name: playwright-e2e
+    restart: on-failure
+    build:
+      context: ./e2e
+      dockerfile: Dockerfile.e2e
+    volumes:
+      - ./persist/playwright-e2e/report:/app/playwright-report
+      - ./persist/playwright-e2e/results:/app/tests-results
+    depends_on:
+      gateway-e2e:
+        condition: service_started
+    environment:
+      WEBSITE_URL: http://gateway-e2e

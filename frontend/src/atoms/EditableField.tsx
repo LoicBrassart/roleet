@@ -1,11 +1,12 @@
+import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import {
+  FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/lib/shadcn/generated/ui/form";
-import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import { Input } from "./Input";
 
 type Props<
@@ -36,7 +37,9 @@ export function EditableField<
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
-          <Input {...field} className={className} />
+          <FormControl>
+            <Input {...field} className={className} />
+          </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>

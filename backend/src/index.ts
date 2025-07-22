@@ -1,11 +1,11 @@
+import "reflect-metadata";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import * as dotenv from "dotenv";
-import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import redisClient from "./lib/Redis";
 import { authChecker } from "./lib/helpers/authChecker";
 import getUserFromReq from "./lib/helpers/getUserFromReq";
+import redisClient from "./lib/Redis";
 import { dataSource } from "./lib/typeorm/dataSource";
 import resolvers from "./resolvers";
 import subscribeToMessageBroker from "./services/messageBroker";

@@ -2,7 +2,7 @@ import { Campaign } from "../entities/Campaign";
 import { Message } from "../entities/Message";
 import RabbitMQ from "../lib/RabbitMQ";
 
-const rabbitMQ = RabbitMQ.getInstance("amqp://rabbit-dev");
+const rabbitMQ = RabbitMQ.getInstance(`amqp://${process.env.REALTIME_HOST}`);
 
 export default function subscribeToMessageBroker() {
   rabbitMQ.consume("newMessage", async (msg) => {

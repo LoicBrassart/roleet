@@ -228,6 +228,34 @@ export const UPDATE_PLAN = gql`
   }
 `;
 
+export const GET_PLAN = gql`
+  query getPlan($id: String!) {
+    getPlan(id: $id) {
+      id
+      title
+      description
+      pictureUrl
+      owner {
+        id
+      }
+      pointsOfInterest {
+        id
+        code
+        title
+        description
+      }
+      scenario {
+        id
+        bannerUrl
+        credits
+        fullStory
+        teaser
+        title
+      }
+    }
+  }
+`;
+
 export const GET_STATS = gql`
   query getStats {
     getStats {

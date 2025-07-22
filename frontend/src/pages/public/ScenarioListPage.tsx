@@ -10,9 +10,5 @@ export default function ScenarioListPage() {
     return <p>Enhance your calm, we're still fetching this data...</p>;
   if (!data) return <p>We found nothing to display.</p>;
 
-  return (
-    <>
-      <ScenarioList title="Scenarios" data={data.getAllScenarios} />
-    </>
-  );
+  return <ScenarioList title="Scenarios" data={data.getAllScenarios} />;
 }
