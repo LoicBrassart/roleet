@@ -3,6 +3,7 @@ import type { z } from "zod";
 import { Button } from "@/atoms/Button";
 import { Card } from "@/atoms/Card";
 import { EditableField } from "@/atoms/EditableField";
+import { Form } from "@/atoms/Form";
 import { triggerCustomEvent } from "@/lib/hooks/useEventListener";
 import { ScrollArea } from "@/lib/shadcn/generated/ui/scroll-area";
 import {
@@ -13,7 +14,6 @@ import {
 } from "@/lib/shadcn/generated/ui/tabs";
 import { dndNpcCardSchema } from "@/lib/zod/dndNpcCard";
 import type { FlashcardTyped, TDndNpcCard } from "@/types/flashcards";
-import { Form } from "../../atoms/Form";
 
 type Props = {
   card?: FlashcardTyped;
@@ -64,7 +64,7 @@ type DndNpcCardProps = {
 };
 function DndNpcCardForm({ card, formCompId }: DndNpcCardProps) {
   const hSubmitCard = async (values: z.input<typeof dndNpcCardSchema>) => {
-    console.warn(values); // TODO call api
+    console.warn("->", values); // TODO call api
     if (formCompId) {
       triggerCustomEvent("FormWrapper-submit-child", { uuid: formCompId });
     }

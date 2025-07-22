@@ -53,10 +53,10 @@ const card = {
   data: {
     species: "Humanoïde (Humain)",
     size: "M",
-    alignment: "Neutre",
+    alignment: "N",
     armorClass: 10,
     health: "7 (2d8-2)",
-    speed: 9,
+    speed: 10,
     strength: 10,
     dexterity: 10,
     constitution: 9,

@@ -9,7 +9,7 @@ import type { z } from "zod";
 import { Form as ShadForm } from "@/lib/shadcn/generated/ui/form";
 
 type Props<TFieldValues extends FieldValues> = {
-  schema: z.ZodType<TFieldValues>;
+  schema: z.ZodType<TFieldValues, TFieldValues>;
   defaultValues?: DefaultValues<TFieldValues>;
   onSubmit: (data: z.output<z.ZodType<TFieldValues>>) => void;
   className?: string;
