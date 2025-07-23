@@ -2,13 +2,13 @@ FROM node:lts-alpine
 WORKDIR /app
 RUN apk --no-cache add curl
 COPY package*.json ./
-COPY tsconfig*.json ./
+COPY tsconfig.json ./
 COPY codegen.ts ./
 RUN npm install
 COPY public public
 COPY src src
 COPY index.html ./
-# COPY components.json ./
+COPY components.json ./
 COPY *.config.ts ./
 COPY *.config.js ./
 
