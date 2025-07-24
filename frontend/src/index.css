@@ -1,9 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Metal+Mania&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-golden: #ebdf89;
+  --color-green: #0c4b4b;
+  --font-title: "Metal Mania", system-ui;
+  --font-base: "Gabarito", sans-serif;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -23,7 +29,7 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-border: var(--border);
+  --color-border: var(--color-golden);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -42,6 +48,7 @@
 }
 
 :root {
+  /* PAS TOUCHE */
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -115,6 +122,9 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply min-h-screen bg-gradient-to-b from-[#1e1e1e] to-green text-foreground;
+  }
+  html {
+    @apply font-base;
   }
 }

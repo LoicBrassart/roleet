@@ -7,8 +7,8 @@ import {
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
 import { useCurrentUser, useLogout } from "@/lib/zustand/userStore";
-import LoginForm from "@/organisms/User/LoginForm";
-import SignupForm from "@/organisms/User/SignupForm";
+import LoginForm from "@/organisms/user/LoginForm";
+import SignupForm from "@/organisms/user/SignupForm";
 
 export default function Authentication() {
   const currentUser = useCurrentUser();
