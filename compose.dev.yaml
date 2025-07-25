@@ -1,10 +1,10 @@
 x-baseService: &baseService
   restart: always
   healthcheck:
-    interval: 300s
-    timeout: 30s
-    retries: 5
-    start_period: 30s
+    interval: 5s
+    timeout: 2s
+    retries: 3
+    start_period: 10s
     start_interval: 5s
 
 services:
@@ -141,6 +141,27 @@ services:
     environment:
       VITE_API_URL: ${VITE_API_URL}
       VITE_WS_URL: ${VITE_WS_URL}
+
+  # frontend-dev:
+  #   <<: *baseService
+  #   container_name: frontend-dev
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile.dev
+  #   healthcheck:
+  #     test:
+  #       [
+  #         "CMD-SHELL",
+  #         "curl -m 5 --fail --request GET --url 'http://frontend-dev:5173' || exit 1",
+  #       ]
+  #   depends_on:
+  #     codegen-dev:
+  #       condition: service_completed_successfully
+  #   volumes:
+  #     - ./frontend/src:/app/src/
+  #   environment:
+  #     VITE_API_URL: ${VITE_API_URL}
+  #     VITE_WS_URL: ${VITE_WS_URL}
 
   codegen-dev:
     <<: *baseService
