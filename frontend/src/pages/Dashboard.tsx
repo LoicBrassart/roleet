@@ -1,3 +1,4 @@
+import { List } from "@/atoms/List";
 import { useGetMyCampaignsQuery } from "@/lib/graphql/generated/graphql-types";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import CampaignCard from "@/organisms/campaign/CampaignCard";
@@ -12,20 +13,18 @@ export default function Dashboard() {
   if (!data) return <p>Error: missing data !</p>;
 
   return (
-    <>
-      <h1 className="font-title text-white">Mes Campagnes</h1>
-      <ul className="space-y-4">
-        {data.getMyCampaigns.map((campaign) => (
-          <li key={campaign.id}>
-            <CampaignCard
-              title={campaign.title}
-              storyteller={campaign.storyteller.name}
-              players={campaign.players.map((player) => player.name)}
-              bannerUrl={campaign.bannerUrl}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
+    <List
+      title="Mes Campagnes"
+      data={data.getMyCampaigns}
+      render={(campaign) => (
+        <CampaignCard
+          key={campaign.id}
+          title={campaign.title}
+          storyteller={campaign.storyteller.name}
+          players={campaign.players.map((player) => player.name)}
+          bannerUrl={campaign.bannerUrl}
+        />
+      )}
+    />
   );
 }
