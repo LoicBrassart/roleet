@@ -14,10 +14,15 @@ export default function Dashboard() {
   return (
     <>
       <h1 className="font-title text-white">Mes Campagnes</h1>
-      <ul>
+      <ul className="space-y-4">
         {data.getMyCampaigns.map((campaign) => (
           <li key={campaign.id}>
-            <CampaignCard {...campaign} />
+            <CampaignCard
+              title={campaign.title}
+              storyteller={campaign.storyteller.name}
+              players={campaign.players.map((player) => player.name)}
+              bannerUrl={campaign.bannerUrl}
+            />
           </li>
         ))}
       </ul>
