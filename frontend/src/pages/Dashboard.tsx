@@ -1,5 +1,6 @@
 import { useGetMyCampaignsQuery } from "@/lib/graphql/generated/graphql-types";
 import { useCurrentUser } from "@/lib/zustand/userStore";
+import { List } from "@/molecules/List";
 import CampaignCard from "@/organisms/campaign/CampaignCard";
 
 export default function Dashboard() {
@@ -12,15 +13,19 @@ export default function Dashboard() {
   if (!data) return <p>Error: missing data !</p>;
 
   return (
-    <>
-      <h1 className="font-title text-white">Mes Campagnes</h1>
-      <ul>
-        {data.getMyCampaigns.map((campaign) => (
-          <li key={campaign.id}>
-            <CampaignCard {...campaign} />
-          </li>
-        ))}
-      </ul>
-    </>
+    <List
+      title="Mes Campagnes"
+      data={data.getMyCampaigns}
+      render={(campaign) => (
+        <li key={campaign.id}>
+          <CampaignCard
+            title={campaign.title}
+            storyteller={campaign.storyteller.name}
+            players={campaign.players.map((player) => player.name)}
+            bannerUrl={campaign.bannerUrl}
+          />
+        </li>
+      )}
+    />
   );
 }

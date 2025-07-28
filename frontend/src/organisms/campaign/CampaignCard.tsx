@@ -1,20 +1,28 @@
 import { Card } from "@/molecules/Card";
 import type { Entities } from "@/types/entities";
 
+interface CampaignCardProps {
+  title: Entities.Campaign["title"];
+  storyteller: Entities.Campaign["storyteller"]["name"];
+  players: Entities.Campaign["players"][number]["name"][];
+  bannerUrl: Entities.Campaign["bannerUrl"];
+}
+
 export default function CampaignCard({
   title,
   storyteller,
   players,
   bannerUrl,
-}: Pick<Entities.Campaign, "title" | "storyteller" | "players" | "bannerUrl">) {
+}: CampaignCardProps) {
   return (
     <Card
       title={title}
-      className="bg-black/50 text-white bg-blend-soft-light"
-      style={{ backgroundImage: `url(/files/${bannerUrl})` }}
+      bgImage={`/files/${bannerUrl}`}
+      contentClassName="space-y-4"
+      height="32"
     >
-      Storyteller: {storyteller.name}
-      Players: {players.map((player) => player.name).join(", ")}
+      <div>Storyteller: {storyteller}</div>
+      <div>Players: {players.join(", ")}</div>
       <ul>
         <li>sessions.last.date</li>
         <li>tags</li>
