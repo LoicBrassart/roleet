@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import type React from "react";
 
 type Props<T> = {
@@ -10,7 +11,12 @@ export function List<T>({ title, data, render }: Props<T>) {
   return (
     <>
       <h1 className="font-title text-white">{title}</h1>
-      <ul className="space-y-4">{data.map(render)}</ul>
+      <ul className="space-y-4">
+        {data.map((item) => {
+          const key = randomUUID();
+          return <li key={key}>{render(item)}</li>;
+        })}
+      </ul>
     </>
   );
 }

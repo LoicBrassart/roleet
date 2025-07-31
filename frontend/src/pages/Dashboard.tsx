@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { useGetMyCampaignsQuery } from "@/lib/graphql/generated/graphql-types";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import { List } from "@/molecules/List";
@@ -17,14 +18,14 @@ export default function Dashboard() {
       title="Mes Campagnes"
       data={data.getMyCampaigns}
       render={(campaign) => (
-        <li key={campaign.id}>
+        <Link to={`/campaigns/${campaign.id}`}>
           <CampaignCard
             title={campaign.title}
             storyteller={campaign.storyteller.name}
             players={campaign.players.map((player) => player.name)}
             bannerUrl={campaign.bannerUrl}
           />
-        </li>
+        </Link>
       )}
     />
   );
