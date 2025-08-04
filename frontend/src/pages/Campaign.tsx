@@ -27,7 +27,7 @@ export default function Campaign() {
 
   return (
     <Tabs orientation={isSmallDevice ? "vertical" : "horizontal"}>
-      <TabsList className="items-start justify-start max-md:fixed max-md:right-0 max-md:flex max-md:translate-x-30 max-md:flex-col max-md:bg-transparent [&>*]:bg-muted [&>*]:data-[state=active]:bg-green [&>*]:max-md:gap-4">
+      <TabsList className="max-md:fixed max-md:right-0 max-md:translate-x-30">
         <TabsTrigger value="home">
           <House className="size-6" />
           General
