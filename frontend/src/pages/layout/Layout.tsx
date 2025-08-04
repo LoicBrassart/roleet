@@ -13,7 +13,7 @@ export default function Layout() {
 
   return (
     <>
-      <main className="p-4">
+      <main className="w-dvw overflow-x-hidden p-4">
         <Outlet />
       </main>
       <footer>

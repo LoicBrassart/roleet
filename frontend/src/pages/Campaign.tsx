@@ -1,3 +1,12 @@
+import {
+  Calendar,
+  FileSearch2,
+  FileUser,
+  House,
+  MessagesSquare,
+  NotebookPen,
+  UserSearch,
+} from "lucide-react";
 import { useParams } from "react-router";
 import { useGetCampaignQuery } from "@/lib/graphql/generated/graphql-types";
 import {
@@ -20,15 +29,36 @@ export default function Campaign() {
   if (!campaign) return <p>Error: missing data !</p>;
 
   return (
-    <Tabs>
-      <TabsList>
-        <TabsTrigger value="home">General</TabsTrigger>
-        <TabsTrigger value="chat">Chat</TabsTrigger>
-        <TabsTrigger value="docs">Documents</TabsTrigger>
-        <TabsTrigger value="notes">Notes</TabsTrigger>
-        <TabsTrigger value="npc">Contacts</TabsTrigger>
-        <TabsTrigger value="sheet">Mon personnage</TabsTrigger>
-        <TabsTrigger value="sessions">Sessions</TabsTrigger>
+    <Tabs className="relative">
+      <TabsList className="items-start justify-start max-md:fixed max-md:right-0 max-md:flex max-md:translate-x-30 max-md:flex-col max-md:bg-transparent [&>*]:bg-muted [&>*]:data-[state=active]:bg-green [&>*]:max-md:gap-4">
+        <TabsTrigger value="home">
+          <House />
+          General
+        </TabsTrigger>
+        <TabsTrigger value="chat">
+          <MessagesSquare />
+          Chat
+        </TabsTrigger>
+        <TabsTrigger value="docs">
+          <FileSearch2 />
+          Documents
+        </TabsTrigger>
+        <TabsTrigger value="notes">
+          <NotebookPen />
+          Notes
+        </TabsTrigger>
+        <TabsTrigger value="npc">
+          <UserSearch />
+          Contacts
+        </TabsTrigger>
+        <TabsTrigger value="sheet">
+          <FileUser />
+          Mon personnage
+        </TabsTrigger>
+        <TabsTrigger value="sessions">
+          <Calendar />
+          Sessions
+        </TabsTrigger>
       </TabsList>
       <TabsContent value="home">TODO: General</TabsContent>
       <TabsContent value="chat">
