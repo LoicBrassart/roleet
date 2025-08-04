@@ -13,10 +13,10 @@ export default function Layout() {
 
   return (
     <>
-      <main className="w-dvw overflow-x-hidden p-4">
+      <main className="min-h-dvh w-dvw overflow-x-hidden p-4">
         <Outlet />
       </main>
-      <footer>
+      <footer className="fixed right-0 bottom-0 left-0 bg-black/40 p-4">
         <h2>DEBUG ZONE</h2>
         <button type="button" onClick={hLogout}>
           Logout

@@ -6,7 +6,12 @@ import { RouterProvider } from "react-router";
 import client from "@/lib/graphql/client";
 import router from "@/lib/react-router/router";
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root");
+if (!root) {
+  throw new Error("Could not find root element");
+}
+
+createRoot(root).render(
   <StrictMode>
     <ApolloProvider client={client}>
       <RouterProvider router={router} />
