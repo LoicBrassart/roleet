@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@uidotdev/usehooks";
 import {
   Calendar,
   FileSearch2,
@@ -9,16 +10,12 @@ import {
 } from "lucide-react";
 import { useParams } from "react-router";
 import { useGetCampaignQuery } from "@/lib/graphql/generated/graphql-types";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/lib/shadcn/generated/ui/tabs";
 import { List } from "@/molecules/List";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/molecules/Tabs";
 import MessageCard from "@/organisms/message/MessageCard";
 
 export default function Campaign() {
+  const isSmallDevice = useMediaQuery("(width < 48rem /* 768px */)");
   const { id } = useParams();
   if (!id) return <p>Error: missing id !</p>;
   // biome-ignore lint/correctness/useHookAtTopLevel: Calling my api without the needed variable is useless, I'd rather this component's perf slow down a bit
@@ -29,34 +26,34 @@ export default function Campaign() {
   if (!campaign) return <p>Error: missing data !</p>;
 
   return (
-    <Tabs className="relative">
+    <Tabs orientation={isSmallDevice ? "vertical" : "horizontal"}>
       <TabsList className="items-start justify-start max-md:fixed max-md:right-0 max-md:flex max-md:translate-x-30 max-md:flex-col max-md:bg-transparent [&>*]:bg-muted [&>*]:data-[state=active]:bg-green [&>*]:max-md:gap-4">
         <TabsTrigger value="home">
-          <House />
+          <House className="size-6" />
           General
         </TabsTrigger>
         <TabsTrigger value="chat">
-          <MessagesSquare />
+          <MessagesSquare className="size-6" />
           Chat
         </TabsTrigger>
         <TabsTrigger value="docs">
-          <FileSearch2 />
+          <FileSearch2 className="size-6" />
           Documents
         </TabsTrigger>
         <TabsTrigger value="notes">
-          <NotebookPen />
+          <NotebookPen className="size-6" />
           Notes
         </TabsTrigger>
         <TabsTrigger value="npc">
-          <UserSearch />
+          <UserSearch className="size-6" />
           Contacts
         </TabsTrigger>
         <TabsTrigger value="sheet">
-          <FileUser />
+          <FileUser className="size-6" />
           Mon personnage
         </TabsTrigger>
         <TabsTrigger value="sessions">
-          <Calendar />
+          <Calendar className="size-6" />
           Sessions
         </TabsTrigger>
       </TabsList>
