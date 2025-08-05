@@ -276,3 +276,43 @@ export const GET_NOTES = gql`
     }
   }
 `;
+
+export const GET_CAMPAIGN_AND_NOTES = gql`
+  query getCampaignAndNotes($campaignId: String!) {
+    getCampaign(id: $campaignId) {
+      id
+      bannerUrl
+      title
+      storyteller {
+        id
+        name
+      }
+      scenarios {
+        id
+        title
+      }
+      players {
+        id
+        name
+      }
+      messages {
+        id
+        channel
+        content
+        createdAt
+      }
+    }
+    getNotes(campaignId: $campaignId) {
+      id
+      content
+    }
+  }
+`;
+
+export const EDIT_PLAN = gql`
+  mutation EditNotes($noteId: String!, $content: String!) {
+    editNotes(noteId: $noteId, content: $content) {
+      id
+    }
+  }
+`;

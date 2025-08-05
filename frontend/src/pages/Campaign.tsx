@@ -10,28 +10,23 @@ import {
   UserSearch,
 } from "lucide-react";
 import { useParams } from "react-router";
-import {
-  useGetCampaignQuery,
-  useGetNotesQuery,
-} from "@/lib/graphql/generated/graphql-types";
-import { List } from "@/molecules/List";
+import { useGetCampaignAndNotesQuery } from "@/lib/graphql/generated/graphql-types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/molecules/Tabs";
-import MessageCard from "@/organisms/message/MessageCard";
+import { CampaignTabChat } from "@/organisms/campaign/tabs/CampaignTabChat";
+import { CampaignTabHome } from "@/organisms/campaign/tabs/CampaignTabHome";
+import { CampaignTabNotes } from "@/organisms/campaign/tabs/CampaignTabNotes";
 
 export default function Campaign() {
   const isSmallDevice = useMediaQuery("(width < 48rem /* 768px */)");
   const { id } = useParams();
   if (!id) return <p>Error: missing id !</p>;
-  const {
-    data: dataNotes,
-    loading: loadingNotes,
-    error: errorNotes,
-  } = useGetNotesQuery({ variables: { campaignId: id } });
-  const { data, loading, error } = useGetCampaignQuery({ variables: { id } });
-  if (errorNotes || error) return <p>Error: fetch failed !</p>;
-  if (loadingNotes || loading) return <p>Loading: please wait...</p>;
+  const { data, loading, error } = useGetCampaignAndNotesQuery({
+    variables: { campaignId: id },
+  });
   const campaign = data?.getCampaign;
-  const notes = dataNotes?.getNotes;
+  const notes = data?.getNotes;
+  if (error) return <p>Error: fetch failed !</p>;
+  if (loading) return <p>Loading: please wait...</p>;
   if (!campaign || !notes) return <p>Error: missing data !</p>;
 
   return (
@@ -66,23 +61,14 @@ export default function Campaign() {
           Sessions
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="home">TODO: General</TabsContent>
+      <TabsContent value="home">
+        <CampaignTabHome campaign={campaign} />
+      </TabsContent>
       <TabsContent value="chat">
-        <List
-          title="Tous les messages"
-          data={campaign.messages}
-          render={(message) => (
-            <MessageCard
-              content={message.content}
-              createdAt={message.createdAt}
-            />
-          )}
-        />
+        <CampaignTabChat campaign={campaign} />
       </TabsContent>
       <TabsContent value="notes">
-        <h1 className="font-title text-white">Mes Notes de campagne</h1>
-        <p contentEditable>{notes.content}</p>
-        {/* TODO: Add debounce + call EditNote */}
+        <CampaignTabNotes notes={notes} />
       </TabsContent>
       <TabsContent value="docs">TODO: Documents</TabsContent>
       <TabsContent value="npc">TODO: Contacts</TabsContent>

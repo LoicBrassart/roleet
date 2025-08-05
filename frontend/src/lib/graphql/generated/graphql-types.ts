@@ -495,6 +495,21 @@ export type GetNotesQueryVariables = Exact<{
 
 export type GetNotesQuery = { __typename?: 'Query', getNotes: { __typename?: 'Note', id: string, content: string } };
 
+export type GetCampaignAndNotesQueryVariables = Exact<{
+  campaignId: Scalars['String']['input'];
+}>;
+
+
+export type GetCampaignAndNotesQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }> } | null, getNotes: { __typename?: 'Note', id: string, content: string } };
+
+export type EditNotesMutationVariables = Exact<{
+  noteId: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type EditNotesMutation = { __typename?: 'Mutation', editNotes: { __typename?: 'Note', id: string } };
+
 
 export const SignupDocument = gql`
     mutation signup($data: NewUserInput!) {
@@ -1389,3 +1404,101 @@ export type GetNotesQueryHookResult = ReturnType<typeof useGetNotesQuery>;
 export type GetNotesLazyQueryHookResult = ReturnType<typeof useGetNotesLazyQuery>;
 export type GetNotesSuspenseQueryHookResult = ReturnType<typeof useGetNotesSuspenseQuery>;
 export type GetNotesQueryResult = Apollo.QueryResult<GetNotesQuery, GetNotesQueryVariables>;
+export const GetCampaignAndNotesDocument = gql`
+    query getCampaignAndNotes($campaignId: String!) {
+  getCampaign(id: $campaignId) {
+    id
+    bannerUrl
+    title
+    storyteller {
+      id
+      name
+    }
+    scenarios {
+      id
+      title
+    }
+    players {
+      id
+      name
+    }
+    messages {
+      id
+      channel
+      content
+      createdAt
+    }
+  }
+  getNotes(campaignId: $campaignId) {
+    id
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetCampaignAndNotesQuery__
+ *
+ * To run a query within a React component, call `useGetCampaignAndNotesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCampaignAndNotesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCampaignAndNotesQuery({
+ *   variables: {
+ *      campaignId: // value for 'campaignId'
+ *   },
+ * });
+ */
+export function useGetCampaignAndNotesQuery(baseOptions: Apollo.QueryHookOptions<GetCampaignAndNotesQuery, GetCampaignAndNotesQueryVariables> & ({ variables: GetCampaignAndNotesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCampaignAndNotesQuery, GetCampaignAndNotesQueryVariables>(GetCampaignAndNotesDocument, options);
+      }
+export function useGetCampaignAndNotesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCampaignAndNotesQuery, GetCampaignAndNotesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCampaignAndNotesQuery, GetCampaignAndNotesQueryVariables>(GetCampaignAndNotesDocument, options);
+        }
+export function useGetCampaignAndNotesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCampaignAndNotesQuery, GetCampaignAndNotesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCampaignAndNotesQuery, GetCampaignAndNotesQueryVariables>(GetCampaignAndNotesDocument, options);
+        }
+export type GetCampaignAndNotesQueryHookResult = ReturnType<typeof useGetCampaignAndNotesQuery>;
+export type GetCampaignAndNotesLazyQueryHookResult = ReturnType<typeof useGetCampaignAndNotesLazyQuery>;
+export type GetCampaignAndNotesSuspenseQueryHookResult = ReturnType<typeof useGetCampaignAndNotesSuspenseQuery>;
+export type GetCampaignAndNotesQueryResult = Apollo.QueryResult<GetCampaignAndNotesQuery, GetCampaignAndNotesQueryVariables>;
+export const EditNotesDocument = gql`
+    mutation EditNotes($noteId: String!, $content: String!) {
+  editNotes(noteId: $noteId, content: $content) {
+    id
+  }
+}
+    `;
+export type EditNotesMutationFn = Apollo.MutationFunction<EditNotesMutation, EditNotesMutationVariables>;
+
+/**
+ * __useEditNotesMutation__
+ *
+ * To run a mutation, you first call `useEditNotesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditNotesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editNotesMutation, { data, loading, error }] = useEditNotesMutation({
+ *   variables: {
+ *      noteId: // value for 'noteId'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useEditNotesMutation(baseOptions?: Apollo.MutationHookOptions<EditNotesMutation, EditNotesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditNotesMutation, EditNotesMutationVariables>(EditNotesDocument, options);
+      }
+export type EditNotesMutationHookResult = ReturnType<typeof useEditNotesMutation>;
+export type EditNotesMutationResult = Apollo.MutationResult<EditNotesMutation>;
+export type EditNotesMutationOptions = Apollo.BaseMutationOptions<EditNotesMutation, EditNotesMutationVariables>;
