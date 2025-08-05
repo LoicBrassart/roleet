@@ -6,6 +6,7 @@ import { Note } from "./Note";
 import { Plan } from "./Plan";
 import { PointOfInterest } from "./PointOfInterest";
 import { Scenario } from "./Scenario";
+import { Session } from "./Session";
 import { User } from "./User";
 
 // biome-ignore lint/complexity/noBannedTypes: Using same type as TypeORM library
@@ -18,5 +19,6 @@ const entities: MixedList<Function> = [
   Scenario,
   User,
   Note,
+  Session,
 ];
 export default entities;

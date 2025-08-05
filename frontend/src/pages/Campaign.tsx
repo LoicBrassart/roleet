@@ -73,7 +73,14 @@ export default function Campaign() {
       <TabsContent value="docs">TODO: Documents</TabsContent>
       <TabsContent value="npc">TODO: Contacts</TabsContent>
       <TabsContent value="sheet">TODO: Mon personnage</TabsContent>
-      <TabsContent value="sessions">TODO: Sessions</TabsContent>
+      <TabsContent value="sessions">
+        <h1 className="font-title text-white">Sessions</h1>
+        <ul>
+          {campaign.sessions.map((session) => (
+            <li key={session.id}>{session.programmedAt}</li>
+          ))}
+        </ul>
+      </TabsContent>
     </Tabs>
   );
 }

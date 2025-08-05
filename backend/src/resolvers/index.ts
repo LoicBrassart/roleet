@@ -6,6 +6,7 @@ import NoteResolver from "./NoteResolver";
 import PlanResolver from "./PlanResolver";
 import PointOfInterestResolver from "./PointOfInterestResolver";
 import ScenarioResolver from "./ScenarioResolver";
+import SessionResolver from "./SessionResolver";
 import StatsResolver from "./StatsResolver";
 import UserResolver from "./UserResolver";
 
@@ -20,5 +21,6 @@ const resolvers: NonEmptyArray<Function> = [
   StatsResolver,
   UserResolver,
   NoteResolver,
+  SessionResolver,
 ];
 export default resolvers;

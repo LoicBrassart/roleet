@@ -104,6 +104,7 @@ export const GET_MY_CAMPAIGNS = gql`
     getMyCampaigns {
       id
       bannerUrl
+      title
       storyteller {
         id
         name
@@ -116,7 +117,12 @@ export const GET_MY_CAMPAIGNS = gql`
         id
         name
       }
-      title
+      sessions {
+        id
+        location
+        programmedAt
+        summary
+      }
     }
   }
 `;
@@ -144,6 +150,12 @@ export const GET_CAMPAIGN = gql`
         channel
         content
         createdAt
+      }
+      sessions {
+        id
+        location
+        programmedAt
+        summary
       }
     }
   }
@@ -300,6 +312,12 @@ export const GET_CAMPAIGN_AND_NOTES = gql`
         channel
         content
         createdAt
+      }
+      sessions {
+        id
+        location
+        programmedAt
+        summary
       }
     }
     getNotes(campaignId: $campaignId) {

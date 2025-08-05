@@ -12,6 +12,7 @@ import {
 import { Message } from "./Message";
 import { Note } from "./Note";
 import { Scenario } from "./Scenario";
+import { Session } from "./Session";
 import { User } from "./User";
 
 @Entity()
@@ -56,7 +57,7 @@ export class Campaign extends BaseEntity {
   @JoinTable({ name: "campaignPlayers" })
   players!: User[];
 
-  @Field((_type) => [Scenario], { nullable: false })
+  @Field(() => [Scenario], { nullable: false })
   @ManyToMany(
     (_type) => Scenario,
     (scenario) => scenario.campaigns,
@@ -82,11 +83,15 @@ export class Campaign extends BaseEntity {
   )
   notes: Note[];
 
-  /* Sessions
-  - date
-  - campaignId
-  - resume
-  */
+  @Field(() => [Session])
+  @OneToMany(
+    () => Session,
+    (session) => session.campaign,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  sessions: Session[];
 
   /* Documents - plus tard ?
   - title

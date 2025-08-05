@@ -29,6 +29,7 @@ export type Campaign = {
   owner: User;
   players: Array<User>;
   scenarios: Array<Scenario>;
+  sessions: Array<Session>;
   storyteller: User;
   title: Scalars['String']['output'];
 };
@@ -62,11 +63,14 @@ export type Mutation = {
   createPlan: Plan;
   createPointOfInterest: PointOfInterest;
   createScenario: Scenario;
+  createSession: Session;
   deleteFlashcard: Scalars['Boolean']['output'];
   deletePlan: Scalars['Boolean']['output'];
   deletePointOfInterest: Scalars['Boolean']['output'];
   deleteScenario: Scalars['Boolean']['output'];
+  deleteSession: Scalars['Boolean']['output'];
   editNotes: Note;
+  editSession: Session;
   login: Scalars['JSONObject']['output'];
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
@@ -107,6 +111,12 @@ export type MutationCreateScenarioArgs = {
 };
 
 
+export type MutationCreateSessionArgs = {
+  campaignId: Scalars['String']['input'];
+  data: NewSessionInput;
+};
+
+
 export type MutationDeleteFlashcardArgs = {
   id: Scalars['String']['input'];
 };
@@ -127,9 +137,20 @@ export type MutationDeleteScenarioArgs = {
 };
 
 
+export type MutationDeleteSessionArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationEditNotesArgs = {
   content: Scalars['String']['input'];
   noteId: Scalars['String']['input'];
+};
+
+
+export type MutationEditSessionArgs = {
+  data: SessionInput;
+  sessionId: Scalars['String']['input'];
 };
 
 
@@ -206,6 +227,12 @@ export type NewScenarioInput = {
   fullStory: Scalars['String']['input'];
   teaser: Scalars['String']['input'];
   title: Scalars['String']['input'];
+};
+
+export type NewSessionInput = {
+  location: Scalars['String']['input'];
+  programmedAt: Scalars['Float']['input'];
+  summary: Scalars['String']['input'];
 };
 
 export type NewUserInput = {
@@ -319,6 +346,21 @@ export type ScenarioInput = {
   title: Scalars['String']['input'];
 };
 
+export type Session = {
+  __typename?: 'Session';
+  campaign: Campaign;
+  id: Scalars['ID']['output'];
+  location: Scalars['String']['output'];
+  programmedAt: Scalars['Float']['output'];
+  summary: Scalars['String']['output'];
+};
+
+export type SessionInput = {
+  location: Scalars['String']['input'];
+  programmedAt: Scalars['Float']['input'];
+  summary: Scalars['String']['input'];
+};
+
 export type Stats = {
   __typename?: 'Stats';
   campaigns: Scalars['Float']['output'];
@@ -410,14 +452,14 @@ export type DeleteScenarioMutation = { __typename?: 'Mutation', deleteScenario: 
 export type GetMyCampaignsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMyCampaignsQuery = { __typename?: 'Query', getMyCampaigns: Array<{ __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }> }> };
+export type GetMyCampaignsQuery = { __typename?: 'Query', getMyCampaigns: Array<{ __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, sessions: Array<{ __typename?: 'Session', id: string, location: string, programmedAt: number, summary: string }> }> };
 
 export type GetCampaignQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetCampaignQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }> } | null };
+export type GetCampaignQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }>, sessions: Array<{ __typename?: 'Session', id: string, location: string, programmedAt: number, summary: string }> } | null };
 
 export type CreateCampaignMutationVariables = Exact<{
   data: NewCampaignInput;
@@ -500,7 +542,7 @@ export type GetCampaignAndNotesQueryVariables = Exact<{
 }>;
 
 
-export type GetCampaignAndNotesQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }> } | null, getNotes: { __typename?: 'Note', id: string, content: string } };
+export type GetCampaignAndNotesQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }>, sessions: Array<{ __typename?: 'Session', id: string, location: string, programmedAt: number, summary: string }> } | null, getNotes: { __typename?: 'Note', id: string, content: string } };
 
 export type EditNotesMutationVariables = Exact<{
   noteId: Scalars['String']['input'];
@@ -864,6 +906,7 @@ export const GetMyCampaignsDocument = gql`
   getMyCampaigns {
     id
     bannerUrl
+    title
     storyteller {
       id
       name
@@ -876,7 +919,12 @@ export const GetMyCampaignsDocument = gql`
       id
       name
     }
-    title
+    sessions {
+      id
+      location
+      programmedAt
+      summary
+    }
   }
 }
     `;
@@ -935,6 +983,12 @@ export const GetCampaignDocument = gql`
       channel
       content
       createdAt
+    }
+    sessions {
+      id
+      location
+      programmedAt
+      summary
     }
   }
 }
@@ -1427,6 +1481,12 @@ export const GetCampaignAndNotesDocument = gql`
       channel
       content
       createdAt
+    }
+    sessions {
+      id
+      location
+      programmedAt
+      summary
     }
   }
   getNotes(campaignId: $campaignId) {
