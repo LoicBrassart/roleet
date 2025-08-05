@@ -2,6 +2,7 @@ import type { MixedList } from "typeorm";
 import { Campaign } from "./Campaign";
 import { Flashcard } from "./FlashCard";
 import { Message } from "./Message";
+import { Note } from "./Note";
 import { Plan } from "./Plan";
 import { PointOfInterest } from "./PointOfInterest";
 import { Scenario } from "./Scenario";
@@ -16,5 +17,6 @@ const entities: MixedList<Function> = [
   PointOfInterest,
   Scenario,
   User,
+  Note,
 ];
 export default entities;

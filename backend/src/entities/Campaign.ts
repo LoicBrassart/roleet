@@ -10,6 +10,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Message } from "./Message";
+import { Note } from "./Note";
 import { Scenario } from "./Scenario";
 import { User } from "./User";
 
@@ -70,4 +71,30 @@ export class Campaign extends BaseEntity {
     { cascade: true },
   )
   messages!: Message[];
+
+  @Field(() => [Note])
+  @OneToMany(
+    () => Note,
+    (note) => note.campaign,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  notes: Note[];
+
+  /* Sessions
+  - date
+  - campaignId
+  - resume
+  */
+
+  /* Documents - plus tard ?
+  - title
+  - url
+  - visibility
+  */
+  /* Contacts - plus tard ?
+   */
+  /* Sheets - plus tard
+   */
 }

@@ -25,6 +25,7 @@ export type Campaign = {
   bannerUrl: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   messages: Array<Message>;
+  notes: Array<Note>;
   owner: User;
   players: Array<User>;
   scenarios: Array<Scenario>;
@@ -65,6 +66,7 @@ export type Mutation = {
   deletePlan: Scalars['Boolean']['output'];
   deletePointOfInterest: Scalars['Boolean']['output'];
   deleteScenario: Scalars['Boolean']['output'];
+  editNotes: Note;
   login: Scalars['JSONObject']['output'];
   logout: Scalars['String']['output'];
   signup: Scalars['String']['output'];
@@ -122,6 +124,12 @@ export type MutationDeletePointOfInterestArgs = {
 
 export type MutationDeleteScenarioArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type MutationEditNotesArgs = {
+  content: Scalars['String']['input'];
+  noteId: Scalars['String']['input'];
 };
 
 
@@ -206,6 +214,14 @@ export type NewUserInput = {
   password: Scalars['String']['input'];
 };
 
+export type Note = {
+  __typename?: 'Note';
+  campaign: Campaign;
+  content: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  owner: User;
+};
+
 export type Plan = {
   __typename?: 'Plan';
   description: Scalars['String']['output'];
@@ -248,6 +264,7 @@ export type Query = {
   getCampaign?: Maybe<Campaign>;
   getMyCampaigns: Array<Campaign>;
   getMyScenarios: Array<Scenario>;
+  getNotes: Note;
   getPlan: Plan;
   getScenario: Scenario;
   getStats: Stats;
@@ -256,6 +273,11 @@ export type Query = {
 
 export type QueryGetCampaignArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetNotesArgs = {
+  campaignId: Scalars['String']['input'];
 };
 
 
@@ -317,6 +339,7 @@ export type User = {
   ownedCampaigns: Array<Campaign>;
   ownedFlashcards: Array<Flashcard>;
   ownedMessages: Array<Message>;
+  ownedNotes: Array<Note>;
   ownedPlans: Array<Plan>;
   ownedPointsOfInterest: Array<PointOfInterest>;
   ownedScenarios: Array<Scenario>;
@@ -464,6 +487,13 @@ export type GetStatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetStatsQuery = { __typename?: 'Query', getStats: { __typename?: 'Stats', campaigns: number, flashcards: number, plans: number, scenarios: number, users: number } };
+
+export type GetNotesQueryVariables = Exact<{
+  campaignId: Scalars['String']['input'];
+}>;
+
+
+export type GetNotesQuery = { __typename?: 'Query', getNotes: { __typename?: 'Note', id: string, content: string } };
 
 
 export const SignupDocument = gql`
@@ -1318,3 +1348,44 @@ export type GetStatsQueryHookResult = ReturnType<typeof useGetStatsQuery>;
 export type GetStatsLazyQueryHookResult = ReturnType<typeof useGetStatsLazyQuery>;
 export type GetStatsSuspenseQueryHookResult = ReturnType<typeof useGetStatsSuspenseQuery>;
 export type GetStatsQueryResult = Apollo.QueryResult<GetStatsQuery, GetStatsQueryVariables>;
+export const GetNotesDocument = gql`
+    query getNotes($campaignId: String!) {
+  getNotes(campaignId: $campaignId) {
+    id
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetNotesQuery__
+ *
+ * To run a query within a React component, call `useGetNotesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNotesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNotesQuery({
+ *   variables: {
+ *      campaignId: // value for 'campaignId'
+ *   },
+ * });
+ */
+export function useGetNotesQuery(baseOptions: Apollo.QueryHookOptions<GetNotesQuery, GetNotesQueryVariables> & ({ variables: GetNotesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNotesQuery, GetNotesQueryVariables>(GetNotesDocument, options);
+      }
+export function useGetNotesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNotesQuery, GetNotesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNotesQuery, GetNotesQueryVariables>(GetNotesDocument, options);
+        }
+export function useGetNotesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetNotesQuery, GetNotesQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNotesQuery, GetNotesQueryVariables>(GetNotesDocument, options);
+        }
+export type GetNotesQueryHookResult = ReturnType<typeof useGetNotesQuery>;
+export type GetNotesLazyQueryHookResult = ReturnType<typeof useGetNotesLazyQuery>;
+export type GetNotesSuspenseQueryHookResult = ReturnType<typeof useGetNotesSuspenseQuery>;
+export type GetNotesQueryResult = Apollo.QueryResult<GetNotesQuery, GetNotesQueryVariables>;

@@ -2,6 +2,7 @@ import type { NonEmptyArray } from "type-graphql";
 import CampaignResolver from "./CampaignResolver";
 import FlashcardResolver from "./FlashcardResolver";
 import MessageResolver from "./MessageResolver";
+import NoteResolver from "./NoteResolver";
 import PlanResolver from "./PlanResolver";
 import PointOfInterestResolver from "./PointOfInterestResolver";
 import ScenarioResolver from "./ScenarioResolver";
@@ -18,5 +19,6 @@ const resolvers: NonEmptyArray<Function> = [
   ScenarioResolver,
   StatsResolver,
   UserResolver,
+  NoteResolver,
 ];
 export default resolvers;

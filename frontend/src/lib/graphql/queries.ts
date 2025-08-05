@@ -267,3 +267,12 @@ export const GET_STATS = gql`
     }
   }
 `;
+
+export const GET_NOTES = gql`
+  query getNotes($campaignId: String!) {
+    getNotes(campaignId: $campaignId) {
+      id
+      content
+    }
+  }
+`;

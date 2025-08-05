@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useHookAtTopLevel: Calling my api without the needed variable is useless, I'd rather this component's perf slow down a bit */
 import { useMediaQuery } from "@uidotdev/usehooks";
 import {
   Calendar,
@@ -9,7 +10,10 @@ import {
   UserSearch,
 } from "lucide-react";
 import { useParams } from "react-router";
-import { useGetCampaignQuery } from "@/lib/graphql/generated/graphql-types";
+import {
+  useGetCampaignQuery,
+  useGetNotesQuery,
+} from "@/lib/graphql/generated/graphql-types";
 import { List } from "@/molecules/List";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/molecules/Tabs";
 import MessageCard from "@/organisms/message/MessageCard";
@@ -18,12 +22,17 @@ export default function Campaign() {
   const isSmallDevice = useMediaQuery("(width < 48rem /* 768px */)");
   const { id } = useParams();
   if (!id) return <p>Error: missing id !</p>;
-  // biome-ignore lint/correctness/useHookAtTopLevel: Calling my api without the needed variable is useless, I'd rather this component's perf slow down a bit
+  const {
+    data: dataNotes,
+    loading: loadingNotes,
+    error: errorNotes,
+  } = useGetNotesQuery({ variables: { campaignId: id } });
   const { data, loading, error } = useGetCampaignQuery({ variables: { id } });
-  if (error) return <p>Error: fetch failed !</p>;
-  if (loading) return <p>Loading: please wait...</p>;
+  if (errorNotes || error) return <p>Error: fetch failed !</p>;
+  if (loadingNotes || loading) return <p>Loading: please wait...</p>;
   const campaign = data?.getCampaign;
-  if (!campaign) return <p>Error: missing data !</p>;
+  const notes = dataNotes?.getNotes;
+  if (!campaign || !notes) return <p>Error: missing data !</p>;
 
   return (
     <Tabs orientation={isSmallDevice ? "vertical" : "horizontal"}>
@@ -70,8 +79,12 @@ export default function Campaign() {
           )}
         />
       </TabsContent>
+      <TabsContent value="notes">
+        <h1 className="font-title text-white">Mes Notes de campagne</h1>
+        <p contentEditable>{notes.content}</p>
+        {/* TODO: Add debounce + call EditNote */}
+      </TabsContent>
       <TabsContent value="docs">TODO: Documents</TabsContent>
-      <TabsContent value="notes">TODO: Notes</TabsContent>
       <TabsContent value="npc">TODO: Contacts</TabsContent>
       <TabsContent value="sheet">TODO: Mon personnage</TabsContent>
       <TabsContent value="sessions">TODO: Sessions</TabsContent>
