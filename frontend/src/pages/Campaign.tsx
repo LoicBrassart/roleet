@@ -30,7 +30,10 @@ export default function Campaign() {
   if (!campaign || !notes) return <p>Error: missing data !</p>;
 
   return (
-    <Tabs orientation={isSmallDevice ? "vertical" : "horizontal"}>
+    <Tabs
+      orientation={isSmallDevice ? "vertical" : "horizontal"}
+      defaultValue="home"
+    >
       <TabsList className="max-md:fixed max-md:right-0 max-md:translate-x-30">
         <TabsTrigger value="home">
           <House className="size-6" />

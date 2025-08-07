@@ -21,13 +21,15 @@ export function useTabs() {
 export function Tabs({
   children,
   orientation,
+  defaultValue,
 }: {
   children: React.ReactNode;
   orientation?: "horizontal" | "vertical";
+  defaultValue: string;
 }) {
   return (
     <TabsContext.Provider value={{ orientation }}>
-      <TabsPrimitive>{children}</TabsPrimitive>
+      <TabsPrimitive defaultValue={defaultValue}>{children}</TabsPrimitive>
     </TabsContext.Provider>
   );
 }
