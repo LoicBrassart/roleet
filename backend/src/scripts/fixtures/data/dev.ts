@@ -906,6 +906,7 @@ const flashcards = [
 ];
 const users = [
   {
+    id: "9c6af658-c040-4c3d-8cd5-3e1c3b8db395",
     mail: "vcode@spamland.com",
     name: "ValhallaCode",
     hashedPassword:
@@ -916,6 +917,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "99d3b0b3-85e1-4553-8715-445d875171e7",
     mail: "lily@spamland.com",
     name: "Lily",
     hashedPassword:
@@ -926,6 +928,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "b1b3b9b3-85e1-4553-8715-445d875171e7",
     mail: "shyz@spamland.com",
     name: "Shyzen",
     hashedPassword:
@@ -936,6 +939,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "e0bd8ef9-1ec1-4cb1-beb4-d81b9aae7c57",
     mail: "missy@spamland.com",
     name: "Missy",
     hashedPassword:
@@ -946,6 +950,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "236a5f47-cf91-4eb7-8e4b-db60bcaa9537",
     mail: "lunacraft@spamland.com",
     name: "LunaCraft",
     hashedPassword:
