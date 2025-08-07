@@ -18,7 +18,7 @@ class NewSessionInput implements Partial<Session> {
   location: string;
 
   @Field()
-  programmedAt: number;
+  programmedAt: Date;
 }
 
 @InputType()
@@ -30,7 +30,7 @@ class SessionInput implements Partial<Session> {
   location: string;
 
   @Field()
-  programmedAt: number;
+  programmedAt: Date;
 }
 
 @Resolver(Session)

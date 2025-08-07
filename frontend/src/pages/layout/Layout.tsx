@@ -1,14 +1,16 @@
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { useLogoutMutation } from "@/lib/graphql/generated/graphql-types";
 import { useLogout } from "@/lib/zustand/userStore";
 
 export default function Layout() {
   const [logout] = useLogoutMutation();
   const logoutFromStore = useLogout();
+  const navigate = useNavigate();
 
   const hLogout = () => {
     logout();
     logoutFromStore();
+    navigate("/");
   };
 
   return (

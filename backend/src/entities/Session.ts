@@ -35,5 +35,5 @@ export class Session extends BaseEntity {
 
   @Field()
   @Column()
-  programmedAt: number;
+  programmedAt: Date;
 }

@@ -12,6 +12,7 @@ declare namespace Entities {
 
   type Campaign = NonNullable<GetCampaignQuery["getCampaign"]>;
   type Message = Campaign["messages"][number];
+  type Session = Campaign["sessions"][number];
   type Notes = GetNotesQuery["getNotes"];
 
   //TODO: Ce serait bien mais je vois pas comment l'avoir - Si porbleme de typage:
