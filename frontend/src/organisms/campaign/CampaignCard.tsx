@@ -18,7 +18,7 @@ export default function CampaignCard({
     <Card
       title={title}
       bgImage={`/files/${bannerUrl}`}
-      contentClassName="space-y-8"
+      contentSpacing="lg" /* A virer, juste un example */
       height="32"
     >
       <div>Storyteller: {storyteller}</div>

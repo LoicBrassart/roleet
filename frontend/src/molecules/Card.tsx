@@ -46,9 +46,9 @@ const contentVariants = cva("", {
     /** Content spacing */
     contentSpacing: {
       none: "",
-      sm: "gap-4",
-      md: "gap-6",
-      lg: "gap-8",
+      sm: "[&>div>div>div]:space-y-1",
+      md: "[&>div>div>div]:space-y-2",
+      lg: "[&>div>div>div]:space-y-4",
     },
   },
   defaultVariants: {
@@ -84,6 +84,8 @@ type Props = Omit<React.ComponentProps<typeof ShadCard>, "title"> &
     bgImage?: string;
     /** Content className */
     contentClassName?: string;
+    /** Content spacing */
+    contentSpacing?: VariantProps<typeof contentVariants>["contentSpacing"];
   };
 
 export function Card({
@@ -118,11 +120,12 @@ export function Card({
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent
-        className={cn(contentVariants({ contentVariant, contentSpacing }))}
+        className={cn(
+          contentVariants({ contentVariant, contentSpacing }),
+          contentClassName,
+        )}
       >
-        <ScrollArea
-          className={cn(scrollAreaVariants({ height }), contentClassName)}
-        >
+        <ScrollArea className={cn(scrollAreaVariants({ height }))}>
           {children}
         </ScrollArea>
       </CardContent>
