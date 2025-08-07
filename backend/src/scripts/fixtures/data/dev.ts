@@ -1012,4 +1012,29 @@ const messages = [
     campaignIndex: 0,
   },
 ];
-export { campaigns, flashcards, messages, plans, pois, scenarios, users };
+const notes = [
+  {
+    campaignIndex: 0,
+    ownerIndex: 0,
+    content: "Lorem ipsum",
+  },
+];
+const sessions = [
+  {
+    campaignIndex: 0,
+    summary: "Lorem ipsum",
+    location: "Chez le GM",
+    programmedAt: new Date(),
+  },
+];
+export {
+  campaigns,
+  flashcards,
+  messages,
+  plans,
+  pois,
+  scenarios,
+  users,
+  notes,
+  sessions,
+};
