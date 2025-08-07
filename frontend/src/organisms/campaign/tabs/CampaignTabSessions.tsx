@@ -10,12 +10,7 @@ export function CampaignTabSessions({ campaign }: Props) {
     <List
       data={campaign.sessions}
       title="Sessions"
-      render={(session) => (
-        <SessionCard
-          summary={session.summary}
-          programmedAt={session.programmedAt}
-        />
-      )}
+      render={(session) => <SessionCard session={session} />}
     />
   );
 }

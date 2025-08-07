@@ -18,7 +18,7 @@ export default function CampaignCard({
     <Card
       title={title}
       bgImage={`/files/${bannerUrl}`}
-      contentClassName="space-y-4"
+      contentClassName="space-y-8"
       height="32"
     >
       <div>Storyteller: {storyteller}</div>

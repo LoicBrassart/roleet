@@ -1,15 +1,18 @@
-import { toRelative } from "@/lib/helpers/dateFormatter";
+import { toDateTime, toRelative } from "@/lib/helpers/dateFormatter";
 import { Card } from "@/molecules/Card";
 import type { Entities } from "@/types/entities";
 
 interface SessionCardProps {
-  summary: Entities.Session["summary"];
-  programmedAt: Entities.Session["programmedAt"];
+  session: Entities.Session;
 }
-
-export default function SessionCard({
-  summary,
-  programmedAt,
-}: SessionCardProps) {
-  return <Card title={toRelative(programmedAt)}>{summary}</Card>;
+export default function SessionCard({ session }: SessionCardProps) {
+  return (
+    <Card
+      title={`${toDateTime(session.programmedAt).replace(" ", " - ")}`}
+      description={`${toRelative(session.programmedAt)} - ${session.location}`}
+      height="32"
+    >
+      {session.summary}
+    </Card>
+  );
 }

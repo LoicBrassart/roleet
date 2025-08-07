@@ -118,12 +118,11 @@ export function Card({
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent
-        className={cn(
-          contentVariants({ contentVariant, contentSpacing }),
-          contentClassName,
-        )}
+        className={cn(contentVariants({ contentVariant, contentSpacing }))}
       >
-        <ScrollArea className={scrollAreaVariants({ height })}>
+        <ScrollArea
+          className={cn(scrollAreaVariants({ height }), contentClassName)}
+        >
           {children}
         </ScrollArea>
       </CardContent>

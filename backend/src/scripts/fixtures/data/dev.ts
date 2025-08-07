@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { Role } from "../../../entities/User";
 
 const scenarios = [
@@ -1022,9 +1023,29 @@ const notes = [
 const sessions = [
   {
     campaignIndex: 0,
-    summary: "Lorem ipsum",
+    summary:
+      "Le groupe reçoit une mission de la part du forgeron pour retrouver sa fille. Il demande expressement aux joueurs de ne rien révéler à sa femme.",
     location: "Chez le GM",
-    programmedAt: new Date(),
+    programmedAt: DateTime.now().minus({ week: 2 }),
+  },
+  {
+    campaignIndex: 0,
+    summary:
+      "Les joueurs suivent la trace de gobelins sui ont été aperçus dans la région et trouvent une caverne un peu trop lourdement gardée",
+    location: "Chez le GM",
+    programmedAt: DateTime.now().minus({ day: 1 }),
+  },
+  {
+    campaignIndex: 0,
+    summary: "",
+    location: "Chez le GM",
+    programmedAt: DateTime.now(),
+  },
+  {
+    campaignIndex: 0,
+    summary: "",
+    location: "Chez le GM",
+    programmedAt: DateTime.now().plus({ day: 2 }),
   },
 ];
 export {
