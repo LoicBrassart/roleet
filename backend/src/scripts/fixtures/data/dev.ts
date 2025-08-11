@@ -3,6 +3,7 @@ import { Role } from "../../../entities/User";
 
 const scenarios = [
   {
+    id: "cea0df48-769a-4340-9b8b-c57f58eebb8d",
     title: "A la chasse aux gobs",
     ownerIndex: 0,
     teaser:
@@ -171,6 +172,7 @@ Si Lanéa a été libérée sans être blessée, ajoutez 50 PX par personnage. S
     credits: "Honteusement pompé sur www.aidedd.org",
   },
   {
+    id: "1801481c-f17d-45f1-8a1a-6188bbcf0910",
     title: "L'Oeil de Gruumsh",
     ownerIndex: 0,
     teaser:
@@ -379,6 +381,7 @@ S'ils ont bien rendu l'œil à Kerog, ajoutez 50 PX par personnage. S'ils ont ef
 ];
 const plans = [
   {
+    id: "f5a052d5-336a-41ab-8782-39e1bbb2df47",
     title: "L'antre des gobelins",
     ownerIndex: 0,
     description: "",
@@ -386,6 +389,7 @@ const plans = [
     scenarioIndex: 0,
   },
   {
+    id: "2a29a5b2-f5f5-47af-8fba-4c86e0116c9c",
     title: "1er étage",
     ownerIndex: 0,
     description: "",
@@ -393,6 +397,7 @@ const plans = [
     scenarioIndex: 1,
   },
   {
+    id: "42a0aaa8-162f-4aba-bd65-dce73990c584",
     title: "Second étage",
     ownerIndex: 0,
     description: "",
@@ -400,6 +405,7 @@ const plans = [
     scenarioIndex: 1,
   },
   {
+    id: "6bf8eee6-6dff-4aea-92da-e1b16b82c522",
     title: "Rez de chaussée",
     ownerIndex: 0,
     description: "",
@@ -407,6 +413,7 @@ const plans = [
     scenarioIndex: 1,
   },
   {
+    id: "746087ee-9747-459a-9fd9-05ac8423cbc1",
     title: "Sous Sol",
     ownerIndex: 0,
     description: "",
@@ -416,6 +423,7 @@ const plans = [
 ];
 const pois = [
   {
+    id: "d5d84fca-6add-4964-8ef5-e011fb9f50ef",
     title: "L'entrée",
     ownerIndex: 0,
     planIndex: 0,
@@ -423,6 +431,7 @@ const pois = [
     description: `Deux gobelins sont censés y monter la garde, mais pour le moment… ils somnolent. Ils n'entendront pas si on crochète la serrure et seront surpris (donc n'agiront pas durant le premier round), de même pour une entrée violente et en force dans la pièce. Ils portent une armure de cuir et un cimeterre mais ont peu de chance d'avoir le temps de prendre leur bouclier (baisser leur CA de 2 dans ce cas). L'un possède 12 po, l'autre 16 pc. À partir de là, si tout se passe trop facilement pour les joueurs, vous pouvez ajouter quelques rencontres dans les couloirs avec un groupe de deux ou trois gobelins.`,
   },
   {
+    id: "4d899115-278a-47cb-86f6-49d0000d509c",
     title: "Le piège",
     ownerIndex: 0,
     planIndex: 0,
@@ -430,6 +439,7 @@ const pois = [
     description: `Au premier carrefour, le couloir qui file tout droit est piégé (emplacement marqué X). C'est une fosse simple, un trou creusé dans le sol et recouvert d'une large toile fixée sur les bords de la fosse, le tout camouflé avec de la terre et des débris. Un jet de Sagesse (Perception) DD 10 réussi permet de remarquer la fosse à temps. Dans le cas contraire, le premier personnage qui marche dessus tombe dans le trou profond de 3 mètres et subit 1d6 points de dégâts contondants.`,
   },
   {
+    id: "4475f025-658e-496f-83ed-119ea8d8cf8f",
     title: "La salle d'armes",
     ownerIndex: 0,
     planIndex: 0,
@@ -437,6 +447,7 @@ const pois = [
     description: `Il n'y a pas de lumière dans cette salle qui est peu utilisée. Cette grotte semble servir de râtelier. On y trouve adossées le long de la paroi un certain nombre d'armes qui ne sont pas d'une facture exceptionnelle : 1 fronde et 20 pierres, 4 javelines, 2 marteaux de guerre, 1 épée longue, 1 arbalète lourde et 10 carreaux, 3 morgensterns, ainsi qu'une cuirasse de taille humaine, une cotte de mailles de la taille d'un nain et 8 boucliers en bois. À droite, en contre bas, on observe une porte en bois entrouverte.`,
   },
   {
+    id: "ab391e78-f040-48dc-a2ac-339b84e16381",
     title: "L'entrepôt",
     ownerIndex: 0,
     planIndex: 0,
@@ -444,6 +455,7 @@ const pois = [
     description: `La porte de cette salle est fermée à clef, mais là encore la serrure est des plus sommaires. Réussir un jet de Dextérité DD 10 si le personnage possède des outils de voleur est suffisant pour la crocheter. L'intérieur de cette salle comporte des rouleaux de tissus, des poteries, une selle de cheval, des outils de paysans, mais rien de grande valeur. Sur chacun des quatre piliers en bois est accrochée une torche, mais aucune n'est allumée. Cette salle sert en fait à entasser le résultat des différents vols effectués par la tribu.`,
   },
   {
+    id: "0557c8cf-67df-42bd-9540-ef250ec9f8ef",
     title: "La salle de torture",
     ownerIndex: 0,
     planIndex: 0,
@@ -451,6 +463,7 @@ const pois = [
     description: `Ici aussi, des torches sont accrochées aux murs, mais aucune n'est allumée. Il y a ici un grand nombre d'instruments de torture et notamment un chevalet sur lequel a pris place un personnage que certains d'entre vous connaissent, le halfelin Gandelme le Dextre, qui était venu rendre visite à Fial à son frère Petit-Pinpin la semaine dernière ! D'après les marques qu'ils portent, le petit homme a visiblement été torturé. Gandelme est épuisé, affamé et déshydraté. On ne lui a rien donné à boire ni à manger depuis sa capture. Il est si faible (0 pv et épuisement niveau 4) qu'il ne peut pas marcher et encore moins combattre. Un sort de soins lui redonnera des points de vie et lui permettra de marcher, mais ne réduira pas ses niveaux d'épuisement. Il insistera pour que l'on retrouve son équipement. Celui-ci se trouve dans la chambre du chef, salle 17, mais il ne le sait pas, bien entendu.`,
   },
   {
+    id: "da599cb2-10b4-4224-97b8-1aea476f0899",
     title: "La réserve de nourriture",
     ownerIndex: 0,
     planIndex: 0,
@@ -459,6 +472,7 @@ const pois = [
       "La double porte donne sur vaste pièce sans lumière qui est en grande partie vide. Dans la partie sud on trouve toutefois un monceau de nourriture : viandes, fruits séchés, alcools, légumes. De quoi nourrir de nombreux gobelins durant des jours.",
   },
   {
+    id: "cf76069b-7bf5-4b49-98ad-74ebab6cd58e",
     title: "La cuisine",
     ownerIndex: 0,
     planIndex: 0,
@@ -466,6 +480,7 @@ const pois = [
     description: `Deux torches aux murs illuminent cette pièce qui ne contient pas grand-chose non plus. Juste un fourneau avec un feu allumé dont la fumée s'échappe par un trou au plafond, des plats et des casseroles sales, et un peu de nourriture qui ne fait pas du tout envie.`,
   },
   {
+    id: "0deabbd5-2012-40c6-97fc-0d8dd311aa0d",
     title: "Une chambre de gobelins",
     ownerIndex: 0,
     planIndex: 0,
@@ -473,6 +488,7 @@ const pois = [
     description: `À l'intérieur de cette pièce se trouvent deux gobelins en train de jouer aux dés sur une table ronde en bois. Il y a aussi six paillasses de petite taille et un coffre fermé à clef. Les gobelins seront normalement surpris. Comme leurs congénères de l'entrée, il y a peu de chance qu'ils aient le temps de prendre leur bouclier (baisser leur CA de 2 dans ce cas). Un des gobelins porte sur lui la clef du coffre qui contient 252 pc.`,
   },
   {
+    id: "72e6ffa9-5f58-402f-b1c9-700829895c4b",
     title: "La chambre des hobgobelins",
     ownerIndex: 0,
     planIndex: 0,
@@ -480,6 +496,7 @@ const pois = [
     description: `Dans cette pièce se trouvent deux paillasses de taille humaine et une grosse bourse. C'est bien entendu là que dorment les deux hobgobelins, mais pour le moment ils sont en train de manger dans la salle commune. La bourse contient 11 po et 1 pp.`,
   },
   {
+    id: "05718714-0756-41a2-adf3-cbe4b2348109",
     title: "La salle commune",
     ownerIndex: 0,
     planIndex: 0,
@@ -487,6 +504,7 @@ const pois = [
     description: `Si les personnages prennent le temps d'écouter avant de rentrer dans la pièce, ils entendront clairement deux créatures parler entre elles en gobelins. La salle contient deux grandes tables et plusieurs bancs. Actuellement deux créatures de la taille d'un humain mais avec des traits semblables à ceux des gobelins sont en train de manger. Occupés à manger et pensant que tout bruit normal vient surement des gobelins de l'antre, les deux hobgobelins ne sont normalement pas sur leur garde. Les hobgobelins ont leur épée longue sur eux et feront leur possible pour récupérer rapidement leur bouclier qui sont posés sur la table. Fiers guerriers, ils essayeront de se débarrasser des intrus tous seuls, mais si l'un d'eux vient à mourir, le survivant n'hésitera pas à crier pour alerter les gobelins de la salle 7 et de la salle 10.`,
   },
   {
+    id: "3efb3773-9d47-4a65-a43d-8a3211ad6d52",
     title: "Une chambre de gobelins",
     ownerIndex: 0,
     planIndex: 0,
@@ -494,6 +512,7 @@ const pois = [
     description: `Il y a dans cette pièce six paillasses et deux gobelins y sont allongés, en train de dormir. Ces gobelins ont le sommeil profond et un simple combat dans la salle 9 ne devrait pas les réveiller. Mais en cas de cris d'un hobgobelin, ils accourront voir ce qu'il se passe.`,
   },
   {
+    id: "936d1417-baec-408d-b8da-4daf6e0087ed",
     title: "La chambre du gobelours",
     ownerIndex: 0,
     planIndex: 0,
@@ -501,6 +520,7 @@ const pois = [
     description: `Lorsqu'ils ouvrent la porte de cette pièce, les personnages aperçoivent une créature qui correspond à la description qu'on leur a peut-être fait à Fial d'un gobelours. Le monstre est de profil et en train de cacher un petit sac sous sa paillasse. Il ne possède comme arme qu'une Morgenstern, n'a pas de bouclier (baisser sa CA de 2). Le petit sac qu'il tentait de cacher contient 40 po. Le gobelours n'appréciera certainement pas qu'on entre chez lui comme cela sans demander la permission, et encore moins alors qu'il était en train de ranger le butin de sa dernière sortie. Il attaquera donc, sans hésiter.`,
   },
   {
+    id: "7e446396-816f-4802-9dfc-c01387d8dee9",
     title: "La salle du trésor",
     ownerIndex: 0,
     planIndex: 0,
@@ -508,6 +528,7 @@ const pois = [
     description: `Protégée par un passage secret (Investigation DD 15), on peut y trouver six petites statuettes en ivoire (valeur de 60 po au total), deux potions de soins (qui font regagner 2d4+2 pv) et un grand coffre non fermé à clef qui contient 2000 pc, 1000 pa et 70 po. Il n'y a aucune lumière ici.`,
   },
   {
+    id: "c3a93509-7dbd-4c82-a573-19759f69c989",
     title: "La salle du trône",
     ownerIndex: 0,
     planIndex: 0,
@@ -515,6 +536,7 @@ const pois = [
     description: `Au fond de cette vaste salle, la plus grande du complexe jusque-là, se trouve un trône en bois sur lequel est assis celui qui doit assurément être le chef de cette petite tribu de gobelins. Trois autres gobelins sont présents. Deux grands tapis recouvrent des pans de mur. Les trois gobelins attaqueront dès que le groupe entrera. Par contre le chef, à traiter comme un gobelin normal, est un poltron qui fera tout pour ne pas combattre. Dès qu'il verra que le combat tourne mal, il essayera de s'enfuir par le passage secret derrière son trône, qui s'active en faisant tourner ce dernier (Investigation DD 15 par défaut, ou DD 5 si un personnage a vu le chef l'activer). Chaque gobelin porte 24 pa sur lui.`,
   },
   {
+    id: "44ec674f-459e-48d8-85ca-afa8bd754bf4",
     title: "Le laboratoire",
     ownerIndex: 0,
     planIndex: 0,
@@ -522,6 +544,7 @@ const pois = [
     description: `Cette pièce est fermée à clef (Dextérité DD 15 pour la crocheter, à condition d'avoir des outils de voleur, ou Force DD 15 pour l'enfoncer). Dans cette pièce se trouvent nombre d'étagères contenant plein de pots et de fioles sans étiquette, et tout un tas de matériel qui semble être celui d'un alchimiste. Ce sont les ingrédients de l'apprenti alchimiste de la salle 15, mais même un magicien n'y reconnaîtra rien !`,
   },
   {
+    id: "6da54b39-6779-4e7d-b14f-e07d3e33cc8a",
     title: "La chambre de l'alchimiste",
     ownerIndex: 0,
     planIndex: 0,
@@ -529,6 +552,7 @@ const pois = [
     description: `Cette pièce possède un bureau de belle facture, une chaise, un tapis épais au sol, et un lit. Elle sent nettement meilleure que toutes les autres pièces visitées. Elric, le jeune apprenti alchimiste humain qui vit ici, est le seul à vivre de jour et à dormir de nuit. Suivant l'heure à laquelle les personnages arrivent, il dort ou bien est en train de travailler sur son grimoire, assis à son bureau. Elric se rend rapidement compte que, seul, il ne fera pas le poids face aux personnages. Il essayera donc de les endormir par de belles paroles, prétendant en premier lieu être prisonnier des gobelins, puis suppliant le membre du groupe qui semble le plus clément de le laisser partir. En fait, il tentera de s'enfuir dès qu'il en aura l'occasion. Ni Gandelme ni Lanéa ne l'avaient vu avant, et il n'a participé à aucun raid avec les gobelins. Il n'a en fait que peu de relations avec les gobelins. Renvoyé par son mentor pour incapacité, il cherchait un endroit tranquille pour réaliser ses expériences, et a été attaqué par les gobelins. Mais, parlant leur langue, et plutôt doué pour embobiner les autres, il a réussi à convaincre leur chef qu'il pouvait transformer le fer en or. Il est donc confiné ici jusqu'à ce qu'il parvienne à montrer les preuves de son soi-disant talent. Il n'est pas autorisé à sortir de l'antre, mais les gobelins le nourrissent, ce qui lui permet de se consacrer de plein temps à ses expériences… infructueuses jusque-là. Il n'a rien de valeur sur lui, mis à part la clef de la salle 14 et son grimoire qui contient tous les sorts qu'il a préparés (voir sa fiche de stat) plus un autre sort de niveau 1 (à déterminer au hasard).`,
   },
   {
+    id: "85ac3668-38e3-41ba-825d-50cb6f9fa1c9",
     title: "La cellule",
     ownerIndex: 0,
     planIndex: 0,
@@ -536,6 +560,7 @@ const pois = [
     description: `Cette pièce qui baigne dans l'obscurité est une cellule. Ceux d'entre vous qui connaissent Lanéa, la fille du chef, la reconnaissent tout de suite, pieds et poings liés par une corde. Elle ne semble toutefois pas avoir été maltraitée et vous reconnaît immédiatement. Si le groupe n'a pas encore trouvé Gandelme dans la salle 4, Lanéa leur révèle qu'elle l'a aperçu la veille et qu'il faut absolument le trouver avant de partir d'ici.`,
   },
   {
+    id: "f107f4b7-2bb8-4997-b6e9-af51f1cadc8e",
     title: "La chambre du chef",
     ownerIndex: 0,
     planIndex: 0,
@@ -543,6 +568,7 @@ const pois = [
     description: `Cette chambre bien décorée contient un vrai lit, des tapis par terre et sur les murs, et un sac à dos sur lequel est posé un bouclier et une épée courte de petite taille. Les deux torches au mur sont éteintes. Le bouclier et l'épée courte appartiennent au halfelin Gandelme, capturé par les gobelins il y a une semaine, de même que le sac à dos qui, en plus de l'équipement standard de tout aventurier (sac d'explorateur), contient des outils de voleur et 20 po.`,
   },
   {
+    id: "688779e0-40f6-4a56-8564-3ea72c542ebf",
     title: "Hall",
     ownerIndex: 0,
     planIndex: 3,
@@ -550,6 +576,7 @@ const pois = [
     description: `La porte d'entrée est en chêne massif de 5 cm d'épaisseur renforcé de gros clous de fer. Elle est fermée de l'intérieur par une solide barre transversale en métal. Impossible de la crocheter donc. Si les personnages ne se débrouillent pas pour qu'on ouvre la porte de l'intérieur, il va leur falloir réussir un jet de Force DD 25 pour l'enfoncer, ce qui immanquablement fera intervenir les gardes de la salle 4. Le hall donne sur un couloir qui possède une imposante cheminée et un escalier en colimaçon qui monte au premier étage et descend à un sous-sol.`,
   },
   {
+    id: "90ef11d9-ca2b-4d1d-8695-d53ee49e3a92",
     title: "Réserve",
     ownerIndex: 0,
     planIndex: 3,
@@ -558,6 +585,7 @@ const pois = [
       "Un garde-manger qui contient de la nourriture pour dix personnes pour au moins une semaine. Principalement de la viande salée, du fromage et du pain.",
   },
   {
+    id: "2cfa256a-2505-400f-9961-734e2a2e3ec6",
     title: "Cuisine",
     ownerIndex: 0,
     planIndex: 3,
@@ -566,6 +594,7 @@ const pois = [
       "Cette petite pièce est équipée de tout le nécessaire pour se concocter de bons petits plats, dont un fourneau de taille moyenne qui siège au milieu de la salle.",
   },
   {
+    id: "d545b855-0800-46a4-960a-6b818f2ffc75",
     title: "Salle de garde 1",
     ownerIndex: 0,
     planIndex: 3,
@@ -573,6 +602,7 @@ const pois = [
     description: `C'est ici que logent la plupart des hommes que Mez'Arate a laissés sur place durant son absence. De jour, ils passent leur temps ici à parler et à boire de la bière et du vin. À partir de minuit et jusqu'au lendemain 7 heures, ils dorment. 5 hommes de main (bandits) sont présents et l'un d'eux possède la clef qui ouvre la porte de la cave. Ils ont respectivement sur eux 10 po, 11 pa, 10 pe, 8 pe et 12 pa. À part cinq paillasses, il n'y a rien de très intéressant ici. Si les personnages les interrogent sur l'Œil de Gruumsh, ceux-ci savent que leur employeur est arrivé à la maison avec, mais reparti sans. Il est donc dans la maison, mais ils ne savent pas où.`,
   },
   {
+    id: "99ed39f3-5c41-4a1b-a78d-e61d3e41af71",
     title: "Bibliothèque",
     ownerIndex: 0,
     planIndex: 1,
@@ -580,6 +610,7 @@ const pois = [
     description: `Cette grande bibliothèque abrite une multitude de livres, d'histoire pour la plupart. On peut y apprendre de nombreuses choses intéressantes sur le royaume, notamment la reconstruction de Laelith suite au Châtiment, et la création des provinces. Aucun livre ne traite de magie.`,
   },
   {
+    id: "bf16fcd2-a0cd-48f6-84d1-06f5c4f3450d",
     title: "Bureau",
     ownerIndex: 0,
     planIndex: 1,
@@ -588,6 +619,7 @@ const pois = [
       "Un seul meuble ici, un très beau secrétaire en acajou. Dans les tiroirs on peut trouver une vingtaine de feuilles de parchemins vierges, des plumes et diverses encres.",
   },
   {
+    id: "362a2c39-5fc2-4275-bc88-21d763ab5ef9",
     title: "Salle de garde 2",
     ownerIndex: 0,
     planIndex: 1,
@@ -595,6 +627,7 @@ const pois = [
     description: `Semblable à la salle de garde du rez-de-chaussée, il y a ici aussi cinq paillasses. C'est là que dorment les meilleurs mercenaires du magicien, mais il n'y a actuellement que 2 hommes de main (malfrats), les trois autres étant à Egonzasthan-la-basse avec Mez'Arate. L'un possède 24 pc, l'autre 3 pp.`,
   },
   {
+    id: "57a388c4-4fae-4e8e-be0d-d211ab166632",
     title: "Chambre 1",
     ownerIndex: 0,
     planIndex: 2,
@@ -603,6 +636,7 @@ const pois = [
       "Une chambre à coucher au mobilier dépouillé mais de goût. Elle semble toutefois ne pas être habitée.",
   },
   {
+    id: "5124c447-e80c-42bf-90bb-c07182504208",
     title: "Chambre 2",
     ownerIndex: 0,
     planIndex: 2,
@@ -610,6 +644,7 @@ const pois = [
     description: "Autre chambre à coucher qui ne semble pas être occupée.",
   },
   {
+    id: "4297d48e-27b8-47b3-aa60-082aa75a3dac",
     title: "Chambre de l'espion-magicien",
     ownerIndex: 0,
     planIndex: 2,
@@ -617,6 +652,7 @@ const pois = [
     description: `Peu de meubles dans cette pièce, mais tous sont de très bonne qualité. À part des vêtements de rechange de taille humaine et deux sacs contenant 600 pa, 100 po et 6 gemmes de 4 po chacune, rien d'autre d'intéressant.`,
   },
   {
+    id: "4dc2494c-96c7-4617-b916-1e7b2f195abd",
     title: "Cellier",
     ownerIndex: 0,
     planIndex: 4,
@@ -624,6 +660,7 @@ const pois = [
     description: `Cette cave abrite trois tonneaux de bière et une étagère contre le mur sur laquelle reposent une douzaine de bouteilles de vin rouge de qualité médiocre. Le passage secret du couloir qui provient de la salle 13 ne s'ouvre que de l'autre côté. Impossible de le détecter ou de l'ouvrir depuis la cave.`,
   },
   {
+    id: "f82b4f50-e91b-4d55-8a85-651bdd1be2d4",
     title: "Cave",
     ownerIndex: 0,
     planIndex: 4,
@@ -631,6 +668,7 @@ const pois = [
     description: `La porte de cette salle est fermée à clef. L'un des gardes de la salle 4 la porte sur lui. Sinon, le DD est de 12. À l'intérieur de cette grande pièce reposent de nombreuses bouteilles de vins fins ainsi que trois grands tonneaux de bonne bière. Mez'Arate semble être un homme de goût qui aime à ne manquer de rien mais n'est pas prêt à partager avec tout le monde. Si un personnage effectue une fouille, le DD du jet de Sagesse (Perception) est de 5. En cas de réussite, il remarque que cette deuxième cave est de facture récente. En cas de réussite de 10 ou plus, il constate également qu'une brique du mur est n'est pas scellée et semble légèrement enfoncée dans le mur (appuyer dessus ouvre le passage secret). Et en cas de réussite de 15 ou plus, il remarque même la présence d'un trou dans le mur ouest face au passage secret. Dans ce dernier cas, un jet d'Intelligence (Investigation) DD 15 réussi permet de déduire la présence d'une plaque de pression au sol, devant le passage secret. Coincer un piton de fer ou tout autre objet sous la plaque empêche le piège de s'activer. De même, boucher les trous avec du tissu ou de la cire empêche les fléchettes d'être lancées. Si on marche sur la plaque devant la porte secrète sans avoir désamorcé le système, un jeu de ressorts propulse 4 fléchettes (+8 au toucher. Dégâts : 2 (1d4) dégâts perforants chacune) et fait sonner une cloche dans le couloir au rez-de-chaussée. Mais, ne connaissant pas l'existence de cette alarme, les gardes ne savent pas où aller !`,
   },
   {
+    id: "29aba283-53cd-443b-b9e7-b4b79b892528",
     title: "L'antre du magicien",
     ownerIndex: 0,
     planIndex: 4,
@@ -640,6 +678,7 @@ const pois = [
 ];
 const flashcards = [
   {
+    id: "9d60287d-5ea6-4578-9056-604e6f6821ba",
     title: "Elric",
     ownerIndex: 0,
     description:
@@ -669,6 +708,7 @@ const flashcards = [
     },
   },
   {
+    id: "d5de0cc0-764d-4711-9e8e-fea58f80d9dc",
     title: "Gobelin",
     ownerIndex: 0,
     description:
@@ -699,6 +739,7 @@ const flashcards = [
     },
   },
   {
+    id: "5e24320c-72af-4341-a3c2-99bcae8b41f5",
     title: "Gobelours",
     ownerIndex: 0,
     description:
@@ -728,6 +769,7 @@ const flashcards = [
     },
   },
   {
+    id: "e11ec10b-9133-4542-aedb-ba0dcce0a0f4",
     title: "Hobgobelin",
     ownerIndex: 0,
     description:
@@ -757,6 +799,7 @@ const flashcards = [
     },
   },
   {
+    id: "f21d0792-4b01-430c-931b-f9a62663efd6",
     title: "Araignée",
     ownerIndex: 0,
     description: "",
@@ -785,6 +828,7 @@ const flashcards = [
     },
   },
   {
+    id: "1c4ea579-4e17-4ec5-aaf9-613e3e8e63d2",
     title: "Bandit",
     ownerIndex: 0,
     description: `Les bandits vagabondent en bandes et sont parfois dirigés par des malfrats, des vétérans ou des mages. Tous les bandits ne sont pas mauvais. L'oppression, la sécheresse, les épidémies ou la famine peuvent souvent entraîner d'honnêtes gens vers une vie de banditisme.Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers intéressés uniquement par les trésors et le meurtre, ou être des corsaires légitimés par la couronne pour attaquer et piller les navires d'une nation ennemie.`,
@@ -812,6 +856,7 @@ const flashcards = [
     },
   },
   {
+    id: "4d4e5e22-c796-49f0-a08f-50ae1312144e",
     title: "Malfrat",
     ownerIndex: 0,
     description:
@@ -840,6 +885,7 @@ const flashcards = [
     },
   },
   {
+    id: "a83e7953-e8b0-48c0-8981-e7d46b98c5c6",
     title: "Molosse",
     ownerIndex: 0,
     description:
@@ -869,6 +915,7 @@ const flashcards = [
     },
   },
   {
+    id: "5369388c-b7b1-4657-a0d2-4147412a548f",
     title: "Orc",
     ownerIndex: 0,
     description:
@@ -897,6 +944,7 @@ const flashcards = [
     },
   },
   {
+    id: "75a3c8a7-867d-4ed3-ada2-0ab41ea6a310",
     title: "L'Oeil de Gruumsh",
     ownerIndex: 0,
     description: `Cette relique tirée des abysses du temps n'a pas grande valeur pour un être humain, mise à part peut-être la gemme qui se révèlera être un magnifique rubis d'au moins 1000 po ! Une personne tentant de retirer la gemme de l'Œil devra réussir un jet de sauvegarde de Constitution DD 30 (DD 10 pour les orques, DD 20 pour les demi-orques) ou prendre 5d10 dégâts de foudre.`,
@@ -906,6 +954,7 @@ const flashcards = [
 ];
 const users = [
   {
+    id: "24293e02-a431-4fdc-a3c5-bc6a0ed9564b",
     mail: "vcode@spamland.com",
     name: "ValhallaCode",
     hashedPassword:
@@ -916,6 +965,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "4fdc7923-5127-4b3f-a970-ab1ff7219087",
     mail: "lily@spamland.com",
     name: "Lily",
     hashedPassword:
@@ -926,6 +976,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "116d2de2-ba5b-479f-8ae2-b35070122640",
     mail: "shyz@spamland.com",
     name: "Shyzen",
     hashedPassword:
@@ -936,6 +987,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "23720c71-7a37-4232-9de6-a3839d5df887",
     mail: "missy@spamland.com",
     name: "Missy",
     hashedPassword:
@@ -946,6 +998,7 @@ const users = [
     campaignsToLead: [],
   },
   {
+    id: "9e98bb3d-e5f7-4276-b22c-ca40e1e80a2f",
     mail: "lunacraft@spamland.com",
     name: "LunaCraft",
     hashedPassword:
@@ -958,6 +1011,7 @@ const users = [
 ];
 const campaigns = [
   {
+    id: "11bc4ad9-b188-4418-957d-34b52b06b49a",
     title: "Campagne d'initiation à D&D5",
     ownerIndex: 0,
     bannerUrl: "scenario-background.webp",
@@ -966,6 +1020,7 @@ const campaigns = [
     scenarios: ["A la chasse aux gobs"],
   },
   {
+    id: "e50a7f31-cc85-40d0-9a0f-a12685fe41fa",
     title: "Le Loup qui avait un nouvel ami",
     ownerIndex: 0,
     bannerUrl: "scenario-background.webp",
@@ -976,38 +1031,43 @@ const campaigns = [
 ];
 const messages = [
   {
+    id: "6c9078a7-5916-49a8-8d4f-faa3895a19dd",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 5 }),
     content: "Hey, la forme ?",
     ownerIndex: 0,
     campaignIndex: 0,
   },
   {
+    id: "04179c7c-432c-44d2-aeb1-564b0a8b971c",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 4 }),
     content: "Ouaip et toi ? Les dés sont prêts ?",
     ownerIndex: 1,
     campaignIndex: 0,
   },
   {
+    id: "d326f7db-4c05-41ad-96dc-6d2ed82c0c7c",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 3 }),
     content:
       "Ouais, par contre pas moyen de remettre la main sur ma feuille de perso, tu te souviens qui les avait gardées la dernière fois ?",
     ownerIndex: 0,
     campaignIndex: 0,
   },
   {
+    id: "0b01c6ad-fb58-4a17-bd61-e03425419242",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 2 }),
     content:
       "Nope! J'ai la mienne avec moi, mais tu avais pas repris la tienne pour vérifier un truc dans le bouquin de règles ?",
     ownerIndex: 1,
     campaignIndex: 0,
   },
   {
+    id: "3d2d83d6-cd54-412c-a448-439f61b2c07d",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 1 }),
     content: "... Je sais plus. Raaah, meujeu va encore se payer ma poire...",
     ownerIndex: 0,
     campaignIndex: 0,
@@ -1015,6 +1075,7 @@ const messages = [
 ];
 const notes = [
   {
+    id: "4a1055fe-d0c3-4ac5-8c52-899a3886545a",
     campaignIndex: 0,
     ownerIndex: 0,
     content: "Lorem ipsum",
@@ -1022,6 +1083,7 @@ const notes = [
 ];
 const sessions = [
   {
+    id: "b14e22e1-e2ae-4abe-ae5d-4a1f158d7304",
     campaignIndex: 0,
     summary:
       "Le groupe reçoit une mission de la part du forgeron pour retrouver sa fille. Il demande expressement aux joueurs de ne rien révéler à sa femme.",
@@ -1029,6 +1091,7 @@ const sessions = [
     programmedAt: DateTime.now().minus({ week: 2 }),
   },
   {
+    id: "0494bccd-9dc3-4d0d-aec1-0646ce09c5dc",
     campaignIndex: 0,
     summary:
       "Les joueurs suivent la trace de gobelins sui ont été aperçus dans la région et trouvent une caverne un peu trop lourdement gardée",
@@ -1036,12 +1099,14 @@ const sessions = [
     programmedAt: DateTime.now().minus({ day: 1 }),
   },
   {
+    id: "3030260a-8bc4-404e-93e4-a331e35330f5",
     campaignIndex: 0,
     summary: "",
     location: "Chez le GM",
     programmedAt: DateTime.now(),
   },
   {
+    id: "7b2bada0-46f2-4cd7-88fd-71e1f03e1c93",
     campaignIndex: 0,
     summary: "",
     location: "Chez le GM",
