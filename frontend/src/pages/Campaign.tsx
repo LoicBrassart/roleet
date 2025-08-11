@@ -15,7 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/molecules/Tabs";
 import { CampaignTabChat } from "@/organisms/campaign/tabs/CampaignTabChat";
 import { CampaignTabHome } from "@/organisms/campaign/tabs/CampaignTabHome";
 import { CampaignTabNotes } from "@/organisms/campaign/tabs/CampaignTabNotes";
-import SessionCard from "@/organisms/session/SessionCard";
+import { CampaignTabSessions } from "@/organisms/campaign/tabs/CampaignTabSessions";
 
 export default function Campaign() {
   const isSmallDevice = useMediaQuery("(width < 48rem /* 768px */)");
@@ -74,19 +74,12 @@ export default function Campaign() {
       <TabsContent value="notes">
         <CampaignTabNotes notes={notes} />
       </TabsContent>
+      <TabsContent value="sessions">
+        <CampaignTabSessions campaign={campaign} />
+      </TabsContent>
       <TabsContent value="docs">TODO: Documents</TabsContent>
       <TabsContent value="npc">TODO: Contacts</TabsContent>
       <TabsContent value="sheet">TODO: Mon personnage</TabsContent>
-      <TabsContent value="sessions">
-        <h1 className="font-title text-white">Sessions</h1>
-        <ul>
-          {campaign.sessions.map((session) => (
-            <li key={session.id}>
-              <SessionCard session={session} />
-            </li>
-          ))}
-        </ul>
-      </TabsContent>
     </Tabs>
   );
 }

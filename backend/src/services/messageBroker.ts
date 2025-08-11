@@ -6,7 +6,7 @@ const rabbitMQ = RabbitMQ.getInstance(`amqp://${process.env.REALTIME_HOST}`);
 
 export default function subscribeToMessageBroker() {
   rabbitMQ.consume("newMessage", async (msg) => {
-    const campaign = await Campaign.findOneByOrFail({ id: msg.channel });
+    const campaign = await Campaign.findOneByOrFail({ id: msg.campaign.id });
     const newMessage = Message.create();
     newMessage.content = msg.content;
     newMessage.channel = "tests"; // TODO: use separate rooms for every purpose
