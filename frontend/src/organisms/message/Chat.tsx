@@ -7,8 +7,8 @@ import MessageCard from "./MessageCard";
 
 type Props = {
   title: string;
-  room: string;
   data: Entities.Message[];
+  room: string;
 };
 export default function Chat({ title, data, room }: Props) {
   const { messages, sendMessage, isConnected } = useChat(room, data);
@@ -23,9 +23,10 @@ export default function Chat({ title, data, room }: Props) {
 
     if (message) {
       sendMessage({
-        channel: room,
+        owner: currentUser,
+        // channel: room,
         content: message,
-        userId: currentUser.id,
+        campaign: room,
       });
       evt.currentTarget.reset();
     }

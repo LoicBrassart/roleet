@@ -2,8 +2,9 @@ import Chat from "@/organisms/message/Chat";
 import type { Entities } from "@/types/entities";
 
 type Props = {
-  campaign: Entities.Campaign;
+  messages: Entities.Message[];
+  campaign: Entities.Campaign["id"];
 };
-export function CampaignTabChat({ campaign }: Props) {
-  return <Chat title="Test" data={campaign.messages} room="tests" />;
+export function CampaignTabChat({ messages, campaign }: Props) {
+  return <Chat title="Test" data={messages} room={campaign} />;
 }

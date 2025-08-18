@@ -26,9 +26,10 @@ export default function Campaign() {
   });
   const campaign = data?.getCampaign;
   const notes = data?.getNotes;
+  const messages = data?.getMessagesByCampaign;
   if (error) return <p>Error: fetch failed !</p>;
   if (loading) return <p>Loading: please wait...</p>;
-  if (!campaign || !notes) return <p>Error: missing data !</p>;
+  if (!campaign || !notes || !messages) return <p>Error: missing data !</p>;
 
   return (
     <Tabs
@@ -69,7 +70,7 @@ export default function Campaign() {
         <CampaignTabHome campaign={campaign} />
       </TabsContent>
       <TabsContent value="chat">
-        <CampaignTabChat campaign={campaign} />
+        <CampaignTabChat messages={messages} campaign={campaign.id} />
       </TabsContent>
       <TabsContent value="notes">
         <CampaignTabNotes notes={notes} />

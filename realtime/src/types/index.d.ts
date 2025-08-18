@@ -9,11 +9,14 @@ export interface ClientToServerEvents {
 
 // TODO: get from codegen ?
 export type Message = {
-  channel: string;
+  // channel: string;
   content: string;
   createdAt: string;
   id: string;
-  userId: string;
+  owner: {
+    id: string;
+    name: string;
+  };
 };
 
 export type MessageInput = {

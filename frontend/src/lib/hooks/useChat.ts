@@ -11,7 +11,7 @@ export function useChat(room: string, initialMessages: Entities.Message[]) {
 
   const sendMessage = (message: Omit<Entities.Message, "id" | "createdAt">) => {
     if (!socket) return;
-    socket.emit("send_message", message);
+    socket.emit("send_message", { ...message, campaign: room });
   };
 
   useEffect(() => {

@@ -84,9 +84,9 @@ ioServer.on("connection", (socket: AuthenticatedSocket) => {
     socket.on("send_message", async (payload) => {
       const message = {
         content: payload.content,
-        userId: payload.userId,
         createdAt: new Date().toISOString().replace("Z", "").replace("T", " "), // TODO: Think about the type to use for dates
-        channel: payload.channel,
+        owner: payload.owner,
+        // channel: payload.channel,
       } satisfies WithoutID<Message>;
       sendToPersist(message);
     });

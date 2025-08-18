@@ -3,7 +3,7 @@ import SessionCard from "@/organisms/session/SessionCard";
 import type { Entities } from "@/types/entities";
 
 type Props = {
-  campaign: Entities.Campaign;
+  campaign: Pick<Entities.Campaign, "sessions">;
 };
 export function CampaignTabSessions({ campaign }: Props) {
   return (

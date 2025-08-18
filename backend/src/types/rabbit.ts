@@ -1,5 +1,17 @@
 import type { Message } from "../entities/Message";
 
+//TODO: get from codegen ?
+export type MessageFromFrontend = {
+  // channel: string;
+  content: string;
+  createdAt: string;
+  id: string;
+  owner: {
+    id: string;
+    name: string;
+  };
+};
+
 export declare namespace Rabbit {
   type SendMessage = {
     // QueueName: Données envoyées
@@ -8,6 +20,6 @@ export declare namespace Rabbit {
 
   type Consume = {
     // QueueName: Données reçues
-    newMessage: Message;
+    newMessage: Omit<MessageFromFrontend, "id"> & { campaign: string };
   };
 }

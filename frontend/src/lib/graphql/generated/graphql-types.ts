@@ -48,7 +48,6 @@ export type Flashcard = {
 export type Message = {
   __typename?: 'Message';
   campaign: Campaign;
-  channel: Scalars['String']['output'];
   content: Scalars['String']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
   id: Scalars['ID']['output'];
@@ -285,10 +284,10 @@ export type PointOfInterestInput = {
 
 export type Query = {
   __typename?: 'Query';
-  getAllMessages: Array<Message>;
   getAllScenarios: Array<Scenario>;
   getAllUsers: Array<User>;
   getCampaign?: Maybe<Campaign>;
+  getMessagesByCampaign: Array<Message>;
   getMyCampaigns: Array<Campaign>;
   getMyScenarios: Array<Scenario>;
   getNotes: Note;
@@ -299,6 +298,11 @@ export type Query = {
 
 
 export type QueryGetCampaignArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryGetMessagesByCampaignArgs = {
   id: Scalars['String']['input'];
 };
 
@@ -459,7 +463,7 @@ export type GetCampaignQueryVariables = Exact<{
 }>;
 
 
-export type GetCampaignQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }>, sessions: Array<{ __typename?: 'Session', id: string, location: string, programmedAt: any, summary: string }> } | null };
+export type GetCampaignQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, content: string, createdAt: any }>, sessions: Array<{ __typename?: 'Session', id: string, location: string, programmedAt: any, summary: string }> } | null };
 
 export type CreateCampaignMutationVariables = Exact<{
   data: NewCampaignInput;
@@ -482,11 +486,6 @@ export type UpdateScenarioMutationVariables = Exact<{
 
 
 export type UpdateScenarioMutation = { __typename?: 'Mutation', updateScenario: { __typename?: 'Scenario', id: string, title: string, teaser: string, fullStory: string, bannerUrl: string, credits: string } };
-
-export type GetAllMessagesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllMessagesQuery = { __typename?: 'Query', getAllMessages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }> };
 
 export type CreatePointOfInterestMutationVariables = Exact<{
   data: NewPointOfInterestInput;
@@ -542,7 +541,7 @@ export type GetCampaignAndNotesQueryVariables = Exact<{
 }>;
 
 
-export type GetCampaignAndNotesQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, messages: Array<{ __typename?: 'Message', id: string, channel: string, content: string, createdAt: any }>, sessions: Array<{ __typename?: 'Session', id: string, location: string, programmedAt: any, summary: string }> } | null, getNotes: { __typename?: 'Note', id: string, content: string } };
+export type GetCampaignAndNotesQuery = { __typename?: 'Query', getCampaign?: { __typename?: 'Campaign', id: string, bannerUrl: string, title: string, storyteller: { __typename?: 'User', id: string, name: string }, scenarios: Array<{ __typename?: 'Scenario', id: string, title: string }>, players: Array<{ __typename?: 'User', id: string, name: string }>, sessions: Array<{ __typename?: 'Session', id: string, location: string, programmedAt: any, summary: string }> } | null, getNotes: { __typename?: 'Note', id: string, content: string }, getMessagesByCampaign: Array<{ __typename?: 'Message', id: string, content: string, createdAt: any, owner: { __typename?: 'User', id: string, name: string } }> };
 
 export type EditNotesMutationVariables = Exact<{
   noteId: Scalars['String']['input'];
@@ -980,7 +979,6 @@ export const GetCampaignDocument = gql`
     }
     messages {
       id
-      channel
       content
       createdAt
     }
@@ -1138,48 +1136,6 @@ export function useUpdateScenarioMutation(baseOptions?: Apollo.MutationHookOptio
 export type UpdateScenarioMutationHookResult = ReturnType<typeof useUpdateScenarioMutation>;
 export type UpdateScenarioMutationResult = Apollo.MutationResult<UpdateScenarioMutation>;
 export type UpdateScenarioMutationOptions = Apollo.BaseMutationOptions<UpdateScenarioMutation, UpdateScenarioMutationVariables>;
-export const GetAllMessagesDocument = gql`
-    query getAllMessages {
-  getAllMessages {
-    id
-    channel
-    content
-    createdAt
-  }
-}
-    `;
-
-/**
- * __useGetAllMessagesQuery__
- *
- * To run a query within a React component, call `useGetAllMessagesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllMessagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAllMessagesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetAllMessagesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllMessagesQuery, GetAllMessagesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllMessagesQuery, GetAllMessagesQueryVariables>(GetAllMessagesDocument, options);
-      }
-export function useGetAllMessagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllMessagesQuery, GetAllMessagesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllMessagesQuery, GetAllMessagesQueryVariables>(GetAllMessagesDocument, options);
-        }
-export function useGetAllMessagesSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllMessagesQuery, GetAllMessagesQueryVariables>) {
-          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetAllMessagesQuery, GetAllMessagesQueryVariables>(GetAllMessagesDocument, options);
-        }
-export type GetAllMessagesQueryHookResult = ReturnType<typeof useGetAllMessagesQuery>;
-export type GetAllMessagesLazyQueryHookResult = ReturnType<typeof useGetAllMessagesLazyQuery>;
-export type GetAllMessagesSuspenseQueryHookResult = ReturnType<typeof useGetAllMessagesSuspenseQuery>;
-export type GetAllMessagesQueryResult = Apollo.QueryResult<GetAllMessagesQuery, GetAllMessagesQueryVariables>;
 export const CreatePointOfInterestDocument = gql`
     mutation createPointOfInterest($data: NewPointOfInterestInput!) {
   createPointOfInterest(data: $data) {
@@ -1476,12 +1432,6 @@ export const GetCampaignAndNotesDocument = gql`
       id
       name
     }
-    messages {
-      id
-      channel
-      content
-      createdAt
-    }
     sessions {
       id
       location
@@ -1492,6 +1442,15 @@ export const GetCampaignAndNotesDocument = gql`
   getNotes(campaignId: $campaignId) {
     id
     content
+  }
+  getMessagesByCampaign(id: $campaignId) {
+    id
+    content
+    createdAt
+    owner {
+      id
+      name
+    }
   }
 }
     `;

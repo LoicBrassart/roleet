@@ -147,7 +147,6 @@ export const GET_CAMPAIGN = gql`
       }
       messages {
         id
-        channel
         content
         createdAt
       }
@@ -193,17 +192,6 @@ export const UPDATE_SCENARIO = gql`
       fullStory
       bannerUrl
       credits
-    }
-  }
-`;
-
-export const GET_ALL_MESSAGES = gql`
-  query getAllMessages {
-    getAllMessages {
-      id
-      channel
-      content
-      createdAt
     }
   }
 `;
@@ -307,12 +295,6 @@ export const GET_CAMPAIGN_AND_NOTES = gql`
         id
         name
       }
-      messages {
-        id
-        channel
-        content
-        createdAt
-      }
       sessions {
         id
         location
@@ -323,6 +305,15 @@ export const GET_CAMPAIGN_AND_NOTES = gql`
     getNotes(campaignId: $campaignId) {
       id
       content
+    }
+    getMessagesByCampaign(id: $campaignId) {
+      id
+      content
+      createdAt
+      owner {
+        id
+        name
+      }
     }
   }
 `;

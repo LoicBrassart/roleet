@@ -1,7 +1,10 @@
 import type { Entities } from "@/types/entities";
 
 type Props = {
-  campaign: Entities.Campaign;
+  campaign: Pick<
+    Entities.Campaign,
+    "title" | "storyteller" | "players" | "scenarios"
+  >;
 };
 export function CampaignTabHome({ campaign }: Props) {
   return (

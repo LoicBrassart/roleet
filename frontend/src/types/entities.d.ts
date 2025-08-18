@@ -1,4 +1,5 @@
 import type {
+  GetCampaignAndNotesQuery,
   GetCampaignQuery,
   GetNotesQuery,
   GetScenarioQuery,
@@ -11,7 +12,7 @@ declare namespace Entities {
   type PoI = Plan["pointsOfInterest"][number];
 
   type Campaign = NonNullable<GetCampaignQuery["getCampaign"]>;
-  type Message = Campaign["messages"][number];
+  type Message = GetCampaignAndNotesQuery["getMessagesByCampaign"][number];
   type Session = Campaign["sessions"][number];
   type Notes = GetNotesQuery["getNotes"];
 
