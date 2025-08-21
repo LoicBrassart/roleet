@@ -7,8 +7,8 @@
       "files/**",
       "frontend/**",
       "realtime/**",
-      "!**/generated/**",
-      "!persist/**"
+      "!**/generated",
+      "!persist"
     ]
   },
   "formatter": { "indentStyle": "space" },
