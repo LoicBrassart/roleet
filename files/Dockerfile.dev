@@ -3,6 +3,7 @@ WORKDIR /app
 RUN apk --no-cache add curl
 COPY package*.json ./
 COPY tsconfig.json ./
+RUN touch /usr/local/bin/husky && chmod +x /usr/local/bin/husky 
 RUN npm install
 COPY src src
 RUN mkdir public

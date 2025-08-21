@@ -1,0 +1,51 @@
+import { toast } from "sonner";
+import type { z } from "zod";
+import { Form } from "@/atoms/Form";
+import { Input } from "@/atoms/Input";
+import { useSignupMutation } from "@/lib/graphql/generated/graphql-types";
+import { Button } from "@/lib/shadcn/generated/ui/button";
+import { currentUserSchema, signupSchema } from "@/lib/zod/auth";
+import { useLogin } from "@/lib/zustand/userStore";
+
+export default function SignupForm() {
+  const [signup] = useSignupMutation();
+  const setUserToStore = useLogin();
+
+  const defaultSignup = {
+    name: "",
+    password: "",
+    mail: "",
+  };
+
+  async function hSignup(values: z.infer<typeof signupSchema>) {
+    try {
+      const { data } = await signup({
+        variables: { data: values },
+      });
+
+      if (!data) return;
+
+      const profile = currentUserSchema.parse(JSON.parse(data.signup));
+      setUserToStore(profile);
+    } catch (_err) {
+      toast.error("An error occured, sorry about that");
+    }
+  }
+  return (
+    <Form
+      onSubmit={hSignup}
+      schema={signupSchema}
+      defaultValues={defaultSignup}
+      className="w-2/3 space-y-6"
+    >
+      {({ register }) => (
+        <>
+          <Input label="Nom d'utilisateur" {...register("name")} />
+          <Input label="Adresse email" {...register("mail")} />
+          <Input label="Password" {...register("password")} />
+          <Button type="submit">S'inscrire</Button>
+        </>
+      )}
+    </Form>
+  );
+}

@@ -16,8 +16,12 @@ class NewMessageInput implements Partial<Message> {
 @Resolver(Message)
 class MessageResolver {
   @Query(() => [Message])
-  getAllMessages() {
-    return Message.find({ relations: ["owner"] });
+  getMessagesByCampaign(@Arg("id") id: string) {
+    return Message.find({
+      relations: ["owner", "campaign"],
+      where: { campaign: { id } },
+      order: { createdAt: "ASC" },
+    });
   }
 
   @Mutation(() => Message)

@@ -10,7 +10,9 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Message } from "./Message";
+import { Note } from "./Note";
 import { Scenario } from "./Scenario";
+import { Session } from "./Session";
 import { User } from "./User";
 
 @Entity()
@@ -55,7 +57,7 @@ export class Campaign extends BaseEntity {
   @JoinTable({ name: "campaignPlayers" })
   players!: User[];
 
-  @Field((_type) => [Scenario], { nullable: false })
+  @Field(() => [Scenario], { nullable: false })
   @ManyToMany(
     (_type) => Scenario,
     (scenario) => scenario.campaigns,
@@ -70,4 +72,34 @@ export class Campaign extends BaseEntity {
     { cascade: true },
   )
   messages!: Message[];
+
+  @Field(() => [Note])
+  @OneToMany(
+    () => Note,
+    (note) => note.campaign,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  notes: Note[];
+
+  @Field(() => [Session])
+  @OneToMany(
+    () => Session,
+    (session) => session.campaign,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  sessions: Session[];
+
+  /* Documents - plus tard ?
+  - title
+  - url
+  - visibility
+  */
+  /* Contacts - plus tard ?
+   */
+  /* Sheets - plus tard
+   */
 }

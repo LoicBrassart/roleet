@@ -1,35 +1,29 @@
-import { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
-import { Toaster } from "@/lib/shadcn/generated/ui/sonner";
-import "../../globals.css";
-import {
-  SidebarProvider,
-  SidebarTrigger,
-} from "../../lib/shadcn/generated/ui/sidebar";
-import AppSidebar from "./AppSidebar";
+import { Outlet, useNavigate } from "react-router";
+import { useLogoutMutation } from "@/lib/graphql/generated/graphql-types";
+import { useLogout } from "@/lib/zustand/userStore";
 
 export default function Layout() {
-  const [open, setOpen] = useState(false);
-  const location = useLocation();
+  const [logout] = useLogoutMutation();
+  const logoutFromStore = useLogout();
+  const navigate = useNavigate();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Need to depend on the pathname, to allow for clicking on current page in the navbar
-  useEffect(() => {
-    setOpen(false);
+  const hLogout = () => {
+    logout();
+    logoutFromStore();
+    navigate("/");
+  };
 
-    return () => {
-      setOpen(false);
-    };
-  }, [location.pathname]);
   return (
-    <SidebarProvider defaultOpen={false} open={open} onOpenChange={setOpen}>
-      <div className="absolute">
-        <AppSidebar />
-      </div>
-      <main className="dark m-auto mt-0 w-8/12">
-        <SidebarTrigger />
+    <>
+      <main className="mb-20 w-dvw overflow-x-hidden p-4">
         <Outlet />
       </main>
-      <Toaster />
-    </SidebarProvider>
+      <footer className="fixed right-0 bottom-0 left-0 bg-black/40 p-4">
+        <h2>DEBUG ZONE</h2>
+        <button type="button" onClick={hLogout}>
+          Logout
+        </button>
+      </footer>
+    </>
   );
 }

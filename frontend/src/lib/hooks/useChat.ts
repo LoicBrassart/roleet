@@ -9,9 +9,11 @@ export function useChat(room: string, initialMessages: Entities.Message[]) {
   >();
   const [messages, setMessages] = useState(initialMessages);
 
-  const sendMessage = (message: Omit<Entities.Message, "id" | "createdAt">) => {
+  const sendMessage = (
+    message: Omit<Entities.Message, "id" | "createdAt"> & { chanel: string },
+  ) => {
     if (!socket) return;
-    socket.emit("send_message", message);
+    socket.emit("send_message", { ...message, campaign: room });
   };
 
   useEffect(() => {
