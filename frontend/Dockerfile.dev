@@ -4,6 +4,7 @@ RUN apk --no-cache add curl
 COPY package*.json ./
 COPY tsconfig*.json ./
 COPY codegen.ts ./
+RUN touch /usr/local/bin/husky && chmod +x /usr/local/bin/husky 
 RUN npm install
 COPY public public
 COPY src src
