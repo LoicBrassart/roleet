@@ -10,7 +10,9 @@ type Props = {
 export function CampaignTabNotes({ notes }: Props) {
   const [content, setContent] = useState(notes.content);
   const debouncedContent = useDebounce(content, 1500);
-  const [save] = useEditNotesMutation();
+  const [save] = useEditNotesMutation({
+    refetchQueries: ["getCampaignAndNotes"],
+  });
 
   const hInput = (evt: FormEvent<HTMLDivElement>) => {
     setContent(evt.currentTarget.innerText);
