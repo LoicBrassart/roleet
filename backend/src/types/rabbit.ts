@@ -20,6 +20,6 @@ export declare namespace Rabbit {
 
   type Consume = {
     // QueueName: Données reçues
-    newMessage: Omit<MessageFromFrontend, "id"> & { campaign: string };
+    newMessage: Omit<MessageFromFrontend, "id"> & { channel: string };
   };
 }
