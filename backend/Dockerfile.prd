@@ -1,6 +1,7 @@
 FROM node:lts-alpine AS builder
 WORKDIR /app
 COPY *.json .
+RUN touch /usr/local/bin/husky && chmod +x /usr/local/bin/husky 
 RUN npm i
 RUN npm i -g typescript
 COPY src/ .
@@ -10,5 +11,6 @@ FROM node:lts-alpine
 WORKDIR /app
 COPY --from=builder /app/build ./build
 COPY package*.json .
+RUN touch /usr/local/bin/husky && chmod +x /usr/local/bin/husky 
 RUN npm i --production
 CMD ["npm", "run", "start"]
