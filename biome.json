@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
   "files": {
     "includes": [
       "backend/**",
@@ -7,8 +7,8 @@
       "files/**",
       "frontend/**",
       "realtime/**",
-      "!**/generated/**",
-      "!persist/**"
+      "!**/generated",
+      "!persist"
     ]
   },
   "formatter": { "indentStyle": "space" },

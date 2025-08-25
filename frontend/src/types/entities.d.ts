@@ -1,5 +1,7 @@
 import type {
+  GetCampaignAndNotesQuery,
   GetCampaignQuery,
+  GetNotesQuery,
   GetScenarioQuery,
 } from "@/lib/graphql/generated/graphql-types";
 
@@ -10,7 +12,9 @@ declare namespace Entities {
   type PoI = Plan["pointsOfInterest"][number];
 
   type Campaign = NonNullable<GetCampaignQuery["getCampaign"]>;
-  type Message = Campaign["messages"][number];
+  type Message = GetCampaignAndNotesQuery["getMessagesByCampaign"][number];
+  type Session = Campaign["sessions"][number];
+  type Notes = GetNotesQuery["getNotes"];
 
   //TODO: Ce serait bien mais je vois pas comment l'avoir - Si porbleme de typage:
   // - fix côté backend

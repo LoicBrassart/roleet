@@ -41,7 +41,7 @@ class CampaignResolver {
   async getMyCampaigns(@Ctx() ctx: AuthContext) {
     return Campaign.find({
       where: [{ owner: { id: ctx.user.id } }, { players: { id: ctx.user.id } }],
-      relations: ["scenarios", "players", "storyteller"],
+      relations: ["scenarios", "players", "storyteller", "sessions"],
     });
   }
 
@@ -52,7 +52,14 @@ class CampaignResolver {
 
     const campaign = await Campaign.findOne({
       where: { id },
-      relations: ["scenarios", "players", "storyteller", "owner", "messages"],
+      relations: [
+        "scenarios",
+        "players",
+        "storyteller",
+        "owner",
+        "messages",
+        "sessions",
+      ],
     });
 
     if (!campaign) throw new DatabaseError("Campaign not found");
@@ -80,6 +87,7 @@ class CampaignResolver {
       scenarios: campaignData.scenarios.map((s) => ({ id: s.id })),
       owner: ctx.user,
       storyteller: ctx.user,
+      sessions: [],
     };
     return Campaign.create(campaign)
       .save()

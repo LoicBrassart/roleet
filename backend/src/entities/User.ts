@@ -10,6 +10,7 @@ import {
 import { Campaign } from "./Campaign";
 import { Flashcard } from "./FlashCard";
 import { Message } from "./Message";
+import { Note } from "./Note";
 import { Plan } from "./Plan";
 import { PointOfInterest } from "./PointOfInterest";
 import { Scenario } from "./Scenario";
@@ -127,4 +128,14 @@ export class User extends BaseEntity {
     },
   )
   ownedMessages: Message[];
+
+  @Field(() => [Note])
+  @OneToMany(
+    () => Note,
+    (note) => note.owner,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  ownedNotes: Note[];
 }
