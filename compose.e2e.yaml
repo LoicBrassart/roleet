@@ -1,5 +1,5 @@
 x-baseService: &baseService
-  restart: always
+  restart: no
   healthcheck:
     interval: 5s
     timeout: 2s
