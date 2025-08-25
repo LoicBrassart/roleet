@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "codegen": "graphql-codegen --config codegen.ts",
-    "unit-tests": "vitest"
+    "test": "vitest"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",

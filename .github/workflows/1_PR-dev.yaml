@@ -1,4 +1,4 @@
-name: Lint, Format & Cherry-picked Unit Tests
+name: Lint, Format & Cherry-picked Unit/integration Tests
 
 on:
   pull_request:
@@ -50,9 +50,9 @@ jobs:
             realtime:
               - 'realtime/**'
 
-      - name: Run unit tests
+      - name: Run unit & integration tests
         if: ${{ steps.filter.outputs[matrix.service] == 'true' }}
         run: |
           cd ${{ matrix.service }}
           npm install
-          npm run unit-tests
+          npm run test

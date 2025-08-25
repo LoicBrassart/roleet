@@ -10,7 +10,7 @@ export function useChat(room: string, initialMessages: Entities.Message[]) {
   const [messages, setMessages] = useState(initialMessages);
 
   const sendMessage = (
-    message: Omit<Entities.Message, "id" | "createdAt"> & { chanel: string },
+    message: Omit<Entities.Message, "id" | "createdAt"> & { channel: string },
   ) => {
     if (!socket) return;
     socket.emit("send_message", { ...message, campaign: room });
