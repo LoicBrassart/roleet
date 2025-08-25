@@ -6,8 +6,7 @@
     "dev": "npm run db:fixtures && nodemon --exec ts-node -- ./src/index.ts",
     "start": "node build/index.js",
     "db:fixtures": "ts-node ./src/scripts/fixtures/script.ts",
-    "unit-tests": "vitest",
-    "integration-tests": "echo 'TODO: Run Integration Tests'"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
