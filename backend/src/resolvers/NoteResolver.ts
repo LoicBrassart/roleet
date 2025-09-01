@@ -1,7 +1,7 @@
 import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import type { AuthContext } from "@/types/ApolloContext";
 import { Campaign } from "../entities/Campaign";
 import { Note } from "../entities/Note";
+import type { AuthContext } from "../types/ApolloContext";
 
 @Resolver(Note)
 class NoteResolver {
