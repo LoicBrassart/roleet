@@ -1,5 +1,5 @@
-import type { NewUserInput } from "@/resolvers/UserResolver";
 import { Role, User } from "../entities/User";
+import type { NewUserInput } from "../resolvers/UserResolver";
 
 export default class UserService implements IUserService {
   find(): Promise<User> {
