@@ -1,11 +1,10 @@
 import type { Message } from "../entities/Message";
 
 //TODO: get from codegen ?
-export type MessageFromFrontend = {
-  // channel: string;
+export type MessageFromRealtime = {
+  channel: string;
   content: string;
   createdAt: string;
-  id: string;
   owner: {
     id: string;
     name: string;
@@ -20,6 +19,6 @@ export declare namespace Rabbit {
 
   type Consume = {
     // QueueName: Données reçues
-    newMessage: Omit<MessageFromFrontend, "id"> & { channel: string };
+    newMessage: MessageFromRealtime;
   };
 }
