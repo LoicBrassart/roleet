@@ -6,6 +6,7 @@ RUN npm i
 RUN npm i -g typescript
 COPY src/ ./src
 RUN npm run build
+RUN ls -la /app/build
 
 FROM node:lts-alpine 
 WORKDIR /app
