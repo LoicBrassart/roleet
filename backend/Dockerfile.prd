@@ -5,7 +5,8 @@ RUN touch /usr/local/bin/husky && chmod +x /usr/local/bin/husky
 RUN npm i
 RUN npm i -g typescript
 COPY src/ ./src
-RUN tsc
+RUN npm run build
+RUN ls -la /app/build
 
 FROM node:lts-alpine 
 WORKDIR /app
