@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npm run db:fixtures && nodemon --exec ts-node -- ./src/index.ts",
-    "start": "node build/index.js",
     "db:fixtures": "ts-node ./src/scripts/fixtures/script.ts",
-    "test": "vitest"
+    "dev": "npm run db:fixtures && nodemon --exec ts-node -- ./src/index.ts",
+    "test": "vitest",
+    "build": "npx tsc",
+    "start": "node build/index.js"
   },
   "keywords": [],
   "author": "",
