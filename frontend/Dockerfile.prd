@@ -6,12 +6,15 @@ COPY *.ts .
 RUN npm install
 RUN npm install -g typescript
 COPY src/ src/
-RUN tsc
+# RUN tsc
+RUN ls -la /app
+RUN ls -la /app/src/
+CMD ["npm", "run", "dev"]
 
-FROM node:lts-alpine
-RUN apk --no-cache add curl
-WORKDIR /app
-COPY --from=builder /app/build ./build
-COPY package*.json .
-RUN npm install --production
-CMD ["npm", "run", "start"]
+# FROM node:lts-alpine
+# RUN apk --no-cache add curl
+# WORKDIR /app
+# COPY --from=builder /app/build ./build
+# COPY package*.json .
+# RUN npm install --production
+# CMD ["npm", "run", "start"]
