@@ -4,7 +4,7 @@ COPY *.json .
 RUN touch /usr/local/bin/husky && chmod +x /usr/local/bin/husky 
 RUN npm i
 RUN npm i -g typescript
-COPY src/ .
+COPY src/ ./src
 RUN tsc
 
 FROM node:lts-alpine 
