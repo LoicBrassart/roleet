@@ -6,7 +6,7 @@
       "e2e/**",
       "files/**",
       "frontend/**",
-      "!frontend/**/generated",
+      "!**/generated",
       "realtime/**",
       "!persist"
     ]
