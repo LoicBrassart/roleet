@@ -1,10 +1,6 @@
 import { useGetStatsQuery } from "@/lib/graphql/generated/graphql-types";
 
 export default function Home() {
-  // const user = useCurrentUser();
-  // if (!user) return <Authentication />;
-  // return <Dashboard />;
-
   const { data } = useGetStatsQuery();
 
   return (
@@ -51,11 +47,11 @@ export default function Home() {
         <>
           <h2>Stats</h2>
           <ul>
-            <li>Scenarios:{data.getStats.scenarios}</li>
-            <li>Utilisateurs:{data.getStats.users}</li>
-            <li>Campagnes:{data.getStats.campaigns}</li>
-            <li>Plans:{data.getStats.plans}</li>
-            <li>Monstres & PNJ:{data.getStats.flashcards}</li>
+            <li>Scenarios:{data.stats.scenarios}</li>
+            <li>Utilisateurs:{data.stats.users}</li>
+            <li>Campagnes:{data.stats.campaigns}</li>
+            <li>Plans:{data.stats.plans}</li>
+            <li>Monstres & PNJ:{data.stats.flashcards}</li>
           </ul>
         </>
       )}

@@ -23,10 +23,9 @@ export default function Chat({ title, data, room }: Props) {
 
     if (message) {
       sendMessage({
-        owner: currentUser,
-        channel: room,
+        ownerId: currentUser.id,
         content: message,
-        // campaign: room,
+        campaignId: room,
       });
       evt.currentTarget.reset();
     }

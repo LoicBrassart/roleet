@@ -1,8 +1,9 @@
 import type {
   GetCampaignAndNotesQuery,
   GetCampaignQuery,
-  GetNotesQuery,
+  // GetMessagesByCampaignQuery,
   GetScenarioQuery,
+  GetTypesQuery,
 } from "@/lib/graphql/generated/graphql-types";
 
 declare namespace Entities {
@@ -12,13 +13,17 @@ declare namespace Entities {
   type PoI = Plan["pointsOfInterest"][number];
 
   type Campaign = NonNullable<GetCampaignQuery["getCampaign"]>;
-  type Message = GetCampaignAndNotesQuery["getMessagesByCampaign"][number];
+  // type Message = GetMessagesByCampaignQuery["messages"][number];
   type Session = Campaign["sessions"][number];
-  type Notes = GetNotesQuery["getNotes"];
+  type Note = GetCampaignAndNotesQuery["getNotes"];
 
   //TODO: Ce serait bien mais je vois pas comment l'avoir - Si porbleme de typage:
   // - fix côté backend
   // - maj comportement store Zustand ?
   // type User = LoginMutation["login"];
+
+  type MessageFull = GetTypesQuery["messages"][number];
+  type MessageShort = ExtractIDs<MessageFull>;
+  type Message = ExtractRels<MessageFull>;
 }
 export type { Entities };
