@@ -1,13 +1,14 @@
 import type { Message } from "../entities/Message";
 
-//TODO: get from codegen ?
 export type MessageFromRealtime = {
-  channel: string;
   content: string;
   createdAt: string;
   owner: {
     id: string;
-    name: string;
+    name: string; // ?
+  };
+  campaign: {
+    id: string;
   };
 };
 

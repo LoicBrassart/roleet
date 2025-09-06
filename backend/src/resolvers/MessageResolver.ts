@@ -5,10 +5,10 @@ import { handleDatabaseError } from "../lib/helpers/handleDatabaseError";
 @InputType()
 class NewMessageInput implements Partial<Message> {
   @Field()
-  channel: string;
+  content: string;
 
   @Field()
-  content: string;
+  campaignId: string;
 
   @Field()
   ownerId: string;
@@ -30,6 +30,7 @@ class MessageResolver {
       ...msgData,
       createdAt: new Date(),
       owner: { id: msgData.ownerId },
+      campaign: { id: msgData.campaignId },
     })
       .save()
       .catch(handleDatabaseError("Failed to create message"));

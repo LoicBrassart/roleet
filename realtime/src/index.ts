@@ -86,8 +86,8 @@ ioServer.on("connection", (socket: AuthenticatedSocket) => {
         content: payload.content,
         createdAt: new Date().toISOString().replace("Z", "").replace("T", " "), // TODO: Think about the type to use for dates
         owner: payload.owner,
-        channel: payload.channel,
-      } satisfies WithoutID<Message> & { channel: string };
+        campaign: payload.campaignId,
+      } satisfies WithoutID<Message>;
       sendToPersist(message);
     });
 

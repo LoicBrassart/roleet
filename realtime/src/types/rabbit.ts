@@ -1,10 +1,12 @@
 type MessageToBackend = {
-  channel: string;
   content: string;
   createdAt: string;
   owner: {
     id: string;
     name: string;
+  };
+  campaign: {
+    id: string;
   };
 };
 

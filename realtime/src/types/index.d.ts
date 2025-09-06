@@ -9,7 +9,6 @@ export interface ClientToServerEvents {
 
 // TODO: get from codegen ?
 export type Message = {
-  // channel: string;
   content: string;
   createdAt: string;
   id: string;
@@ -20,9 +19,9 @@ export type Message = {
 };
 
 export type MessageInput = {
-  channel: string;
   content: string;
   userId: string;
+  campaignId: string;
 };
 
 export type WithoutID<T> = Omit<T, "id">;

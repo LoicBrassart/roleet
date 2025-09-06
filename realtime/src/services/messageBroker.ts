@@ -4,9 +4,7 @@ import type { Message, WithoutID } from "../types";
 
 const rabbitMQ = RabbitMQ.getInstance(`amqp://${process.env.REALTIME_HOST}`);
 
-export default async function sendToPersist(
-  message: WithoutID<Message> & { channel: string },
-) {
+export default async function sendToPersist(message: WithoutID<Message>) {
   await rabbitMQ.sendMessage(message, "newMessage");
 }
 
