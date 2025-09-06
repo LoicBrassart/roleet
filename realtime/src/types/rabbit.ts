@@ -1,25 +1,4 @@
-type MessageToBackend = {
-  content: string;
-  createdAt: string;
-  owner: {
-    id: string;
-    name: string;
-  };
-  campaign: {
-    id: string;
-  };
-};
-
-type Message = {
-  campaign: {
-    id: string;
-  };
-  content: string;
-  owner: {
-    id: string;
-    name: string;
-  };
-};
+import type { MessageFromBackend, MessageToBackend } from "./message";
 
 export declare namespace Rabbit {
   type SendMessage = {
@@ -29,6 +8,6 @@ export declare namespace Rabbit {
 
   type Consume = {
     // QueueName: Données reçues
-    newMessageCallback: Message; //from entity
+    newMessageCallback: MessageFromBackend; //from entity
   };
 }

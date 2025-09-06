@@ -7,8 +7,8 @@ const rabbitMQ = RabbitMQ.getInstance(`amqp://${process.env.REALTIME_HOST}`);
 
 export default function subscribeToMessageBroker() {
   rabbitMQ.consume("newMessage", async (msg) => {
-    const campaign = await Campaign.findOneByOrFail({ id: msg.campaign.id });
-    const owner = await User.findOneByOrFail({ id: msg.owner.id });
+    const campaign = await Campaign.findOneByOrFail({ id: msg.campaignId });
+    const owner = await User.findOneByOrFail({ id: msg.ownerId });
     const newMessage = Message.create();
     newMessage.content = msg.content;
     newMessage.createdAt = new Date(msg.createdAt);
