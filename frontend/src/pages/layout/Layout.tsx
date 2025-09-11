@@ -1,29 +1,24 @@
-import { Outlet, useNavigate } from "react-router";
-import { useLogoutMutation } from "@/lib/graphql/generated/graphql-types";
-import { useLogout } from "@/lib/zustand/userStore";
+import { useState } from "react";
+import { Outlet } from "react-router";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/lib/shadcn/generated/ui/sidebar";
+import AppSidebar from "./AppSidebar";
 
 export default function Layout() {
-  const [logout] = useLogoutMutation();
-  const logoutFromStore = useLogout();
-  const navigate = useNavigate();
-
-  const hLogout = () => {
-    logout();
-    logoutFromStore();
-    navigate("/");
-  };
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <SidebarProvider defaultOpen={false} open={open} onOpenChange={setOpen}>
+      <div className="absolute">
+        <AppSidebar />
+      </div>
+      <SidebarTrigger />
+
       <main className="mb-20 w-dvw overflow-x-hidden p-4">
         <Outlet />
       </main>
-      <footer className="fixed right-0 bottom-0 left-0 bg-black/40 p-4">
-        <h2>DEBUG ZONE</h2>
-        <button type="button" onClick={hLogout}>
-          Logout
-        </button>
-      </footer>
-    </>
+    </SidebarProvider>
   );
 }

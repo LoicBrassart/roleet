@@ -1,35 +1,17 @@
-import { useLogoutMutation } from "@/lib/graphql/generated/graphql-types";
-import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/lib/shadcn/generated/ui/tabs";
-import { useCurrentUser, useLogout } from "@/lib/zustand/userStore";
 import LoginForm from "@/organisms/user/LoginForm";
 import SignupForm from "@/organisms/user/SignupForm";
 
 export default function Authentication() {
-  const currentUser = useCurrentUser();
-  const [logout] = useLogoutMutation();
-  const unsetUserToStore = useLogout();
+  // const currentUser = useCurrentUser();
+  // const navigate = useNavigate();
 
-  const hLogout = () => {
-    logout();
-    unsetUserToStore();
-  };
-
-  if (currentUser?.name)
-    return (
-      <>
-        <p>You're logged in as {currentUser.name}</p>
-        <pre>{JSON.stringify(currentUser, null, 4)}</pre>
-        <Button type="submit" onClick={hLogout}>
-          Se déconnecter
-        </Button>
-      </>
-    );
+  // if (currentUser) navigate("/");
 
   return (
     <Tabs defaultValue="login">

@@ -1,4 +1,9 @@
 name: Compile Code & Send Images to DockerHub
+# [ghub] Create images with stg env
+# [ghub] Send images to DHub
+# [ghub] Ping server
+# [vps] Pull images
+# [vps] Deploy
 
 on:
   push:

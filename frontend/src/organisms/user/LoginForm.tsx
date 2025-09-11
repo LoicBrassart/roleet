@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import type { z } from "zod";
 import { Form } from "@/atoms/Form";
 import { Input } from "@/atoms/Input";
@@ -9,6 +10,7 @@ import { useLogin } from "@/lib/zustand/userStore";
 export default function LoginForm() {
   const [login] = useLoginMutation();
   const setUserToStore = useLogin();
+  const navigate = useNavigate();
 
   const hLogin = async (values: z.infer<typeof loginSchema>) => {
     const { data } = await login({
@@ -18,6 +20,7 @@ export default function LoginForm() {
     if (!data) return;
     const profile = currentUserSchema.parse(data.login);
     setUserToStore(profile);
+    navigate("/dashboard");
   };
 
   const defaultLogin = {
