@@ -5,7 +5,7 @@ import { useEditNotesMutation } from "@/lib/graphql/generated/graphql-types";
 import type { Entities } from "@/types/entities";
 
 type Props = {
-  notes: Entities.Notes;
+  notes: Entities.Note;
 };
 export function CampaignTabNotes({ notes }: Props) {
   const [content, setContent] = useState(notes.content);
