@@ -6,9 +6,11 @@
       "e2e/**",
       "files/**",
       "frontend/**",
+      "!frontend/**/generated",
       "realtime/**",
-      "!**/generated",
-      "!persist"
+      "!persist",
+      "shared/**",
+      "!shared/**/generated"
     ]
   },
   "formatter": { "indentStyle": "space" },

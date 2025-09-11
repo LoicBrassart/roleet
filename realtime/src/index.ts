@@ -6,12 +6,8 @@ import { Server, type Socket } from "socket.io";
 import sendToPersist, {
   subscribeToMessageBroker,
 } from "./services/messageBroker";
-import type {
-  ClientToServerEvents,
-  Message,
-  ServerToClientEvents,
-  WithoutID,
-} from "./types";
+import type { ClientToServerEvents, ServerToClientEvents } from "./types";
+import type { MessageToBackend } from "./types/message";
 
 type jwtContent = {
   id: string;
@@ -19,7 +15,8 @@ type jwtContent = {
   name: string;
   roles: string[];
 };
-interface AuthenticatedSocket extends Socket {
+interface AuthenticatedSocket
+  extends Socket<ClientToServerEvents, ServerToClientEvents> {
   decodedToken?: jwtContent;
 }
 
@@ -82,12 +79,12 @@ ioServer.on("connection", (socket: AuthenticatedSocket) => {
     });
 
     socket.on("send_message", async (payload) => {
-      const message = {
+      const message: MessageToBackend = {
         content: payload.content,
         createdAt: new Date().toISOString().replace("Z", "").replace("T", " "), // TODO: Think about the type to use for dates
-        owner: payload.owner,
-        channel: payload.channel,
-      } satisfies WithoutID<Message> & { channel: string };
+        ownerId: payload.ownerId,
+        campaignId: payload.campaignId,
+      };
       sendToPersist(message);
     });
 

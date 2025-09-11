@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import { type FormEvent, useEffect, useRef } from "react";
 import { useChat } from "@/lib/hooks/useChat";
 import { useCurrentUser } from "@/lib/zustand/userStore";
 import { List } from "@/molecules/List";
@@ -13,6 +13,13 @@ type Props = {
 export default function Chat({ title, data, room }: Props) {
   const { messages, sendMessage, isConnected } = useChat(room, data);
   const currentUser = useCurrentUser();
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (messages.length) {
+      ref.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    }
+  }, [messages.length]);
+
   if (!currentUser) return <p>Connectez vous pour accéder au Chat</p>;
 
   const hSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -23,10 +30,9 @@ export default function Chat({ title, data, room }: Props) {
 
     if (message) {
       sendMessage({
-        owner: currentUser,
-        channel: room,
+        ownerId: currentUser.id,
         content: message,
-        // campaign: room,
+        campaignId: room,
       });
       evt.currentTarget.reset();
     }
@@ -41,7 +47,7 @@ export default function Chat({ title, data, room }: Props) {
     );
 
   return (
-    <>
+    <div ref={ref} className="">
       <List
         title={`${title} (${isConnected ? "🟢" : "🔴"})`}
         data={messages}
@@ -58,6 +64,6 @@ export default function Chat({ title, data, room }: Props) {
         <input type="text" name="msg" placeholder="Message..." />
         <input type="submit" value="Envoyer" />
       </form>
-    </>
+    </div>
   );
 }

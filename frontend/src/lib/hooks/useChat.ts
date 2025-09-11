@@ -9,11 +9,9 @@ export function useChat(room: string, initialMessages: Entities.Message[]) {
   >();
   const [messages, setMessages] = useState(initialMessages);
 
-  const sendMessage = (
-    message: Omit<Entities.Message, "id" | "createdAt"> & { channel: string },
-  ) => {
+  const sendMessage: ClientToServerEvents["send_message"] = (message) => {
     if (!socket) return;
-    socket.emit("send_message", { ...message, campaign: room });
+    socket.emit("send_message", message);
   };
 
   useEffect(() => {

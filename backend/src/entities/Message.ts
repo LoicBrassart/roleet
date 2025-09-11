@@ -16,10 +16,6 @@ export class Message extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  // @Field()
-  // @Column()
-  // channel: string;
-
   @Field()
   @Column()
   content: string;

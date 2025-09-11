@@ -1,9 +1,28 @@
 name: Deploy to prod & Code Release
+# [ghub] Create changelog
+# [ghub] Create new tag
+# [ghub] Create release
+# [ghub] Push to main
+# [ghub] Create images with prd env
+# [ghub] Send images to DHub
+# [ghub] Ping server
+# [vps] Pull images
+# [vps] Backup database
+# [vps] Deploy
 
 on:
   workflow_dispatch:
 
 jobs:
+  notify-server:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Notify server
+        run: |
+          curl -X POST ${{ secrets.SERVER_DOMAIN }}/hooks/dockerhub-${{ secrets.APP_NAME }}
+
   deploy:
     runs-on: ubuntu-latest
     environment: production
