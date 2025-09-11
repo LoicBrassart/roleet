@@ -3,8 +3,12 @@ name: Deploy to prod & Code Release
 # [ghub] Create new tag
 # [ghub] Create release
 # [ghub] Push to main
+# [ghub] Create images with prd env
+# [ghub] Send images to DHub
+# [ghub] Ping server
+# [vps] Pull images
 # [vps] Backup database
-# [vps] Deploy to prod
+# [vps] Deploy
 
 on:
   workflow_dispatch:
