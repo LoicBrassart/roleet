@@ -8,7 +8,9 @@
       "frontend/**",
       "!frontend/**/generated",
       "realtime/**",
-      "!persist"
+      "!persist",
+      "shared/**",
+      "!shared/**/generated"
     ]
   },
   "formatter": { "indentStyle": "space" },
