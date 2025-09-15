@@ -6,55 +6,55 @@ x-baseService: &baseService
     retries: 100
 
 services:
-  gateway-prd:
+  gateway-stg:
     <<: *baseService
-    container_name: gateway-prd
+    container_name: gateway-stg
     image: nginx
     volumes:
-      - ./nginx.prd.conf:/etc/nginx/nginx.conf
+      - ./nginx.stg.conf:/etc/nginx/nginx.conf
     ports:
       - ${GATEWAY_PORT}:80
     depends_on:
-      backend-prd:
+      backend-stg:
         condition: service_healthy
-      files-prd:
+      files-stg:
         condition: service_healthy
-      frontend-prd:
+      frontend-stg:
         condition: service_healthy
-      realtime-prd:
+      realtime-stg:
         condition: service_started
 
-  db-prd:
+  db-stg:
     <<: *baseService
-    container_name: db-prd
+    container_name: db-stg
     image: postgres
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d ${DB_DATABASE} -U ${DB_USER}"]
     volumes:
-      - ./persist/db-prd:/var/lib/postgresql/data
+      - ./persist/db-stg:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_HOST: ${DB_HOST}
 
-  backend-prd:
+  backend-stg:
     <<: *baseService
-    container_name: backend-prd
+    container_name: backend-stg
     build:
       context: ./backend
-      dockerfile: Dockerfile.prd
+      dockerfile: Dockerfile.stg
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-prd:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
+          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-stg:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
         ]
     depends_on:
-      db-prd:
+      db-stg:
         condition: service_healthy
     volumes:
-      - ./persist/backend-prd:/app/static
+      - ./persist/backend-stg:/app/static
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
@@ -63,52 +63,52 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_TTL: ${COOKIE_TTL}
 
-  files-prd:
+  files-stg:
     <<: *baseService
-    container_name: files-prd
+    container_name: files-stg
     build:
       context: ./files
-      dockerfile: Dockerfile.prd
+      dockerfile: Dockerfile.stg
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://files-prd:4000/health'|| exit 1",
+          "curl --fail --request GET --url 'http://files-stg:4000/health'|| exit 1",
         ]
     volumes:
-      - ./persist/files-prd:/app/public
+      - ./persist/files-stg:/app/public
 
-  realtime-prd:
+  realtime-stg:
     <<: *baseService
-    container_name: realtime-prd
+    container_name: realtime-stg
     build:
       context: ./realtime
-      dockerfile: Dockerfile.prd
+      dockerfile: Dockerfile.stg
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://realtime-prd:4000/health'|| exit 1",
+          "curl --fail --request GET --url 'http://realtime-stg:4000/health'|| exit 1",
         ]
 
-  frontend-prd:
+  frontend-stg:
     <<: *baseService
-    container_name: frontend-prd
+    container_name: frontend-stg
     build:
       context: ./frontend
-      dockerfile: Dockerfile.prd
+      dockerfile: Dockerfile.stg
     healthcheck:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://frontend-prd:5173' || exit 1",
+          "curl --fail --request GET --url 'http://frontend-stg:5173' || exit 1",
         ]
     environment:
       VITE_API_URL: ${VITE_API_URL}
       VITE_WS_URL: ${VITE_WS_URL}
 
-  rabbit-prd:
-    container_name: rabbit-prd
+  rabbit-stg:
+    container_name: rabbit-stg
     <<: *baseService
     image: rabbitmq
     volumes:

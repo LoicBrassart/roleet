@@ -3,6 +3,7 @@
 **/node_modules/
 **/.env.*
 persist/
+**/build/
 
 # Playwright
 /test-results/

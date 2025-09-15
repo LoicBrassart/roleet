@@ -1,19 +1,24 @@
 name: Compile Code & Send Images to DockerHub
-# [ghub] Create images with stg env
-# [ghub] Send images to DHub
+# When code is committed to `staging` through a PR, we want to automatically deploy the staging environment on the server
+# [ghub] For every service:
+# [ghub]  Create image with 'stg' env
+# [ghub]  Send image to DHub
 # [ghub] Ping server
-# [vps] Pull images
-# [vps] Deploy
+# [vps] Deploy 'stg' environment
 
 on:
   push:
     branches:
       - staging
 
+concurrency:
+  group: staging-deploy
+  cancel-in-progress: true
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     strategy:
       matrix:
         # Add services here
@@ -36,19 +41,34 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ matrix.service }}-${{ github.ref_name }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-${{ matrix.service }}-
+
       - name: Build and push images
         uses: docker/build-push-action@v3
         with:
           context: ./${{ matrix.service }}
-          file: ./${{ matrix.service }}/Dockerfile.prd
+          file: ./${{ matrix.service }}/Dockerfile.stg
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}-${{ matrix.service }}:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}-${{ matrix.service }}:staging
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache || true
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache || true
 
   notify-server:
     needs: build-and-push
     runs-on: ubuntu-latest
-    environment: production
+    environment: staging
     steps:
-      - name: Notify server
+      - name: Notify staging server
         run: |
-          curl -X POST ${{ secrets.SERVER_DOMAIN }}/hooks/dockerhub-${{ secrets.APP_NAME }}
+          curl -f -X POST ${{ secrets.SERVER_DOMAIN }}/hooks/staging-${{ secrets.APP_NAME }}
