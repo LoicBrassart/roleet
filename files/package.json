@@ -4,8 +4,9 @@
   "description": "",
   "scripts": {
     "dev": "nodemon --exec ts-node -- ./src/index.ts",
-    "start": "echo 'TODO: Run prod command'",
-    "test": "vitest"
+    "test": "vitest",
+    "build": "npx tsc",
+    "start": "node build/index.js"
   },
   "keywords": [],
   "author": "",
