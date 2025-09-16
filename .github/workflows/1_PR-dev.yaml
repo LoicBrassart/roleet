@@ -28,6 +28,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Debug list service dir
+        run: |
+          echo "Service = ${{ matrix.service }}"
+          ls -la ${{ matrix.service }} || true
+          echo "Existence package-lock:"
+          [ -f ${{ matrix.service }}/package-lock.json ] && echo "OK" || echo "MISSING"
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
