@@ -32,12 +32,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-          cache-dependency-path: |
-            frontend/package-lock.json
-            backend/package-lock.json
-            files/package-lock.json
-            realtime/package-lock.json
+
+      - name: Cache npm for ${{ matrix.service }}
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            ${{ matrix.service }}/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.service }}-${{ hashFiles(format('{0}/package-lock.json', matrix.service)) }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.service }}-
 
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
