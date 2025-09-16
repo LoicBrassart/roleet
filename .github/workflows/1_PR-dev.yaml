@@ -28,19 +28,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Debug list service dir
-        run: |
-          echo "Service = ${{ matrix.service }}"
-          ls -la ${{ matrix.service }} || true
-          echo "Existence package-lock:"
-          [ -f ${{ matrix.service }}/package-lock.json ] && echo "OK" || echo "MISSING"
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-          cache-dependency-path: ${{ matrix.service }}/package-lock.json
+
+      - name: Cache npm for ${{ matrix.service }}
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.npm
+            ${{ matrix.service }}/node_modules
+          key: ${{ runner.os }}-node-${{ matrix.service }}-${{ hashFiles(format('{0}/package-lock.json', matrix.service)) }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.service }}-
 
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
