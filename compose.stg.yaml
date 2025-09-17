@@ -1,0 +1,123 @@
+x-baseService: &baseService
+  restart: always
+  healthcheck:
+    interval: 1s
+    timeout: 2s
+    retries: 100
+
+services:
+  gateway-stg:
+    <<: *baseService
+    container_name: gateway-stg
+    image: nginx
+    volumes:
+      - ./nginx.stg.conf:/etc/nginx/nginx.conf
+    ports:
+      - ${GATEWAY_PORT}:80
+    depends_on:
+      backend-stg:
+        condition: service_healthy
+      files-stg:
+        condition: service_healthy
+      frontend-stg:
+        condition: service_healthy
+      realtime-stg:
+        condition: service_started
+
+  db-stg:
+    <<: *baseService
+    container_name: db-stg
+    image: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${DB_DATABASE} -U ${DB_USER}"]
+    volumes:
+      - ./persist/db-stg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_HOST: ${DB_HOST}
+
+  backend-stg:
+    <<: *baseService
+    container_name: backend-stg
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.stg
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-stg:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
+        ]
+    depends_on:
+      db-stg:
+        condition: service_healthy
+    volumes:
+      - ./persist/backend-stg:/app/static
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_HOST: ${DB_HOST}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_TTL: ${COOKIE_TTL}
+
+  files-stg:
+    <<: *baseService
+    container_name: files-stg
+    build:
+      context: ./files
+      dockerfile: Dockerfile.stg
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://files-stg:4000/health'|| exit 1",
+        ]
+    volumes:
+      - ./persist/files-stg:/app/public
+
+  realtime-stg:
+    <<: *baseService
+    container_name: realtime-stg
+    build:
+      context: ./realtime
+      dockerfile: Dockerfile.stg
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://realtime-stg:4000/health'|| exit 1",
+        ]
+
+  frontend-stg:
+    <<: *baseService
+    container_name: frontend-stg
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.stg
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail --request GET --url 'http://frontend-stg:5173' || exit 1",
+        ]
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_WS_URL: ${VITE_WS_URL}
+
+  rabbit-stg:
+    container_name: rabbit-stg
+    <<: *baseService
+    image: rabbitmq
+    volumes:
+      - ./persist/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./persist/rabbitmq/log/:/var/log/rabbitmq
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping || exit 1"]
+    ports:
+      - 5672:5672
+    command: >
+      sh -c "
+      rabbitmq-plugins enable rabbitmq-server"

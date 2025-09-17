@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "npm run db:fixtures && nodemon --exec ts-node -- ./src/index.ts",
-    "start": "node build/index.js",
     "db:fixtures": "ts-node ./src/scripts/fixtures/script.ts",
-    "unit-tests": "echo 'TODO: Run Unit Tests'",
-    "integration-tests": "echo 'TODO: Run Integration Tests'"
+    "dev": "npm run db:fixtures && nodemon --exec ts-node -- ./src/index.ts",
+    "test": "vitest",
+    "build": "npx tsc",
+    "start": "node build/index.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "graphql": "^16.11.0",
     "graphql-scalars": "^1.24.2",
     "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.7.1",
     "pg": "^8.16.0",
     "redis": "^4.0.0",
     "reflect-metadata": "^0.2.2",
@@ -30,10 +31,13 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/luxon": "^3.7.1",
     "@types/node": "^24.0.0",
     "eslint": "^9.28.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "unplugin-swc": "^1.5.5",
+    "vitest": "^3.2.4"
   }
 }

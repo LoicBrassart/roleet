@@ -1,33 +1,42 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
   "files": {
-    "ignore": [
-      "**/build/*",
-      "**/*.template.*",
-      "**/generated/*",
-      "**/tsconfig*.json",
-      "coverage",
-      "**/node_modules",
-      "persist/"
+    "includes": [
+      "backend/**",
+      "e2e/**",
+      "files/**",
+      "frontend/**",
+      "!frontend/**/generated",
+      "realtime/**",
+      "!persist",
+      "shared/**",
+      "!shared/**/generated"
     ]
   },
   "formatter": { "indentStyle": "space" },
-  "organizeImports": { "enabled": true },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noConsoleLog": "warn"
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["assert", "error", "info", "warn"]
+          }
+        }
       },
       "correctness": {
         "noUnusedVariables": {
           "fix": "safe",
-          "level": "error"
+          "level": "error",
+          "options": {}
         },
         "noUnusedImports": {
           "fix": "safe",
-          "level": "error"
+          "level": "error",
+          "options": {}
         }
       },
       "nursery": {

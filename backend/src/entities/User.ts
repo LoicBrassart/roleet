@@ -9,6 +9,8 @@ import {
 } from "typeorm";
 import { Campaign } from "./Campaign";
 import { Flashcard } from "./FlashCard";
+import { Message } from "./Message";
+import { Note } from "./Note";
 import { Plan } from "./Plan";
 import { PointOfInterest } from "./PointOfInterest";
 import { Scenario } from "./Scenario";
@@ -28,7 +30,7 @@ registerEnumType(Role, {
 export class User extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")
-  readonly id!: string;
+  readonly id: string;
 
   @Field()
   @Column({ unique: true })
@@ -116,4 +118,24 @@ export class User extends BaseEntity {
     },
   )
   ownedCampaigns: Campaign[];
+
+  @Field(() => [Message])
+  @OneToMany(
+    () => Message,
+    (message) => message.owner,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  ownedMessages: Message[];
+
+  @Field(() => [Note])
+  @OneToMany(
+    () => Note,
+    (note) => note.owner,
+    {
+      onDelete: "CASCADE",
+    },
+  )
+  ownedNotes: Note[];
 }

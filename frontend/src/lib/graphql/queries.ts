@@ -104,6 +104,7 @@ export const GET_MY_CAMPAIGNS = gql`
     getMyCampaigns {
       id
       bannerUrl
+      title
       storyteller {
         id
         name
@@ -116,7 +117,12 @@ export const GET_MY_CAMPAIGNS = gql`
         id
         name
       }
-      title
+      sessions {
+        id
+        location
+        programmedAt
+        summary
+      }
     }
   }
 `;
@@ -141,9 +147,14 @@ export const GET_CAMPAIGN = gql`
       }
       messages {
         id
-        channel
         content
         createdAt
+      }
+      sessions {
+        id
+        location
+        programmedAt
+        summary
       }
     }
   }
@@ -185,17 +196,6 @@ export const UPDATE_SCENARIO = gql`
   }
 `;
 
-export const GET_ALL_MESSAGES = gql`
-  query getAllMessages {
-    getAllMessages {
-      id
-      channel
-      content
-      createdAt
-    }
-  }
-`;
-
 export const CREATE_POI = gql`
   mutation createPointOfInterest($data: NewPointOfInterestInput!) {
     createPointOfInterest(data: $data) {
@@ -228,6 +228,34 @@ export const UPDATE_PLAN = gql`
   }
 `;
 
+export const GET_PLAN = gql`
+  query getPlan($id: String!) {
+    getPlan(id: $id) {
+      id
+      title
+      description
+      pictureUrl
+      owner {
+        id
+      }
+      pointsOfInterest {
+        id
+        code
+        title
+        description
+      }
+      scenario {
+        id
+        bannerUrl
+        credits
+        fullStory
+        teaser
+        title
+      }
+    }
+  }
+`;
+
 export const GET_STATS = gql`
   query getStats {
     getStats {
@@ -236,6 +264,64 @@ export const GET_STATS = gql`
       plans
       scenarios
       users
+    }
+  }
+`;
+
+export const GET_NOTES = gql`
+  query getNotes($campaignId: String!) {
+    getNotes(campaignId: $campaignId) {
+      id
+      content
+    }
+  }
+`;
+
+export const GET_CAMPAIGN_AND_NOTES = gql`
+  query getCampaignAndNotes($campaignId: String!) {
+    getCampaign(id: $campaignId) {
+      id
+      bannerUrl
+      title
+      storyteller {
+        id
+        name
+      }
+      scenarios {
+        id
+        title
+      }
+      players {
+        id
+        name
+      }
+      sessions {
+        id
+        location
+        programmedAt
+        summary
+      }
+    }
+    getNotes(campaignId: $campaignId) {
+      id
+      content
+    }
+    getMessagesByCampaign(id: $campaignId) {
+      id
+      content
+      createdAt
+      owner {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const EDIT_PLAN = gql`
+  mutation EditNotes($noteId: String!, $content: String!) {
+    editNotes(noteId: $noteId, content: $content) {
+      id
     }
   }
 `;

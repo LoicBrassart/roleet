@@ -1,12 +1,6 @@
-import { buttonVariants } from "@/lib/shadcn/generated/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/lib/shadcn/generated/ui/dialog";
+import { Link, useNavigate } from "react-router";
+import { useLogoutMutation } from "@/lib/graphql/generated/graphql-types";
+import { Button } from "@/lib/shadcn/generated/ui/button";
 import {
   Sidebar,
   SidebarContent,
@@ -16,11 +10,20 @@ import {
   SidebarHeader,
   SidebarTrigger,
 } from "@/lib/shadcn/generated/ui/sidebar";
-import { Link } from "react-router-dom";
-import CampaignForm from "../../organisms/Campaign/CampaignForm";
-import ScenarioForm from "../../organisms/Scenario/ScenarioForm";
+import { useCurrentUser, useLogout } from "@/lib/zustand/userStore";
 
 export default function AppSidebar() {
+  const [logout] = useLogoutMutation();
+  const logoutFromStore = useLogout();
+  const navigate = useNavigate();
+  const user = useCurrentUser();
+
+  const hLogout = () => {
+    logout();
+    logoutFromStore();
+    navigate("/");
+  };
+
   return (
     <Sidebar>
       <SidebarHeader className="flex flex-row justify-between">
@@ -31,48 +34,14 @@ export default function AppSidebar() {
           <SidebarGroupLabel>Pages publiques</SidebarGroupLabel>
           <Link to="/">Home</Link>
           <Link to="/auth">Authentification</Link>
-          <Link to="/scenarios">Scenarios</Link>
         </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Pages personnalisées</SidebarGroupLabel>
-          <Link to="/dashboard">Dashboard</Link>
-          <Link to="/campaigns">Mes Campagnes</Link>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Créer de nouveaux éléments</SidebarGroupLabel>
-          <div className="space-y-2 [&>*]:w-full">
-            <Dialog>
-              <DialogTrigger className={buttonVariants()}>
-                Créer une campagne
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>D'humeur créatrice ?</DialogTitle>
-                  <DialogDescription>
-                    Vous pouvez ici renseigner les premières infos pour votre
-                    nouvelle campagne
-                  </DialogDescription>
-                </DialogHeader>
-                <CampaignForm />
-              </DialogContent>
-            </Dialog>
-            <Dialog>
-              <DialogTrigger className={buttonVariants()}>
-                Créer un scénario
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>D'humeur créatrice ?</DialogTitle>
-                  <DialogDescription>
-                    Vous pouvez ici renseigner les premières infos pour votre
-                    nouveau scenario
-                  </DialogDescription>
-                </DialogHeader>
-                <ScenarioForm />
-              </DialogContent>
-            </Dialog>
-          </div>
-        </SidebarGroup>
+        {user && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Pages personnalisées</SidebarGroupLabel>
+            <Link to="/dashboard">Mes campagnes</Link>
+            <Button onClick={hLogout}>Logout</Button>
+          </SidebarGroup>
+        )}
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>

@@ -14,29 +14,25 @@ import { User } from "./User";
 export class Message extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")
-  readonly id!: string;
+  readonly id: string;
 
   @Field()
   @Column()
-  channel!: string;
+  content: string;
 
   @Field()
   @Column()
-  content!: string;
-
-  @Field()
-  @Column()
-  createdAt!: Date;
+  createdAt: Date;
 
   @Field(() => User)
   @ManyToOne(
     () => User,
-    (user) => user.ownedPointsOfInterest,
+    (user) => user.ownedMessages,
     {
       onDelete: "CASCADE",
     },
   )
-  owner!: User;
+  owner: User;
 
   @Field(() => Campaign)
   @ManyToOne(
@@ -46,5 +42,5 @@ export class Message extends BaseEntity {
       onDelete: "CASCADE",
     },
   )
-  campaign!: Campaign;
+  campaign: Campaign;
 }

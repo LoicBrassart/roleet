@@ -1,76 +1,115 @@
 name: Deploy to prod & Code Release
+# When we manually trigger this job, we want to create code artifacts (changelog, tag, release, etc) and deploy the prod environment on the server
+# [ghub] Create changelog
+# [ghub] Create new tag
+# [ghub] Create release
+# [ghub] Push to main
+# [ghub] For every service:
+# [ghub]  Create image with 'prd' env
+# [ghub]  Send image to DHub
+# [ghub] Ping server
+# [vps] Pull images
+# [vps] Backup database prd
+# [vps] Deploy 'prd' environment
 
 on:
   workflow_dispatch:
 
+concurrency:
+  group: prod-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: write # can write on the repository
+
 jobs:
-  deploy:
+  prepare-release:
     runs-on: ubuntu-latest
     environment: production
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: staging
+          fetch-depth: 0 # To get commit messages
 
-      - name: Setup Git
+      - name: Set release tag
+        id: tag
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          TAG=$(date +'%Y.%m.%d-%H%M')
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Get latest version tag
-        run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0 --match 'v*' || echo "v0.0.0")
-          echo "LATEST_TAG=${LATEST_TAG}" >> $GITHUB_ENV
+      - name: Generate changelog
+        run:
+          | # TODO: remplacer par ton outil préféré (release-please, git-chglog, etc.)
+          echo "## Changelog ${{ steps.tag.outputs.tag }}" > CHANGELOG.md
+          git log $(git describe --tags --abbrev=0)..HEAD --oneline >> CHANGELOG.md
 
-      - name: Create new tag
-        run: |
-          LATEST_TAG=${{ env.LATEST_TAG }}
-          echo "Last tag: $LATEST_TAG"
-
-          VERSION=$(echo $LATEST_TAG | sed 's/^v//')
-          IFS='.' read -r -a VERSION_PARTS <<< "$VERSION"
-          MAJOR=${VERSION_PARTS[0]}
-          MINOR=${VERSION_PARTS[1]}
-          PATCH=${VERSION_PARTS[2]}
-
-          PATCH=$((PATCH + 1))
-          NEW_TAG="v$MAJOR.$MINOR.$PATCH"
-          
-          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-          echo "New tag: $NEW_TAG"
-
-          git tag -a $NEW_TAG -m "Release $NEW_TAG"
-          git push origin $NEW_TAG
+      - name: Commit changelog and push to main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Changelog
         run: |
-          git fetch --tags
-          git log ${{ env.LATEST_TAG }}..HEAD --pretty=format:"* %s" > CHANGELOG.md
-          git add CHANGELOG.md
-          git commit -m "Update CHANGELOG.md for ${{ env.LATEST_TAG }}"
-          git push origin staging
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Update main branch
-        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout main
-          git merge --no-ff staging
+          git merge origin/staging --no-ff -m "Merge staging into main for release ${{ steps.tag.outputs.tag }}"
+          git add CHANGELOG.md
+          git commit -m "chore: update changelog for release ${{ steps.tag.outputs.tag }}"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git push origin main
+
+      - name: Create GitHub tag
+        run: |
+          git tag ${{ steps.tag.outputs.tag }}
+          git push origin ${{ steps.tag.outputs.tag }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Release
-        uses: actions/create-release@v1
-        with: 
-          tag_name: ${{ env.NEW_TAG }}
-          release_name: "Release ${{ env.NEW_TAG }}"
-          body_path: ./CHANGELOG.md
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # build-and-push:
+  #   needs: prepare-release
+  #   runs-on: ubuntu-latest
+  #   environment: production
+  #   strategy:
+  #     matrix:
+  #       service:
+  #         - frontend
+  #         - backend
+  #         - files
+  #         - realtime
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+
+  #     - name: Login to Docker Hub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ secrets.DOCKER_HUB_USERNAME }}
+  #         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
+
+  #     - name: Build and push prod image
+  #       uses: docker/build-push-action@v3
+  #       with:
+  #         context: ./${{ matrix.service }}
+  #         file: ./${{ matrix.service }}/Dockerfile.prd
+  #         push: true
+  #         tags: |
+  #           ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}-${{ matrix.service }}:${{ needs.prepare-release.outputs.tag }}
+  #           ${{ secrets.DOCKER_HUB_USERNAME }}/${{ secrets.APP_NAME }}-${{ matrix.service }}:latest
+
+  # notify-server:
+  #   needs: build-and-push
+  #   runs-on: ubuntu-latest
+  #   environment: production
+  #   steps:
+  #     - name: Notify production server
+  #       run: |
+  #         curl -f -X POST ${{ secrets.SERVER_DOMAIN }}/hooks/prod-${{ secrets.APP_NAME }}

@@ -1,13 +1,13 @@
-import type { Message } from "../entities/Message";
+import type { MessageFromBackend, MessageToBackend } from "./message";
 
 export declare namespace Rabbit {
   type SendMessage = {
     // QueueName: Données envoyées
-    newMessage: Message;
+    newMessage: MessageToBackend;
   };
 
   type Consume = {
     // QueueName: Données reçues
-    newMessageCallback: Message;
+    newMessageCallback: MessageFromBackend; //from entity
   };
 }

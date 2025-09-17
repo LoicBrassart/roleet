@@ -19,8 +19,8 @@ services:
         condition: service_healthy
       files-prd:
         condition: service_healthy
-      # frontend-prd:
-      #   condition: service_healthy
+      frontend-prd:
+        condition: service_healthy
       realtime-prd:
         condition: service_started
 

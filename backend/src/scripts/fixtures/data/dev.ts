@@ -1,55 +1,387 @@
+import { DateTime } from "luxon";
 import { Role } from "../../../entities/User";
 
 const scenarios = [
   {
+    id: "cea0df48-769a-4340-9b8b-c57f58eebb8d",
     title: "A la chasse aux gobs",
     ownerIndex: 0,
     teaser:
       "Depuis environ deux semaines, plusieurs villageois ont aperçu sur la colline, à l'ouest, des gobelins.",
     fullStory: `## Contexte
-Fial est un village tranquille niché au creux de la grande vallée du Saril, à l'est de la province d'Egonzasthan, et placé sous l'autorité du chevalier de Saint-Bris. Depuis environ deux semaines, plusieurs villageois ont aperçu sur la colline, à l'ouest, des gobelins. Toutefois, jusque-là, aucun raid de ces petites créatures maléfiques n'est à déplorer. Gérald de Flamberge, le régisseur de Saint-Bris, a été prévenu, mais le chevalier a d'autres chats à fouetter pour le moment, en particulier une bande d'orques qui sévit dans les montagnes au sud-est de Fial et qui représente un danger bien plus important. De Flamberge, pour sa part, n'a que deux soldats à ses ordres, et il préfère les garder au village avec lui plutôt que de les envoyer prendre des risques dans la forêt.
+Fial est un village tranquille niché au creux de la grande vallée du Saril, à l'est de la province d'Egonzasthan, et placé sous l'autorité du chevalier de Saint-Bris.
+
+Depuis environ deux semaines, plusieurs villageois ont aperçu sur la colline, à l'ouest, des gobelins. Toutefois, jusque-là, aucun raid de ces petites créatures maléfiques n'est à déplorer. Gérald de Flamberge, le régisseur de Saint-Bris, a été prévenu, mais le chevalier a d'autres chats à fouetter pour le moment, en particulier une bande d'orques qui sévit dans les montagnes au sud-est de Fial et qui représente un danger bien plus important. De Flamberge, pour sa part, n'a que deux soldats à ses ordres, et il préfère les garder au village avec lui plutôt que de les envoyer prendre des risques dans la forêt.
 
 ## Au md
-Ce scénario délibérément simpliste s'adresse à des joueurs débutants. Comme première aventure, il devrait leur permettre de se familiariser avec les règles de base et de  écouvrir quelques spécificités du jeu comme les pièges, les passages secrets et les objets magiques. Faites une description physique des gobelins aux joueurs avant de  commencer.
+Ce scénario délibérément simpliste s'adresse à des joueurs débutants. Comme première aventure, il devrait leur permettre de se familiariser avec les règles de base et de découvrir quelques spécificités du jeu comme les pièges, les passages secrets et les objets magiques.
+
+Faites une description physique des gobelins aux joueurs avant de commencer.
 
 ## Accroches d'aventures
-Un ou plusieurs des personnages sont natifs du village de Fial. Les autres pourraient leur avoir rendu visite. 
+Un ou plusieurs des personnages sont natifs du village de Fial. Les autres pourraient leur avoir rendu visite.
 
 ## Le village de Fial
 Le village de Fial et plusieurs de ses habitants sont décrits en détails sur www.aidedd.org dans la rubrique Univers.
 
-# Introduction
+## Introduction
 En début d'après-midi, Thron, le forgeron qui fait également office de chef du village, convoque les personnages.
 
-> Mes enfants, vous êtes les jeunes les plus aguerris du village, et certains d'entre vous sont des amis de ma fille Lanéa. Un commis du vieil Erdrios, le meunier, vient de m'apprendre qu'il vient de voir sur la colline un petit groupe de gobelins portant une jeune femme qui ressemblait beaucoup à ma fille. Or justement Lanéa est partie tôt ce  matin dans cette direction, et elle n'est pas revenue à l'heure du repas. Je ne vous cache pas ma préoccupation, et si sa mère l'apprend, elle risque de mourir d'inquiétude. Alors en toute franchise, je voudrais vous demander un énorme service : pourriez-vous aller vérifier si c'est bien ma fille que ces monstres ont attrapée et, si vous le pensez possible, en profiter pour la délivrer des mains de ces créatures ? Si j'y vais moi, ma femme va se douter que quelque chose de grave est en train de se passer.
+> Mes enfants, vous êtes les jeunes les plus aguerris du village, et certains d'entre vous sont des amis de ma fille Lanéa.
+ Un commis du vieil Erdrios, le meunier, vient de m'apprendre qu'il vient de voir sur la colline un petit groupe de gobelins portant une jeune femme qui ressemblait beaucoup à ma fille. Or justement Lanéa est partie tôt ce matin dans cette direction, et elle n'est pas revenue à l'heure du repas. Je ne vous cache pas ma préoccupation, et si sa mère l'apprend, elle risque de mourir d'inquiétude.
+ Alors en toute franchise, je voudrais vous demander un énorme service : pourriez-vous aller vérifier si c'est bien ma fille que ces monstres ont attrapée et, si vous le pensez possible, en profiter pour la délivrer des mains de ces créatures ? Si j'y vais moi, ma femme va se douter que quelque chose de grave est en train de se passer.
 
-Le commis du meunier, qui a suivi de loin les gobelins, pourra indiquer au groupe où se situe l'entrée de leur antre, à environ trois heures de marche à l'ouest, dans les  collines, mais il se gardera bien, personnellement, de s'approcher trop près.
+Le commis du meunier, qui a suivi de loin les gobelins, pourra indiquer au groupe où se situe l'entrée de leur antre, à environ trois heures de marche à l'ouest, dans les collines, mais il se gardera bien, personnellement, de s'approcher trop près.
 
 De plus, si les personnages posent quelques questions aux autres villageois avant de partir, ils apprennent également qu'un gobelours, un monstre bien plus grand et bien plus fort qu'un gobelin, a également été aperçu du même côté il y a quelques jours.
 
 ## En chemin
-Si le groupe se met en route immédiatement, les personnages arrivent en vue de l'entrée de la grotte en fin d'après-midi, et ils ont 20% de chance de se faire attaquer à quelques encablures de l'antre par un groupe de deux gobelins en patrouille. 
+Si le groupe se met en route immédiatement, les personnages arrivent en vue de l'entrée de la grotte en fin d'après-midi, et ils ont 20% de chance de se faire attaquer à quelques encablures de l'antre par un groupe de deux gobelins en patrouille.
 
 Si pour une raison ou une autre ils ne parviennent sur place qu'à la nuit tombée, les chances d'attaque passent alors à 80% et la patrouille est composée de trois gobelins.
 
 Chaque gobelin possède 18 pa.
 
-> Après cette incartade, vous arrivez enfin en vue de la grotte. L'entrée est bloquée par une grosse porte en bois fermée à clef, avec des montants en fer et une grosse serrure. La porte est plutôt solide (Force DD 15 pour l'enfoncer) mais la serrure est particulièrement grossière (Dextérité DD 10 pour l'ouvrir, à condition d'avoir des outils de voleur).`,
+> Après cette incartade, vous arrivez enfin en vue de la grotte. L'entrée est bloquée par une grosse porte en bois fermée à clef, avec des montants en fer et une grosse serrure.
+
+La porte est plutôt solide (Force DD 15 pour l'enfoncer) mais la serrure est particulièrement grossière (Dextérité DD 10 pour l'ouvrir, à condition d'avoir des outils de voleur).
+
+## L'antre des gobelins
+**Plafonds:** Tous les plafonds sont à environ 3 mètres de haut. 
+**Lumière:** Par défaut les couloirs sont obscurs et les salles éclairées par des torches. Les gobelins possédant la vision dans le noir, ils ne s'embarrassent pas à éclairer les passages, mais la lumière dans les lieux de vie est plus confortable pour eux.
+
+Le complexe possède deux parties : une grotte naturelle (salles 1 et 2) et un vieux complexe creusé il y a de nombreuses années et que les gobelins ne font qu'occuper temporairement.
+
+### 1. L'entrée
+Deux gobelins sont censés y monter la garde, mais pour le moment… ils somnolent. Ils n'entendront pas si on crochète la serrure et seront surpris (donc n'agiront pas durant le premier round), de même pour une entrée violente et en force dans la pièce.
+
+Ils portent une armure de cuir et un cimeterre mais ont peu de chance d'avoir le temps de prendre leur bouclier (baisser leur CA de 2 dans ce cas). L'un possède 12 po, l'autre 16 pc.
+
+À partir de là, si tout se passe trop facilement pour les joueurs, vous pouvez ajouter quelques rencontres dans les couloirs avec un groupe de deux ou trois gobelins.
+
+### X. Le piège
+Au premier carrefour, le couloir qui file tout droit est piégé (emplacement marqué X). C'est une fosse simple, un trou creusé dans le sol et recouvert d'une large toile fixée sur les bords de la fosse, le tout camouflé avec de la terre et des débris. Un jet de Sagesse (Perception) DD 10 réussi permet de remarquer la fosse à temps. Dans le cas contraire, le premier personnage qui marche dessus tombe dans le trou profond de 3 mètres et subit 1d6 points de dégâts contondants.
+
+### 2. La salle d'armes
+Il n'y a pas de lumière dans cette salle qui est peu utilisée.
+
+> Cette grotte semble servir de râtelier. On y trouve adossées le long de la paroi un certain nombre d'armes qui ne sont pas d'une facture exceptionnelle : 1 fronde et 20 pierres, 4 javelines, 2 marteaux de guerre, 1 épée longue, 1 arbalète lourde et 10 carreaux, 3 morgensterns, ainsi qu'une cuirasse de taille humaine, une cotte de mailles de la taille d'un nain et 8 boucliers en bois.
+ À droite, en contre bas, on observe une porte en bois entrouverte. 
+
+### 3. L'entrepôt
+La porte de cette salle est fermée à clef, mais là encore la serrure est des plus sommaires. Réussir un jet de Dextérité DD 10 si le personnage possède des outils de voleur est suffisant pour la crocheter.
+
+> L'intérieur de cette salle comporte des rouleaux de tissus, des poteries, une selle de cheval, des outils de paysans, mais rien de grande valeur. Sur chacun des quatre piliers en bois est accrochée une torche, mais aucune n'est allumée. Cette salle sert en fait à entasser le résultat des différents vols effectués par la tribu. 
+
+### 4. La salle de torture
+Ici aussi, des torches sont accrochées aux murs, mais aucune n'est allumée.
+
+> Il y a ici un grand nombre d'instruments de torture et notamment un chevalet sur lequel a pris place un personnage que certains d'entre vous connaissent, le halfelin Gandelme le Dextre, qui était venu rendre visite à Fial à son frère Petit-Pinpin la semaine dernière !
+ D'après les marques qu'ils portent, le petit homme a visiblement été torturé.
+
+Gandelme est épuisé, affamé et déshydraté. On ne lui a rien donné à boire ni à manger depuis sa capture. Il est si faible (0 pv et épuisement niveau 4) qu'il ne peut pas marcher et encore moins combattre. Un sort de soins lui redonnera des points de vie et lui permettra de marcher, mais ne réduira pas ses niveaux d'épuisement.
+
+Il insistera pour que l'on retrouve son équipement. Celui-ci se trouve dans la chambre du chef, salle 17, mais il ne le sait pas, bien entendu. 
+
+### 5. La réserve de nourriture
+> La double porte donne sur vaste pièce sans lumière qui est en grande partie vide. Dans la partie sud on trouve toutefois un monceau de nourriture : viandes, fruits séchés, alcools, légumes.
+
+De quoi nourrir de nombreux gobelins durant des jours. 
+
+### 6. La cuisine
+> Deux torches aux murs illuminent cette pièce qui ne contient pas grand-chose non plus. Juste un fourneau avec un feu allumé dont la fumée s'échappe par un trou au plafond, des plats et des casseroles sales, et un peu de nourriture qui ne fait pas du tout envie. 
+
+### 7. Une chambre de gobelins
+> À l'intérieur de cette pièce se trouvent deux gobelins en train de jouer aux dés sur une table ronde en bois. Il y a aussi six paillasses de petite taille et un coffre fermé à clef.
+
+Les gobelins seront normalement surpris. Comme leurs congénères de l'entrée, il y a peu de chance qu'ils aient le temps de prendre leur bouclier (baisser leur CA de 2 dans ce cas). Un des gobelins porte sur lui la clef du coffre qui contient 252 pc. 
+
+### 8. La chambre des hobgobelins
+> Dans cette pièce se trouvent deux paillasses de taille humaine et une grosse bourse.
+
+C'est bien entendu là que dorment les deux hobgobelins, mais pour le moment ils sont en train de manger dans la salle commune. La bourse contient 11 po et 1 pp. 
+
+### 9. La salle commune
+Si les personnages prennent le temps d'écouter avant de rentrer dans la pièce, ils entendront clairement deux créatures parler entre elles en gobelins.
+
+> La salle contient deux grandes tables et plusieurs bancs. Actuellement deux créatures de la taille d'un humain mais avec des traits semblables à ceux des gobelins sont en train de manger.
+
+Occupés à manger et pensant que tout bruit normal vient surement des gobelins de l'antre, les deux hobgobelins ne sont normalement pas sur leur garde.
+
+Les hobgobelins ont leur épée longue sur eux et feront leur possible pour récupérer rapidement leur bouclier qui sont posés sur la table. Fiers guerriers, ils essayeront de se débarrasser des intrus tous seuls, mais si l'un d'eux vient à mourir, le survivant n'hésitera pas à crier pour alerter les gobelins de la salle 7 et de la salle 10. 
+
+### 10. Une chambre de gobelins
+> Il y a dans cette pièce six paillasses et deux gobelins y sont allongés, en train de dormir.
+
+Ces gobelins ont le sommeil profond et un simple combat dans la salle 9 ne devrait pas les réveiller. Mais en cas de cris d'un hobgobelin, ils accourront voir ce qu'il se passe. 
+
+### 11. La chambre du gobelours
+Lorsqu'ils ouvrent la porte de cette pièce, les personnages aperçoivent une créature qui correspond à la description qu'on leur a peut-être fait à Fial d'un gobelours. Le monstre est de profil et en train de cacher un petit sac sous sa paillasse. Il ne possède comme arme qu'une Morgenstern, n'a pas de bouclier (baisser sa CA de 2). Le petit sac qu'il tentait de cacher contient 40 po.
+
+Le gobelours n'appréciera certainement pas qu'on entre chez lui comme cela sans demander la permission, et encore moins alors qu'il était en train de ranger le butin de sa dernière sortie. Il attaquera donc, sans hésiter. 
+
+### 12. La salle du trésor
+Protégée par un passage secret (Investigation DD 15), on peut y trouver six petites statuettes en ivoire (valeur de 60 po au total), deux potions de soins (qui font regagner 2d4+2 pv) et un grand coffre non fermé à clef qui contient 2000 pc, 1000 pa et 70 po. Il n'y a aucune lumière ici. 
+
+### 13. La salle du trône
+> Au fond de cette vaste salle, la plus grande du complexe jusque-là, se trouve un trône en bois sur lequel est assis celui qui doit assurément être le chef de cette petite tribu de gobelins. Trois autres gobelins sont présents. Deux grands tapis recouvrent des pans de mur.
+
+Les trois gobelins attaqueront dès que le groupe entrera. Par contre le chef, à traiter comme un gobelin normal, est un poltron qui fera tout pour ne pas combattre. Dès qu'il verra que le combat tourne mal, il essayera de s'enfuir par le passage secret derrière son trône, qui s'active en faisant tourner ce dernier (Investigation DD 15 par défaut, ou DD 5 si un personnage a vu le chef l'activer). Chaque gobelin porte 24 pa sur lui. 
+
+### 14. Le laboratoire
+Cette pièce est fermée à clef (Dextérité DD 15 pour la crocheter, à condition d'avoir des outils de voleur, ou Force DD 15 pour l'enfoncer).
+
+> Dans cette pièce se trouvent nombre d'étagères contenant plein de pots et de fioles sans étiquette, et tout un tas de matériel qui semble être celui d'un alchimiste.
+
+Ce sont les ingrédients de l'apprenti alchimiste de la salle 15, mais même un magicien n'y reconnaîtra rien ! 
+
+### 15. La chambre de l'alchimiste
+> Cette pièce possède un bureau de belle facture, une chaise, un tapis épais au sol, et un lit. Elle sent nettement meilleure que toutes les autres pièces visitées.
+
+Elric, le jeune apprenti alchimiste humain qui vit ici, est le seul à vivre de jour et à dormir de nuit. Suivant l'heure à laquelle les personnages arrivent, il dort ou bien est en train de travailler sur son grimoire, assis à son bureau.
+
+Elric se rend rapidement compte que, seul, il ne fera pas le poids face aux personnages. Il essayera donc de les endormir par de belles paroles, prétendant en premier lieu être prisonnier des gobelins, puis suppliant le membre du groupe qui semble le plus clément de le laisser partir. En fait, il tentera de s'enfuir dès qu'il en aura l'occasion.
+
+Ni Gandelme ni Lanéa ne l'avaient vu avant, et il n'a participé à aucun raid avec les gobelins. Il n'a en fait que peu de relations avec les gobelins. Renvoyé par son mentor pour incapacité, il cherchait un endroit tranquille pour réaliser ses expériences, et a été attaqué par les gobelins. Mais, parlant leur langue, et plutôt doué pour embobiner les autres, il a réussi à convaincre leur chef qu'il pouvait transformer le fer en or. Il est donc confiné ici jusqu'à ce qu'il parvienne à montrer les preuves de son soi-disant talent.
+
+Il n'est pas autorisé à sortir de l'antre, mais les gobelins le nourrissent, ce qui lui permet de se consacrer de plein temps à ses expériences… infructueuses jusque-là. Il n'a rien de valeur sur lui, mis à part la clef de la salle 14 et son grimoire qui contient tous les sorts qu'il a préparés (voir sa fiche de stat) plus un autre sort de niveau 1 (à déterminer au hasard). 
+
+### 16. La cellule
+> Cette pièce qui baigne dans l'obscurité est une cellule. Ceux d'entre vous qui connaissent Lanéa, la fille du chef, la reconnaissent tout de suite, pieds et poings liés par une corde. Elle ne semble toutefois pas avoir été maltraitée et vous reconnaît immédiatement.
+
+Si le groupe n'a pas encore trouvé Gandelme dans la salle 4, Lanéa leur révèle qu'elle l'a aperçu la veille et qu'il faut absolument le trouver avant de partir d'ici. 
+
+### 17. La chambre du chef
+> Cette chambre bien décorée contient un vrai lit, des tapis par terre et sur les murs, et un sac à dos sur lequel est posé un bouclier et une épée courte de petite taille. Les deux torches au mur sont éteintes.
+
+Le bouclier et l'épée courte appartiennent au halfelin Gandelme, capturé par les gobelins il y a une semaine, de même que le sac à dos qui, en plus de l'équipement standard de tout aventurier (sac d'explorateur), contient des outils de voleur et 20 po. 
+
+## Conclusion
+De retour au village, Thron ne saura comment remercier les personnages, n'ayant que peu d'argent à leur offrir. Ils auront au moins droit à une forte embrassade ! Puis, suite au succès de cette première mission, le chef leur confiera que le temps est venu pour eux de quitter la monotonie du village. Ils doivent aspirer à une vie plus palpitante et il leur confie alors l'adresse d'un bon ami à lui qui réside à Laelith, la cité sainte.
+
+Gandelme, pour sa part, connait pas mal de gens du « milieu » à Egonzasthan, et pourra recommander tout roublard du groupe.
+
+Et de là à ce que Lanéa tombe amoureuse d'un de ses sauveurs…
+
+## PX
+Pour un groupe de quatre, chaque personnage devrait gagner au minimum 200 PX à la fin de cette aventure.
+
+Si Lanéa a été libérée sans être blessée, ajoutez 50 PX par personnage. Si Gandelme a également été libéré, ajoutez 25 PX par personnage. Si le chef des gobelins a été éliminé, ajoutez 25 PX par personnage.
+`,
     bannerUrl: "scenario-background.webp",
     credits: "Honteusement pompé sur www.aidedd.org",
   },
   {
+    id: "1801481c-f17d-45f1-8a1a-6188bbcf0910",
     title: "L'Oeil de Gruumsh",
     ownerIndex: 0,
     teaser:
       "Les personnages doivent ramener une relique à un chaman orc afin de sauver l'un des leurs.",
-    fullStory: `Par une belle après-midi, près du village de Fial, sur la route qui mène à la ville de Fiohl (province des comtés d'Egonzasthan), un des personnages est attaqué par une bande d'orques en maraude. Une dizaine d'orques surgissent par surprise des deux bords de la route. Nul besoin de préciser qu'ils ont l'air menaçants. Seul face à autant d'individus, le combat semble perdu d'avance. Toutefois ils ne frappent pas immédiatement. Tout laisse à croire qu'ils veulent capturer leur proie vivante. Deux orques face à un personnage de niveau 1 ou 2 représentent une rencontre mortelle, donc face à une dizaine, notre héros devrait rapidement se rendre compte qu'il vaut mieux se rendre que de mourir bêtement. Toutefois, s'il insiste pour se battre et tenter sa chance, jouez le combat, en prenant en compte que les orques ne frappent pas pour tuer mais seulement pour assommer. À 0 point de vie, le personnage tombe donc momentanément dans les pommes, il n'est pas tué. Prisonnier Une fois ligoté, le personnage est entraîné dans une course folle jusqu'à un discret campement situé dans la montagne, au sud de Gladz, dans le comté de l'Est d'Egonzasthan. Le camp semble venir d'être monté et abrite une cinquantaine d'orques, tous des mâles en tenue de combat. Puis apparait celui qui semble être le chef, un véritable colosse, qui parle un commun approximatif. Le chef commence par se moquer du personnage, puis lui demande ce qu'ils doivent faire de sa personne. Quelle que soit la réponse, l'orque lui propose de racheter sa vie dans un duel à mort contre un des guerriers de la tribu choisi au hasard. Le sort désigne alors un guerrier orque, Bolrogg, puis ses armes sont rendues au personnage. Toute la tribu finit par former un cercle autour des deux protagonistes, et le combat commence. Cette fois l'orque frappe pour tuer. Si le personnage gagne le combat, la première réaction des orques est la stupeur. Puis rapidement ils se mettent à crier et se précipitent sur le vainqueur du duel, dans l'idée apparente de le déchiqueter. C'est alors qu'une voix retentit. S'il perd, c'est au moment où Bolrogg va porter le coup de grâce que cette même voix retentit. Une voix autoritaire se fait entendre et tous les orques se figent, même le chef. Les regards se tournent alors vers celui qui vient de parler, un vieil orque décharné dont la stature frêle et voutée contraste avec celle, robuste, des guerriers de la bande. Le personnage est alors de nouveau désarmé, enchaîné, et conduit jusqu'à une tente. Le chaman Là, il fera connaissance avec celui qui semble devoir être son sauveur et qui parle parfaitement le commun. Le vieil orque se présente comme étant Kerog Merakk, prêtre de Gruumsh, «celui qui ne dort jamais », divinité majeure des orques. Kerog est un orque intelligent et cultivé qui, en tant que chaman de la tribu, occupe une place très importante dans celle-ci. Comme tous les orques, il déteste les races civilisées, mais sa situation particulière ne lui laisse d'autres choix que de devoir faire appel à une de ces « sous-races » pour se sortir d'affaire. Un « bâtard puant » nommé Naram Sark m'a dérobé quelque chose de précieux et j'ai besoin de toi pour le récupérer. Alors que je m'étais absenté de notre campement principal, ce « rejeton d'elfe » m'a volé un objet sacré appelé l'Œil de Gruumsh, une relique dont j'avais la garde. J'ai poursuivi le voleur jusqu'ici, mais Naram (qui est donc un demi-orque) s'est réfugié à Egonzasthan-la-basse. Et comme tu l'as vu, ma troupe est trop peu importante pour pouvoir attaquer la capitale de cette province. Autre raison, mais qu'il n'avouera pas à son interlocuteur, est qu'il ne veut pas attirer l'attention des autres sorciers de sa tribu sur lui, car le fait est que si Kerog ne ramène pas l'objet, le crime sera découvert et le chaman sacrifié à Gruumsh afin d'expier sa faute. Kerog offre donc la vie au personnage et lui promet la richesse (il donne à ce moment un coup de pied dans un coffre qui se renverse, révélant un monceau de pièces d'or) si celui-ci revient avec la relique. Il le jure sur Gruumsh, d'un air vraiment écœuré. Le personnage devrait comprendre que ses choix sont relativement limités ! Le chaman décrit alors la sainte relique comme étant un œil énorme d'environ 30 centimètres de large et serti d'une énorme gemme couleur rouge sang. Et comme il ne lui fait pas confiance, il prendra une petite précaution vis-à-vis du personnage en lui faisant avaler de force une étrange graine qui ressemble à un noyau de pêche poilue. Tu n'as pas toute la vie pour me ramener mon bien. La grosse graine que tu viens d'avaler est un poison mortel, et si tu n'absorbes pas l'antidote que je suis le seul à posséder dans les cinq jours qui suivent, tu disparaîtras de cette terre dans une mort lente et douloureuse. Le personnage a donc cinq jours pour remplir sa mission. LA GRAINE DE NICOLAK Ingestion - Toxine Appelée aussi « graine du démon jardinier », cette étrange semence est le fruit des travaux d'un chaman du Decharnrath, Nicolak. Une des particularités de cette graine est que bien qu'étant un végétal, elle a besoin d'un organisme animal pour se développer. Une fois implantée dans un être vivant donc, elle se met à germer entre le quatrième et le cinquième jour après son absorption. Puis en l'espace de 12 heures elle absorbe les substances vitales environnantes et provoque une mort lente et très douloureuse. La créature doit réussir un jet de sauvegarde de Constitution DD 12 ou prendre 3 (1d6) dégâts de poison. Ce jet doit être lancé toutes les heures durant 12 heures. À noter que Nicolak a également conçu une substance appelé « lait de dragon », un liquide laiteux et pâteux au goût immonde qui, s'il est absorbé avant que la graine ne commence à germer, la détruit dans l'organisme, tout en provoquant une forte diarrhée. La créature prend un niveau d'épuisement jusqu'à son prochain repos long. Puis Kerog, dans sa grande bonté, donne au personnage un moyen de repérer Naram, un objet aussi utile qu'esthétique : une main humaine coupée au niveau du poignet et dont le majeur indique la direction dans lequel se trouve le voleur ! Le chaman possède un sens de l'humour assez macabre, mais l'objet fonctionne. De toute façon, il pourra facilement reconnaître Naram, celui-ci est borgne et possède une énorme cicatrice sur sa joue gauche. Enfin, Kerog l'informe que Naram, malgré son sang elfe, est quelqu'un d'assez retors. Il lui conseille donc d'engager quelques sbires pour l'aider dans sa tâche, et à cette fin il lui jette une bourse contenant près de 50 po. Retrouvailles Fial est une charmante bourgade située à deux jours d'Egonzasthan-la-basse à marche forcée. Soit notre héros connait déjà les autres membres du groupe, et c'est donc naturellement qu'il va les retrouver. Soit Fial est le premier village sur sa route. Quoi qu'il en soit, le reste du groupe est à l'auberge du Taureau Gris. Mis à part les personnages, il y a quelques paysans qui boivent et se racontent les derniers potins du coin. Sur ce, l'ex-prisonnier fait son entrée. Les autres personnages remarquerontqu'il est épuisé, que ses vêtements sont en lambeaux et qu'il a l'air hagard. Si le groupe ne prête pas attention au nouveau venu, une bagarre d'ivrognes pourrait montrer à notre victime que les personnages sont des hommes qui savent se battre et qu'ils pourraient l'aider fortement à remplir sa mission et ainsi lui sauver la vie. Après tout, le chaman ne l'a-t-il pas encouragé à s'entourer de bras forts pour retrouver Naram ? Le combat, si combat il y a, devrait normalement se dérouler à mains nues. Un mort serait très mal vu par les villageois, même par ceux qui ne sont pas à l'auberge à ce moment-là. Quoi qu'il en soit, le groupe devrait être formé maintenant ! Egonzasthan-la-basse Une fois le groupe formé et le but de la mission expliqué à tous, les personnages devraient logiquement se mettre en route pour Egonzasthan-la-basse. Le temps presse, l'estomac de l'un d'eux commence à montrer de petits signes inquiétants. La capitale de la fédération des comtés d'Egonzasthan est une grande ville à la foule aussi grouillante que bigarrée. Les personnages peuvent y acheter ce qu'ils veulent, armes, armures, équipement divers. Une foule a toujours profité aux roublards, mais une milice attentive patrouille en ville, donc prudence. Une fois en ville donc, la main permet aux personnages de trouver leur proie. Toutefois c'est un objet qui peut être difficilement utilisé en plein jour et qui n'est pas très précis. La main les conduit à travers les quartiers chauds de la ville, et après quelques heures ils finissent par trouver ce qu'ils cherchent, du moins ce qu'il en reste, dans une auberge sordide du quartier des Sonneurs [repère 7 sur la carte de la ville]. Naram a été sauvagement tué et son cadavre est froid. La relique n'est bien entendu plus en sa possession. Si la logeuse, une vieille femme un peu folle, est interrogée, elle révèlera que « Mr Kapa » (le pseudonyme de Naram) a reçu la visite d'un homme « louche » il y a trois jours de cela, et qu'il l'a brutalement expulsé en hurlant « v a dire à cette saloperie de Mez'Arate que je lui arracherai la gorge avec les dents s'il s'approche ». Un jet d'Intelligence (Arcanes) DD 15 permet d'apprendre que « Mez' » est un préfixe utilisé pour qualifier le rang des magiciens dans la tour de l'échec des Pics des Mages à Laelith ! L'histoire La province maléfique du Decharnrath est située au cœur du Shaar occidental et s'étend sur les collines du même nom et le bois de Channath. Elle constitue la plus grosse communauté du Shaar, mais sûrement pas la plus organisée. C'est en effet une communauté orque, bien qu'on y trouve également quelques rares sorciers humains, et une terre où règnent les intrigues, les assassinats et les trahisons. Le dieu Gruumsh est bien entendu la divinité suprême dans cette province. Kerog est un personnage influent du Decharnrath. Il le doit à sa position de chaman d'une des plus grandes tribus de la communauté, mais surtout au fait que c'est lui qui a découvert lors de l'une de ses expéditions « l'Œil de Gruumsh », véritable relique pour les adorateurs du chef du panthéon orque. Naram, lui aussi prêtre de Gruumsh, est alors devenu férocement jaloux de Kerog. Il était, avant cela, celui des deux qui avait le plus d'influence sur la tribu, mais depuis que Kerog a ramené son trophée, le rapport de force s'est inversé. Vu la nouvelle situation privilégiée de Kerog, il lui était devenu difficile de l'assassiner, alors Naram a dérobé l'Œil et l'a caché. Mais sa victime, grâce à la sorcellerie, a découvert l'auteur du larcin et ce pauvre Naram n'a eu d'autres choix que de s'enfuir précipitamment du Decharnrath avec son butin. Kerog, à la tête d'une bande d'orques dévoués, l'a poursuivi et allait réussir à le capturer quand Naram s'est réfugié en désespoir de cause dans la ville d'Egonzasthan-la-basse. Malheureusement pour lui, il a été remarqué par un espion de la tour de l'échec de Laelith, Mez'Arate. Intrigué par la présence d'un demi-orque seul dans la capitale d'Egonzasthan, le mage a envoyé un de ses sbires aux nouvelles. Mais Naram, craignant qu'on ne lui vole sa relique, a violement repoussé l'intrus, ce qui a encore plus excité la curiosité de Mez'Arate. Ce dernier a donc envoyé dès le lendemain toute sa bande cette fois lui ramener la brute, et ceux-ci l'ont cueilli au moment même où il terminait de boucler son sac. Une rapide et sanglante échauffourée s'en est alors suivie dans laquelle Naram a trouvé la mort. Mez'Arate, qui surveillait l'opération de loin, est ensuite reparti avec son précieux butin pour sa demeure au sud de la ville, après avoir laissé sur place trois de ses hommes pour surveiller le coin, par précaution. Surveillés En sortant, dépités, de la chambre du défunt, les personnages seront filés par les trois hommes de main que Mez'Arate a laissés par-là (1 malfrat et 2 bandits). Mais ils ne sont pas très habiles pour la filature. Un score de Sagesse (Perception) passive de 12 ou plus permet au groupe de s'apercevoir qu'ils sont filés. Il est préférable pour les personnages de leur tendre une embuscade pour les capturer vivant et les faire parler. S'ils y parviennent, les sbires lâcheront le nom de leur patron et l'endroit où il réside actuellement. Dans le cas contraire, l'affrontement n'effraiera pas les hommes. Ils ont chacun 8 po et 15 pc sur eux. Notez que si les personnages les tuent tous les trois avant de les interroger, ils seront mal pour la suite de l'aventure. Ça leur apprendra, à D&D on ne fait pas que tuer des monstres !`,
+    fullStory: `## Contexte
+Un des personnages du groupe, si possible le plus costaud, physiquement parlant, est seul sur une route et va se faire capturer vivant par une bande d'orques.
+
+Il ira bien entendu ensuite demander de l'aide au reste du groupe pour se sortir du mauvais pas dans lequel il va être mis.
+
+## Au md
+Ce scénario peut être joué comme suite de l'aventure « À la chasse aux gobs ».
+
+## Accroches d'aventure
+Le personnage qui commence seul l'aventure peut être un nouveau joueur qui se joint au groupe.
+
+Ou bien ce peut être un roublard qui revient d'Egonzasthan après avoir été recommandé par Gandelme à la fin du scénario « À la chasse aux gobs ».
+
+Ou bien encore, simplement, un personnage qui est parti seul de Fial faire une petite balade dans la campagne avoisinant le village.
+
+## Les provinces de Laelith
+Les provinces de Laelith, la ville d'Egonzasthan-la-basse et le village de Fial, qui servent de contexte géographique pour cette aventure, sont décrits en détails sur www.aidedd.org dans la rubrique Univers, tout comme les Pics des Mages, cité un peu plus tard.
+
+## Introduction
+Par une belle après-midi, près du village de Fial, sur la route qui mène à la ville de Fiohl (province des comtés d'Egonzasthan), un des personnages est attaqué par une bande d'orques en maraude.
+
+> Une dizaine d'orques surgissent par surprise des deux bords de la route. Nul besoin de préciser qu'ils ont l'air menaçants. Seul face à autant d'individus, le combat semble perdu d'avance. Toutefois ils ne frappent pas immédiatement. Tout laisse à croire qu'ils veulent capturer leur proie vivante.
+
+Deux orques face à un personnage de niveau 1 ou 2 représentent une rencontre mortelle, donc face à une dizaine, notre héros devrait rapidement se rendre compte qu'il vaut mieux se rendre que de mourir bêtement.
+
+Toutefois, s'il insiste pour se battre et tenter sa chance, jouez le combat, en prenant en compte que les orques ne frappent pas pour tuer mais seulement pour assommer. À 0 point de vie, le personnage tombe donc momentanément dans les pommes, il n'est pas tué.
+
+## Prisonnier
+Une fois ligoté, le personnage est entraîné dans une course folle jusqu'à un discret campement situé dans la montagne, au sud de Gladz, dans le comté de l'Est d'Egonzasthan.
+
+> Le camp semble venir d'être monté et abrite une cinquantaine d'orques, tous des mâles en tenue de combat. Puis apparait celui qui semble être le chef, un véritable colosse, qui parle un commun approximatif.
+
+Le chef commence par se moquer du personnage, puis lui demande ce qu'ils doivent faire de sa personne. Quelle que soit la réponse, l'orque lui propose de racheter sa vie dans un duel à mort contre un des guerriers de la tribu choisi au hasard. Le sort désigne alors un guerrier orque, Bolrogg, puis ses armes sont rendues au personnage. Toute la tribu finit par former un cercle autour des deux protagonistes, et le combat commence. Cette fois l'orque frappe pour tuer.
+
+Si le personnage gagne le combat, la première réaction des orques est la stupeur. Puis rapidement ils se mettent à crier et se précipitent sur le vainqueur du duel, dans l'idée apparente de le déchiqueter. C'est alors qu'une voix retentit. S'il perd, c'est au moment où Bolrogg va porter le coup de grâce que cette même voix retentit.
+
+> Une voix autoritaire se fait entendre et tous les orques se figent, même le chef. Les regards se tournent alors vers celui qui vient de parler, un vieil orque décharné dont la stature frêle et voutée contraste avec celle, robuste, des guerriers de la bande.
+
+Le personnage est alors de nouveau désarmé, enchaîné, et conduit jusqu'à une tente.
+
+## Le chaman
+Là, il fera connaissance avec celui qui semble devoir être son sauveur et qui parle parfaitement le commun. Le vieil orque se présente comme étant Kerog Merakk, prêtre de Gruumsh, « celui qui ne dort jamais », divinité majeure des orques. Kerog est un orque intelligent et cultivé qui, en tant que chaman de la tribu, occupe une place très importante dans celle-ci. Comme tous les orques, il déteste les races civilisées, mais sa situation particulière ne lui laisse d'autres choix que de devoir faire appel à une de ces « sous-races » pour se sortir d'affaire.
+
+> Un « bâtard puant » nommé Naram Sark m'a dérobé quelque chose de précieux et j'ai besoin de toi pour le récupérer. Alors que je m'étais absenté de notre campement principal, ce « rejeton d'elfe » m'a volé un objet sacré appelé l'Œil de Gruumsh, une relique dont j'avais la garde. J'ai poursuivi le voleur jusqu'ici, mais Naram (qui est donc un demi-orque) s'est réfugié à Egonzasthan-la-basse. Et comme tu l'as vu, ma troupe est trop peu importante pour pouvoir attaquer la capitale de cette province.
+
+Autre raison, mais qu'il n'avouera pas à son interlocuteur, est qu'il ne veut pas attirer l'attention des autres sorciers de sa tribu sur lui, car le fait est que si Kerog ne ramène pas l'objet, le crime sera découvert et le chaman sacrifié à Gruumsh afin d'expier sa faute.
+
+Kerog offre donc la vie au personnage et lui promet la richesse (il donne à ce moment un coup de pied dans un coffre qui se renverse, révélant un monceau de pièces d'or) si celui-ci revient avec la relique. Il le jure sur Gruumsh, d'un air vraiment écœuré. Le personnage devrait comprendre que ses choix sont relativement limités !
+
+Le chaman décrit alors la sainte relique comme étant un œil énorme d'environ 30 centimètres de large et serti d'une énorme gemme couleur rouge sang. Et comme il ne lui fait pas confiance, il prendra une petite précaution vis-à-vis du personnage en lui faisant avaler de force une étrange graine qui ressemble à un noyau de pêche poilue.
+
+> Tu n'as pas toute la vie pour me ramener mon bien. La grosse graine que tu viens d'avaler est un poison mortel, et si tu n'absorbes pas l'antidote que je suis le seul à posséder dans les cinq jours qui suivent, tu disparaîtras de cette terre dans une mort lente et douloureuse.
+
+Le personnage a donc cinq jours pour remplir sa mission.
+
+> LA GRAINE DE NICOLAK Ingestion - Toxine
+ Appelée aussi « graine du démon jardinier », cette étrange semence est le fruit des travaux d'un chaman du Decharnrath, Nicolak. Une des particularités de cette graine est que bien qu'étant un végétal, elle a besoin d'un organisme animal pour se développer. Une fois implantée dans un être vivant donc, elle se met à germer entre le quatrième et le cinquième jour après son absorption. Puis en l'espace de 12 heures elle absorbe les substances vitales environnantes et provoque une mort lente et très douloureuse. La créature doit réussir un jet de sauvegarde de Constitution DD 12 ou prendre 3 (1d6) dégâts de poison. Ce jet doit être lancé toutes les heures durant 12 heures.
+
+À noter que Nicolak a également conçu une substance appelé « lait de dragon », un liquide laiteux et pâteux au goût immonde qui, s'il est absorbé avant que la graine ne commence à germer, la détruit dans l'organisme, tout en provoquant une forte diarrhée. La créature prend un niveau d'épuisement jusqu'à son prochain repos long.
+
+Puis Kerog, dans sa grande bonté, donne au personnage un moyen de repérer Naram, un objet aussi utile qu'esthétique : une main humaine coupée au niveau du poignet et dont le majeur indique la direction dans lequel se trouve le voleur ! Le chaman possède un sens de l'humour assez macabre, mais l'objet fonctionne. De toute façon, il pourra facilement reconnaître Naram, celui-ci est borgne et possède une énorme cicatrice sur sa joue gauche.
+
+Enfin, Kerog l'informe que Naram, malgré son sang elfe, est quelqu'un d'assez retors. Il lui conseille donc d'engager quelques sbires pour l'aider dans sa tâche, et à cette fin il lui jette une bourse contenant près de 50 po.
+
+## Retrouvailles
+Fial est une charmante bourgade située à deux jours d'Egonzasthan-la-basse à marche forcée. Soit notre héros connait déjà les autres membres du groupe, et c'est donc naturellement qu'il va les retrouver. Soit Fial est le premier village sur sa route. Quoi qu'il en soit, le reste du groupe est à l'auberge du Taureau Gris. Mis à part les personnages, il y a quelques paysans qui boivent et se racontent les derniers potins du coin.
+
+Sur ce, l'ex-prisonnier fait son entrée. Les autres personnages remarqueront qu'il est épuisé, que ses vêtements sont en lambeaux et qu'il a l'air hagard. Si le groupe ne prête pas attention au nouveau venu, une bagarre d'ivrognes pourrait montrer à notre victime que les personnages sont des hommes qui savent se battre et qu'ils pourraient l'aider fortement à remplir sa mission et ainsi lui sauver la vie. Après tout, le chaman ne l'a-t-il pas encouragé à s'entourer de bras forts pour retrouver Naram ? Le combat, si combat il y a, devrait normalement se dérouler à mains nues. Un mort serait très mal vu par les villageois, même par ceux qui ne sont pas à l'auberge à ce moment-là. Quoi qu'il en soit, le groupe devrait être formé maintenant !
+
+## Egonzasthan-la-basse
+Une fois le groupe formé et le but de la mission expliqué à tous, les personnages devraient logiquement se mettre en route pour Egonzasthan-la-basse. Le temps presse, l'estomac de l'un d'eux commence à montrer de petits signes inquiétants.
+
+La capitale de la fédération des comtés d'Egonzasthan est une grande ville à la foule aussi grouillante que bigarrée. Les personnages peuvent y acheter ce qu'ils veulent, armes, armures, équipement divers. Une foule a toujours profité aux roublards, mais une milice attentive patrouille en ville, donc prudence. Une fois en ville donc, la main permet aux personnages de trouver leur proie. Toutefois c'est un objet qui peut être difficilement utilisé en plein jour et qui n'est pas très précis. La main les conduit à travers les quartiers chauds de la ville, et après quelques heures ils finissent par trouver ce qu'ils cherchent, du moins ce qu'il en reste, dans une auberge sordide du quartier des Sonneurs [repère 7 sur la carte de la ville]. Naram a été sauvagement tué et son cadavre est froid. La relique n'est bien entendu plus en sa possession.
+
+Si la logeuse, une vieille femme un peu folle, est interrogée, elle révèlera que « Mr Kapa » (le pseudonyme de Naram) a reçu la visite d'un homme « louche » il y a trois jours de cela, et qu'il l'a brutalement expulsé en hurlant « va dire à cette saloperie de Mez'Arate que je lui arracherai la gorge avec les dents s'il s'approche ». Un jet d'Intelligence (Arcanes) DD 15 permet d'apprendre que « Mez' » est un préfixe utilisé pour qualifier le rang des magiciens dans la tour de l'échec des Pics des Mages à Laelith !
+
+## L'histoire
+La province maléfique du Decharnrath est située au cœur du Shaar occidental et s'étend sur les collines du même nom et le bois de Channath. Elle constitue la plus grosse communauté du Shaar, mais sûrement pas la plus organisée. C'est en effet une communauté orque, bien qu'on y trouve également quelques rares sorciers humains, et une terre où règnent les intrigues, les assassinats et les trahisons. Le dieu Gruumsh est bien entendu la divinité suprême dans cette province.
+
+Kerog est un personnage influent du Decharnrath. Il le doit à sa position de chaman d'une des plus grandes tribus de la communauté, mais surtout au fait que c'est lui qui a découvert lors de l'une de ses expéditions « l'Œil de Gruumsh », véritable relique pour les adorateurs du chef du panthéon orque. Naram, lui aussi prêtre de Gruumsh, est alors devenu férocement jaloux de Kerog. Il était, avant cela, celui des deux qui avait le plus d'influence sur la tribu, mais depuis que Kerog a ramené son trophée, le rapport de force s'est inversé. Vu la nouvelle situation privilégiée de Kerog, il lui était devenu difficile de l'assassiner, alors Naram a dérobé l'Œil et l'a caché. Mais sa victime, grâce à la sorcellerie, a découvert l'auteur du larcin et ce pauvre Naram n'a eu d'autres choix que de s'enfuir précipitamment du Decharnrath avec son butin. Kerog, à la tête d'une bande d'orques dévoués, l'a poursuivi et allait réussir à le capturer quand Naram s'est réfugié en désespoir de cause dans la ville d'Egonzasthan-la-basse.
+
+Malheureusement pour lui, il a été remarqué par un espion de la tour de l'échec de Laelith, Mez'Arate. Intrigué par la présence d'un demi-orque seul dans la capitale d'Egonzasthan, le mage a envoyé un de ses sbires aux nouvelles. Mais Naram, craignant qu'on ne lui vole sa relique, a violement repoussé l'intrus, ce qui a encore plus excité la curiosité de Mez'Arate. Ce dernier a donc envoyé dès le lendemain toute sa bande cette fois lui ramener la brute, et ceux-ci l'ont cueilli au moment même où il terminait de boucler son sac. Une rapide et sanglante échauffourée s'en est alors suivie dans laquelle Naram a trouvé la mort.
+
+Mez'Arate, qui surveillait l'opération de loin, est ensuite reparti avec son précieux butin pour sa demeure au sud de la ville, après avoir laissé sur place trois de ses hommes pour surveiller le coin, par précaution.
+
+## Surveillés
+En sortant, dépités, de la chambre du défunt, les personnages seront filés par les trois hommes de main que Mez'Arate a laissés par-là (1 malfrat et 2 bandits). Mais ils ne sont pas très habiles pour la filature. Un score de Sagesse (Perception) passive de 12 ou plus permet au groupe de s'apercevoir qu'ils sont filés.
+
+Il est préférable pour les personnages de leur tendre une embuscade pour les capturer vivant et les faire parler. S'ils y parviennent, les sbires lâcheront le nom de leur patron et l'endroit où il réside actuellement. Dans le cas contraire, l'affrontement n'effraiera pas les hommes. Ils ont chacun 8 po et 15 pc sur eux.
+
+Notez que si les personnages les tuent tous les trois avant de les interroger, ils seront mal pour la suite de l'aventure. Ça leur apprendra, à D&D on ne fait pas que tuer des monstres !
+
+## Le repaire du magicien
+Le repaire de Mez'Arate est situé dans un endroit reculé à un peu moins de trois heures de marches au sud d'Egonzasthan-labasse, dans un vallon appelé le Creux du Géant. Le magicien, originaire de cette province et employé par la tour de l'échec comme espion, s'y est installé il y a un peu plus de deux ans et l'a depuis aménagée à sa convenance.
+
+Par chance pour les personnages, Mez'Arate est absent. Il est retourné à Egonzasthan-la-basse afin de régler les derniers préparatifs de son voyage pour Laelith. L'espion-magicien a en effet l'intention de ramener l'Œil à ses maîtres de la tour de l'échec. Nul doute qu'ils le récompenseront grassement pour son geste. Mez'Arate a emmené avec lui trois de ses meilleurs hommes. Les autres sont restés dans son repaire.
+
+### Entrée
+> La maison est protégée par un mur d'enceinte de trois mètres de haut. L'entrée est fermée par une grille en fer, près de laquelle a été construite une petite cabane. Une centaine de mètres à peine sépare la grille d'entrée de la maison. Un autre bâtiment, qui semble être une écurie, se dresse au bord du chemin qui relie l'entrée à la demeure.
+
+À l'intérieur de la cabane réside en permanence 2 gardiens (bandits), relayés de façon régulière chaque soir et chaque matin, et accompagnés de 2 molosses. La cabane contient deux lits, une table, un poêle et une corde actionnant une cloche installée sur le toit. Les hommes ont respectivement dans leurs poches 17 pa et 22 pa. Même de nuit, les gardiens sont éveillés.
+
+En ce qui concerne l'écurie, celle-ci contient quatre boxes. Mais, comme indiqué précédemment, Mez'Arate est parti avec trois de ses hommes. Les boxes sont donc vides ; il n'y a aucun cheval, que du foin et une fourche.
+
+Le chef étant absent, les gardes ne portent aucune attention particulière à la surveillance de l'entrée. Mais si les chiens entendent du bruit, ils se mettront à aboyer, ce qui attirera forcément l'attention des hommes. Ils sortiront de la cabane en tenant les deux chiens en laisse, et ils ne les lâcheront que si les personnages ont une attitude hostile. Ils n'actionneront la cloche que s'ils se sentent en danger.
+
+### Rez-de-chaussée
+Le toit de cette grande demeure toute en pierre est en chaume. Le bâtiment possède trois niveaux. Toutes les fenêtres du rez-dechaussée sont munies de barreaux et aux deux étages de lourds volets en bois ferment toutes les ouvertures depuis que le maître des lieux est parti.
+
+### 1. Hall
+La porte d'entrée est en chêne massif de 5 cm d'épaisseur renforcé de gros clous de fer. Elle est fermée de l'intérieur par une solide barre transversale en métal. Impossible de la crocheter donc. Si les personnages ne se débrouillent pas pour qu'on ouvre la porte de l'intérieur, il va leur falloir réussir un jet de Force DD 25 pour l'enfoncer, ce qui immanquablement fera intervenir les gardes de la salle 4.
+
+> Le hall donne sur un couloir qui possède une imposante cheminée et un escalier en colimaçon qui monte au premier étage et descend à un sous-sol.
+
+### 2. Réserve
+> Un garde-manger qui contient de la nourriture pour dix personnes pour au moins une semaine. Principalement de la viande salée, du fromage et du pain.
+ 
+### 3. Cuisine
+> Cette petite pièce est équipée de tout le nécessaire pour se concocter de bons petits plats, dont un fourneau de taille moyenne qui siège au milieu de la salle.
+
+### 4. Salle de garde 1
+C'est ici que logent la plupart des hommes que Mez'Arate a laissés sur place durant son absence. De jour, ils passent leur temps ici à parler et à boire de la bière et du vin. À partir de minuit et jusqu'au lendemain 7 heures, ils dorment.
+
+5 hommes de main (bandits) sont présents et l'un d'eux possède la clef qui ouvre la porte de la cave. Ils ont respectivement sur eux 10 po, 11 pa, 10 pe, 8 pe et 12 pa. À part cinq paillasses, il n'y a rien de très intéressant ici. Si les personnages les interrogent sur l'Œil de Gruumsh, ceux-ci savent que leur employeur est arrivé à la maison avec, mais reparti sans. Il est donc dans la maison, mais ils ne savent pas où.
+
+### Premier étage
+### 5. Bibliothèque
+> Cette grande bibliothèque abrite une multitude de livres, d'histoire pour la plupart. On peut y apprendre de nombreuses choses intéressantes sur le royaume, notamment la reconstruction de Laelith suite au Châtiment, et la création des provinces. Aucun livre ne traite de magie.
+
+### 6. Bureau
+> Un seul meuble ici, un très beau secrétaire en acajou.
+
+Dans les tiroirs on peut trouver une vingtaine de feuilles de parchemins vierges, des plumes et diverses encres. 
+
+### 7. Salle de garde 2
+Semblable à la salle de garde du rez-de-chaussée, il y a ici aussi cinq paillasses. C'est là que dorment les meilleurs mercenaires du magicien, mais il n'y a actuellement que 2 hommes de main (malfrats), les trois autres étant à Egonzasthan-la-basse avec Mez'Arate. L'un possède 24 pc, l'autre 3 pp.
+
+### Deuxième étage
+Les appartements de Mez'Arate se situent au deuxième étage de la maison. Les trois portes de cet étage sont fermées à clef (Dextérité DD 15 pour les ouvrir, à condition d'avoir des outils de voleur).
+
+### 8. Chambre 1
+> Une chambre à coucher au mobilier dépouillé mais de goût. Elle semble toutefois ne pas être habitée.
+
+### 9. Chambre 2
+> Autre chambre à coucher qui ne semble pas être occupée.
+
+### 10. Chambre de l'espion-magicien
+> Peu de meubles dans cette pièce, mais tous sont de très bonne qualité. À part des vêtements de rechange de taille humaine et deux sacs contenant 600 pa, 100 po et 6 gemmes de 4 po chacune, rien d'autre d'intéressant.
+
+### Sous-sol
+### 11. Cellier
+> Cette cave abrite trois tonneaux de bière et une étagère contre le mur sur laquelle reposent une douzaine de bouteilles de vin rouge de qualité médiocre.
+
+Le passage secret du couloir qui provient de la salle 13 ne s'ouvre que de l'autre côté. Impossible de le détecter ou de l'ouvrir depuis la cave.
+
+### 12. Cave
+La porte de cette salle est fermée à clef. L'un des gardes de la salle 4 la porte sur lui. Sinon, le DD est de 12.
+> À l'intérieur de cette grande pièce reposent de nombreuses bouteilles de vins fins ainsi que trois grands tonneaux de bonne bière. Mez'Arate semble être un homme de goût qui aime à ne manquer de rien mais n'est pas prêt à partager avec tout le monde.
+
+Si un personnage effectue une fouille, le DD du jet de Sagesse (Perception) est de 5. En cas de réussite, il remarque que cette deuxième cave est de facture récente. En cas de réussite de 10 ou plus, il constate également qu'une brique du mur est n'est pas scellée et semble légèrement enfoncée dans le mur (appuyer dessus ouvre le passage secret). Et en cas de réussite de 15 ou plus, il remarque même la présence d'un trou dans le mur ouest face au passage secret.
+
+Dans ce dernier cas, un jet d'Intelligence (Investigation) DD 15 réussi permet de déduire la présence d'une plaque de pression au sol, devant le passage secret. Coincer un piton de fer ou tout autre objet sous la plaque empêche le piège de s'activer. De même, boucher les trous avec du tissu ou de la cire empêche les fléchettes d'être lancées.
+
+Si on marche sur la plaque devant la porte secrète sans avoir désamorcé le système, un jeu de ressorts propulse 4 fléchettes (+8 au toucher. Dégâts : 2 (1d4) dégâts perforants chacune) et fait sonner une cloche dans le couloir au rez-de-chaussée. Mais, ne connaissant pas l'existence de cette alarme, les gardes ne savent pas où aller !
+
+13. L'antre du magicien
+> Cette grande salle est d'un aspect sinistre, et d'étranges odeurs flottent dans l'air. Sur les multiples tables et étagères se trouve ce qui semble être l'Œil de Gruumsh ainsi que deux potions, un grimoire et diverses composantes matérielles. Dans un bocal posé sur une table, une main droite d'elfe. Et au sol, un gros coffre en fer fermé à clef.
+
+Alors que les personnages seront surement occupés à se remplir les poches, 7 grosses araignées vont s'en prendre à eux. Leur morsure ne représente pas un grand danger ; le problème avec ces petites bestioles c'est leur venin.
+
+Les potions sont une potion d'escalade et une potion de soins. Le grimoire est un livre de sorts de magicien (volé) qui contient tous les sorts de niveau 1 et 2 de l'école d'enchantement, avec toutes les composantes matérielles nécessaires à ceux-ci. La main droite d'elfe ne sert à rien. Mez'Arate a par contre la main gauche sur lui. Il a réussi à y faire fixer le sort main de mage, ce qui lui permet d'avoir un sort mineur à volonté supplémentaire.
+
+Ouvrir le coffre après l'avoir crocheté (jet de Dextérité DD 15) permet d'y trouver environ 2100 pa.
+
+> L'ŒIL DE GRUUMSH
+ Cette relique tirée des abysses du temps n'a pas grande valeur pour un être humain, mise à part peut-être la gemme qui se révèlera être un magnifique rubis d'au moins 1000 po ! Une personne tentant de retirer la gemme de l'Œil devra réussir un jet de sauvegarde de Constitution DD 30 (DD 10 pour les orques, DD 20 pour les demi-orques) ou prendre 5d10 dégâts de foudre.
+
+## Retour à la case départ
+Une fois la relique en leur possession, les personnages devraient effectuer le trajet inverse pour la rendre à son « légitime » propriétaire. L'estomac de la victime commence en effet à faire des siennes.
+
+Une fois au campement des orques, si le personnage est seul, il sera conduit jusqu'à la tente du chaman, sans même être désarmé ni brutalisé. Kerog a du mal à contenir son excitation et arrache la relique des mains du personnage avant de pousser un soupir de soulagement. Puis il se tourne vers lui, un sourire sarcastique aux babines, et lui demande d'une voix cruelle : « Tu n'es pas malade ? Je te trouve un peu pâle ». Ensuite, d'un air à la fois écœuré et résigné, il cherche dans sa tente une petite bouteille en verre remplie d'un liquide laiteux et le tend au personnage : « Bois ça, c'est l'antidote ». La boisson est infâme mais efficace. D'un air méprisant, il lui signifie alors qu'il peut déguerpir.
+
+Si ce dernier lui rappelle ses promesses de richesses, Kerog lui demande si la plus grande des richesses n'est pas la vie ! Puis il éclate de rire et ordonne au personnage de filer avant qu'il ne change d'avis et ne le fasse écorcher vivant. S'il parle l'orque, le personnage peut ensuite entendre le chaman donner des ordres à sa troupe afin de démonter le campement et se préparer à partir.
+
+Si par contre tout le groupe accompagne le personnage au campement, tous seront désarmés. Puis le principal intéressé sera conduit seul sous la tente du chaman avant d'être éjecté du camp manu militari, l'antidote en main. Mais la promesse de vie était pour lui, pas pour le reste du groupe. Ceux-ci devront donc déployer des trésors d'imagination pour s'en tirer vivant. Laisser une partie de leur équipement aux orques pourrait être une bonne idée.
+
+Si les personnages ont alerté les autorités du coin au sujet de la présence d'une bande d'orque sur leur territoire, il y a de fortes chances pour que Kerog et sa tribu soient défaits. Mais Kerog emportera avec lui dans sa tombe l'antidote. L'avenir de notre héros de la première heure est alors bien compromis.
+
+## Conclusion
+À son retour chez lui, Mez'Arate entrera dans une colère immense en constatant qu'on lui a volé sa relique, que sa maison a été pillée, et que ses hommes ont été massacrés. Heureusement pour lui, il reçoit régulièrement des fonds de la tour de l'échec de Laelith. Il ne se retrouve donc pas si démuni que ça, ce qui lui permettra d'embaucher rapidement de nouveaux hommes de main.
+
+Retrouver les auteurs du crime deviendra sa priorité. Il obtiendra la description du groupe par la logeuse de Naram. Ensuite son réseau d'informateurs aura vite fait de retrouver leur piste. Mez'Arate, qui ne connaît pas l'existence des orques de Kerog, est persuadé que cela est un coup des érudits du Pic des Mages. Il est donc convaincu que son trésor est en ce moment même en route pour Laelith. C'est là qu'il portera son attention, et sûrement là qu'un jour ou l'autre il retrouvera leur piste.
+
+## PX
+Pour un groupe de quatre, chaque personnage devrait gagner au minimum 200 PX à la fin de cette aventure.
+
+S'ils ont bien rendu l'œil à Kerog, ajoutez 50 PX par personnage. S'ils ont effectué la mission dans les temps, avant que le poison ne fasse effet, ajoutez 50 PX par personnage.
+`,
     bannerUrl: "scenario-background.webp",
     credits: "Honteusement pompé sur www.aidedd.org",
   },
 ];
 const plans = [
   {
+    id: "f5a052d5-336a-41ab-8782-39e1bbb2df47",
     title: "L'antre des gobelins",
     ownerIndex: 0,
     description: "",
@@ -57,6 +389,7 @@ const plans = [
     scenarioIndex: 0,
   },
   {
+    id: "2a29a5b2-f5f5-47af-8fba-4c86e0116c9c",
     title: "1er étage",
     ownerIndex: 0,
     description: "",
@@ -64,6 +397,7 @@ const plans = [
     scenarioIndex: 1,
   },
   {
+    id: "42a0aaa8-162f-4aba-bd65-dce73990c584",
     title: "Second étage",
     ownerIndex: 0,
     description: "",
@@ -71,6 +405,7 @@ const plans = [
     scenarioIndex: 1,
   },
   {
+    id: "6bf8eee6-6dff-4aea-92da-e1b16b82c522",
     title: "Rez de chaussée",
     ownerIndex: 0,
     description: "",
@@ -78,6 +413,7 @@ const plans = [
     scenarioIndex: 1,
   },
   {
+    id: "746087ee-9747-459a-9fd9-05ac8423cbc1",
     title: "Sous Sol",
     ownerIndex: 0,
     description: "",
@@ -87,6 +423,7 @@ const plans = [
 ];
 const pois = [
   {
+    id: "d5d84fca-6add-4964-8ef5-e011fb9f50ef",
     title: "L'entrée",
     ownerIndex: 0,
     planIndex: 0,
@@ -94,6 +431,7 @@ const pois = [
     description: `Deux gobelins sont censés y monter la garde, mais pour le moment… ils somnolent. Ils n'entendront pas si on crochète la serrure et seront surpris (donc n'agiront pas durant le premier round), de même pour une entrée violente et en force dans la pièce. Ils portent une armure de cuir et un cimeterre mais ont peu de chance d'avoir le temps de prendre leur bouclier (baisser leur CA de 2 dans ce cas). L'un possède 12 po, l'autre 16 pc. À partir de là, si tout se passe trop facilement pour les joueurs, vous pouvez ajouter quelques rencontres dans les couloirs avec un groupe de deux ou trois gobelins.`,
   },
   {
+    id: "4d899115-278a-47cb-86f6-49d0000d509c",
     title: "Le piège",
     ownerIndex: 0,
     planIndex: 0,
@@ -101,27 +439,31 @@ const pois = [
     description: `Au premier carrefour, le couloir qui file tout droit est piégé (emplacement marqué X). C'est une fosse simple, un trou creusé dans le sol et recouvert d'une large toile fixée sur les bords de la fosse, le tout camouflé avec de la terre et des débris. Un jet de Sagesse (Perception) DD 10 réussi permet de remarquer la fosse à temps. Dans le cas contraire, le premier personnage qui marche dessus tombe dans le trou profond de 3 mètres et subit 1d6 points de dégâts contondants.`,
   },
   {
+    id: "4475f025-658e-496f-83ed-119ea8d8cf8f",
     title: "La salle d'armes",
     ownerIndex: 0,
     planIndex: 0,
     code: "2",
-    description: `Il n'y a pas de lumière dans cette salle qui est peu utilisée. Cette grotte semble servir de râtelier. On y trouve adossées le long de la paroi un certain nombre  d'armes qui ne sont pas d'une facture exceptionnelle : 1 fronde et 20 pierres, 4 javelines, 2 marteaux de guerre, 1 épée longue, 1 arbalète lourde et 10 carreaux, 3 morgensterns, ainsi qu'une cuirasse de taille humaine, une cotte de mailles de la taille d'un nain et 8 boucliers en bois. À droite, en contre bas, on observe une porte en bois entrouverte.`,
+    description: `Il n'y a pas de lumière dans cette salle qui est peu utilisée. Cette grotte semble servir de râtelier. On y trouve adossées le long de la paroi un certain nombre d'armes qui ne sont pas d'une facture exceptionnelle : 1 fronde et 20 pierres, 4 javelines, 2 marteaux de guerre, 1 épée longue, 1 arbalète lourde et 10 carreaux, 3 morgensterns, ainsi qu'une cuirasse de taille humaine, une cotte de mailles de la taille d'un nain et 8 boucliers en bois. À droite, en contre bas, on observe une porte en bois entrouverte.`,
   },
   {
+    id: "ab391e78-f040-48dc-a2ac-339b84e16381",
     title: "L'entrepôt",
     ownerIndex: 0,
     planIndex: 0,
     code: "3",
-    description: `La porte de cette salle est fermée à clef, mais là encore la serrure est des plus sommaires. Réussir un jet de Dextérité DD 10 si le personnage possède des outils de  voleur est suffisant pour la crocheter. L'intérieur de cette salle comporte des rouleaux de tissus, des poteries, une selle de cheval, des outils de paysans, mais rien de grande valeur. Sur chacun des quatre piliers en bois est accrochée une torche, mais aucune n'est allumée. Cette salle sert en fait à entasser le résultat des différents vols effectués par la tribu.`,
+    description: `La porte de cette salle est fermée à clef, mais là encore la serrure est des plus sommaires. Réussir un jet de Dextérité DD 10 si le personnage possède des outils de voleur est suffisant pour la crocheter. L'intérieur de cette salle comporte des rouleaux de tissus, des poteries, une selle de cheval, des outils de paysans, mais rien de grande valeur. Sur chacun des quatre piliers en bois est accrochée une torche, mais aucune n'est allumée. Cette salle sert en fait à entasser le résultat des différents vols effectués par la tribu.`,
   },
   {
+    id: "0557c8cf-67df-42bd-9540-ef250ec9f8ef",
     title: "La salle de torture",
     ownerIndex: 0,
     planIndex: 0,
     code: "4",
-    description: `Ici aussi, des torches sont accrochées aux murs, mais aucune n'est allumée. Il y a ici un grand nombre d'instruments de torture et notamment un chevalet sur lequel a pris place un personnage que certains d'entre vous connaissent, le halfelin Gandelme le Dextre, qui était venu rendre visite à Fial à son frère Petit-Pinpin la semaine dernière ! D'après les marques qu'ils portent, le petit homme a visiblement été torturé. Gandelme est épuisé, affamé et déshydraté. On ne lui a rien donné à boire ni à manger depuis sa  capture. Il est si faible (0 pv et épuisement niveau 4) qu'il ne peut pas marcher et encore moins combattre. Un sort de soins lui redonnera des points de vie et lui permettra de  marcher, mais ne réduira pas ses niveaux d'épuisement. Il insistera pour que l'on retrouve son équipement. Celui-ci se trouve dans la chambre du chef, salle 17, mais il ne le sait pas, bien entendu.`,
+    description: `Ici aussi, des torches sont accrochées aux murs, mais aucune n'est allumée. Il y a ici un grand nombre d'instruments de torture et notamment un chevalet sur lequel a pris place un personnage que certains d'entre vous connaissent, le halfelin Gandelme le Dextre, qui était venu rendre visite à Fial à son frère Petit-Pinpin la semaine dernière ! D'après les marques qu'ils portent, le petit homme a visiblement été torturé. Gandelme est épuisé, affamé et déshydraté. On ne lui a rien donné à boire ni à manger depuis sa capture. Il est si faible (0 pv et épuisement niveau 4) qu'il ne peut pas marcher et encore moins combattre. Un sort de soins lui redonnera des points de vie et lui permettra de marcher, mais ne réduira pas ses niveaux d'épuisement. Il insistera pour que l'on retrouve son équipement. Celui-ci se trouve dans la chambre du chef, salle 17, mais il ne le sait pas, bien entendu.`,
   },
   {
+    id: "da599cb2-10b4-4224-97b8-1aea476f0899",
     title: "La réserve de nourriture",
     ownerIndex: 0,
     planIndex: 0,
@@ -130,6 +472,7 @@ const pois = [
       "La double porte donne sur vaste pièce sans lumière qui est en grande partie vide. Dans la partie sud on trouve toutefois un monceau de nourriture : viandes, fruits séchés, alcools, légumes. De quoi nourrir de nombreux gobelins durant des jours.",
   },
   {
+    id: "cf76069b-7bf5-4b49-98ad-74ebab6cd58e",
     title: "La cuisine",
     ownerIndex: 0,
     planIndex: 0,
@@ -137,6 +480,7 @@ const pois = [
     description: `Deux torches aux murs illuminent cette pièce qui ne contient pas grand-chose non plus. Juste un fourneau avec un feu allumé dont la fumée s'échappe par un trou au plafond, des plats et des casseroles sales, et un peu de nourriture qui ne fait pas du tout envie.`,
   },
   {
+    id: "0deabbd5-2012-40c6-97fc-0d8dd311aa0d",
     title: "Une chambre de gobelins",
     ownerIndex: 0,
     planIndex: 0,
@@ -144,6 +488,7 @@ const pois = [
     description: `À l'intérieur de cette pièce se trouvent deux gobelins en train de jouer aux dés sur une table ronde en bois. Il y a aussi six paillasses de petite taille et un coffre fermé à clef. Les gobelins seront normalement surpris. Comme leurs congénères de l'entrée, il y a peu de chance qu'ils aient le temps de prendre leur bouclier (baisser leur CA de 2 dans ce cas). Un des gobelins porte sur lui la clef du coffre qui contient 252 pc.`,
   },
   {
+    id: "72e6ffa9-5f58-402f-b1c9-700829895c4b",
     title: "La chambre des hobgobelins",
     ownerIndex: 0,
     planIndex: 0,
@@ -151,6 +496,7 @@ const pois = [
     description: `Dans cette pièce se trouvent deux paillasses de taille humaine et une grosse bourse. C'est bien entendu là que dorment les deux hobgobelins, mais pour le moment ils sont en train de manger dans la salle commune. La bourse contient 11 po et 1 pp.`,
   },
   {
+    id: "05718714-0756-41a2-adf3-cbe4b2348109",
     title: "La salle commune",
     ownerIndex: 0,
     planIndex: 0,
@@ -158,6 +504,7 @@ const pois = [
     description: `Si les personnages prennent le temps d'écouter avant de rentrer dans la pièce, ils entendront clairement deux créatures parler entre elles en gobelins. La salle contient deux grandes tables et plusieurs bancs. Actuellement deux créatures de la taille d'un humain mais avec des traits semblables à ceux des gobelins sont en train de manger. Occupés à manger et pensant que tout bruit normal vient surement des gobelins de l'antre, les deux hobgobelins ne sont normalement pas sur leur garde. Les hobgobelins ont leur épée longue sur eux et feront leur possible pour récupérer rapidement leur bouclier qui sont posés sur la table. Fiers guerriers, ils essayeront de se débarrasser des intrus tous seuls, mais si l'un d'eux vient à mourir, le survivant n'hésitera pas à crier pour alerter les gobelins de la salle 7 et de la salle 10.`,
   },
   {
+    id: "3efb3773-9d47-4a65-a43d-8a3211ad6d52",
     title: "Une chambre de gobelins",
     ownerIndex: 0,
     planIndex: 0,
@@ -165,6 +512,7 @@ const pois = [
     description: `Il y a dans cette pièce six paillasses et deux gobelins y sont allongés, en train de dormir. Ces gobelins ont le sommeil profond et un simple combat dans la salle 9 ne devrait pas les réveiller. Mais en cas de cris d'un hobgobelin, ils accourront voir ce qu'il se passe.`,
   },
   {
+    id: "936d1417-baec-408d-b8da-4daf6e0087ed",
     title: "La chambre du gobelours",
     ownerIndex: 0,
     planIndex: 0,
@@ -172,6 +520,7 @@ const pois = [
     description: `Lorsqu'ils ouvrent la porte de cette pièce, les personnages aperçoivent une créature qui correspond à la description qu'on leur a peut-être fait à Fial d'un gobelours. Le monstre est de profil et en train de cacher un petit sac sous sa paillasse. Il ne possède comme arme qu'une Morgenstern, n'a pas de bouclier (baisser sa CA de 2). Le petit sac qu'il tentait de cacher contient 40 po. Le gobelours n'appréciera certainement pas qu'on entre chez lui comme cela sans demander la permission, et encore moins alors qu'il était en train de ranger le butin de sa dernière sortie. Il attaquera donc, sans hésiter.`,
   },
   {
+    id: "7e446396-816f-4802-9dfc-c01387d8dee9",
     title: "La salle du trésor",
     ownerIndex: 0,
     planIndex: 0,
@@ -179,6 +528,7 @@ const pois = [
     description: `Protégée par un passage secret (Investigation DD 15), on peut y trouver six petites statuettes en ivoire (valeur de 60 po au total), deux potions de soins (qui font regagner 2d4+2 pv) et un grand coffre non fermé à clef qui contient 2000 pc, 1000 pa et 70 po. Il n'y a aucune lumière ici.`,
   },
   {
+    id: "c3a93509-7dbd-4c82-a573-19759f69c989",
     title: "La salle du trône",
     ownerIndex: 0,
     planIndex: 0,
@@ -186,6 +536,7 @@ const pois = [
     description: `Au fond de cette vaste salle, la plus grande du complexe jusque-là, se trouve un trône en bois sur lequel est assis celui qui doit assurément être le chef de cette petite tribu de gobelins. Trois autres gobelins sont présents. Deux grands tapis recouvrent des pans de mur. Les trois gobelins attaqueront dès que le groupe entrera. Par contre le chef, à traiter comme un gobelin normal, est un poltron qui fera tout pour ne pas combattre. Dès qu'il verra que le combat tourne mal, il essayera de s'enfuir par le passage secret derrière son trône, qui s'active en faisant tourner ce dernier (Investigation DD 15 par défaut, ou DD 5 si un personnage a vu le chef l'activer). Chaque gobelin porte 24 pa sur lui.`,
   },
   {
+    id: "44ec674f-459e-48d8-85ca-afa8bd754bf4",
     title: "Le laboratoire",
     ownerIndex: 0,
     planIndex: 0,
@@ -193,6 +544,7 @@ const pois = [
     description: `Cette pièce est fermée à clef (Dextérité DD 15 pour la crocheter, à condition d'avoir des outils de voleur, ou Force DD 15 pour l'enfoncer). Dans cette pièce se trouvent nombre d'étagères contenant plein de pots et de fioles sans étiquette, et tout un tas de matériel qui semble être celui d'un alchimiste. Ce sont les ingrédients de l'apprenti alchimiste de la salle 15, mais même un magicien n'y reconnaîtra rien !`,
   },
   {
+    id: "6da54b39-6779-4e7d-b14f-e07d3e33cc8a",
     title: "La chambre de l'alchimiste",
     ownerIndex: 0,
     planIndex: 0,
@@ -200,6 +552,7 @@ const pois = [
     description: `Cette pièce possède un bureau de belle facture, une chaise, un tapis épais au sol, et un lit. Elle sent nettement meilleure que toutes les autres pièces visitées. Elric, le jeune apprenti alchimiste humain qui vit ici, est le seul à vivre de jour et à dormir de nuit. Suivant l'heure à laquelle les personnages arrivent, il dort ou bien est en train de travailler sur son grimoire, assis à son bureau. Elric se rend rapidement compte que, seul, il ne fera pas le poids face aux personnages. Il essayera donc de les endormir par de belles paroles, prétendant en premier lieu être prisonnier des gobelins, puis suppliant le membre du groupe qui semble le plus clément de le laisser partir. En fait, il tentera de s'enfuir dès qu'il en aura l'occasion. Ni Gandelme ni Lanéa ne l'avaient vu avant, et il n'a participé à aucun raid avec les gobelins. Il n'a en fait que peu de relations avec les gobelins. Renvoyé par son mentor pour incapacité, il cherchait un endroit tranquille pour réaliser ses expériences, et a été attaqué par les gobelins. Mais, parlant leur langue, et plutôt doué pour embobiner les autres, il a réussi à convaincre leur chef qu'il pouvait transformer le fer en or. Il est donc confiné ici jusqu'à ce qu'il parvienne à montrer les preuves de son soi-disant talent. Il n'est pas autorisé à sortir de l'antre, mais les gobelins le nourrissent, ce qui lui permet de se consacrer de plein temps à ses expériences… infructueuses jusque-là. Il n'a rien de valeur sur lui, mis à part la clef de la salle 14 et son grimoire qui contient tous les sorts qu'il a préparés (voir sa fiche de stat) plus un autre sort de niveau 1 (à déterminer au hasard).`,
   },
   {
+    id: "85ac3668-38e3-41ba-825d-50cb6f9fa1c9",
     title: "La cellule",
     ownerIndex: 0,
     planIndex: 0,
@@ -207,6 +560,7 @@ const pois = [
     description: `Cette pièce qui baigne dans l'obscurité est une cellule. Ceux d'entre vous qui connaissent Lanéa, la fille du chef, la reconnaissent tout de suite, pieds et poings liés par une corde. Elle ne semble toutefois pas avoir été maltraitée et vous reconnaît immédiatement. Si le groupe n'a pas encore trouvé Gandelme dans la salle 4, Lanéa leur révèle qu'elle l'a aperçu la veille et qu'il faut absolument le trouver avant de partir d'ici.`,
   },
   {
+    id: "f107f4b7-2bb8-4997-b6e9-af51f1cadc8e",
     title: "La chambre du chef",
     ownerIndex: 0,
     planIndex: 0,
@@ -214,6 +568,7 @@ const pois = [
     description: `Cette chambre bien décorée contient un vrai lit, des tapis par terre et sur les murs, et un sac à dos sur lequel est posé un bouclier et une épée courte de petite taille. Les deux torches au mur sont éteintes. Le bouclier et l'épée courte appartiennent au halfelin Gandelme, capturé par les gobelins il y a une semaine, de même que le sac à dos qui, en plus de l'équipement standard de tout aventurier (sac d'explorateur), contient des outils de voleur et 20 po.`,
   },
   {
+    id: "688779e0-40f6-4a56-8564-3ea72c542ebf",
     title: "Hall",
     ownerIndex: 0,
     planIndex: 3,
@@ -221,6 +576,7 @@ const pois = [
     description: `La porte d'entrée est en chêne massif de 5 cm d'épaisseur renforcé de gros clous de fer. Elle est fermée de l'intérieur par une solide barre transversale en métal. Impossible de la crocheter donc. Si les personnages ne se débrouillent pas pour qu'on ouvre la porte de l'intérieur, il va leur falloir réussir un jet de Force DD 25 pour l'enfoncer, ce qui immanquablement fera intervenir les gardes de la salle 4. Le hall donne sur un couloir qui possède une imposante cheminée et un escalier en colimaçon qui monte au premier étage et descend à un sous-sol.`,
   },
   {
+    id: "90ef11d9-ca2b-4d1d-8695-d53ee49e3a92",
     title: "Réserve",
     ownerIndex: 0,
     planIndex: 3,
@@ -229,6 +585,7 @@ const pois = [
       "Un garde-manger qui contient de la nourriture pour dix personnes pour au moins une semaine. Principalement de la viande salée, du fromage et du pain.",
   },
   {
+    id: "2cfa256a-2505-400f-9961-734e2a2e3ec6",
     title: "Cuisine",
     ownerIndex: 0,
     planIndex: 3,
@@ -237,6 +594,7 @@ const pois = [
       "Cette petite pièce est équipée de tout le nécessaire pour se concocter de bons petits plats, dont un fourneau de taille moyenne qui siège au milieu de la salle.",
   },
   {
+    id: "d545b855-0800-46a4-960a-6b818f2ffc75",
     title: "Salle de garde 1",
     ownerIndex: 0,
     planIndex: 3,
@@ -244,6 +602,7 @@ const pois = [
     description: `C'est ici que logent la plupart des hommes que Mez'Arate a laissés sur place durant son absence. De jour, ils passent leur temps ici à parler et à boire de la bière et du vin. À partir de minuit et jusqu'au lendemain 7 heures, ils dorment. 5 hommes de main (bandits) sont présents et l'un d'eux possède la clef qui ouvre la porte de la cave. Ils ont respectivement sur eux 10 po, 11 pa, 10 pe, 8 pe et 12 pa. À part cinq paillasses, il n'y a rien de très intéressant ici. Si les personnages les interrogent sur l'Œil de Gruumsh, ceux-ci savent que leur employeur est arrivé à la maison avec, mais reparti sans. Il est donc dans la maison, mais ils ne savent pas où.`,
   },
   {
+    id: "99ed39f3-5c41-4a1b-a78d-e61d3e41af71",
     title: "Bibliothèque",
     ownerIndex: 0,
     planIndex: 1,
@@ -251,6 +610,7 @@ const pois = [
     description: `Cette grande bibliothèque abrite une multitude de livres, d'histoire pour la plupart. On peut y apprendre de nombreuses choses intéressantes sur le royaume, notamment la reconstruction de Laelith suite au Châtiment, et la création des provinces. Aucun livre ne traite de magie.`,
   },
   {
+    id: "bf16fcd2-a0cd-48f6-84d1-06f5c4f3450d",
     title: "Bureau",
     ownerIndex: 0,
     planIndex: 1,
@@ -259,6 +619,7 @@ const pois = [
       "Un seul meuble ici, un très beau secrétaire en acajou. Dans les tiroirs on peut trouver une vingtaine de feuilles de parchemins vierges, des plumes et diverses encres.",
   },
   {
+    id: "362a2c39-5fc2-4275-bc88-21d763ab5ef9",
     title: "Salle de garde 2",
     ownerIndex: 0,
     planIndex: 1,
@@ -266,6 +627,7 @@ const pois = [
     description: `Semblable à la salle de garde du rez-de-chaussée, il y a ici aussi cinq paillasses. C'est là que dorment les meilleurs mercenaires du magicien, mais il n'y a actuellement que 2 hommes de main (malfrats), les trois autres étant à Egonzasthan-la-basse avec Mez'Arate. L'un possède 24 pc, l'autre 3 pp.`,
   },
   {
+    id: "57a388c4-4fae-4e8e-be0d-d211ab166632",
     title: "Chambre 1",
     ownerIndex: 0,
     planIndex: 2,
@@ -274,6 +636,7 @@ const pois = [
       "Une chambre à coucher au mobilier dépouillé mais de goût. Elle semble toutefois ne pas être habitée.",
   },
   {
+    id: "5124c447-e80c-42bf-90bb-c07182504208",
     title: "Chambre 2",
     ownerIndex: 0,
     planIndex: 2,
@@ -281,6 +644,7 @@ const pois = [
     description: "Autre chambre à coucher qui ne semble pas être occupée.",
   },
   {
+    id: "4297d48e-27b8-47b3-aa60-082aa75a3dac",
     title: "Chambre de l'espion-magicien",
     ownerIndex: 0,
     planIndex: 2,
@@ -288,6 +652,7 @@ const pois = [
     description: `Peu de meubles dans cette pièce, mais tous sont de très bonne qualité. À part des vêtements de rechange de taille humaine et deux sacs contenant 600 pa, 100 po et 6 gemmes de 4 po chacune, rien d'autre d'intéressant.`,
   },
   {
+    id: "4dc2494c-96c7-4617-b916-1e7b2f195abd",
     title: "Cellier",
     ownerIndex: 0,
     planIndex: 4,
@@ -295,6 +660,7 @@ const pois = [
     description: `Cette cave abrite trois tonneaux de bière et une étagère contre le mur sur laquelle reposent une douzaine de bouteilles de vin rouge de qualité médiocre. Le passage secret du couloir qui provient de la salle 13 ne s'ouvre que de l'autre côté. Impossible de le détecter ou de l'ouvrir depuis la cave.`,
   },
   {
+    id: "f82b4f50-e91b-4d55-8a85-651bdd1be2d4",
     title: "Cave",
     ownerIndex: 0,
     planIndex: 4,
@@ -302,6 +668,7 @@ const pois = [
     description: `La porte de cette salle est fermée à clef. L'un des gardes de la salle 4 la porte sur lui. Sinon, le DD est de 12. À l'intérieur de cette grande pièce reposent de nombreuses bouteilles de vins fins ainsi que trois grands tonneaux de bonne bière. Mez'Arate semble être un homme de goût qui aime à ne manquer de rien mais n'est pas prêt à partager avec tout le monde. Si un personnage effectue une fouille, le DD du jet de Sagesse (Perception) est de 5. En cas de réussite, il remarque que cette deuxième cave est de facture récente. En cas de réussite de 10 ou plus, il constate également qu'une brique du mur est n'est pas scellée et semble légèrement enfoncée dans le mur (appuyer dessus ouvre le passage secret). Et en cas de réussite de 15 ou plus, il remarque même la présence d'un trou dans le mur ouest face au passage secret. Dans ce dernier cas, un jet d'Intelligence (Investigation) DD 15 réussi permet de déduire la présence d'une plaque de pression au sol, devant le passage secret. Coincer un piton de fer ou tout autre objet sous la plaque empêche le piège de s'activer. De même, boucher les trous avec du tissu ou de la cire empêche les fléchettes d'être lancées. Si on marche sur la plaque devant la porte secrète sans avoir désamorcé le système, un jeu de ressorts propulse 4 fléchettes (+8 au toucher. Dégâts : 2 (1d4) dégâts perforants chacune) et fait sonner une cloche dans le couloir au rez-de-chaussée. Mais, ne connaissant pas l'existence de cette alarme, les gardes ne savent pas où aller !`,
   },
   {
+    id: "29aba283-53cd-443b-b9e7-b4b79b892528",
     title: "L'antre du magicien",
     ownerIndex: 0,
     planIndex: 4,
@@ -311,6 +678,7 @@ const pois = [
 ];
 const flashcards = [
   {
+    id: "9d60287d-5ea6-4578-9056-604e6f6821ba",
     title: "Elric",
     ownerIndex: 0,
     description:
@@ -320,10 +688,10 @@ const flashcards = [
     data: {
       species: "Humanoïde (Humain)",
       size: "M",
-      alignment: "Neutre",
+      alignment: "NN",
       armorClass: 10,
       health: "7 (2d8-2)",
-      speed: 9,
+      speed: 10,
       strength: 10,
       dexterity: 10,
       constitution: 9,
@@ -334,12 +702,13 @@ const flashcards = [
       senses: "Perception passive 10",
       languages: "Commun, Gobelin",
       dangerLevel: 1,
-      behaviour: `Incantation: Elric est un lanceur de sorts de niveau 1. Sa caracteristique d'incantation est l'Intelligence (jet de sauvegarde contre ses sorts DD12, +4 au toucher pour les attaques avec un sort). Elric a préparé les sorts de magicien suivants:   Sorts mineurs (à volonté): Amis, Aspersion d'acide, Lumière   Niveau 1 (2 emplacements): Bouclier, Graisse, Repli expéditif`,
+      behaviour: `Incantation: Elric est un lanceur de sorts de niveau 1. Sa caracteristique d'incantation est l'Intelligence (jet de sauvegarde contre ses sorts DD12, +4 au toucher pour les attaques avec un sort). Elric a préparé les sorts de magicien suivants: Sorts mineurs (à volonté): Amis, Aspersion d'acide, Lumière Niveau 1 (2 emplacements): Bouclier, Graisse, Repli expéditif`,
       actions:
         "Dague: Attaque au corps à corps ou à distance avec une arme: +2 au toucher, allonge 1.50m ou portée 6/18m, une cible. Touché: 2 (1d4) dégâts perforants",
     },
   },
   {
+    id: "d5de0cc0-764d-4711-9e8e-fea58f80d9dc",
     title: "Gobelin",
     ownerIndex: 0,
     description:
@@ -366,10 +735,11 @@ const flashcards = [
       behaviour:
         "Fuite agile: Le gobelin peut Se Cacher ou Se Désengager à chacun de ses tours en utilisant une action bonus.",
       actions:
-        "Cimeterre: Attaque au corps à corps avec une arme: +4 au toucher, allonge 1.50m, une cible. Touché: 5 (1d6+2) dégâts tranchants.      Arc Court: Attaque à distance avec une arme: +4 au toucher, portée 24/96m, une cible. Touché: 5 (1d6+2) dégâts perforants.",
+        "Cimeterre: Attaque au corps à corps avec une arme: +4 au toucher, allonge 1.50m, une cible. Touché: 5 (1d6+2) dégâts tranchants. Arc Court: Attaque à distance avec une arme: +4 au toucher, portée 24/96m, une cible. Touché: 5 (1d6+2) dégâts perforants.",
     },
   },
   {
+    id: "5e24320c-72af-4341-a3c2-99bcae8b41f5",
     title: "Gobelours",
     ownerIndex: 0,
     description:
@@ -393,12 +763,13 @@ const flashcards = [
       senses: "Vision dans le noir 18m, Perception passive 10",
       languages: "Commun, Gobelin",
       dangerLevel: 1,
-      behaviour: `Attaque surprise: Si un gobelours surprend une créature et touche avec une attaque lors du premier round de combat, la cible subit 7 (2d6) dégâts supplémentaires pour cette attaque.  Brutal: Une arme de corps à corps inflige un dé de dégâts supplémentaire lors que le gobelours réussit son attaque (inclus dans l'attaque ci-dessous).`,
+      behaviour: `Attaque surprise: Si un gobelours surprend une créature et touche avec une attaque lors du premier round de combat, la cible subit 7 (2d6) dégâts supplémentaires pour cette attaque. Brutal: Une arme de corps à corps inflige un dé de dégâts supplémentaire lors que le gobelours réussit son attaque (inclus dans l'attaque ci-dessous).`,
       actions:
-        "Morgenstern: Attaque au corps à corps avec une arme: +4 au toucher, allonge 1.50m, une cible. Touché: 11 (2d8+2) dégâts perforants.      Javeline: Attaque au corps à corps ou à distance avec une arme: +4 au toucher, allonge 1.50m ou portée 9/36m, une cible. Touché: 9 (2d6+2) dégâts perforants à distance.",
+        "Morgenstern: Attaque au corps à corps avec une arme: +4 au toucher, allonge 1.50m, une cible. Touché: 11 (2d8+2) dégâts perforants. Javeline: Attaque au corps à corps ou à distance avec une arme: +4 au toucher, allonge 1.50m ou portée 9/36m, une cible. Touché: 9 (2d6+2) dégâts perforants à distance.",
     },
   },
   {
+    id: "e11ec10b-9133-4542-aedb-ba0dcce0a0f4",
     title: "Hobgobelin",
     ownerIndex: 0,
     description:
@@ -424,10 +795,11 @@ const flashcards = [
       dangerLevel: 1,
       behaviour: `Avantage martial: Une fois apr tour, un hobgobelin peur infliger 7 (2d6) dégâts supplémentaires à une créature s'il la touche à l'aide d'une attaque armée réussie à condition que cette créature se situe à 1.50m ou moins d'un allié du hiobgobelin.`,
       actions:
-        "Epée longue: Attaque au corps à corps avec une arme: +3 au toucher, allonge 1.50m, une cible. Touché: 5 (1d8+1) dégâts tranchants, ou 6 (1d10+1) dégâts tranchants si utilisée à deux mains.      Arc Long: Attaque à distance avec une arme: +3 au toucher, portée 45/180m, une cible. Touché: 5 (1d8+1) dégâts perforants.",
+        "Epée longue: Attaque au corps à corps avec une arme: +3 au toucher, allonge 1.50m, une cible. Touché: 5 (1d8+1) dégâts tranchants, ou 6 (1d10+1) dégâts tranchants si utilisée à deux mains. Arc Long: Attaque à distance avec une arme: +3 au toucher, portée 45/180m, une cible. Touché: 5 (1d8+1) dégâts perforants.",
     },
   },
   {
+    id: "f21d0792-4b01-430c-931b-f9a62663efd6",
     title: "Araignée",
     ownerIndex: 0,
     description: "",
@@ -450,18 +822,16 @@ const flashcards = [
       senses: "vision dans le noir 9 m, Perception passive 10",
       languages: "",
       dangerLevel: 0,
-      behaviour: `Pattes d'araignée. L'araignée peut escalader des surfaces difficiles et être au plafond la tête en bas sans avoir besoin d'effectuer un jet de caractéristique.
- Sens de la toile. Lorsqu'elle est en contact avec une toile, l'araignée connait l'emplacement exact de toutes les créatures qui sont en contact avec cette toile.
- Déplacement sur la toile. L'araignée ignore les restrictions de mouvement causées par une toile d'araignée.`,
+      behaviour: `Pattes d'araignée. L'araignée peut escalader des surfaces difficiles et être au plafond la tête en bas sans avoir besoin d'effectuer un jet de caractéristique. Sens de la toile. Lorsqu'elle est en contact avec une toile, l'araignée connait l'emplacement exact de toutes les créatures qui sont en contact avec cette toile. Déplacement sur la toile. L'araignée ignore les restrictions de mouvement causées par une toile d'araignée.`,
       actions:
         "Morsure. Attaque au corps à corps avec une arme : +4 au toucher, allonge 1,50 m, une créature. Touché : 1 dégât perforant et la cible doit réussir un jet de sauvegarde de Constitution DD 9 ou subir 2 (1d4) dégâts de poison.",
     },
   },
   {
+    id: "1c4ea579-4e17-4ec5-aaf9-613e3e8e63d2",
     title: "Bandit",
     ownerIndex: 0,
-    description: `Les bandits vagabondent en bandes et sont parfois dirigés par des malfrats, des vétérans ou des mages. Tous les bandits ne sont pas mauvais. L'oppression, la sécheresse, les épidémies ou la famine peuvent souvent entraîner d'honnêtes gens vers une vie de banditisme.
-Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers intéressés uniquement par les trésors et le meurtre, ou être des corsaires légitimés par la couronne pour attaquer et piller les navires d'une nation ennemie.`,
+    description: `Les bandits vagabondent en bandes et sont parfois dirigés par des malfrats, des vétérans ou des mages. Tous les bandits ne sont pas mauvais. L'oppression, la sécheresse, les épidémies ou la famine peuvent souvent entraîner d'honnêtes gens vers une vie de banditisme.Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers intéressés uniquement par les trésors et le meurtre, ou être des corsaires légitimés par la couronne pour attaquer et piller les navires d'une nation ennemie.`,
     type: "DndNpcCard",
     scenarioIndex: 1,
     data: {
@@ -482,12 +852,11 @@ Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers int
       languages: "une langue au choix (généralement le commun)",
       dangerLevel: 1,
       behaviour: "",
-      actions: `Cimeterre. Attaque au corps à corps avec une arme : +3 au toucher, allonge 1,50 m, une cible. Touché : 4 (1d6 + 1) dégâts tranchants.
-      
-      Arbalète légère. Attaque à distance avec une arme : +3 au toucher, portée 24/96 m, une cible. Touché : 5 (1d8 + 1) dégâts perforants.`,
+      actions: `Cimeterre. Attaque au corps à corps avec une arme : +3 au toucher, allonge 1,50 m, une cible. Touché : 4 (1d6 + 1) dégâts tranchants. Arbalète légère. Attaque à distance avec une arme : +3 au toucher, portée 24/96 m, une cible. Touché : 5 (1d8 + 1) dégâts perforants.`,
     },
   },
   {
+    id: "4d4e5e22-c796-49f0-a08f-50ae1312144e",
     title: "Malfrat",
     ownerIndex: 0,
     description:
@@ -512,14 +881,11 @@ Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers int
       languages: "une langue au choix (généralement le commun)",
       dangerLevel: 0,
       behaviour: `Tactique de groupe. Le malfrat a un avantage aux jets d'attaque contre une créature si au moins l'un de ses alliés est à 1,50 mètre ou moins de la créature et n'est pas incapable d'agir.`,
-      actions: `Attaques multiples. Le malfrat effectue deux attaques au corps à corps.
-
-      Masse d'armes. Attaque au corps à corps avec une arme : +4 au toucher, allonge 1,50 m, une cible. Touché : 5 (1d6 + 2) dégâts contondants.
-      
-      Arbalète lourde. Attaque à distance avec une arme : +2 au toucher, portée 30/120 m, une cible. Touché : 5 (1d10) dégâts perforants.`,
+      actions: `Attaques multiples. Le malfrat effectue deux attaques au corps à corps. Masse d'armes. Attaque au corps à corps avec une arme : +4 au toucher, allonge 1,50 m, une cible. Touché : 5 (1d6 + 2) dégâts contondants. Arbalète lourde. Attaque à distance avec une arme : +2 au toucher, portée 30/120 m, une cible. Touché : 5 (1d10) dégâts perforants.`,
     },
   },
   {
+    id: "a83e7953-e8b0-48c0-8981-e7d46b98c5c6",
     title: "Molosse",
     ownerIndex: 0,
     description:
@@ -549,6 +915,7 @@ Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers int
     },
   },
   {
+    id: "5369388c-b7b1-4657-a0d2-4147412a548f",
     title: "Orc",
     ownerIndex: 0,
     description:
@@ -573,12 +940,11 @@ Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers int
       languages: "commun, orc",
       dangerLevel: 0,
       behaviour: `Agressif. Par une action bonus, l'orc peut se déplacer de sa vitesse vers une créature hostile qu'il peut voir.`,
-      actions: `Hache à deux mains. Attaque au corps à corps avec une arme : +5 au toucher, allonge 1,50 m, une cible. Touché : 9 (1d12 + 3) dégâts tranchants.
-    
-    Javeline. Attaque au corps à corps ou à distance avec une arme : +5 au toucher, allonge 1,50 m ou portée 9/36 m, une cible. Touché : 6 (1d6 + 3) dégâts perforants.`,
+      actions: `Hache à deux mains. Attaque au corps à corps avec une arme : +5 au toucher, allonge 1,50 m, une cible. Touché : 9 (1d12 + 3) dégâts tranchants. Javeline. Attaque au corps à corps ou à distance avec une arme : +5 au toucher, allonge 1,50 m ou portée 9/36 m, une cible. Touché : 6 (1d6 + 3) dégâts perforants.`,
     },
   },
   {
+    id: "75a3c8a7-867d-4ed3-ada2-0ab41ea6a310",
     title: "L'Oeil de Gruumsh",
     ownerIndex: 0,
     description: `Cette relique tirée des abysses du temps n'a pas grande valeur pour un être humain, mise à part peut-être la gemme qui se révèlera être un magnifique rubis d'au moins 1000 po ! Une personne tentant de retirer la gemme de l'Œil devra réussir un jet de sauvegarde de Constitution DD 30 (DD 10 pour les orques, DD 20 pour les demi-orques) ou prendre 5d10 dégâts de foudre.`,
@@ -588,50 +954,55 @@ Les pirates sont des bandits de haute mer. Ils peuvent être des flibustiers int
 ];
 const users = [
   {
+    id: "24293e02-a431-4fdc-a3c5-bc6a0ed9564b",
     mail: "vcode@spamland.com",
     name: "ValhallaCode",
     hashedPassword:
-      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4",
     roles: [Role.USER, Role.ADMIN],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
   },
   {
+    id: "4fdc7923-5127-4b3f-a970-ab1ff7219087",
     mail: "lily@spamland.com",
     name: "Lily",
     hashedPassword:
-      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4",
     roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
   },
   {
+    id: "116d2de2-ba5b-479f-8ae2-b35070122640",
     mail: "shyz@spamland.com",
     name: "Shyzen",
     hashedPassword:
-      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4",
     roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
   },
   {
+    id: "23720c71-7a37-4232-9de6-a3839d5df887",
     mail: "missy@spamland.com",
     name: "Missy",
     hashedPassword:
-      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4",
     roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
     campaignsToLead: [],
   },
   {
+    id: "9e98bb3d-e5f7-4276-b22c-ca40e1e80a2f",
     mail: "lunacraft@spamland.com",
     name: "LunaCraft",
     hashedPassword:
-      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4", // Password "toto" for a JWT_SECRET of "toto"
+      "$argon2id$v=19$m=65536,t=3,p=4$ON/zbjS7rWgNDvi6nsQTOw$UEJqnXzJBdict0tUBwGucwX/fPA6Os/cx0YcU7lwIu4",
     roles: [Role.USER],
     readScenarios: [],
     campaigns: [],
@@ -640,6 +1011,7 @@ const users = [
 ];
 const campaigns = [
   {
+    id: "11bc4ad9-b188-4418-957d-34b52b06b49a",
     title: "Campagne d'initiation à D&D5",
     ownerIndex: 0,
     bannerUrl: "scenario-background.webp",
@@ -648,6 +1020,7 @@ const campaigns = [
     scenarios: ["A la chasse aux gobs"],
   },
   {
+    id: "e50a7f31-cc85-40d0-9a0f-a12685fe41fa",
     title: "Le Loup qui avait un nouvel ami",
     ownerIndex: 0,
     bannerUrl: "scenario-background.webp",
@@ -658,41 +1031,96 @@ const campaigns = [
 ];
 const messages = [
   {
+    id: "6c9078a7-5916-49a8-8d4f-faa3895a19dd",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 5 }),
     content: "Hey, la forme ?",
     ownerIndex: 0,
     campaignIndex: 0,
   },
   {
+    id: "04179c7c-432c-44d2-aeb1-564b0a8b971c",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 4 }),
     content: "Ouaip et toi ? Les dés sont prêts ?",
     ownerIndex: 1,
     campaignIndex: 0,
   },
   {
+    id: "d326f7db-4c05-41ad-96dc-6d2ed82c0c7c",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 3 }),
     content:
       "Ouais, par contre pas moyen de remettre la main sur ma feuille de perso, tu te souviens qui les avait gardées la dernière fois ?",
     ownerIndex: 0,
     campaignIndex: 0,
   },
   {
+    id: "0b01c6ad-fb58-4a17-bd61-e03425419242",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 2 }),
     content:
       "Nope! J'ai la mienne avec moi, mais tu avais pas repris la tienne pour vérifier un truc dans le bouquin de règles ?",
     ownerIndex: 1,
     campaignIndex: 0,
   },
   {
+    id: "3d2d83d6-cd54-412c-a448-439f61b2c07d",
     channel: "tests",
-    createdAt: new Date(),
+    createdAt: DateTime.now().minus({ minutes: 1 }),
     content: "... Je sais plus. Raaah, meujeu va encore se payer ma poire...",
     ownerIndex: 0,
     campaignIndex: 0,
   },
 ];
-export { campaigns, flashcards, messages, plans, pois, scenarios, users };
+const notes = [
+  {
+    id: "4a1055fe-d0c3-4ac5-8c52-899a3886545a",
+    campaignIndex: 0,
+    ownerIndex: 0,
+    content: "Lorem ipsum",
+  },
+];
+const sessions = [
+  {
+    id: "b14e22e1-e2ae-4abe-ae5d-4a1f158d7304",
+    campaignIndex: 0,
+    summary:
+      "Le groupe reçoit une mission de la part du forgeron pour retrouver sa fille. Il demande expressement aux joueurs de ne rien révéler à sa femme.",
+    location: "Chez le GM",
+    programmedAt: DateTime.now().minus({ week: 2 }),
+  },
+  {
+    id: "0494bccd-9dc3-4d0d-aec1-0646ce09c5dc",
+    campaignIndex: 0,
+    summary:
+      "Les joueurs suivent la trace de gobelins sui ont été aperçus dans la région et trouvent une caverne un peu trop lourdement gardée",
+    location: "Chez le GM",
+    programmedAt: DateTime.now().minus({ day: 1 }),
+  },
+  {
+    id: "3030260a-8bc4-404e-93e4-a331e35330f5",
+    campaignIndex: 0,
+    summary: "",
+    location: "Chez le GM",
+    programmedAt: DateTime.now(),
+  },
+  {
+    id: "7b2bada0-46f2-4cd7-88fd-71e1f03e1c93",
+    campaignIndex: 0,
+    summary: "",
+    location: "Chez le GM",
+    programmedAt: DateTime.now().plus({ day: 2 }),
+  },
+];
+export {
+  campaigns,
+  flashcards,
+  messages,
+  plans,
+  pois,
+  scenarios,
+  users,
+  notes,
+  sessions,
+};

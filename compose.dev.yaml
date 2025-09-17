@@ -1,10 +1,10 @@
 x-baseService: &baseService
   restart: always
   healthcheck:
-    interval: 300s
-    timeout: 30s
-    retries: 5
-    start_period: 30s
+    interval: 5s
+    timeout: 2s
+    retries: 3
+    start_period: 10s
     start_interval: 5s
 
 services:
@@ -60,7 +60,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          'curl --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-dev:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
+          'curl -m 5 --fail --request POST --header ''Content-Type: application/json'' --url ''http://backend-dev:4000'' --data ''{"query":"query { __typename }"}'' || exit 1',
         ]
     depends_on:
       db-dev:
@@ -82,6 +82,7 @@ services:
       COOKIE_TTL: ${COOKIE_TTL}
       CACHE_PORT: ${CACHE_PORT}
       CACHE_HOST: ${CACHE_HOST}
+      REALTIME_HOST: ${REALTIME_HOST}
 
   files-dev:
     <<: *baseService
@@ -93,7 +94,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://files-dev:4000/health'|| exit 1",
+          "curl -m 5 --fail --request GET --url 'http://files-dev:4000/health'|| exit 1",
         ]
     volumes:
       - ./files/src:/app/src/
@@ -109,12 +110,13 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://realtime-dev:4000/health'|| exit 1",
+          "curl -m 5 --fail --request GET --url 'http://realtime-dev:4000/health'|| exit 1",
         ]
     volumes:
       - ./realtime/src:/app/src/
     environment:
       JWT_SECRET: ${JWT_SECRET}
+      REALTIME_HOST: ${REALTIME_HOST}
     depends_on:
       rabbit-dev:
         condition: service_healthy
@@ -129,7 +131,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl --fail --request GET --url 'http://frontend-dev:5173' || exit 1",
+          "curl -m 5 --fail --request GET --url 'http://frontend-dev:5173' || exit 1",
         ]
     depends_on:
       codegen-dev:
@@ -161,8 +163,8 @@ services:
     <<: *baseService
     image: rabbitmq
     volumes:
-      - ./persist/rabbitmq/data/:/var/lib/rabbitmq/
-      - ./persist/rabbitmq/log/:/var/log/rabbitmq
+      - ./persist/rabbitmq-dev/data/:/var/lib/rabbitmq/
+      - ./persist/rabbitmq-dev/log/:/var/log/rabbitmq
     healthcheck:
       test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping || exit 1"]
     ports:

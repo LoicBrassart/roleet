@@ -1,4 +1,4 @@
-.PHONY: stop clean enter run
+.PHONY: stop clean run
 
 stop:
 	docker stop $(shell docker ps -a -q)
