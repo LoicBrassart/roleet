@@ -64,11 +64,11 @@ jobs:
           rm -rf /tmp/.buildx-cache || true
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache || true
 
-  # notify-server:
-  #   needs: build-and-push
-  #   runs-on: ubuntu-latest
-  #   environment: staging
-  #   steps:
-  #     - name: Notify staging server
-  #       run: |
-  #         curl -f -X POST ${{ secrets.SERVER_DOMAIN }}/hooks/staging-${{ secrets.APP_NAME }}
+  notify-server:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Notify staging server
+        run: |
+          curl -f -X POST ${{ secrets.SERVER_DOMAIN }}/hooks/staging-${{ secrets.APP_NAME }}
