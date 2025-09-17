@@ -19,6 +19,9 @@ concurrency:
   group: prod-deploy
   cancel-in-progress: false
 
+permissions:
+  contents: write # can write on the repository
+
 jobs:
   prepare-release:
     runs-on: ubuntu-latest
@@ -36,12 +39,14 @@ jobs:
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
       - name: Generate changelog
-        run: |
-          # TODO: remplacer par ton outil préféré (release-please, git-chglog, etc.)
+        run:
+          | # TODO: remplacer par ton outil préféré (release-please, git-chglog, etc.)
           echo "## Changelog ${{ steps.tag.outputs.tag }}" > CHANGELOG.md
           git log $(git describe --tags --abbrev=0)..HEAD --oneline >> CHANGELOG.md
 
       - name: Commit changelog and push to main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -49,6 +54,7 @@ jobs:
           git merge origin/staging --no-ff -m "Merge staging into main for release ${{ steps.tag.outputs.tag }}"
           git add CHANGELOG.md
           git commit -m "chore: update changelog for release ${{ steps.tag.outputs.tag }}"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
           git push origin main
 
       - name: Create GitHub tag
