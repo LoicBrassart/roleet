@@ -14,6 +14,10 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: true,
+    watch: {
+      usePolling: true,
+      interval: 200,
+    },
     hmr: {
       port: 7000,
       path: "/hmr",
