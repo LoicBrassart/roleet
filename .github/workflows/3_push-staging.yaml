@@ -71,5 +71,4 @@ jobs:
     steps:
       - name: Notify staging server
         run: |
-          echo ${{ secrets.SERVER_DOMAIN }}/hooks/staging-${{ secrets.APP_NAME }}
-          curl -f -X GET ${{ secrets.SERVER_DOMAIN }}/hooks/staging-${{ secrets.APP_NAME }}
+          curl -X GET ${{ secrets.SERVER_DOMAIN }}/hooks/staging-${{ secrets.APP_NAME }}
