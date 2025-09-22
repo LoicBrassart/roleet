@@ -41,9 +41,7 @@ services:
   backend-stg:
     <<: *baseService
     container_name: backend-stg
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.stg
+    image: valhallacode/roleet-backend
     healthcheck:
       test:
         [
@@ -62,13 +60,14 @@ services:
       DB_HOST: ${DB_HOST}
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_TTL: ${COOKIE_TTL}
+      CACHE_PORT: ${CACHE_PORT}
+      CACHE_HOST: ${CACHE_HOST}
+      REALTIME_HOST: ${REALTIME_HOST}
 
   files-stg:
     <<: *baseService
     container_name: files-stg
-    build:
-      context: ./files
-      dockerfile: Dockerfile.stg
+    image: valhallacode/roleet-files
     healthcheck:
       test:
         [
@@ -81,9 +80,7 @@ services:
   realtime-stg:
     <<: *baseService
     container_name: realtime-stg
-    build:
-      context: ./realtime
-      dockerfile: Dockerfile.stg
+    image: valhallacode/roleet-realtime
     healthcheck:
       test:
         [
@@ -94,9 +91,7 @@ services:
   frontend-stg:
     <<: *baseService
     container_name: frontend-stg
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.stg
+    image: valhallacode/roleet-frontend
     healthcheck:
       test:
         [
@@ -120,4 +115,13 @@ services:
       - 5672:5672
     command: >
       sh -c "
-      rabbitmq-plugins enable rabbitmq-server"
+      rabbitmq-plugins enable rabbitmq_management && rabbitmq-server"
+
+  cache-stg:
+    <<: *baseService
+    container_name: cache-stg
+    image: redis
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    ports:
+      - ${CACHE_PORT}:6379
