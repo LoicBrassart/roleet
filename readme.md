@@ -1,5 +1,9 @@
 # TODO list d'une app
 
+## Notes
+
+Keep working on this, it's gone sour...
+
 ## Infra
 
 - makefile
